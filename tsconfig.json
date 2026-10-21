@@ -1,4 +1,14 @@
 {
   "files": [],
-  "references": [{ "path": "./tsconfig.tools.json" }, { "path": "./apps/web" }]
+  "references": [
+    {
+      "path": "./tsconfig.tools.json"
+    },
+    {
+      "path": "./packages/content-schema"
+    },
+    {
+      "path": "./apps/web"
+    }
+  ]
 }
