@@ -41,6 +41,23 @@ vitest.mock('../../content/loader', async (importOriginal) => {
   return { ...actual, loadExercise: (id: string) => loadExercise(id) as unknown };
 });
 
+const getExerciseProgress = vitest.fn();
+const recordAttempt = vitest.fn();
+const saveDraft = vitest.fn();
+vitest.mock('../../progress/db', () => ({
+  quietly: async (work: () => Promise<unknown>) => {
+    try {
+      return await work();
+    } catch {
+      return undefined;
+    }
+  },
+  getExerciseProgress: (id: string) => getExerciseProgress(id) as unknown,
+  recordAttempt: (...args: unknown[]) => recordAttempt(...args) as unknown,
+  saveDraft: (...args: unknown[]) => saveDraft(...args) as unknown,
+  markLessonStarted: () => Promise.resolve(),
+}));
+
 const run = vitest.fn<() => Promise<RunOutcome>>();
 const grade = vitest.fn<() => Promise<GradeOutcome>>();
 const cancel = vitest.fn();
@@ -62,6 +79,9 @@ function renderPage() {
 }
 
 beforeEach(() => {
+  getExerciseProgress.mockResolvedValue(undefined);
+  recordAttempt.mockResolvedValue(undefined);
+  saveDraft.mockResolvedValue(undefined);
   loadExercise.mockResolvedValue({
     lesson: { version: 1, lesson: { title: 'Xin chào, Python!' }, markdown: '', exercises: [] },
     exercise,
@@ -210,6 +230,55 @@ describe('ExercisePage', () => {
     const hints = screen.getByTestId('hint-list');
     expect(hints.querySelector('code')).toHaveTextContent('print');
     expect(hints.textContent).not.toContain('`');
+  });
+
+  it('mở lại bài thì thấy đúng code đang làm dở, không bị về code khởi đầu', async () => {
+    getExerciseProgress.mockResolvedValue({
+      exerciseId: exercise.id,
+      lessonId: 'py-khoi-dong.01-xin-chao',
+      status: 'dang-lam',
+      attempts: 2,
+      draftCode: 'print("em làm dở")',
+      updatedAt: new Date().toISOString(),
+    });
+    renderPage();
+    const editor = await screen.findByRole('textbox', { name: strings.exercise.yourCode });
+    expect(editor).toHaveValue('print("em làm dở")');
+    expect(screen.getByTestId('restored-draft')).toHaveTextContent(strings.exercise.restored);
+  });
+
+  it('nộp bài thì ghi nhận kết quả vào tiến độ trên máy', async () => {
+    const user = userEvent.setup();
+    renderPage();
+    await user.click(await screen.findByRole('button', { name: strings.exercise.submit }));
+    await waitFor(() => expect(recordAttempt).toHaveBeenCalledTimes(1));
+    expect(recordAttempt).toHaveBeenCalledWith(
+      exercise.id,
+      'py-khoi-dong.01-xin-chao',
+      true,
+      exercise.starterCode,
+    );
+  });
+
+  it('chỉ chạy thử thì không tính là một lần nộp bài', async () => {
+    const user = userEvent.setup();
+    renderPage();
+    await user.click(await screen.findByRole('button', { name: strings.exercise.run }));
+    await waitFor(() =>
+      expect(screen.getByTestId('exercise-output')).toHaveTextContent('Xin chào, Python!'),
+    );
+    expect(recordAttempt).not.toHaveBeenCalled();
+  });
+
+  it('không lưu được tiến độ thì bài tập vẫn dùng bình thường', async () => {
+    getExerciseProgress.mockRejectedValue(new Error('IndexedDB bị chặn'));
+    recordAttempt.mockRejectedValue(new Error('IndexedDB bị chặn'));
+    const user = userEvent.setup();
+    renderPage();
+    const editor = await screen.findByRole('textbox', { name: strings.exercise.yourCode });
+    expect(editor).toHaveValue(exercise.starterCode);
+    await user.click(screen.getByRole('button', { name: strings.exercise.submit }));
+    expect(await screen.findByText(strings.exercise.allPassed)).toBeInTheDocument();
   });
 
   it('bài tập không có thì mời trẻ về bản đồ', async () => {

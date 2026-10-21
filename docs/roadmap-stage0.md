@@ -22,11 +22,11 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-11 Màn bài tập: editor CodeMirror, chạy, chấm, kết quả từng test — thêm job Playwright e2e (Chromium + WebKit) chạy trên bản build, chặn deploy nếu đỏ
 
 ## M3 — Tiến độ & động lực (tuần 4–5)
-- [ ] S0-12 IndexedDB progress + migrate
+- [x] S0-12 IndexedDB progress + migrate
 - [ ] S0-13 Bản đồ nhiệm vụ, streak, 6 huy hiệu đầu
-- [ ] S0-14 Mã tiến độ xuất/nhập
-- [ ] S0-15 Link báo cáo cho bố mẹ (`#fragment`) + trang báo cáo
-- [ ] S0-16 Nút xoá toàn bộ dữ liệu trên máy
+- [ ] S0-14 Mã tiến độ xuất/nhập — **không đưa `draftCode` vào mã chia sẻ** (code trẻ tự gõ, có thể vô tình chứa tên thật)
+- [ ] S0-15 Link báo cáo cho bố mẹ (`#fragment`) + trang báo cáo — chỉ hiện số liệu tiến độ, **không hiện code của trẻ**
+- [ ] S0-16 Nút xoá toàn bộ dữ liệu trên máy (`clearAllProgress()` đã có từ S0-12) — nhớ dọn luôn state đang hiển thị trên màn hình, và e2e: xoá → tải lại → sạch
 
 ## M4 — Gợi ý AI (tuần 5–6)
 - [ ] S0-17 Lambda `ai-hint`: validate, sanitize, prompt, gọi Claude qua Bedrock (IAM role, profile global)

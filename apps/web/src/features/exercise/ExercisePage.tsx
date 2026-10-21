@@ -2,6 +2,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { Play, RotateCcw, Send, Square } from 'lucide-react';
 import { loadExercise, lessonIdOfExercise } from '../../content/loader';
+import {
+  getExerciseProgress,
+  markLessonStarted,
+  quietly,
+  recordAttempt,
+  saveDraft,
+} from '../../progress/db';
 import type { PublicExercise } from '../../content/types';
 import type { DrawCommand, TestResult } from '../../runner/protocol';
 import { createRunner, type Runner } from '../../runner/runner-client';
@@ -19,6 +26,7 @@ export function ExercisePage() {
   const { exerciseId = '' } = useParams();
   const [exercise, setExercise] = useState<PublicExercise | null>(null);
   const [lessonTitle, setLessonTitle] = useState('');
+  const [restoredDraft, setRestoredDraft] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
   const [code, setCode] = useState('');
   const [phase, setPhase] = useState<Phase>('idle');
@@ -46,12 +54,19 @@ export function ExercisePage() {
   useEffect(() => {
     let active = true;
     loadExercise(exerciseId)
-      .then(({ exercise: found, lesson }) => {
+      .then(async ({ exercise: found, lesson }) => {
+        if (!active) return;
+        // Mở lại bài thì thấy đúng code lúc rời đi; chưa làm bao giờ thì lấy code khởi đầu.
+        const saved = await quietly(() => getExerciseProgress(found.id));
         if (!active) return;
         setExercise(found);
         setLessonTitle(lesson.lesson.title);
-        setCode(found.starterCode);
+        setCode(saved?.draftCode ?? found.starterCode);
+        setRestoredDraft(saved !== undefined);
         setLoadFailed(false);
+        void quietly(() =>
+          markLessonStarted(lessonIdOfExercise(found.id), found.id.split('.')[0] ?? ''),
+        );
       })
       .catch(() => {
         if (active) setLoadFailed(true);
@@ -60,6 +75,15 @@ export function ExercisePage() {
       active = false;
     };
   }, [exerciseId]);
+
+  // Lưu nháp sau khi trẻ ngừng gõ một nhịp, để không ghi đĩa sau mỗi phím.
+  useEffect(() => {
+    if (!exercise || code === '') return;
+    const timer = setTimeout(() => {
+      void quietly(() => saveDraft(exercise.id, lessonIdOfExercise(exercise.id), code));
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [code, exercise]);
 
   const clearOutcome = useCallback(() => {
     setStdout('');
@@ -86,8 +110,14 @@ export function ExercisePage() {
       timeoutMs: exercise.timeoutMs,
     });
     setPhase('idle');
-    if (outcome.ok) setResults(outcome.report.results);
-    else setError(describeRunError(outcome.error));
+    if (outcome.ok) {
+      setResults(outcome.report.results);
+      void quietly(() =>
+        recordAttempt(exercise.id, lessonIdOfExercise(exercise.id), outcome.report.passed, code),
+      );
+    } else {
+      setError(describeRunError(outcome.error));
+    }
   }
 
   if (loadFailed) {
@@ -134,6 +164,11 @@ export function ExercisePage() {
           <h2 id="code-cua-em" className="text-lg font-bold">
             {vi.exercise.yourCode}
           </h2>
+          {restoredDraft && (
+            <p className="text-sm text-ink-muted" data-testid="restored-draft">
+              {vi.exercise.restored}
+            </p>
+          )}
           <p className="text-sm text-ink-muted" data-testid="python-status">
             {pythonReady ? vi.exercise.ready : vi.exercise.preparing}
           </p>
