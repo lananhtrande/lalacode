@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# tài liệu viết tay: giữ nguyên cách xuống dòng và bảng của người viết
+docs/
+.claude/
+CLAUDE.md
+README.md

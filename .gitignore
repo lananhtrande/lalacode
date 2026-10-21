@@ -23,3 +23,6 @@ infra/**/*.tfvars
 
 # claude code local settings
 .claude/settings.local.json
+
+# typescript build info
+*.tsbuildinfo
