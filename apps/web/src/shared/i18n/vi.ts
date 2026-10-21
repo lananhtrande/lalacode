@@ -53,6 +53,12 @@ export const vi = {
     exercises: 'bài tập',
     draftBadge: 'Bản nháp',
   },
+  runner: {
+    timeout:
+      'Code chạy lâu quá rồi. Có thể em viết một vòng lặp không bao giờ dừng. Mình đã dừng giúp em, sửa lại rồi chạy tiếp nhé.',
+    cancelled: 'Mình đã dừng chương trình. Em sửa code rồi chạy lại nhé.',
+    internal: 'Máy chạy Python gặp trục trặc. Em thử tải lại trang giúp mình nhé.',
+  },
   comingSoon: {
     badge: 'Đang xây',
     body: 'Phần này mình đang làm. Em quay lại sau nhé!',

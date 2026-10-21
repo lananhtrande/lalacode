@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createRunner, type Runner } from '../../runner/runner-client';
+import { runnerErrorMessage } from '../../runner/messages';
 
 /**
  * Trang thử runner — **chỉ có ở chế độ dev** (xem app/routes.tsx).
@@ -10,6 +11,8 @@ export function RunnerSandboxPage() {
   const runnerRef = useRef<Runner | null>(null);
   const [code, setCode] = useState('print("Xin chào, Python!")');
   const [stdin, setStdin] = useState('');
+  const [timeoutMs, setTimeoutMs] = useState(5000);
+  const [running, setRunning] = useState(false);
   const [status, setStatus] = useState('chưa nạp');
   const [output, setOutput] = useState('');
 
@@ -31,12 +34,14 @@ export function RunnerSandboxPage() {
   async function run() {
     setOutput('');
     setStatus('đang chạy…');
-    const outcome = await runnerRef.current!.run(code, { stdin });
+    setRunning(true);
+    const outcome = await runnerRef.current!.run(code, { stdin, timeoutMs });
+    setRunning(false);
     if (outcome.ok) {
       setOutput(outcome.result.stdout + outcome.result.stderr);
       setStatus(`xong trong ${outcome.result.durationMs} ms`);
     } else {
-      setOutput(outcome.error.message);
+      setOutput(runnerErrorMessage(outcome.error));
       setStatus(`lỗi (${outcome.error.kind})`);
     }
   }
@@ -68,6 +73,17 @@ export function RunnerSandboxPage() {
         />
       </label>
 
+      <label className="block">
+        <span className="font-medium">Thời gian tối đa (ms)</span>
+        <input
+          aria-label="Thời gian tối đa"
+          type="number"
+          className="mt-1 block w-40 rounded-lg border border-line p-2"
+          value={timeoutMs}
+          onChange={(event) => setTimeoutMs(Number(event.target.value))}
+        />
+      </label>
+
       <div className="flex gap-3">
         <button
           type="button"
@@ -82,6 +98,14 @@ export function RunnerSandboxPage() {
           className="min-h-tap rounded-xl bg-brand-500 px-5 font-semibold text-white"
         >
           Chạy
+        </button>
+        <button
+          type="button"
+          disabled={!running}
+          onClick={() => runnerRef.current?.cancel()}
+          className="min-h-tap rounded-xl border border-line px-4 font-semibold disabled:opacity-50"
+        >
+          Dừng
         </button>
       </div>
 
