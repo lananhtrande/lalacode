@@ -64,6 +64,7 @@ export const vi = {
     grading: 'Đang chấm…',
     stop: 'Dừng',
     reset: 'Làm lại từ đầu',
+    restored: 'Mình giữ lại bài em đang làm dở',
     resetConfirm: 'Xoá code hiện tại và quay về code ban đầu nhé?',
     outputTitle: 'Kết quả chạy',
     outputEmpty: 'Bấm "Chạy thử" để xem chương trình in ra gì.',

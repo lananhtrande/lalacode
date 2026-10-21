@@ -83,6 +83,41 @@ test.describe('màn bài tập', () => {
     await expect(page).toHaveURL(/\/bai-hoc\/py-khoi-dong\.01-xin-chao$/);
   });
 
+  test('đóng rồi mở lại: code đang làm dở vẫn còn (IndexedDB)', async ({ page }) => {
+    await page.goto(EXERCISE);
+    await setCode(page, 'print("em quay lại sau")');
+    // Đợi qua nhịp lưu nháp rồi mới tải lại trang.
+    await expect(page.getByTestId('python-status')).toHaveText('Python sẵn sàng', {
+      timeout: 120_000,
+    });
+    await page.waitForTimeout(1500);
+
+    await page.reload();
+    await expect(page.locator('.cm-content')).toHaveText('print("em quay lại sau")', {
+      useInnerText: true,
+    });
+    await expect(page.getByTestId('restored-draft')).toBeVisible();
+
+    // "Làm lại từ đầu" đưa về code khởi đầu của bài.
+    await page.getByRole('button', { name: 'Làm lại từ đầu' }).click();
+    await expect(page.locator('.cm-content')).toContainText('Viết code của em');
+  });
+
+  test('tiến độ nằm trên máy: không có request nào mang code của trẻ đi', async ({ page }) => {
+    const leaked: string[] = [];
+    page.on('request', (request) => {
+      const body = request.postData() ?? '';
+      if (body.includes('em quay lại sau') || request.url().includes('em quay')) {
+        leaked.push(request.url());
+      }
+    });
+    await page.goto(EXERCISE);
+    await setCode(page, 'print("em quay lại sau")');
+    await page.getByRole('button', { name: 'Nộp bài' }).click();
+    await expect(page.getByText(/Test 1:/)).toBeVisible({ timeout: 120_000 });
+    expect(leaked).toEqual([]);
+  });
+
   test('màn bài tập không bị cuộn ngang trên điện thoại', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 740 });
     await page.goto(EXERCISE);
