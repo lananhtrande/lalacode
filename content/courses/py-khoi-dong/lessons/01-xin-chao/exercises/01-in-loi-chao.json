@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.01-xin-chao.01-in-loi-chao",
+  "title": "In lời chào",
+  "kind": "code",
+  "prompt": "Viết chương trình in ra dòng chữ `Xin chào, Python!`",
+  "starterCode": "# Viết code của em ở dưới dòng này\n",
+  "solution": "print(\"Xin chào, Python!\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Xin chào, Python!\n",
+      "message": "Gần đúng rồi! Em kiểm tra lại dấu phẩy, dấu chấm than và chữ hoa nhé."
+    }
+  ],
+  "hints": [
+    "Lệnh để in ra màn hình là `print`.",
+    "Chữ cần in phải nằm trong dấu ngoặc kép, bên trong cặp ngoặc tròn.",
+    "Ví dụ tương tự: `print(\"Chào bạn\")` in ra dòng chữ Chào bạn."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

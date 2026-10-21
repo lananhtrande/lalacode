@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.01-xin-chao.02-in-hai-dong",
+  "title": "Hai dòng chữ",
+  "kind": "code",
+  "prompt": "Viết chương trình in ra 2 dòng: dòng 1 là `Em thích Python`, dòng 2 là `Python cũng thích em`.",
+  "starterCode": "print(\"Em thích Python\")\n",
+  "solution": "print(\"Em thích Python\")\nprint(\"Python cũng thích em\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Em thích Python\nPython cũng thích em\n",
+      "message": "Chương trình cần in đúng 2 dòng. Mỗi dòng dùng một lệnh print nhé."
+    }
+  ],
+  "hints": [
+    "Mỗi lệnh `print` in ra một dòng.",
+    "Em cần thêm một lệnh `print` nữa ở dòng thứ 2.",
+    "Ví dụ tương tự: `print(\"Một\")` rồi xuống dòng viết `print(\"Hai\")`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

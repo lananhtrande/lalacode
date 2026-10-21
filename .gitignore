@@ -1,0 +1,25 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.vite/
+*.log
+.DS_Store
+
+# secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# terraform
+infra/**/.terraform/
+infra/**/*.tfstate
+infra/**/*.tfstate.*
+infra/**/*.tfvars
+!infra/**/example.tfvars
+
+# claude code local settings
+.claude/settings.local.json

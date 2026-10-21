@@ -1,0 +1,9 @@
+{
+  "id": "py-khoi-dong",
+  "title": "Python khởi động",
+  "summary": "Làm quen với Python qua những bài học ngắn, mỗi ngày 15 phút.",
+  "ageRange": [10, 15],
+  "authorId": "core",
+  "order": ["01-xin-chao"],
+  "status": "draft"
+}

@@ -1,0 +1,49 @@
+# Công nghệ — giai đoạn 0
+
+Mọi thay đổi bảng này cần một ADR trong `docs/decisions/`.
+
+| Lớp | Lựa chọn | Phiên bản | Lý do ngắn |
+| --- | --- | --- | --- |
+| Runtime dev | Node.js | 22 LTS | Dùng chung cho web, scripts, Lambda |
+| Package manager | npm workspaces | — | Đơn giản, đủ cho monorepo nhỏ |
+| Ngôn ngữ | TypeScript `strict` | 5.x | Bắt lỗi sớm, type dùng chung cho nội dung |
+| Frontend | React | 19 | Quen thuộc, hệ sinh thái lớn (DataLab cũng dùng) |
+| Build | Vite | mới nhất ổn định | Nhanh, hỗ trợ worker và WASM tốt |
+| Routing | React Router (data router) | 7 | Route phía client, lazy-load theo trang |
+| Style | Tailwind CSS + CSS variables cho theme | 4 | Nhanh; token màu/kích thước dùng chung |
+| Editor | CodeMirror 6 + `@codemirror/lang-python` | 6 | Nhẹ hơn Monaco, chạy tốt trên tablet/điện thoại |
+| Python runtime | Pyodide (tự host) | ghim cố định, ví dụ 0.28.x | CPython thật trong WASM |
+| Trạng thái UI | React state + Zustand cho store nhỏ | — | Không cần Redux |
+| Lưu trữ máy | IndexedDB qua `idb` | — | Dung lượng lớn hơn localStorage, async |
+| Schema nội dung | zod (`packages/content-schema`) | 3/4 | Một nguồn sự thật cho type + validate |
+| Markdown | `react-markdown` + `remark-gfm`, highlight bằng CodeMirror static | — | Nội dung bài viết bằng Markdown |
+| Icon | lucide-react | — | Nhẹ, tree-shake |
+| Unit test | Vitest + Testing Library | — | Cùng hệ Vite |
+| E2E test | Playwright (Chromium, WebKit iPhone/iPad) | — | Kiểm tra Pyodide thật trên trình duyệt |
+| Lint/format | ESLint (flat config) + Prettier | — | Hook chạy sau mỗi lần sửa file |
+| Kiểm tra nội dung | Script Node + CPython 3.12+ (`content:verify`) | — | Lời giải mẫu pass, starter fail |
+| AI | Claude API, model `claude-haiku-5-5` | — | Rẻ, nhanh, đủ cho gợi ý ngắn |
+| Serverless | AWS Lambda (Node 22) + Function URL sau CloudFront | — | Gần như 0 USD ở quy mô nhỏ |
+| Rate limit | DynamoDB on-demand + TTL | — | Không cần server |
+| Bí mật | AWS Secrets Manager | — | API key không ở client/repo |
+| Hosting | S3 Singapore + CloudFront (OAC) | — | 1 TB/tháng miễn phí, edge tại HN/HCM |
+| IaC | Terraform | ≥1.9 | Dùng lại ở giai đoạn 1–2 |
+| CI/CD | GitHub Actions + OIDC → AWS | — | Không khoá dài hạn |
+
+## Ngân sách bundle
+
+- JS chính (không tính Pyodide) ≤ 200 kB gzip; mỗi route lazy ≤ 80 kB gzip.
+- Pyodide core tải ngầm, cache dài hạn (`immutable`, tên file có version).
+- Lighthouse mobile (trang chủ): Performance ≥ 85, Accessibility ≥ 95.
+
+## Trình duyệt hỗ trợ
+
+Chrome/Edge 2 phiên bản gần nhất, Safari iOS/iPadOS 16.4+, Firefox mới nhất. Máy yếu (RAM 3–4 GB) phải chạy được bài cơ bản.
+
+## Không dùng (và lý do)
+
+- **Next.js / SSR server:** giai đoạn 0 là web tĩnh; SEO xử lý bằng prerender vài trang công khai lúc build.
+- **Monaco:** nặng, kém trên mobile.
+- **Firebase/Supabase Auth:** chưa có tài khoản ở giai đoạn 0; giai đoạn 1 dữ liệu phải nằm tại Việt Nam.
+- **Google Analytics / Facebook Pixel:** cookie theo dõi, không phù hợp người dùng trẻ em.
+- **Chạy code học sinh trên server:** không cần, tốn tiền, rủi ro bảo mật.

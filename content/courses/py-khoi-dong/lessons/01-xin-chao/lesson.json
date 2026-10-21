@@ -1,0 +1,8 @@
+{
+  "id": "py-khoi-dong.01-xin-chao",
+  "title": "Xin chào, Python!",
+  "concepts": ["print", "chuỗi"],
+  "estimatedMinutes": 10,
+  "exercises": ["01-in-loi-chao", "02-in-hai-dong"],
+  "status": "draft"
+}
