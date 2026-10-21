@@ -103,7 +103,7 @@ Schema (`packages/content-schema`) chạy ở chế độ chặt: **trường l�
 
 Cảnh báo không làm script đỏ; lỗi thì có. Đường dẫn là nguồn sự thật — khi `id` lệch, script báo theo tên thư mục/file.
 
-Việc chạy thật lời giải và starter là của `npm run content:verify` (S0-03).
+Việc chạy thật lời giải và starter là của `npm run content:verify`: nó gọi `scripts/grader.py` bằng CPython 3.12+, lời giải phải pass hết test và starter phải fail ít nhất một test.
 
 ## Nguyên tắc sư phạm (trẻ 10–15 tuổi)
 
