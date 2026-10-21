@@ -64,7 +64,9 @@ const replyWithResult =
 
 /** Đã nạp xong Pyodide rồi kẹt trong vòng lặp: báo `started` xong im luôn. */
 const startsThenHangs = (request: RunnerRequest, send: (r: RunnerResponse) => void) => {
-  if (request.type === 'run') send({ type: 'started', id: request.id, payload: { loadedMs: 0 } });
+  if (request.type === 'run' || request.type === 'grade') {
+    send({ type: 'started', id: request.id, payload: { loadedMs: 0 } });
+  }
 };
 
 /** Không nói gì cả, kể cả `started`: giả cảnh nạp Pyodide bị treo. */
@@ -251,6 +253,64 @@ describe('runner client — hết giờ và dựng lại worker', () => {
     runner.dispose();
     expect(workers[0]?.terminated).toBe(true);
     expect(workers).toHaveLength(1);
+  });
+});
+
+describe('runner client — chấm bài', () => {
+  const graded =
+    (passed: boolean) => (request: RunnerRequest, send: (r: RunnerResponse) => void) => {
+      if (request.type === 'grade') {
+        send({ type: 'started', id: request.id, payload: { loadedMs: 0 } });
+        send({
+          type: 'graded',
+          id: request.id,
+          payload: {
+            passed,
+            durationMs: 12,
+            results: [
+              {
+                index: 0,
+                type: 'stdout_equals',
+                passed,
+                message: 'Thử lại nhé em.',
+                detail: passed ? null : "cần 'Xin chào', nhận 'Chào'",
+              },
+            ],
+          },
+        });
+      }
+    };
+
+  it('gửi code và test xuống worker rồi trả về báo cáo', async () => {
+    const { runner, workers } = makeRunner(graded(true));
+    const tests = [{ type: 'stdout_equals', expected: 'Xin chào\n', message: 'Thử lại nhé em.' }];
+    const outcome = await runner.grade('print("Xin chào")', tests);
+
+    expect(workers[0]?.sent[0]).toMatchObject({ type: 'grade', payload: { tests } });
+    expect(outcome).toMatchObject({ ok: true, report: { passed: true } });
+  });
+
+  it('giữ nguyên câu tiếng Việt và chi tiết của test khi fail', async () => {
+    const { runner } = makeRunner(graded(false));
+    const outcome = await runner.grade('print("Chào")', [{ type: 'stdout_equals' }]);
+    expect(outcome.ok).toBe(true);
+    if (outcome.ok) {
+      expect(outcome.report.passed).toBe(false);
+      expect(outcome.report.results[0]?.message).toBe('Thử lại nhé em.');
+      expect(outcome.report.results[0]?.detail).toContain('nhận');
+    }
+  });
+
+  it('chấm bài cũng có timeout và dựng lại worker như khi chạy', async () => {
+    vitest.useFakeTimers();
+    const { runner, workers } = makeRunner(startsThenHangs);
+    const grading = runner.grade('while True: pass', [{ type: 'stdout_equals' }], {
+      timeoutMs: 3000,
+    });
+    await vitest.advanceTimersByTimeAsync(3000);
+    expect(await grading).toMatchObject({ ok: false, error: { kind: 'timeout' } });
+    expect(workers[0]?.terminated).toBe(true);
+    expect(workers).toHaveLength(2);
   });
 });
 

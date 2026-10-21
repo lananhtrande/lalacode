@@ -69,6 +69,50 @@ test.describe('runner Pyodide', () => {
     });
   });
 
+  test('chấm bài bằng grader.py: lời giải đúng thì đạt hết', async ({ page }) => {
+    await page.goto('/thu-runner');
+    await page.getByRole('button', { name: 'Chấm' }).click();
+    await expect(page.getByTestId('runner-status')).toContainText('đạt hết', { timeout: 120_000 });
+    await expect(page.getByTestId('runner-output')).toContainText('test 1 (stdout_equals): đạt');
+  });
+
+  test('chấm bài: code sai thì chưa đạt, hiện câu tiếng Việt của bài', async ({ page }) => {
+    await page.goto('/thu-runner');
+    await page.getByLabel('Code Python').fill('print("Chào")');
+    await page.getByRole('button', { name: 'Chấm' }).click();
+    await expect(page.getByTestId('runner-status')).toContainText('chưa đạt', { timeout: 120_000 });
+    const output = page.getByTestId('runner-output');
+    await expect(output).toContainText('Thử lại nhé em.');
+    await expect(output).toContainText('Xin chào, Python!');
+  });
+
+  test('chấm đủ 5 loại test trong một lần, như grader.py chạy bằng CPython', async ({ page }) => {
+    await page.goto('/thu-runner');
+    await page
+      .getByLabel('Code Python')
+      .fill('ten = input()\nprint(f"Chào {ten}")\ndiem = 10\ndef cong(a, b):\n    return a + b');
+    await page.getByLabel('Dữ liệu stdin').fill('Lan');
+    await page.getByLabel('Test JSON').fill(
+      JSON.stringify([
+        { type: 'stdout_equals', expected: 'Chào Lan\n', stdin: 'Lan\n', message: 'm1' },
+        { type: 'stdout_contains', expected: 'Chào', stdin: 'Lan\n', message: 'm2' },
+        { type: 'variable_equals', name: 'diem', expected: 10, stdin: 'Lan\n', message: 'm3' },
+        {
+          type: 'function_returns',
+          name: 'cong',
+          args: [2, 3],
+          expected: 5,
+          stdin: 'Lan\n',
+          message: 'm4',
+        },
+        { type: 'python_assert', code: 'assert diem == 10', stdin: 'Lan\n', message: 'm5' },
+      ]),
+    );
+    await page.getByRole('button', { name: 'Chấm' }).click();
+    await expect(page.getByTestId('runner-status')).toContainText('đạt hết', { timeout: 120_000 });
+    await expect(page.getByTestId('runner-output')).toContainText('test 5 (python_assert): đạt');
+  });
+
   test('Pyodide tải từ chính domain của mình, không qua CDN ngoài', async ({ page }) => {
     const externalRequests: string[] = [];
     page.on('request', (request) => {

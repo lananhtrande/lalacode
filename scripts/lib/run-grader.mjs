@@ -3,7 +3,11 @@ import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { projectDir } from './read-content.mjs';
 
-export const GRADER = path.join(projectDir, 'scripts', 'grader.py');
+/**
+ * Một bản cài đặt duy nhất: file này vừa được CPython chạy ở đây, vừa được
+ * Pyodide chạy trong trình duyệt (apps/web/src/runner/worker.ts).
+ */
+export const GRADER = path.join(projectDir, 'apps', 'web', 'src', 'runner', 'grader.py');
 
 /** Rộng hơn timeout của bài để trừ hao lúc python khởi động. */
 export const PROCESS_MARGIN_MS = 5000;

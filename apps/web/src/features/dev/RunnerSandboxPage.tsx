@@ -13,6 +13,9 @@ export function RunnerSandboxPage() {
   const [stdin, setStdin] = useState('');
   const [timeoutMs, setTimeoutMs] = useState(5000);
   const [running, setRunning] = useState(false);
+  const [testsJson, setTestsJson] = useState(
+    '[{"type":"stdout_equals","expected":"Xin chào, Python!\\n","message":"Thử lại nhé em."}]',
+  );
   const [status, setStatus] = useState('chưa nạp');
   const [output, setOutput] = useState('');
 
@@ -46,6 +49,38 @@ export function RunnerSandboxPage() {
     }
   }
 
+  async function grade() {
+    setOutput('');
+    setStatus('đang chấm…');
+    try {
+      setRunning(true);
+      const outcome = await runnerRef.current!.grade(code, JSON.parse(testsJson) as unknown[], {
+        timeoutMs,
+      });
+      setRunning(false);
+      if (outcome.ok) {
+        setOutput(
+          outcome.report.results
+            .map(
+              (result) =>
+                `test ${result.index + 1} (${result.type}): ${result.passed ? 'đạt' : 'chưa đạt'}` +
+                (result.passed ? '' : ` — ${result.detail ?? ''} | ${result.message ?? ''}`),
+            )
+            .join('\n'),
+        );
+        setStatus(outcome.report.passed ? 'chấm xong: đạt hết' : 'chấm xong: chưa đạt');
+      } else {
+        setOutput(runnerErrorMessage(outcome.error));
+        setStatus(`lỗi (${outcome.error.kind})`);
+      }
+    } catch (error) {
+      // Thường là Test (JSON) gõ sai — trang nội bộ nên hiện thẳng lỗi.
+      setRunning(false);
+      setStatus('test JSON không đọc được');
+      setOutput(String(error));
+    }
+  }
+
   return (
     <section className="space-y-4">
       <h1 className="text-2xl font-bold">Thử runner</h1>
@@ -74,6 +109,17 @@ export function RunnerSandboxPage() {
       </label>
 
       <label className="block">
+        <span className="font-medium">Test (JSON)</span>
+        <textarea
+          aria-label="Test JSON"
+          className="mt-1 block w-full rounded-lg border border-line p-2 font-mono text-sm"
+          rows={3}
+          value={testsJson}
+          onChange={(event) => setTestsJson(event.target.value)}
+        />
+      </label>
+
+      <label className="block">
         <span className="font-medium">Thời gian tối đa (ms)</span>
         <input
           aria-label="Thời gian tối đa"
@@ -98,6 +144,13 @@ export function RunnerSandboxPage() {
           className="min-h-tap rounded-xl bg-brand-500 px-5 font-semibold text-white"
         >
           Chạy
+        </button>
+        <button
+          type="button"
+          onClick={() => void grade()}
+          className="min-h-tap rounded-xl bg-brand-500 px-5 font-semibold text-white"
+        >
+          Chấm
         </button>
         <button
           type="button"

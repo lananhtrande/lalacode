@@ -13,9 +13,16 @@
 
 ## Chấm bài: một bản cài đặt, hai nơi chạy
 
-`scripts/grader.py` nhận một "việc" JSON (`{code, tests}`) ở stdin và in kết quả JSON. Hiện tại `content:verify` gọi nó bằng CPython; S0-08 sẽ dùng chính file này trong Pyodide để chấm bài của trẻ. Vì vậy grader chỉ dùng thư viện chuẩn, mỗi test chạy trong một namespace mới, và `stdin` của test được nạp sẵn cho `input()`.
+`apps/web/src/runner/grader.py` là **một bản cài đặt, hai nơi chạy**:
 
-Test cho grader nằm ở `scripts/grader.test.mjs` (Vitest gọi python thật). Máy không có CPython 3.12+ thì bộ test này tự bỏ qua.
+- `npm run content:verify` gọi nó bằng **CPython** (JSON vào ở stdin, JSON ra ở stdout qua `main()`).
+- Worker gọi `grade_json(...)` của nó trong **Pyodide** để chấm bài của trẻ.
+
+Vì vậy grader chỉ dùng thư viện chuẩn, mỗi test chạy trong một namespace mới, và `stdin` của test được nạp sẵn cho `input()`.
+
+**Bẫy đã gặp:** `pyodide.runPython(source)` đặt `__name__ = "__main__"`, nên nạp thẳng grader.py sẽ chạy luôn `main()` và ngồi đợi JSON ở stdin → treo worker. Worker phải `exec` nguồn vào một module riêng (xem `worker.ts`). Lỗi này chỉ lộ ra khi chạy Pyodide thật, không unit test nào bắt được.
+
+Test cho grader nằm ở `scripts/grader.test.mjs` (Vitest gọi python thật, tự bỏ qua nếu máy không có CPython 3.12+) và `e2e/runner.spec.ts` (chấm đủ 5 loại test trong Pyodide thật).
 
 ## Luồng E2E tối thiểu
 1. Mở trang chủ → vào bài 1 → đọc → làm bài tập 1 sai → thấy thông báo lỗi tiếng Việt → sửa đúng → huy hiệu.

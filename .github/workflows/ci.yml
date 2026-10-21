@@ -26,10 +26,11 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
-      # content:verify chạy lời giải mẫu bằng CPython thật (xem docs/testing.md)
+      # content:verify chạy lời giải mẫu bằng CPython thật (xem docs/testing.md).
+      # Cùng dòng CPython với Pyodide trong trình duyệt để chấm cho khớp.
       - uses: actions/setup-python@v7
         with:
-          python-version: '3.12'
+          python-version: '3.14'
 
       - name: Cài dependency
         run: npm ci
