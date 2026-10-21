@@ -46,6 +46,29 @@ test.describe('runner Pyodide', () => {
     await expect(page.getByTestId('runner-output')).toHaveText('2\n', { timeout: 120_000 });
   });
 
+  test('vòng lặp vô hạn: hết giờ, báo tiếng Việt, rồi chạy lại được', async ({ page }) => {
+    await page.goto('/thu-runner');
+    // Nạp sẵn Pyodide để đồng hồ đo đúng lúc chạy, không tính lúc nạp.
+    await page.getByRole('button', { name: 'Nạp Pyodide' }).click();
+    await expect(page.getByTestId('runner-status')).toContainText('sẵn sàng', { timeout: 120_000 });
+
+    await page.getByLabel('Code Python').fill('while True:\n    pass');
+    await page.getByLabel('Thời gian tối đa').fill('2000');
+    await page.getByRole('button', { name: 'Chạy' }).click();
+
+    await expect(page.getByTestId('runner-status')).toContainText('lỗi (timeout)', {
+      timeout: 30_000,
+    });
+    await expect(page.getByTestId('runner-output')).toContainText('vòng lặp');
+
+    // Worker đã bị giết và dựng lại: bài tiếp theo vẫn chạy.
+    await page.getByLabel('Code Python').fill('print("vẫn chạy được")');
+    await page.getByRole('button', { name: 'Chạy' }).click();
+    await expect(page.getByTestId('runner-output')).toHaveText('vẫn chạy được\n', {
+      timeout: 120_000,
+    });
+  });
+
   test('Pyodide tải từ chính domain của mình, không qua CDN ngoài', async ({ page }) => {
     const externalRequests: string[] = [];
     page.on('request', (request) => {

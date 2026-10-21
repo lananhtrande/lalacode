@@ -51,7 +51,15 @@ async function handleInit(id: string): Promise<void> {
 }
 
 async function handleRun(id: string, code: string, stdin: string): Promise<void> {
+  const loadStartedAt = performance.now();
   const pyodide = await getPyodide();
+  // Báo trước khi chạy: đồng hồ của main thread chỉ đo code của trẻ, không đo
+  // thời gian nạp Pyodide (máy yếu nạp cả chục giây là bình thường).
+  post({
+    type: 'started',
+    id,
+    payload: { loadedMs: Math.round(performance.now() - loadStartedAt) },
+  });
 
   let stdout = '';
   let stderr = '';
@@ -109,10 +117,6 @@ self.onmessage = (event: MessageEvent<RunnerRequest>) => {
       return;
     case 'run':
       handleRun(message.id, message.payload.code, message.payload.stdin ?? '').catch(fail);
-      return;
-    case 'cancel':
-      // Dừng thật sự là `terminate()` ở main thread (S0-07); ở đây chỉ báo đã nhận.
-      post({ type: 'error', id: message.id, payload: { kind: 'internal', message: 'đã huỷ' } });
       return;
   }
 };
