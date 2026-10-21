@@ -1,0 +1,13 @@
+{
+  "name": "@lalacode/content-schema",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Schema zod cho nội dung bài học lalacode — một nguồn sự thật cho type và validate",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  }
+}

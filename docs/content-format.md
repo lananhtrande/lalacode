@@ -86,6 +86,25 @@ Mỗi test có `message`: câu tiếng Việt thân thiện hiện khi test fail
 - `prompt` ≤ 400 ký tự; `starterCode` ≤ 20 dòng.
 - Chỉ dùng thư viện chuẩn của Python có trong Pyodide; không mạng, không file.
 
+### `npm run content:check` kiểm tra những gì
+
+Schema (`packages/content-schema`) chạy ở chế độ chặt: **trường lạ là lỗi**, nên gõ sai tên trường sẽ bị bắt ngay thay vì bị bỏ qua lặng lẽ. Ngoài các giới hạn ở trên, script còn kiểm tra quan hệ giữa các file:
+
+| Luật | Mức |
+| --- | --- |
+| `id` khớp đường dẫn (`course.id` = tên thư mục; `lesson.id` = `<khoá>.<thư-mục-bài>`; `exercise.id` = `<lesson.id>.<tên-file>`) | lỗi |
+| `course.order` khớp đúng danh sách thư mục bài trên đĩa, không thiếu, không thừa, không trùng | lỗi |
+| `lesson.exercises` khớp đúng các file trong `exercises/`, không thiếu, không thừa, không trùng | lỗi |
+| `lesson.md` tồn tại và không rỗng | lỗi |
+| Không gợi ý nào chứa nguyên văn `solution` | lỗi |
+| Bài `published` nhưng có dưới 3 bài tập | cảnh báo |
+| Khoá `published` mà bài vẫn `draft` | cảnh báo |
+| `turtle: true` nhưng lời giải không dùng `turtle` | cảnh báo |
+
+Cảnh báo không làm script đỏ; lỗi thì có. Đường dẫn là nguồn sự thật — khi `id` lệch, script báo theo tên thư mục/file.
+
+Việc chạy thật lời giải và starter là của `npm run content:verify` (S0-03).
+
 ## Nguyên tắc sư phạm (trẻ 10–15 tuổi)
 
 - **Một khái niệm mới mỗi bài.** 2 phút đọc/xem + 3–5 bài tập, tổng ≤ 15 phút.

@@ -8,6 +8,8 @@
     "moduleDetection": "force",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    // Node 22 bóc kiểu khi chạy .ts trực tiếp (scripts/), nên import phải ghi rõ đuôi .ts
+    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
 
