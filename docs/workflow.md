@@ -28,6 +28,7 @@
 - Nhánh: `feat/S0-07-runner-timeout`, `fix/...`, `content/...`, `docs/...`, `infra/...`
 - Commit: `type(scope): mô tả` bằng tiếng Anh. `type` ∈ feat, fix, content, docs, test, refactor, chore, infra, perf.
 - Không force-push lên `main`. `main` luôn deploy được.
+- Nhánh `main` được bảo vệ bằng ruleset `protect-main` trên GitHub: bắt buộc qua PR, bắt buộc job `check` xanh, cấm force-push và cấm xoá nhánh. Repo để public nên ruleset dùng được với gói Free.
 
 ## Mẫu mô tả PR
 

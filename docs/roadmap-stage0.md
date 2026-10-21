@@ -6,7 +6,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 
 ## M1 — Nền móng (tuần 1–2)
 - [x] S0-01 Monorepo npm workspaces, TS strict, ESLint/Prettier, Vitest, Playwright, script `check`
-- [~] S0-01b CI: GitHub Actions `ci.yml` chạy `npm ci` + `npm run check` trên mỗi PR và push vào `main`; cache npm; Node từ `.nvmrc`; bảo vệ nhánh `main` (bắt buộc CI xanh)
+- [x] S0-01b CI: GitHub Actions `ci.yml` chạy `npm ci` + `npm run check` trên mỗi PR và push vào `main`; cache npm; Node từ `.nvmrc`; nhánh `main` được bảo vệ bằng ruleset `protect-main`
 - [ ] S0-02 `packages/content-schema` (zod) + `scripts/content-check.mjs`
 - [ ] S0-03 `scripts/content-verify.mjs` (chạy solution/starter bằng CPython) — thêm `content:verify` vào CI (setup-python 3.12)
 - [ ] S0-04 Khung app React: router, layout, i18n `vi.ts`, theme token, trang chủ tĩnh
