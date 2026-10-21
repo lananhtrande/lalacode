@@ -12,7 +12,7 @@ Mọi thay đổi bảng này cần một ADR trong `docs/decisions/`.
 | Routing | React Router (data router) | 7 | Route phía client, lazy-load theo trang |
 | Style | Tailwind CSS + CSS variables cho theme | 4 | Nhanh; token màu/kích thước dùng chung |
 | Editor | CodeMirror 6 + `@codemirror/lang-python` | 6 | Nhẹ hơn Monaco, chạy tốt trên tablet/điện thoại |
-| Python runtime | Pyodide (tự host) | ghim cố định, ví dụ 0.28.x | CPython thật trong WASM |
+| Python runtime | Pyodide (tự host) | **314.0.7** (CPython 3.14) — ghim chính xác | CPython thật trong WASM; đổi phiên bản phải chạy lại e2e runner |
 | Trạng thái UI | React state + Zustand cho store nhỏ | — | Không cần Redux |
 | Lưu trữ máy | IndexedDB qua `idb` | — | Dung lượng lớn hơn localStorage, async |
 | Schema nội dung | zod (`packages/content-schema`) | 3/4 | Một nguồn sự thật cho type + validate |

@@ -52,9 +52,12 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 ### 2. Runner (`apps/web/src/runner`)
 - **Một Web Worker riêng** giữ Pyodide; main thread chỉ gửi/nhận message theo protocol có kiểu (`protocol.ts`).
 - Pyodide **tự host** trên CloudFront (không dùng jsDelivr) — nhanh hơn ở Việt Nam, kiểm soát phiên bản.
+- `scripts/copy-pyodide.mjs` chép bản đã ghim từ `node_modules` vào `apps/web/public/pyodide/<version>/` (≈13 MB, 5 file: `pyodide.mjs`, `pyodide.asm.mjs`, `pyodide.asm.wasm`, `python_stdlib.zip`, `pyodide-lock.json`). Đường dẫn có số phiên bản → cache `immutable`. Script sẽ dừng build nếu phiên bản trong `node_modules` lệch với `PYODIDE_VERSION` trong code.
+- Giao thức có `PROTOCOL_VERSION` (hiện là 1: `init`, `run`, `cancel`; `grade` thêm ở S0-08 kèm tăng phiên bản). Main thread chỉ nhận message hợp lệ (`isRunnerResponse`).
+- Trang `/thu-runner` **chỉ có ở chế độ dev** để thử runner bằng tay và cho e2e chạy Pyodide thật.
 - Tải ngầm (`preload`) khi trẻ mở bài học, trước khi tới phần bài tập.
 - Mỗi lần chạy: timeout mặc định 5 s (bài có vòng lặp nặng tối đa 10 s). Hết giờ → `worker.terminate()` → tạo worker mới → báo trẻ "Code chạy lâu quá, có thể có vòng lặp vô hạn".
-- `input()` → hộp nhập trong UI (qua `SharedArrayBuffer` + Atomics nếu bật COOP/COEP, nếu không thì cung cấp input dựng sẵn trong đề).
+- `input()` → **input dựng sẵn trong đề** (`stdin` của từng test), nạp vào Pyodide bằng `setStdin`. Cách này **không cần `SharedArrayBuffer`**, nên **không phải bật COOP/COEP** — đỡ rắc rối và không chặn nhúng video YouTube. Hộp nhập tương tác (cần Atomics) để sau, nếu thật sự cần.
 - `turtle` → module Python tự viết vẽ lên `OffscreenCanvas`/lệnh vẽ gửi về main thread.
 - Grader: chạy code học sinh trong namespace riêng, rồi chạy test ẩn (assert theo dạng khai báo trong `content-format.md`), trả `{passed, results[], stdout, error}`.
 - Lỗi Python → chuyển traceback sang thông báo tiếng Việt thân thiện (bảng ánh xạ `errors-vi.ts`), giữ dòng lỗi.
