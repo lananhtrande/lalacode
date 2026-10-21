@@ -105,6 +105,13 @@ Cảnh báo không làm script đỏ; lỗi thì có. Đường dẫn là nguồ
 
 Việc chạy thật lời giải và starter là của `npm run content:verify`: nó gọi `scripts/grader.py` bằng CPython 3.12+, lời giải phải pass hết test và starter phải fail ít nhất một test.
 
+### Thứ gì tới được trình duyệt
+
+`npm run content:build` sinh bundle cho web và **bỏ trường `solution`**: trẻ mở devtools sẽ không thấy đáp án. `tests`, `hints`, `starterCode`, `prompt` thì có trong bundle vì việc chạy và chấm diễn ra ngay trên máy. Vì vậy:
+
+- Đừng viết đáp án trong `prompt`, `hints` hay `message` của test.
+- `solution` chỉ dùng cho `content:verify` và (sau này) cho dịch vụ gợi ý AI ở phía server.
+
 ## Nguyên tắc sư phạm (trẻ 10–15 tuổi)
 
 - **Một khái niệm mới mỗi bài.** 2 phút đọc/xem + 3–5 bài tập, tổng ≤ 15 phút.

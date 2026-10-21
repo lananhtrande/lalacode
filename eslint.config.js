@@ -37,6 +37,11 @@ export default tseslint.config(
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
+      // Tiền tố `_` nghĩa là "cố tình bỏ", ví dụ khi tách bớt một trường khỏi object.
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
+      ],
       // Giai đoạn 0: không để console.log gỡ lỗi sót lại trong sản phẩm.
       'no-console': ['error', { allow: ['warn', 'error'] }],
       eqeqeq: ['error', 'always'],

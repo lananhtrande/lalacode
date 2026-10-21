@@ -59,6 +59,15 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - Grader: chạy code học sinh trong namespace riêng, rồi chạy test ẩn (assert theo dạng khai báo trong `content-format.md`), trả `{passed, results[], stdout, error}`.
 - Lỗi Python → chuyển traceback sang thông báo tiếng Việt thân thiện (bảng ánh xạ `errors-vi.ts`), giữ dòng lỗi.
 
+### 2b. Bundle nội dung (`scripts/content-build.mjs` → `apps/web/public/content/`)
+
+- `content/` được build thành JSON tĩnh trước khi Vite chạy (`npm run content:build`, tự chạy trong script `dev` và `build` của `apps/web`).
+- `index.json` — tên cố định, cache ngắn: danh sách khoá và tóm tắt bài (tiêu đề, số phút, số bài tập, trạng thái) kèm **đường dẫn file bài học**.
+- `lessons/<lessonId>.<hash8>.json` — tên có hash nội dung nên cache `immutable` được: bài học + Markdown + bài tập.
+- **Không gửi `solution` xuống trình duyệt.** Trẻ mở devtools là thấy đáp án. Test thì vẫn gửi, vì việc chấm chạy ngay trong máy; "ẩn" ở đây nghĩa là không hiển thị, không phải bí mật tuyệt đối.
+- Build từ chối chạy nếu nội dung sai schema — bundle là thứ trẻ tải về.
+- Loader ở `apps/web/src/content/loader.ts`: tải một lần rồi nhớ trong bộ nhớ, chỉ dùng `import type` từ `@lalacode/content-schema` nên zod không đi vào bundle trình duyệt.
+
 ### 3. Progress (`apps/web/src/progress`)
 - IndexedDB (thư viện `idb`), schema có `version` để migrate.
 - Lưu: bài đã xong, số lần chạy, thời điểm, streak, huy hiệu, code nháp gần nhất mỗi bài. **Không** lưu tên thật; "biệt danh" (tuỳ chọn) chỉ ở máy.

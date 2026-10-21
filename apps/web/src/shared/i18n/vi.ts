@@ -43,6 +43,16 @@ export const vi = {
       'lalacode không thu thập thông tin cá nhân của trẻ: không tài khoản, không quảng cáo, không theo dõi.',
     forParentsLink: 'Đọc trang giới thiệu & quyền riêng tư',
   },
+  map: {
+    title: 'Bản đồ nhiệm vụ',
+    lead: 'Chọn một bài để bắt đầu. Mỗi bài khoảng 15 phút.',
+    loading: 'Đang tải danh sách bài học…',
+    error: 'Chưa tải được danh sách bài học. Em thử tải lại trang nhé.',
+    empty: 'Chưa có bài học nào. Mình đang viết, em quay lại sau nhé!',
+    minutes: 'phút',
+    exercises: 'bài tập',
+    draftBadge: 'Bản nháp',
+  },
   comingSoon: {
     badge: 'Đang xây',
     body: 'Phần này mình đang làm. Em quay lại sau nhé!',

@@ -25,6 +25,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "content:check": "node scripts/content-check.mjs",
+    "content:build": "node scripts/content-build.mjs",
     "content:verify": "node scripts/content-verify.mjs",
     "check": "npm run lint && npm run typecheck && npm run test && npm run --if-present content:check"
   },
