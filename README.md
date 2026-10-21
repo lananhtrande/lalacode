@@ -10,8 +10,15 @@ Yêu cầu: Node.js 22 LTS, Python 3.12+ (để chạy `content:verify`).
 
 ```bash
 npm install
-npm run dev
-npm run check
+npm run dev     # Vite dev server (http://localhost:5173)
+npm run check   # lint + typecheck + unit test + content:check
+```
+
+E2E lần đầu cần tải trình duyệt:
+
+```bash
+npx playwright install chromium webkit
+npm run test:e2e
 ```
 
 ## Tài liệu

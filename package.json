@@ -1,0 +1,42 @@
+{
+  "name": "lalacode",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "N\u1ec1n t\u1ea3ng h\u1ecdc Python ti\u1ebfng Vi\u1ec7t cho h\u1ecdc sinh 10-15 tu\u1ed5i (giai \u0111o\u1ea1n 0)",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "services/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @lalacode/web",
+    "build": "npm run build -w @lalacode/web",
+    "preview": "npm run preview -w @lalacode/web",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run --if-present content:check"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^22.19.0",
+    "eslint": "^10.13.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.0",
+    "vitest": "^5.0.5"
+  }
+}

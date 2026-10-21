@@ -5,7 +5,7 @@ Mục tiêu: 20 bài "Python khởi động" chạy hoàn toàn trên trình duy
 Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập nhật file này khi xong một mục.
 
 ## M1 — Nền móng (tuần 1–2)
-- [ ] S0-01 Monorepo npm workspaces, TS strict, ESLint/Prettier, Vitest, Playwright, script `check`
+- [x] S0-01 Monorepo npm workspaces, TS strict, ESLint/Prettier, Vitest, Playwright, script `check`
 - [ ] S0-02 `packages/content-schema` (zod) + `scripts/content-check.mjs`
 - [ ] S0-03 `scripts/content-verify.mjs` (chạy solution/starter bằng CPython)
 - [ ] S0-04 Khung app React: router, layout, i18n `vi.ts`, theme token, trang chủ tĩnh
@@ -27,7 +27,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [ ] S0-16 Nút xoá toàn bộ dữ liệu trên máy
 
 ## M4 — Gợi ý AI (tuần 5–6)
-- [ ] S0-17 Lambda `ai-hint`: validate, sanitize, prompt, gọi Claude
+- [ ] S0-17 Lambda `ai-hint`: validate, sanitize, prompt, gọi Claude qua Bedrock (IAM role, profile global)
 - [ ] S0-18 Rate limit DynamoDB + giới hạn toàn cục + công tắc tắt
 - [ ] S0-19 Panel gợi ý 3 mức trong UI + gợi ý tĩnh dự phòng
 - [ ] S0-20 Bộ eval prompt (30 case) và kết quả lưu trong repo
@@ -36,7 +36,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [ ] S0-21 10 bài đầu + bài tập (đã verify, đã review)
 - [ ] S0-22 10 bài tiếp
 - [ ] S0-23 Trang giới thiệu cho phụ huynh + trang quyền riêng tư
-- [ ] S0-24 Terraform: S3, CloudFront (OAC, headers), Lambda, DynamoDB, budget alarm
+- [ ] S0-24 Terraform: S3, CloudFront (OAC, headers), Lambda + IAM `bedrock:InvokeModel`, DynamoDB, budget alarm (bật model access Claude trong Bedrock — làm tay một lần)
 - [ ] S0-25 GitHub Actions: check → build → e2e → deploy; OIDC
 - [ ] S0-26 Analytics gộp (sau khi chốt ADR 0005)
 - [ ] S0-27 Beta kín 50–100 trẻ, thu phản hồi qua nhóm Zalo
