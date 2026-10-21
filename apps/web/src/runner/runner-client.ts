@@ -6,6 +6,7 @@
  */
 import {
   isRunnerResponse,
+  type DrawCommand,
   type GradedPayload,
   type ReadyPayload,
   type ResultPayload,
@@ -43,7 +44,10 @@ export interface RunOptions {
   onOutput?: (chunk: { stream: 'stdout' | 'stderr'; text: string }) => void;
 }
 
-export type RunOutcome = { ok: true; result: ResultPayload } | { ok: false; error: RunError };
+/** Lệnh vẽ của rùa trong lần chạy này; rỗng nếu bài không dùng `turtle`. */
+export type RunOutcome =
+  | { ok: true; result: ResultPayload; drawing: DrawCommand[] }
+  | { ok: false; error: RunError; drawing: DrawCommand[] };
 
 /** Kết quả chấm bài: `report.results` theo đúng thứ tự test trong bài tập. */
 export type GradeOutcome = { ok: true; report: GradedPayload } | { ok: false; error: RunError };
@@ -121,13 +125,18 @@ export function createRunner(createWorker: WorkerFactory = defaultWorkerFactory)
   function execute<T>(
     buildRequest: (id: string) => RunnerRequest,
     options: RunOptions,
-    onResponse: (response: RunnerResponse, settle: (value: T) => void) => void,
-    toFailure: (error: RunError) => T,
+    onResponse: (
+      response: RunnerResponse,
+      settle: (value: T) => void,
+      drawing: DrawCommand[],
+    ) => void,
+    toFailure: (error: RunError, drawing: DrawCommand[]) => T,
   ): Promise<T> {
     const timeoutMs = clampTimeout(options.timeoutMs);
     return new Promise<T>((resolve) => {
       const id = `r${++nextId}`;
       const currentWorker = worker;
+      const drawing: DrawCommand[] = [];
       let settled = false;
 
       let timer = setTimeout(() => {
@@ -146,6 +155,10 @@ export function createRunner(createWorker: WorkerFactory = defaultWorkerFactory)
       const onMessage = (event: MessageEvent<unknown>) => {
         if (!isRunnerResponse(event.data) || event.data.id !== id) return;
         const response = event.data;
+        if (response.type === 'drawing') {
+          drawing.push(...response.payload.commands);
+          return;
+        }
         if (response.type === 'started') {
           // Pyodide đã sẵn sàng: từ đây mới tính giờ chạy code.
           clearTimeout(timer);
@@ -163,13 +176,13 @@ export function createRunner(createWorker: WorkerFactory = defaultWorkerFactory)
           return;
         }
         if (response.type === 'error') {
-          settle(toFailure(response.payload));
+          settle(toFailure(response.payload, drawing));
           return;
         }
-        onResponse(response, settle);
+        onResponse(response, settle, drawing);
       };
 
-      pending = { id, fail: (error) => settle(toFailure(error)) };
+      pending = { id, fail: (error) => settle(toFailure(error, drawing)) };
       currentWorker.addEventListener('message', onMessage);
       currentWorker.addEventListener(
         'error',
@@ -192,10 +205,12 @@ export function createRunner(createWorker: WorkerFactory = defaultWorkerFactory)
           payload: { code, ...(options.stdin === undefined ? {} : { stdin: options.stdin }) },
         }),
         options,
-        (response, settle) => {
-          if (response.type === 'result') settle({ ok: true, result: response.payload });
+        (response, settle, drawing) => {
+          if (response.type === 'result') {
+            settle({ ok: true, result: response.payload, drawing });
+          }
         },
-        (error) => ({ ok: false, error }),
+        (error, drawing) => ({ ok: false, error, drawing }),
       ),
 
     grade: (code, tests, options = {}) =>

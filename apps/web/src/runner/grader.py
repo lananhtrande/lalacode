@@ -116,8 +116,24 @@ def check_test(test: dict[str, Any]) -> tuple[bool, str | None]:
     return False, f"loại test không hỗ trợ: {kind}"
 
 
+def install_turtle(source: str) -> None:
+    """Cài rùa tự viết thành module `turtle`.
+
+    Cần cho cả hai nơi: CPython khi chạy `content:verify` (turtle thật đòi
+    tkinter và màn hình), và bất cứ chỗ nào khác không có turtle.
+    """
+    import types
+
+    module = types.ModuleType("turtle")
+    exec(source, module.__dict__)  # noqa: S102
+    sys.modules["turtle"] = module
+
+
 def grade(job: dict[str, Any]) -> dict[str, Any]:
     """Chấm một bài: chạy `job["code"]` với từng test trong `job["tests"]`."""
+    turtle_source = job.get("turtle_source")
+    if turtle_source:
+        install_turtle(turtle_source)
     code = job["code"]
     results = []
 

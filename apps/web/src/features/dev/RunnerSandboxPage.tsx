@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { createRunner, type Runner } from '../../runner/runner-client';
 import { runnerErrorMessage } from '../../runner/messages';
+import { drawTurtleCommands } from '../../runner/turtle-canvas';
+import type { DrawCommand } from '../../runner/protocol';
+
+const CANVAS_SIZE = { width: 320, height: 320 };
 
 /**
  * Trang thử runner — **chỉ có ở chế độ dev** (xem app/routes.tsx).
@@ -9,6 +13,8 @@ import { runnerErrorMessage } from '../../runner/messages';
  */
 export function RunnerSandboxPage() {
   const runnerRef = useRef<Runner | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [drawCount, setDrawCount] = useState(0);
   const [code, setCode] = useState('print("Xin chào, Python!")');
   const [stdin, setStdin] = useState('');
   const [timeoutMs, setTimeoutMs] = useState(5000);
@@ -34,12 +40,20 @@ export function RunnerSandboxPage() {
     setStatus(`sẵn sàng · Python ${ready.pythonVersion} · ${ready.loadMs} ms`);
   }
 
+  function paint(commands: DrawCommand[]) {
+    const context = canvasRef.current?.getContext('2d');
+    if (!context) return;
+    drawTurtleCommands(context, commands, CANVAS_SIZE);
+    setDrawCount(commands.filter((command) => command.op === 'line').length);
+  }
+
   async function run() {
     setOutput('');
     setStatus('đang chạy…');
     setRunning(true);
     const outcome = await runnerRef.current!.run(code, { stdin, timeoutMs });
     setRunning(false);
+    paint(outcome.drawing);
     if (outcome.ok) {
       setOutput(outcome.result.stdout + outcome.result.stderr);
       setStatus(`xong trong ${outcome.result.durationMs} ms`);
@@ -165,6 +179,17 @@ export function RunnerSandboxPage() {
       <p>
         Trạng thái: <span data-testid="runner-status">{status}</span>
       </p>
+      <p>
+        Số nét rùa vẽ: <span data-testid="runner-draw-count">{drawCount}</span>
+      </p>
+      <canvas
+        ref={canvasRef}
+        data-testid="runner-canvas"
+        width={CANVAS_SIZE.width}
+        height={CANVAS_SIZE.height}
+        aria-label="Hình rùa vẽ"
+        className="rounded-lg border border-line bg-surface"
+      />
       <pre
         data-testid="runner-output"
         className="min-h-20 overflow-x-auto rounded-lg bg-surface-muted p-3 font-mono text-sm"

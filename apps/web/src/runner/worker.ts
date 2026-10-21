@@ -8,6 +8,7 @@
  */
 import {
   PROTOCOL_VERSION,
+  type DrawCommand,
   type GradedPayload,
   type RunnerRequest,
   type RunnerResponse,
@@ -16,6 +17,8 @@ import { PYODIDE_BASE_URL } from './pyodide-version';
 // Chính file mà `npm run content:verify` chạy bằng CPython — một bản cài đặt,
 // hai nơi chạy (docs/testing.md).
 import graderSource from './grader.py?raw';
+// Rùa tự viết: Pyodide không có `turtle` thật (cần tkinter).
+import turtleSource from './turtle.py?raw';
 
 interface PyodideApi {
   runPython: (code: string) => unknown;
@@ -40,9 +43,20 @@ async function getPyodide(): Promise<PyodideApi> {
     };
     const pyodide = await module.loadPyodide({ indexURL: PYODIDE_BASE_URL });
     // Mặc định Pyodide đọc stdin bằng `prompt()` của trình duyệt — trong worker
-    // không có hàm đó nên sẽ ném ReferenceError. Luôn cho stdin rỗng; lệnh
-    // `run` sẽ thay bằng stdin dựng sẵn của bài.
-    pyodide.setStdin({ stdin: () => '' });
+    // không có hàm đó nên sẽ ném ReferenceError. `null` nghĩa là hết dữ liệu
+    // (EOF), giống CPython khi stdin rỗng; lệnh `run` sẽ thay bằng stdin của bài.
+    pyodide.setStdin({ stdin: () => null });
+    // `import turtle` phải dùng rùa của mình (Pyodide không có turtle thật).
+    // Cài vào sys.modules cho gọn; `exec` vào module riêng nên `__name__` không
+    // phải `__main__`.
+    pyodide.globals.set('_turtle_source', turtleSource);
+    pyodide.runPython(`
+import sys as _sys, types as _types
+_turtle_module = _types.ModuleType('turtle')
+exec(_turtle_source, _turtle_module.__dict__)
+_sys.modules['turtle'] = _turtle_module
+del _turtle_source
+`);
     return pyodide;
   })();
   return pyodidePromise;
@@ -100,6 +114,8 @@ async function handleRun(id: string, code: string, stdin: string): Promise<void>
   try {
     await pyodide.runPythonAsync(code);
   } catch (error) {
+    // Vẽ được tới đâu gửi tới đó: trẻ thấy hình dở dang và hiểu code dừng ở đâu.
+    postDrawing(id, pyodide);
     post({
       type: 'error',
       id,
@@ -107,11 +123,24 @@ async function handleRun(id: string, code: string, stdin: string): Promise<void>
     });
     return;
   }
+  postDrawing(id, pyodide);
   post({
     type: 'result',
     id,
     payload: { stdout, stderr, durationMs: Math.round(performance.now() - startedAt) },
   });
+}
+
+/** Gửi lệnh vẽ (nếu có) trước khi báo kết quả, kể cả khi code bị lỗi giữa chừng. */
+function postDrawing(id: string, pyodide: PyodideApi): void {
+  const commands = drainDrawing(pyodide);
+  if (commands.length > 0) post({ type: 'drawing', id, payload: { commands } });
+}
+
+/** Lấy lệnh vẽ rùa đã ghi được (rỗng nếu bài không dùng turtle). */
+function drainDrawing(pyodide: PyodideApi): DrawCommand[] {
+  const drain = pyodide.runPython("__import__('sys').modules['turtle'].drain_commands()") as string;
+  return JSON.parse(drain) as DrawCommand[];
 }
 
 /**
@@ -141,6 +170,7 @@ del _grader_source
 async function handleGrade(id: string, code: string, tests: readonly unknown[]): Promise<void> {
   const loadStartedAt = performance.now();
   const gradeJson = await getGrader();
+  const pyodide = await getPyodide();
   post({
     type: 'started',
     id,
@@ -153,6 +183,7 @@ async function handleGrade(id: string, code: string, tests: readonly unknown[]):
     GradedPayload,
     'durationMs'
   >;
+  postDrawing(id, pyodide);
   post({
     type: 'graded',
     id,
