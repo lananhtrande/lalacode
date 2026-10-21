@@ -116,8 +116,8 @@ def check_test(test: dict[str, Any]) -> tuple[bool, str | None]:
     return False, f"loại test không hỗ trợ: {kind}"
 
 
-def main() -> int:
-    job = json.load(sys.stdin)
+def grade(job: dict[str, Any]) -> dict[str, Any]:
+    """Chấm một bài: chạy `job["code"]` với từng test trong `job["tests"]`."""
     code = job["code"]
     results = []
 
@@ -138,8 +138,17 @@ def main() -> int:
             }
         )
 
-    output = {"passed": all(result["passed"] for result in results), "results": results}
-    json.dump(output, sys.stdout, ensure_ascii=False)
+    return {"passed": all(result["passed"] for result in results), "results": results}
+
+
+def grade_json(job_json: str) -> str:
+    """Cửa vào cho Pyodide: JSON vào, JSON ra (không dùng stdin/stdout)."""
+    return json.dumps(grade(json.loads(job_json)), ensure_ascii=False)
+
+
+def main() -> int:
+    """Cửa vào cho CPython ở terminal: đọc việc ở stdin, in kết quả ra stdout."""
+    json.dump(grade(json.load(sys.stdin)), sys.stdout, ensure_ascii=False)
     return 0
 
 

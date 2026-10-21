@@ -6,16 +6,24 @@
  * Timeout và `terminate()` do main thread lo (S0-07): worker không tự dừng
  * được vòng lặp vô hạn.
  */
-import { PROTOCOL_VERSION, type RunnerRequest, type RunnerResponse } from './protocol';
+import {
+  PROTOCOL_VERSION,
+  type GradedPayload,
+  type RunnerRequest,
+  type RunnerResponse,
+} from './protocol';
 import { PYODIDE_BASE_URL } from './pyodide-version';
+// Chính file mà `npm run content:verify` chạy bằng CPython — một bản cài đặt,
+// hai nơi chạy (docs/testing.md).
+import graderSource from './grader.py?raw';
 
 interface PyodideApi {
   runPython: (code: string) => unknown;
+  globals: { get: (name: string) => unknown; set: (name: string, value: unknown) => void };
   runPythonAsync: (code: string) => Promise<unknown>;
   setStdout: (options: { batched: (text: string) => void }) => void;
   setStderr: (options: { batched: (text: string) => void }) => void;
   setStdin: (options: { stdin: () => string | null }) => void;
-  globals: { get: (name: string) => unknown };
 }
 
 const post = (message: RunnerResponse) => {
@@ -30,7 +38,12 @@ async function getPyodide(): Promise<PyodideApi> {
     const module = (await import(/* @vite-ignore */ `${PYODIDE_BASE_URL}pyodide.mjs`)) as {
       loadPyodide: (options: { indexURL: string }) => Promise<PyodideApi>;
     };
-    return module.loadPyodide({ indexURL: PYODIDE_BASE_URL });
+    const pyodide = await module.loadPyodide({ indexURL: PYODIDE_BASE_URL });
+    // Mặc định Pyodide đọc stdin bằng `prompt()` của trình duyệt — trong worker
+    // không có hàm đó nên sẽ ném ReferenceError. Luôn cho stdin rỗng; lệnh
+    // `run` sẽ thay bằng stdin dựng sẵn của bài.
+    pyodide.setStdin({ stdin: () => '' });
+    return pyodide;
   })();
   return pyodidePromise;
 }
@@ -79,7 +92,9 @@ async function handleRun(id: string, code: string, stdin: string): Promise<void>
   // `input()` đọc từng dòng của stdin dựng sẵn trong đề bài.
   const lines = stdin.length > 0 ? stdin.split('\n') : [];
   let lineIndex = 0;
-  pyodide.setStdin({ stdin: () => lines[lineIndex++] ?? '' });
+  // Hết dòng thì trả `null` (EOF) → `input()` ném EOFError, đúng như CPython
+  // khi chạy `content:verify`. Trả chuỗi rỗng mãi sẽ khiến `while input()` quay vô tận.
+  pyodide.setStdin({ stdin: () => lines[lineIndex++] ?? null });
 
   const startedAt = performance.now();
   try {
@@ -96,6 +111,52 @@ async function handleRun(id: string, code: string, stdin: string): Promise<void>
     type: 'result',
     id,
     payload: { stdout, stderr, durationMs: Math.round(performance.now() - startedAt) },
+  });
+}
+
+/**
+ * Nạp grader.py vào Pyodide một lần, trả về hàm `grade_json(job) -> json`.
+ *
+ * Phải exec vào một module riêng chứ **không** `runPython(source)` thẳng:
+ * `runPython` đặt `__name__ = "__main__"`, nên khối `if __name__ == "__main__"`
+ * của grader.py sẽ chạy `main()` và ngồi đọc JSON từ stdin — treo luôn worker.
+ */
+let graderLoaded = false;
+async function getGrader(): Promise<(jobJson: string) => string> {
+  const pyodide = await getPyodide();
+  if (!graderLoaded) {
+    pyodide.globals.set('_grader_source', graderSource);
+    pyodide.runPython(`
+import types as _types
+_grader_module = _types.ModuleType('lalacode_grader')
+exec(_grader_source, _grader_module.__dict__)
+grade_json = _grader_module.grade_json
+del _grader_source
+`);
+    graderLoaded = true;
+  }
+  return pyodide.globals.get('grade_json') as (jobJson: string) => string;
+}
+
+async function handleGrade(id: string, code: string, tests: readonly unknown[]): Promise<void> {
+  const loadStartedAt = performance.now();
+  const gradeJson = await getGrader();
+  post({
+    type: 'started',
+    id,
+    payload: { loadedMs: Math.round(performance.now() - loadStartedAt) },
+  });
+
+  const startedAt = performance.now();
+  // grader.py tự bắt stdout và lỗi của từng test, nên ở đây không cần try theo kiểu `run`.
+  const report = JSON.parse(gradeJson(JSON.stringify({ code, tests }))) as Omit<
+    GradedPayload,
+    'durationMs'
+  >;
+  post({
+    type: 'graded',
+    id,
+    payload: { ...report, durationMs: Math.round(performance.now() - startedAt) },
   });
 }
 
@@ -117,6 +178,9 @@ self.onmessage = (event: MessageEvent<RunnerRequest>) => {
       return;
     case 'run':
       handleRun(message.id, message.payload.code, message.payload.stdin ?? '').catch(fail);
+      return;
+    case 'grade':
+      handleGrade(message.id, message.payload.code, message.payload.tests).catch(fail);
       return;
   }
 };

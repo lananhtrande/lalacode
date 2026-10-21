@@ -16,7 +16,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 ## M2 — Runner & chấm bài (tuần 2–4)
 - [x] S0-06 Pyodide tự host + Web Worker + protocol có version
 - [x] S0-07 Timeout & terminate/restart worker
-- [ ] S0-08 Grader Python cho 5 loại test
+- [x] S0-08 Grader Python cho 5 loại test
 - [ ] S0-09 Dịch lỗi Python sang tiếng Việt (`errors-vi.ts`) cho 15 lỗi phổ biến
 - [ ] S0-10 Module `turtle` vẽ lên canvas
 - [ ] S0-11 Màn bài tập: editor CodeMirror, chạy, chấm, kết quả từng test — thêm job Playwright e2e (Chromium + WebKit) chạy trên bản build, chặn deploy nếu đỏ

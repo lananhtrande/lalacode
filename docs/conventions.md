@@ -33,8 +33,8 @@ shared/         # ui/, lib/, i18n/vi.ts
 - Token màu/kích thước khai báo một chỗ trong `apps/web/src/index.css` (`@theme` của Tailwind 4); chế độ tối ghi đè chính các biến đó. Nút bấm dùng `min-h-tap` (44 px).
 
 ## Runner protocol
-- Main thread → worker: `{ type: 'init' | 'run', id, payload }` (`grade` thêm ở S0-08).
-- Worker → main thread: `{ type: 'ready' | 'started' | 'stdout' | 'stderr' | 'result' | 'error', id, payload }`.
+- Main thread → worker: `{ type: 'init' | 'run' | 'grade', id, payload }`.
+- Worker → main thread: `{ type: 'ready' | 'started' | 'stdout' | 'stderr' | 'result' | 'graded' | 'error', id, payload }`.
 - **Không có message `cancel`.** Code kẹt trong `while True:` không đọc message nào cả, nên huỷ thật sự là `terminate()` rồi dựng worker mới ở main thread.
 - `started` được gửi ngay trước khi chạy code của trẻ: main thread bấm giờ từ lúc đó, **không tính thời gian nạp Pyodide**. Việc nạp có đồng hồ riêng, rộng hơn nhiều.
 - Không truyền hàm/đối tượng phức tạp qua `postMessage`; chỉ JSON thuần.

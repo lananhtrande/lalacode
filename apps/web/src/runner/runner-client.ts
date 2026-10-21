@@ -6,10 +6,12 @@
  */
 import {
   isRunnerResponse,
+  type GradedPayload,
   type ReadyPayload,
   type ResultPayload,
   type RunnerErrorPayload,
   type RunnerRequest,
+  type RunnerResponse,
 } from './protocol';
 
 /** Mặc định 5 giây; bài có vòng lặp nặng được khai báo tối đa 10 giây. */
@@ -43,9 +45,14 @@ export interface RunOptions {
 
 export type RunOutcome = { ok: true; result: ResultPayload } | { ok: false; error: RunError };
 
+/** Kết quả chấm bài: `report.results` theo đúng thứ tự test trong bài tập. */
+export type GradeOutcome = { ok: true; report: GradedPayload } | { ok: false; error: RunError };
+
 export interface Runner {
   preload: () => Promise<ReadyPayload>;
   run: (code: string, options?: RunOptions) => Promise<RunOutcome>;
+  /** Chạy code của trẻ với test ẩn của bài; chấm bằng chính `grader.py`. */
+  grade: (code: string, tests: readonly unknown[], options?: RunOptions) => Promise<GradeOutcome>;
   /** Trẻ bấm "Dừng": giết worker đang chạy, lần chạy đang chờ trả về `cancelled`. */
   cancel: () => void;
   dispose: () => void;
@@ -62,7 +69,7 @@ const clampTimeout = (value: number | undefined): number =>
 /** Ai đang chờ worker trả lời, để còn báo khi worker bị giết giữa chừng. */
 interface Pending {
   id: string;
-  settle: (outcome: RunOutcome) => void;
+  fail: (error: RunError) => void;
 }
 
 export function createRunner(createWorker: WorkerFactory = defaultWorkerFactory): Runner {
@@ -77,7 +84,7 @@ export function createRunner(createWorker: WorkerFactory = defaultWorkerFactory)
     const waiting = pending;
     pending = null;
     if (!disposed) worker = createWorker();
-    waiting?.settle({ ok: false, error });
+    waiting?.fail(error);
   }
 
   /** `init`: nạp Pyodide. Không đặt đồng hồ ở đây — máy yếu nạp lâu là bình thường. */
@@ -107,68 +114,99 @@ export function createRunner(createWorker: WorkerFactory = defaultWorkerFactory)
     });
   }
 
+  /**
+   * Khung chung cho `run` và `grade`: hai đồng hồ (nạp Pyodide / chạy code),
+   * gom stdout, và luôn trả về một giá trị thay vì treo.
+   */
+  function execute<T>(
+    buildRequest: (id: string) => RunnerRequest,
+    options: RunOptions,
+    onResponse: (response: RunnerResponse, settle: (value: T) => void) => void,
+    toFailure: (error: RunError) => T,
+  ): Promise<T> {
+    const timeoutMs = clampTimeout(options.timeoutMs);
+    return new Promise<T>((resolve) => {
+      const id = `r${++nextId}`;
+      const currentWorker = worker;
+      let settled = false;
+
+      let timer = setTimeout(() => {
+        restart({ kind: 'internal', message: 'Nạp Python quá lâu' });
+      }, LOAD_TIMEOUT_MS);
+
+      const settle = (value: T) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        currentWorker.removeEventListener('message', onMessage);
+        if (pending?.id === id) pending = null;
+        resolve(value);
+      };
+
+      const onMessage = (event: MessageEvent<unknown>) => {
+        if (!isRunnerResponse(event.data) || event.data.id !== id) return;
+        const response = event.data;
+        if (response.type === 'started') {
+          // Pyodide đã sẵn sàng: từ đây mới tính giờ chạy code.
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            // Worker đang kẹt: giết nó, dựng cái mới, rồi mới trả lời.
+            restart({
+              kind: 'timeout',
+              message: `Code chạy quá ${Math.round(timeoutMs / 1000)} giây`,
+            });
+          }, timeoutMs);
+          return;
+        }
+        if (response.type === 'stdout' || response.type === 'stderr') {
+          options.onOutput?.({ stream: response.type, text: response.payload.text });
+          return;
+        }
+        if (response.type === 'error') {
+          settle(toFailure(response.payload));
+          return;
+        }
+        onResponse(response, settle);
+      };
+
+      pending = { id, fail: (error) => settle(toFailure(error)) };
+      currentWorker.addEventListener('message', onMessage);
+      currentWorker.addEventListener(
+        'error',
+        (event: ErrorEvent) =>
+          restart({ kind: 'internal', message: event.message || 'Worker gặp lỗi' }),
+        { once: true },
+      );
+      currentWorker.postMessage(buildRequest(id));
+    });
+  }
+
   return {
     preload: sendInit,
 
-    run: (code, options = {}) => {
-      const timeoutMs = clampTimeout(options.timeoutMs);
-      return new Promise<RunOutcome>((resolve) => {
-        const id = `r${++nextId}`;
-        const currentWorker = worker;
-        let settled = false;
-
-        // Hai đồng hồ: một cho lúc nạp Pyodide, một cho lúc code thật sự chạy.
-        let timer = setTimeout(() => {
-          restart({ kind: 'internal', message: 'Nạp Python quá lâu' });
-        }, LOAD_TIMEOUT_MS);
-
-        const settle = (outcome: RunOutcome) => {
-          if (settled) return;
-          settled = true;
-          clearTimeout(timer);
-          currentWorker.removeEventListener('message', onMessage);
-          if (pending?.id === id) pending = null;
-          resolve(outcome);
-        };
-
-        const onMessage = (event: MessageEvent<unknown>) => {
-          if (!isRunnerResponse(event.data) || event.data.id !== id) return;
-          const response = event.data;
-          if (response.type === 'started') {
-            // Pyodide đã sẵn sàng: từ đây mới tính giờ chạy code.
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-              // Worker đang kẹt: giết nó, dựng cái mới, rồi mới trả lời.
-              restart({
-                kind: 'timeout',
-                message: `Code chạy quá ${Math.round(timeoutMs / 1000)} giây`,
-              });
-            }, timeoutMs);
-            return;
-          }
-          if (response.type === 'stdout' || response.type === 'stderr') {
-            options.onOutput?.({ stream: response.type, text: response.payload.text });
-            return;
-          }
-          if (response.type === 'result') settle({ ok: true, result: response.payload });
-          if (response.type === 'error') settle({ ok: false, error: response.payload });
-        };
-
-        pending = { id, settle };
-        currentWorker.addEventListener('message', onMessage);
-        currentWorker.addEventListener(
-          'error',
-          (event: ErrorEvent) =>
-            restart({ kind: 'internal', message: event.message || 'Worker gặp lỗi' }),
-          { once: true },
-        );
-        currentWorker.postMessage({
+    run: (code, options = {}) =>
+      execute<RunOutcome>(
+        (id) => ({
           type: 'run',
           id,
           payload: { code, ...(options.stdin === undefined ? {} : { stdin: options.stdin }) },
-        } satisfies RunnerRequest);
-      });
-    },
+        }),
+        options,
+        (response, settle) => {
+          if (response.type === 'result') settle({ ok: true, result: response.payload });
+        },
+        (error) => ({ ok: false, error }),
+      ),
+
+    grade: (code, tests, options = {}) =>
+      execute<GradeOutcome>(
+        (id) => ({ type: 'grade', id, payload: { code, tests } }),
+        options,
+        (response, settle) => {
+          if (response.type === 'graded') settle({ ok: true, report: response.payload });
+        },
+        (error) => ({ ok: false, error }),
+      ),
 
     cancel: () => {
       if (pending) restart({ kind: 'cancelled', message: 'Đã dừng theo yêu cầu' });

@@ -61,7 +61,8 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - Huỷ (`cancel`) cũng đi qua đúng đường đó: `terminate()` + dựng lại, vì worker đang kẹt không trả lời message.
 - `input()` → **input dựng sẵn trong đề** (`stdin` của từng test), nạp vào Pyodide bằng `setStdin`. Cách này **không cần `SharedArrayBuffer`**, nên **không phải bật COOP/COEP** — đỡ rắc rối và không chặn nhúng video YouTube. Hộp nhập tương tác (cần Atomics) để sau, nếu thật sự cần.
 - `turtle` → module Python tự viết vẽ lên `OffscreenCanvas`/lệnh vẽ gửi về main thread.
-- Grader: chạy code học sinh trong namespace riêng, rồi chạy test ẩn (assert theo dạng khai báo trong `content-format.md`), trả `{passed, results[], stdout, error}`.
+- Grader: `apps/web/src/runner/grader.py` — **cùng một file** mà `content:verify` chạy bằng CPython. Mỗi test chạy code học sinh trong namespace mới rồi kiểm tra theo khai báo trong `content-format.md`, trả `{passed, results[]}` với `message` tiếng Việt của người viết bài và `detail` kỹ thuật ("cần ... nhận ...").
+- Worker `exec` grader vào một module riêng thay vì `runPython` thẳng: `runPython` đặt `__name__ = "__main__"` nên khối CLI của grader sẽ chạy và treo worker.
 - Lỗi Python → chuyển traceback sang thông báo tiếng Việt thân thiện (bảng ánh xạ `errors-vi.ts`), giữ dòng lỗi.
 
 ### 2b. Bundle nội dung (`scripts/content-build.mjs` → `apps/web/public/content/`)
