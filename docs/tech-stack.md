@@ -33,6 +33,7 @@ Mọi thay đổi bảng này cần một ADR trong `docs/decisions/`.
 ## Ngân sách bundle
 
 - JS chính (không tính Pyodide) ≤ 200 kB gzip; mỗi route lazy ≤ 80 kB gzip.
+- Riêng route bài tập ≤ 150 kB gzip vì chứa CodeMirror (ADR 0007); hiện ~131 kB.
 - Pyodide core tải ngầm, cache dài hạn (`immutable`, tên file có version).
 - Lighthouse mobile (trang chủ): Performance ≥ 85, Accessibility ≥ 95.
 

@@ -19,7 +19,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-08 Grader Python cho 5 loại test
 - [x] S0-09 Dịch lỗi Python sang tiếng Việt (`errors-vi.ts`) cho 15 lỗi phổ biến
 - [x] S0-10 Module `turtle` vẽ lên canvas
-- [ ] S0-11 Màn bài tập: editor CodeMirror, chạy, chấm, kết quả từng test — thêm job Playwright e2e (Chromium + WebKit) chạy trên bản build, chặn deploy nếu đỏ
+- [x] S0-11 Màn bài tập: editor CodeMirror, chạy, chấm, kết quả từng test — thêm job Playwright e2e (Chromium + WebKit) chạy trên bản build, chặn deploy nếu đỏ
 
 ## M3 — Tiến độ & động lực (tuần 4–5)
 - [ ] S0-12 IndexedDB progress + migrate

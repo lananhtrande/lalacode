@@ -23,3 +23,4 @@ Ngày: YYYY-MM-DD
 | 0004 | Gợi ý AI qua Lambda proxy không trạng thái + rate limit ẩn danh | Chấp nhận (model provider → 0006) |
 | 0005 | Analytics gộp không cookie | Đề xuất |
 | 0006 | Gọi Claude qua Amazon Bedrock thay vì Claude API trực tiếp | Chấp nhận |
+| 0007 | Nới ngân sách bundle cho riêng màn bài tập (CodeMirror) | Chấp nhận |

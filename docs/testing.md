@@ -42,6 +42,12 @@ Nâng phiên bản Pyodide thì chạy lại bộ e2e này: nếu Pyodide đổi
 
 Chạy trên Chromium desktop và WebKit (iPhone 13, iPad).
 
+## Chạy e2e trên bản build
+
+- `npm run test:e2e` — dev server, nhanh, dùng khi đang làm.
+- `PLAYWRIGHT_PREVIEW=1 npm run test:e2e` — **build rồi chạy trên bản phát hành thật** (`vite preview`). CI dùng chế độ này ở job `e2e`, chạy sau khi `check` xanh; đỏ thì chặn deploy.
+- Trang `/thu-runner` chỉ có ở dev nên `runner.spec.ts` tự bỏ qua ở chế độ preview. Luồng của trẻ (`smoke.spec.ts`, `exercise.spec.ts`) chạy ở cả hai chế độ.
+
 ## Quy tắc
 - Không mock Pyodide trong test runner — dùng Pyodide thật; test UI khác có thể mock runner qua protocol.
 - Test e2e số 4 phải **khẳng định** không có request mạng chứa mã tiến độ (chặn hồi quy về quyền riêng tư).

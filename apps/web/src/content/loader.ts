@@ -1,4 +1,4 @@
-import type { ContentIndex, LessonBundle, LessonSummary } from './types';
+import type { ContentIndex, LessonBundle, LessonSummary, PublicExercise } from './types';
 
 /**
  * Tải nội dung đã build (`public/content/`). Bundle là file tĩnh trên cùng
@@ -49,6 +49,23 @@ export async function findLessonSummary(lessonId: string): Promise<LessonSummary
     if (lesson) return lesson;
   }
   return undefined;
+}
+
+/** `py-khoi-dong.01-xin-chao.01-in-loi-chao` → `py-khoi-dong.01-xin-chao`. */
+export function lessonIdOfExercise(exerciseId: string): string {
+  return exerciseId.split('.').slice(0, 2).join('.');
+}
+
+/** Tải bài học chứa bài tập này rồi tìm đúng bài tập trong đó. */
+export async function loadExercise(
+  exerciseId: string,
+): Promise<{ lesson: LessonBundle; exercise: PublicExercise }> {
+  const lesson = await loadLesson(lessonIdOfExercise(exerciseId));
+  const exercise = lesson.exercises.find((item) => item.id === exerciseId);
+  if (!exercise) {
+    throw new ContentError(`Không có bài tập \`${exerciseId}\``, 'lesson-not-found');
+  }
+  return { lesson, exercise };
 }
 
 export async function loadLesson(lessonId: string): Promise<LessonBundle> {

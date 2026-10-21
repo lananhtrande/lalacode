@@ -1,6 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 5173;
+/**
+ * Mặc định chạy trên dev server cho nhanh. `PLAYWRIGHT_PREVIEW=1` thì build rồi
+ * chạy trên **bản phát hành thật** — CI dùng chế độ này trước khi deploy.
+ */
+const preview = Boolean(process.env['PLAYWRIGHT_PREVIEW']);
+const PORT = preview ? 4173 : 5173;
 const baseURL = `http://localhost:${PORT}`;
 
 // Trẻ dùng điện thoại/tablet là chính → luôn chạy cả WebKit mobile.
@@ -21,9 +26,11 @@ export default defineConfig({
     { name: 'ipad', use: { ...devices['iPad (gen 7)'] } },
   ],
   webServer: {
-    command: `npm run dev -w @lalacode/web -- --port ${PORT} --strictPort`,
+    command: preview
+      ? `npm run build -w @lalacode/web && npm run preview -w @lalacode/web -- --port ${PORT} --strictPort`
+      : `npm run dev -w @lalacode/web -- --port ${PORT} --strictPort`,
     url: baseURL,
     reuseExistingServer: !process.env['CI'],
-    timeout: 120_000,
+    timeout: 180_000,
   },
 });

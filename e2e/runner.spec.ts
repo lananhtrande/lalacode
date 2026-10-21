@@ -6,6 +6,11 @@ import { expect, test } from '@playwright/test';
  */
 test.describe('runner Pyodide', () => {
   test.slow();
+  // Trang /thu-runner chỉ có ở chế độ dev, nên bỏ qua khi chạy trên bản build.
+  test.skip(
+    Boolean(process.env['PLAYWRIGHT_PREVIEW']),
+    'trang thử runner không có ở bản phát hành',
+  );
 
   test('nạp được Pyodide tự host và báo đúng phiên bản Python', async ({ page }) => {
     await page.goto('/thu-runner');
