@@ -63,7 +63,10 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - `turtle` → module Python tự viết vẽ lên `OffscreenCanvas`/lệnh vẽ gửi về main thread.
 - Grader: `apps/web/src/runner/grader.py` — **cùng một file** mà `content:verify` chạy bằng CPython. Mỗi test chạy code học sinh trong namespace mới rồi kiểm tra theo khai báo trong `content-format.md`, trả `{passed, results[]}` với `message` tiếng Việt của người viết bài và `detail` kỹ thuật ("cần ... nhận ...").
 - Worker `exec` grader vào một module riêng thay vì `runPython` thẳng: `runPython` đặt `__name__ = "__main__"` nên khối CLI của grader sẽ chạy và treo worker.
-- Lỗi Python → chuyển traceback sang thông báo tiếng Việt thân thiện (bảng ánh xạ `errors-vi.ts`), giữ dòng lỗi.
+- Lỗi Python → thông báo tiếng Việt thân thiện (`errors-vi.ts`), **giữ số dòng** của code trẻ và giữ nguyên văn dòng lỗi (để gỡ rối và để gửi cho dịch vụ gợi ý AI).
+  - Bảng dịch viết dựa trên **traceback thật** lấy từ Pyodide, lưu ở `pyodide-errors.fixture.json` — đoán theo trí nhớ rất dễ lệch với chuỗi thật (Python 3.14 còn thêm `Did you mean: 'print'?`, mình dịch luôn gợi ý đó).
+  - Phủ 20 lỗi hay gặp nhất của người mới (NameError, SyntaxError, IndentationError, TypeError, ValueError, ZeroDivisionError, IndexError, KeyError, AttributeError, ModuleNotFoundError, EOFError, RecursionError, UnboundLocalError…), có câu chung cho lỗi lạ.
+  - Chỉ lấy số dòng từ khung code của trẻ (`<exec>` hoặc `bai-lam.py`), bỏ qua khung nội bộ của Pyodide.
 
 ### 2b. Bundle nội dung (`scripts/content-build.mjs` → `apps/web/public/content/`)
 
