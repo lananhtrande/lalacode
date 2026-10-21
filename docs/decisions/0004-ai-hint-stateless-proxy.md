@@ -1,5 +1,5 @@
 # 0004 — Gợi ý AI qua Lambda proxy không trạng thái + rate limit ẩn danh
-Trạng thái: Chấp nhận
+Trạng thái: Chấp nhận — phần nhà cung cấp model được thay bởi 0006
 Ngày: 2026-10-21
 
 ## Bối cảnh

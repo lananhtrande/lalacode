@@ -8,8 +8,8 @@
 | Nội dung – hành vi | CPython 3.12+ | `npm run content:verify` | Mọi thay đổi bài tập: solution pass, starter fail |
 | Runner thật | Playwright + Pyodide | `npm run test:e2e -- runner` | Đổi runner, protocol, phiên bản Pyodide |
 | E2E luồng chính | Playwright | `npm run test:e2e` | Đổi UI của bài học/bài tập/báo cáo |
-| Lambda | Vitest, mock Claude API & DynamoDB | `npm run test -w services/ai-hint` | Mọi thay đổi `services/ai-hint` |
-| Prompt AI | Bộ case cố định (`prompt.cases.json`) chạy thủ công với API thật | `npm run eval:hints` | Đổi prompt hoặc model |
+| Lambda | Vitest, mock Bedrock Runtime & DynamoDB (`aws-sdk-client-mock`) | `npm run test -w services/ai-hint` | Mọi thay đổi `services/ai-hint` |
+| Prompt AI | Bộ case cố định (`prompt.cases.json`) chạy thủ công với Bedrock thật (profile AWS có quyền) | `npm run eval:hints` | Đổi prompt hoặc model |
 
 ## Luồng E2E tối thiểu
 1. Mở trang chủ → vào bài 1 → đọc → làm bài tập 1 sai → thấy thông báo lỗi tiếng Việt → sửa đúng → huy hiệu.

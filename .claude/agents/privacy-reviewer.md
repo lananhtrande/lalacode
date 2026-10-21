@@ -19,6 +19,7 @@ Bạn là người review quyền riêng tư cho một nền tảng học lập 
    - Có thu tên thật, email, SĐT, trường, lớp, ngày sinh, ảnh không?
    - Link báo cáo: dữ liệu tiến độ có nằm sau `#` và không bao giờ bị gửi đi (kể cả qua analytics, error reporting)?
    - Prompt AI có thể khiến AI hỏi thông tin cá nhân của trẻ không?
+   - Lambda gọi Bedrock (profile global, có thể xử lý ngoài châu Á) chỉ với dữ liệu đã lọc? Quyền IAM có bị nới quá `bedrock:InvokeModel` cho đúng model không? Có ai thêm lại API key AI không?
    - Infra: S3 private, CloudFront OAC, log tắt hoặc ≤7 ngày, không public bucket?
 4. Không sửa code. Chỉ báo cáo.
 

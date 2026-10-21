@@ -24,7 +24,7 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
                             │ GET tĩnh (HTML/JS/WASM/JSON/video)           │ POST /hint (không PII)
                             ▼                                              ▼
               CloudFront (edge HN/HCM) ◄── S3 Singapore          Lambda ai-hint (Function URL
-                                                                  qua CloudFront) ──► Claude API
+                                                                  qua CloudFront) ──► Bedrock (Claude, global)
                                                                   └─ DynamoDB: bộ đếm rate-limit
                                                                      theo token ẩn danh (TTL 48h)
 ```
@@ -56,7 +56,7 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 ### 4. AI hint proxy (`services/ai-hint`)
 - AWS Lambda (Node 22, TS), gọi qua CloudFront path `/api/hint` (cùng origin → không cần CORS rộng).
 - Input: `{exerciseId, code ≤ 4 kB, error ≤ 2 kB, hintLevel 1–3, token}`. Server tự lấy đề bài theo `exerciseId` từ bundle nội dung — **không tin đề bài do client gửi**.
-- Model: `claude-haiku-5-5`, `max_tokens` thấp (~400). Prompt hệ thống: không đưa lời giải đầy đủ, tiếng Việt cho trẻ 10–15 tuổi, từ chối chủ đề ngoài bài.
+- Model: Claude Haiku 5.5 qua **Amazon Bedrock**, inference profile `global.anthropic.claude-haiku-5-5` (Singapore chỉ hỗ trợ profile global — request có thể được xử lý ở bất kỳ vùng nào). Gọi bằng `@aws-sdk/client-bedrock-runtime` (Converse API) với IAM role của Lambda; không có API key. `max_tokens` thấp (~400). Prompt hệ thống: không đưa lời giải đầy đủ, tiếng Việt cho trẻ 10–15 tuổi, từ chối chủ đề ngoài bài.
 - Rate limit: `token` = UUID ngẫu nhiên tạo trên máy (không liên kết danh tính). Lambda lưu `sha256(token)` + ngày trong DynamoDB, TTL 48 h, ~5 lượt/ngày/token, cộng giới hạn toàn cục/ngày để chặn chi phí.
 - Không ghi log body request/response. Chỉ log: thời gian, mã kết quả, độ trễ, số token AI.
 - Có công tắc tắt AI (biến môi trường) → frontend hiển thị gợi ý tĩnh viết sẵn trong bài.
@@ -70,7 +70,7 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 
 ### 7. Infra (`infra/`, Terraform)
 - S3 (private) + CloudFront (OAC), response headers: CSP chặt, COOP/COEP nếu dùng SharedArrayBuffer, HSTS.
-- Lambda + Function URL (auth IAM, chỉ CloudFront gọi được qua OAC), DynamoDB on-demand, Secrets Manager cho API key, budget alarm 20 USD.
+- Lambda + Function URL (auth IAM, chỉ CloudFront gọi được qua OAC), DynamoDB on-demand, IAM role cho Lambda chỉ có `bedrock:InvokeModel` trên inference profile + model Haiku 5.5, bật model access Claude trong Bedrock, budget alarm 20 USD (gồm cả phí Claude tính qua AWS Marketplace).
 - CI/CD: GitHub Actions, OIDC vào AWS (không có access key dài hạn).
 
 ## Những gì KHÔNG có ở giai đoạn 0

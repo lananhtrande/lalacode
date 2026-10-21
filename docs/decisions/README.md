@@ -20,5 +20,6 @@ Ngày: YYYY-MM-DD
 | 0001 | Giai đoạn 0 là web tĩnh, không lưu dữ liệu người dùng trên server | Chấp nhận |
 | 0002 | Chạy và chấm code Python bằng Pyodide trong Web Worker | Chấp nhận |
 | 0003 | Nội dung bài học là dữ liệu JSON/Markdown có schema | Chấp nhận |
-| 0004 | Gợi ý AI qua Lambda proxy không trạng thái + rate limit ẩn danh | Chấp nhận |
+| 0004 | Gợi ý AI qua Lambda proxy không trạng thái + rate limit ẩn danh | Chấp nhận (model provider → 0006) |
 | 0005 | Analytics gộp không cookie | Đề xuất |
+| 0006 | Gọi Claude qua Amazon Bedrock thay vì Claude API trực tiếp | Chấp nhận |

@@ -9,7 +9,7 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 | Tiến độ, code nháp, streak, huy hiệu, biệt danh (tuỳ chọn) | IndexedDB trên máy | **Không** |
 | Mã tiến độ / link báo cáo | Do người dùng tự sao chép; dữ liệu nằm sau `#` | **Không** |
 | Token ẩn danh (UUID ngẫu nhiên) | Máy; server lưu `sha256(token)` + bộ đếm, TTL 48 h | Có — chỉ để giới hạn lượt AI |
-| Yêu cầu gợi ý AI | `exerciseId`, `code`, `error`, `hintLevel` | Có — không log body; chuyển tới Claude API |
+| Yêu cầu gợi ý AI | `exerciseId`, `code`, `error`, `hintLevel` | Có — không log body; chuyển tới Claude trên Amazon Bedrock (profile global, có thể xử lý ngoài châu Á) |
 | Sự kiện analytics gộp | Tên sự kiện + bài học + ngày | Có — không ID, không IP lưu trữ |
 | Log truy cập CloudFront | Mặc định **tắt**; nếu bật để debug thì tối đa 7 ngày | — |
 
@@ -22,6 +22,7 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 - Ô nhập tự do có thể khiến trẻ gõ thông tin cá nhân gửi lên AI — code học sinh gửi lên AI phải qua bộ lọc (`sanitizeInput`): cắt độ dài, loại chuỗi giống email/SĐT, cảnh báo nếu phát hiện.
 
 ## Yêu cầu với AI
+- Gọi qua Amazon Bedrock bằng profile global: dữ liệu gửi cho AI có thể được xử lý ở nước ngoài. Đây là lý do **tuyệt đối không** gửi dữ liệu cá nhân tới AI. Khi có pháp nhân, hỏi luật sư về thủ tục chuyển dữ liệu xuyên biên giới.
 - Không gửi gì ngoài mã bài, code (đã lọc), lỗi, mức gợi ý.
 - Prompt hệ thống buộc trả lời ngắn, tiếng Việt, đúng chủ đề bài, không hỏi thông tin cá nhân của trẻ.
 - Có công tắc tắt AI; có gợi ý tĩnh dự phòng.

@@ -15,7 +15,7 @@
 
 ## Definition of Done
 
-- [ ] `npm run check` xanh (lint, typecheck, unit, content:check)
+- [ ] `npm run check` xanh (lint, typecheck, unit, content:check) và CI trên PR xanh
 - [ ] Có test cho hành vi mới; e2e cho luồng người dùng chính nếu đụng UI
 - [ ] Chạy thử trên viewport điện thoại (360×740) và tablet (820×1180)
 - [ ] Văn bản UI tiếng Việt, đúng giọng thân thiện (xem `content-format.md` §Giọng văn)
@@ -46,6 +46,25 @@ S0-xx — <tên>
 ## Dữ liệu & quyền riêng tư
 Có gửi/lưu dữ liệu mới không? <không / mô tả>
 ```
+
+## CI/CD theo giai đoạn
+
+Pipeline được dựng sớm và lớn dần cùng sản phẩm, không để cuối giai đoạn.
+
+| Mục roadmap | Pipeline có thêm |
+| --- | --- |
+| S0-01b | `ci.yml`: `npm ci` → `npm run check` trên mỗi PR; `main` bắt buộc CI xanh |
+| S0-03 | `content:verify` (Python 3.12) trong CI |
+| S0-04b | Terraform tối thiểu + `deploy-web.yml`: build → S3 `releases/<sha>/` → CloudFront; preview cho PR; OIDC, không access key |
+| S0-11 | Job Playwright e2e trên bản build, chặn deploy nếu đỏ |
+| S0-18 | `deploy-ai-hint.yml` cho Lambda; Terraform thêm Lambda/DynamoDB/IAM Bedrock |
+| S0-25 | Rollback, `terraform plan` vào PR, dọn preview, Dependabot |
+
+Nguyên tắc:
+- Mọi workflow dùng OIDC role riêng, quyền tối thiểu (role deploy web chỉ ghi S3 bucket web + invalidate distribution đó).
+- Job chạy theo thứ tự: check → build → e2e → deploy; bước nào đỏ thì dừng.
+- Secrets GitHub chỉ chứa ARN role và tên bucket/distribution — không chứa khoá AWS hay API key.
+- Terraform: CI chạy `fmt -check`, `validate`, `plan`; `apply` do người duy trì chạy tay (luật trong `CLAUDE.md`).
 
 ## Phát hành
 

@@ -22,10 +22,10 @@ Mọi thay đổi bảng này cần một ADR trong `docs/decisions/`.
 | E2E test | Playwright (Chromium, WebKit iPhone/iPad) | — | Kiểm tra Pyodide thật trên trình duyệt |
 | Lint/format | ESLint (flat config) + Prettier | — | Hook chạy sau mỗi lần sửa file |
 | Kiểm tra nội dung | Script Node + CPython 3.12+ (`content:verify`) | — | Lời giải mẫu pass, starter fail |
-| AI | Claude API, model `claude-haiku-5-5` | — | Rẻ, nhanh, đủ cho gợi ý ngắn |
+| AI | Claude Haiku 5.5 qua Amazon Bedrock, profile `global.anthropic.claude-haiku-5-5`, SDK `@aws-sdk/client-bedrock-runtime` | — | Giá token như API trực tiếp; IAM thay API key; một hoá đơn AWS (ADR 0006) |
 | Serverless | AWS Lambda (Node 22) + Function URL sau CloudFront | — | Gần như 0 USD ở quy mô nhỏ |
 | Rate limit | DynamoDB on-demand + TTL | — | Không cần server |
-| Bí mật | AWS Secrets Manager | — | API key không ở client/repo |
+| Quyền truy cập AI | IAM role của Lambda (`bedrock:InvokeModel`) | — | Không có API key để lộ; Secrets Manager chỉ dùng nếu sau này có bí mật khác |
 | Hosting | S3 Singapore + CloudFront (OAC) | — | 1 TB/tháng miễn phí, edge tại HN/HCM |
 | IaC | Terraform | ≥1.9 | Dùng lại ở giai đoạn 1–2 |
 | CI/CD | GitHub Actions + OIDC → AWS | — | Không khoá dài hạn |

@@ -19,7 +19,7 @@ Nền tảng học Python tiếng Việt cho học sinh 10–15 tuổi: bài gi�
 
 1. **Không lưu dữ liệu cá nhân trên server.** Không tài khoản, không form thu tên/email/SĐT của trẻ, không cookie theo dõi, không log nội dung request. Tiến độ học chỉ ở IndexedDB trên máy người dùng. Người dùng là trẻ em — xem `docs/privacy.md`.
 2. **Code của học sinh chỉ chạy trong Web Worker Pyodide**, có timeout và có thể `terminate()`. Không bao giờ `eval` code học sinh trên main thread hay trên server.
-3. **AI proxy không trạng thái:** chỉ nhận `{exerciseId, code, error, hintLevel, token}`; không ghi log body; không gửi gì nhận dạng được trẻ tới API AI. API key chỉ nằm ở server (Secrets Manager), không bao giờ ở frontend hay trong repo.
+3. **AI proxy không trạng thái:** chỉ nhận `{exerciseId, code, error, hintLevel, token}`; không ghi log body; không gửi gì nhận dạng được trẻ tới model AI. Gọi Claude qua **Amazon Bedrock** bằng IAM role của Lambda — không có API key AI nào trong code, `.env` hay frontend.
 4. **AI không đưa lời giải đầy đủ.** Gợi ý theo 3 mức (nhẹ → chỉ dòng lỗi → ví dụ tương tự). Prompt hệ thống nằm ở `services/ai-hint/src/prompt.ts` và có test.
 5. **Nội dung là dữ liệu.** Bài học và bài tập là file trong `content/`, kiểm tra bằng schema (`npm run content:check`). Không viết cứng nội dung bài trong component.
 6. **Mọi lời giải mẫu phải pass test ẩn, mọi starter code phải fail** — kiểm tra bằng `npm run content:verify` (chạy CPython thật).

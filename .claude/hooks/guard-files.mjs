@@ -30,7 +30,7 @@ const secretPatterns = [
   { re: /gh[pousr]_[A-Za-z0-9]{30,}/, what: 'GitHub token' },
 ];
 for (const s of secretPatterns) {
-  if (s.re.test(text)) block(`Chặn: nội dung ghi vào ${file} chứa ${s.what}. Bí mật để trong Secrets Manager / .env (không commit).`);
+  if (s.re.test(text)) block(`Chặn: nội dung ghi vào ${file} chứa ${s.what}. AI dùng IAM role qua Bedrock — không cần key; bí mật khác để trong Secrets Manager / .env (không commit).`);
 }
 
 // 3. Stage-0 privacy rules for application code (docs/privacy.md).
