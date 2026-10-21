@@ -8,7 +8,8 @@ Nền tảng học Python tiếng Việt cho học sinh 10–15 tuổi — bài 
 
 ## Bắt đầu
 
-Yêu cầu: Node.js 22 LTS, Python 3.12+ (để chạy `content:verify`).
+Yêu cầu: Node.js 22 LTS, Python 3.12+ (để chạy `content:verify` — cùng phiên bản CPython với Pyodide).
+Nếu `python3` trên máy cũ hơn, chỉ cần có `python3.12`/`python3.13` trong PATH, hoặc chạy `PYTHON=/duong/dan/python3.13 npm run content:verify`.
 
 ```bash
 npm install

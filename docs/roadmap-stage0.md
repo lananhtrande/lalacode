@@ -8,7 +8,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-01 Monorepo npm workspaces, TS strict, ESLint/Prettier, Vitest, Playwright, script `check`
 - [x] S0-01b CI: GitHub Actions `ci.yml` chạy `npm ci` + `npm run check` trên mỗi PR và push vào `main`; cache npm; Node từ `.nvmrc`; nhánh `main` được bảo vệ bằng ruleset `protect-main`
 - [x] S0-02 `packages/content-schema` (zod) + `scripts/content-check.mjs`
-- [ ] S0-03 `scripts/content-verify.mjs` (chạy solution/starter bằng CPython) — thêm `content:verify` vào CI (setup-python 3.12)
+- [x] S0-03 `scripts/content-verify.mjs` (chạy solution/starter bằng CPython) — thêm `content:verify` vào CI (setup-python 3.12)
 - [ ] S0-04 Khung app React: router, layout, i18n `vi.ts`, theme token, trang chủ tĩnh
 - [ ] S0-04b Walking skeleton lên AWS: Terraform tối thiểu (S3 private, CloudFront + OAC, response headers CSP/COOP/COEP/HSTS, SPA fallback, GitHub OIDC role) + workflow `deploy-web.yml`: build → upload `releases/<sha>/` → trỏ CloudFront → invalidate; preview cho PR
 - [ ] S0-05 Loader nội dung: build `content/` thành JSON bundle có hash
