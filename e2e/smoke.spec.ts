@@ -20,6 +20,25 @@ test.describe('khung app', () => {
     await expect(page.getByRole('heading', { name: 'Bản đồ nhiệm vụ' })).toBeVisible();
   });
 
+  test('bản đồ liệt kê bài học đọc từ bundle nội dung', async ({ page }) => {
+    await page.goto('/ban-do');
+    const lesson = page.getByRole('link', { name: /Xin chào, Python!/ });
+    await expect(lesson).toBeVisible();
+    await expect(lesson).toHaveAttribute('href', '/bai-hoc/py-khoi-dong.01-xin-chao');
+  });
+
+  test('bundle nội dung không chứa lời giải mẫu', async ({ page }) => {
+    const response = await page.request.get('/content/index.json');
+    expect(response.ok()).toBe(true);
+    const index = (await response.json()) as {
+      courses: { lessons: { file: string }[] }[];
+    };
+    const file = index.courses[0]?.lessons[0]?.file ?? '';
+    const lesson = await page.request.get(`/content/${file}`);
+    const text = await lesson.text();
+    expect(text).not.toContain('"solution"');
+  });
+
   test('đường dẫn lạ hiện trang không tìm thấy', async ({ page }) => {
     await page.goto('/khong-co-trang-nay');
     await expect(page.getByRole('heading', { name: 'Không tìm thấy trang này' })).toBeVisible();

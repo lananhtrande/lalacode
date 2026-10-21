@@ -26,3 +26,6 @@ infra/**/*.tfvars
 
 # typescript build info
 *.tsbuildinfo
+
+# bundle nội dung do scripts/content-build.mjs sinh ra
+apps/web/public/content/
