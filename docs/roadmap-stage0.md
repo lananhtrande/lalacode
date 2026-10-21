@@ -6,18 +6,20 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 
 ## M1 — Nền móng (tuần 1–2)
 - [x] S0-01 Monorepo npm workspaces, TS strict, ESLint/Prettier, Vitest, Playwright, script `check`
+- [ ] S0-01b CI: GitHub Actions `ci.yml` chạy `npm ci` + `npm run check` trên mỗi PR và push vào `main`; cache npm; Node từ `.nvmrc`; bảo vệ nhánh `main` (bắt buộc CI xanh)
 - [ ] S0-02 `packages/content-schema` (zod) + `scripts/content-check.mjs`
-- [ ] S0-03 `scripts/content-verify.mjs` (chạy solution/starter bằng CPython)
+- [ ] S0-03 `scripts/content-verify.mjs` (chạy solution/starter bằng CPython) — thêm `content:verify` vào CI (setup-python 3.12)
 - [ ] S0-04 Khung app React: router, layout, i18n `vi.ts`, theme token, trang chủ tĩnh
+- [ ] S0-04b Walking skeleton lên AWS: Terraform tối thiểu (S3 private, CloudFront + OAC, response headers CSP/COOP/COEP/HSTS, SPA fallback, GitHub OIDC role) + workflow `deploy-web.yml`: build → upload `releases/<sha>/` → trỏ CloudFront → invalidate; preview cho PR
 - [ ] S0-05 Loader nội dung: build `content/` thành JSON bundle có hash
 
 ## M2 — Runner & chấm bài (tuần 2–4)
-- [ ] S0-06 Pyodide tự host + Web Worker + protocol có version
+- [ ] S0-06 Pyodide tự host + Web Worker + protocol có version — kiểm tra cache/headers WASM trên CloudFront thật
 - [ ] S0-07 Timeout & terminate/restart worker
 - [ ] S0-08 Grader Python cho 5 loại test
 - [ ] S0-09 Dịch lỗi Python sang tiếng Việt (`errors-vi.ts`) cho 15 lỗi phổ biến
 - [ ] S0-10 Module `turtle` vẽ lên canvas
-- [ ] S0-11 Màn bài tập: editor CodeMirror, chạy, chấm, kết quả từng test
+- [ ] S0-11 Màn bài tập: editor CodeMirror, chạy, chấm, kết quả từng test — thêm job Playwright e2e (Chromium + WebKit) chạy trên bản build, chặn deploy nếu đỏ
 
 ## M3 — Tiến độ & động lực (tuần 4–5)
 - [ ] S0-12 IndexedDB progress + migrate
@@ -28,7 +30,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 
 ## M4 — Gợi ý AI (tuần 5–6)
 - [ ] S0-17 Lambda `ai-hint`: validate, sanitize, prompt, gọi Claude qua Bedrock (IAM role, profile global)
-- [ ] S0-18 Rate limit DynamoDB + giới hạn toàn cục + công tắc tắt
+- [ ] S0-18 Rate limit DynamoDB + giới hạn toàn cục + công tắc tắt — Terraform thêm Lambda, Function URL sau CloudFront, DynamoDB, IAM `bedrock:InvokeModel`; workflow `deploy-ai-hint.yml`
 - [ ] S0-19 Panel gợi ý 3 mức trong UI + gợi ý tĩnh dự phòng
 - [ ] S0-20 Bộ eval prompt (30 case) và kết quả lưu trong repo
 
@@ -36,8 +38,8 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [ ] S0-21 10 bài đầu + bài tập (đã verify, đã review)
 - [ ] S0-22 10 bài tiếp
 - [ ] S0-23 Trang giới thiệu cho phụ huynh + trang quyền riêng tư
-- [ ] S0-24 Terraform: S3, CloudFront (OAC, headers), Lambda + IAM `bedrock:InvokeModel`, DynamoDB, budget alarm (bật model access Claude trong Bedrock — làm tay một lần)
-- [ ] S0-25 GitHub Actions: check → build → e2e → deploy; OIDC
+- [ ] S0-24 Hoàn thiện infra: budget alarm 20 USD, CloudWatch alarm lỗi/độ trễ Lambda, rà soát quyền IAM tối thiểu (bật model access Claude trong Bedrock — làm tay một lần)
+- [ ] S0-25 Hoàn thiện CI/CD: workflow `rollback-web.yml` (trỏ về `releases/<sha>` trước), `terraform plan` đăng vào PR, dọn preview cũ, Dependabot
 - [ ] S0-26 Analytics gộp (sau khi chốt ADR 0005)
 - [ ] S0-27 Beta kín 50–100 trẻ, thu phản hồi qua nhóm Zalo
 
