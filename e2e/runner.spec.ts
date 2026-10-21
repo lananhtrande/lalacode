@@ -31,14 +31,18 @@ test.describe('runner Pyodide', () => {
     await expect(page.getByTestId('runner-output')).toHaveText('Chào Lan\n', { timeout: 120_000 });
   });
 
-  test('code sai thì báo lỗi Python, trang vẫn dùng được', async ({ page }) => {
+  test('code sai thì báo lỗi bằng tiếng Việt, trang vẫn dùng được', async ({ page }) => {
     await page.goto('/thu-runner');
     await page.getByLabel('Code Python').fill('print(ten_chua_co)');
     await page.getByRole('button', { name: 'Chạy' }).click();
     await expect(page.getByTestId('runner-status')).toContainText('lỗi (python)', {
       timeout: 120_000,
     });
-    await expect(page.getByTestId('runner-output')).toContainText('NameError');
+    // Trẻ đọc tiếng Việt, không đọc traceback tiếng Anh.
+    const output = page.getByTestId('runner-output');
+    await expect(output).toContainText('Python chưa biết tên');
+    await expect(output).toContainText('ten_chua_co');
+    await expect(output).not.toContainText('Traceback');
 
     // Chạy lại được sau lỗi: worker vẫn sống.
     await page.getByLabel('Code Python').fill('print(1 + 1)');
@@ -111,6 +115,67 @@ test.describe('runner Pyodide', () => {
     await page.getByRole('button', { name: 'Chấm' }).click();
     await expect(page.getByTestId('runner-status')).toContainText('đạt hết', { timeout: 120_000 });
     await expect(page.getByTestId('runner-output')).toContainText('test 5 (python_assert): đạt');
+  });
+
+  test('lỗi cú pháp và lỗi cộng chữ với số cũng ra tiếng Việt, kèm số dòng', async ({ page }) => {
+    await page.goto('/thu-runner');
+    await page.getByLabel('Code Python').fill('if 1 > 0\n    print("a")');
+    await page.getByRole('button', { name: 'Chạy' }).click();
+    await expect(page.getByTestId('runner-output')).toContainText('hai chấm', {
+      timeout: 120_000,
+    });
+
+    await page.getByLabel('Code Python').fill('tuoi = 10\nprint("tuổi: " + tuoi)');
+    await page.getByRole('button', { name: 'Chạy' }).click();
+    const output = page.getByTestId('runner-output');
+    await expect(output).toContainText('dòng 2', { timeout: 120_000 });
+    await expect(output).toContainText('str(');
+  });
+
+  /**
+   * Chạy thật từng đoạn code sai phổ biến: nếu Pyodide đổi cách viết thông báo
+   * (ví dụ khi nâng phiên bản), bảng dịch sẽ rơi về câu chung và test này đỏ.
+   */
+  test('mọi lỗi phổ biến đều có câu tiếng Việt riêng, không rơi vào câu chung', async ({
+    page,
+  }) => {
+    const snippets = [
+      'print(ten_chua_co)',
+      'prnt("xin chào")',
+      'print("xin chào"',
+      'print("xin chào)',
+      'if 1 > 0\n    print("a")',
+      'if 1 > 0:\nprint("a")',
+      'print("a")\n  print("b")',
+      'print("tuổi: " + 10)',
+      'print(1 + "a")',
+      'def chao(ten):\n    pass\nchao()',
+      'int("mười")',
+      'print(10 / 0)',
+      'diem = [8, 9]\nprint(diem[5])',
+      'd = {"a": 1}\nprint(d["b"])',
+      'ten = "Lan"\nten.push("a")',
+      'import numpy',
+      'ten = input()',
+      'def f():\n    return f()\nf()',
+      'def f():\n    x += 1\nf()',
+      'x = 5\nx()',
+    ];
+
+    await page.goto('/thu-runner');
+    await page.getByRole('button', { name: 'Nạp Pyodide' }).click();
+    await expect(page.getByTestId('runner-status')).toContainText('sẵn sàng', { timeout: 120_000 });
+
+    for (const snippet of snippets) {
+      await page.getByLabel('Code Python').fill(snippet);
+      await page.getByRole('button', { name: 'Chạy' }).click();
+      await expect(page.getByTestId('runner-status')).toContainText('lỗi (python)', {
+        timeout: 30_000,
+      });
+      const output = (await page.getByTestId('runner-output').textContent()) ?? '';
+      expect(output, `chưa dịch: ${snippet}`).not.toMatch(/Chương trình dừng vì|chưa đọc được/);
+      expect(output, `lọt tiếng Anh: ${snippet}`).not.toMatch(/Traceback|micropip/);
+    }
   });
 
   test('Pyodide tải từ chính domain của mình, không qua CDN ngoài', async ({ page }) => {

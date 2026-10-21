@@ -24,6 +24,15 @@ Vì vậy grader chỉ dùng thư viện chuẩn, mỗi test chạy trong một 
 
 Test cho grader nằm ở `scripts/grader.test.mjs` (Vitest gọi python thật, tự bỏ qua nếu máy không có CPython 3.12+) và `e2e/runner.spec.ts` (chấm đủ 5 loại test trong Pyodide thật).
 
+## Dịch lỗi Python
+
+`apps/web/src/runner/errors-vi.ts` được test hai tầng:
+
+1. **Unit** — chạy lại trên `pyodide-errors.fixture.json`, là traceback thật ghi từ Pyodide. Có test khẳng định **không lỗi nào trong fixture rơi vào câu chung**, và không câu nào dùng từ mắng trẻ.
+2. **E2E** — chạy thật 20 đoạn code sai trong Pyodide rồi kiểm tra UI hiện câu tiếng Việt riêng, không lọt `Traceback` hay hướng dẫn `micropip` tiếng Anh.
+
+Nâng phiên bản Pyodide thì chạy lại bộ e2e này: nếu Pyodide đổi cách viết thông báo, test đỏ ngay. Muốn cập nhật fixture thì chạy lại các đoạn code trong e2e và ghi `error.message` ra file.
+
 ## Luồng E2E tối thiểu
 1. Mở trang chủ → vào bài 1 → đọc → làm bài tập 1 sai → thấy thông báo lỗi tiếng Việt → sửa đúng → huy hiệu.
 2. Vòng lặp vô hạn → hết giờ → thông báo → chạy lại được.
