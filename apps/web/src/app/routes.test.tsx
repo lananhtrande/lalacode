@@ -35,10 +35,14 @@ describe('router', () => {
     ['/bao-cao', strings.pages.report],
     ['/gioi-thieu', strings.pages.about],
     ['/bai-hoc/01-xin-chao', strings.pages.lesson],
-    ['/bai-tap/01-in-loi-chao', strings.pages.exercise],
   ])('đường dẫn %s mở đúng trang "%s"', async (path, title) => {
     renderAt(path);
     expect(await screen.findByRole('heading', { name: title })).toBeInTheDocument();
+  });
+
+  it('đường dẫn bài tập mở màn bài tập (màn này có test riêng)', async () => {
+    renderAt('/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao');
+    expect(await screen.findByRole('status')).toHaveTextContent(strings.exercise.loading);
   });
 
   it('đường dẫn lạ thì hiện trang không tìm thấy, vẫn giữ khung chung', async () => {

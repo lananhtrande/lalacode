@@ -81,6 +81,16 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - Build từ chối chạy nếu nội dung sai schema — bundle là thứ trẻ tải về.
 - Loader ở `apps/web/src/content/loader.ts`: tải một lần rồi nhớ trong bộ nhớ, chỉ dùng `import type` từ `@lalacode/content-schema` nên zod không đi vào bundle trình duyệt.
 
+### 2c. Màn bài tập (`apps/web/src/features/exercise`)
+
+- Editor: CodeMirror 6 **không dùng `basicSetup`** — chỉ số dòng, hoàn tác, thụt dòng, tô màu Python (ADR 0007 về ngân sách bundle).
+- Hai nút: *Chạy thử* (xem chương trình in gì) và *Nộp bài* (chấm bằng test ẩn). Đang chạy thì khoá ô code và hiện nút *Dừng*.
+- Pyodide được nạp ngầm ngay khi mở bài tập, có dòng trạng thái "Đang chuẩn bị Python…" → "Python sẵn sàng".
+- Kết quả từng test: **icon + chữ**, không chỉ dựa vào màu; hiện câu tiếng Việt của người viết bài, kèm chi tiết "cần … nhận …".
+- Lỗi: câu tiếng Việt + số dòng, lỗi gốc giấu trong `<details>` để trẻ nào tò mò thì xem.
+- Gợi ý viết sẵn mở dần từng mức (gợi ý AI là S0-19).
+- Tiến độ chưa lưu ở bước này — IndexedDB là S0-12.
+
 ### 3. Progress (`apps/web/src/progress`)
 - IndexedDB (thư viện `idb`), schema có `version` để migrate.
 - Lưu: bài đã xong, số lần chạy, thời điểm, streak, huy hiệu, code nháp gần nhất mỗi bài. **Không** lưu tên thật; "biệt danh" (tuỳ chọn) chỉ ở máy.
