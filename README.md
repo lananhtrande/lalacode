@@ -1,5 +1,7 @@
 # lalacode
 
+[![CI](https://github.com/lananhtrande/lalacode/actions/workflows/ci.yml/badge.svg)](https://github.com/lananhtrande/lalacode/actions/workflows/ci.yml)
+
 Nền tảng học Python tiếng Việt cho học sinh 10–15 tuổi — bài học ngắn, code chạy và chấm ngay trên trình duyệt, gợi ý AI như một gia sư.
 
 **Trạng thái:** giai đoạn 0 (kiểm chứng) — web tĩnh, không lưu dữ liệu người dùng trên server.
