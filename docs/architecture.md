@@ -34,6 +34,19 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 ### 1. Frontend tĩnh (`apps/web`)
 - SPA build bằng Vite, deploy lên S3 + CloudFront. Route phía client.
 - Trang: Trang chủ · Bản đồ nhiệm vụ · Bài học · Bài tập · Huy hiệu · Báo cáo cho bố mẹ · Giới thiệu & quyền riêng tư.
+- Đường dẫn bằng tiếng Việt, để trẻ và bố mẹ đọc hiểu được:
+
+  | Đường dẫn | Trang |
+  | --- | --- |
+  | `/` | Trang chủ |
+  | `/ban-do` | Bản đồ nhiệm vụ |
+  | `/bai-hoc/:lessonId` | Bài học |
+  | `/bai-tap/:exerciseId` | Bài tập |
+  | `/huy-hieu` | Huy hiệu |
+  | `/bao-cao` | Báo cáo cho bố mẹ (đọc `#fragment`) |
+  | `/gioi-thieu` | Giới thiệu & quyền riêng tư |
+
+  Trang chủ nằm trong bundle chính; các trang khác lazy-load. Hosting phải trả `index.html` cho mọi đường dẫn (SPA fallback).
 - Responsive: điện thoại (≥360 px), tablet, laptop. Trẻ có thể dùng tablet là chính.
 
 ### 2. Runner (`apps/web/src/runner`)

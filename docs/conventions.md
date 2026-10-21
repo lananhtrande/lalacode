@@ -29,6 +29,8 @@ shared/         # ui/, lib/, i18n/vi.ts
 - Nút tối thiểu 44×44 px; cỡ chữ thân ≥ 16 px; tương phản AA.
 - Không dùng màu là tín hiệu duy nhất (đúng/sai luôn kèm icon + chữ).
 - Hoạt ảnh tôn trọng `prefers-reduced-motion`.
+- **Không tải font, script hay ảnh từ CDN ngoài** (kể cả Google Fonts): mọi tài nguyên đi từ domain của mình — xem `privacy.md`. Chữ dùng font hệ thống.
+- Token màu/kích thước khai báo một chỗ trong `apps/web/src/index.css` (`@theme` của Tailwind 4); chế độ tối ghi đè chính các biến đó. Nút bấm dùng `min-h-tap` (44 px).
 
 ## Runner protocol
 - Message có kiểu `{ type: 'run' | 'grade' | 'cancel', id, payload }` → `{ type: 'stdout' | 'result' | 'error', id, payload }`.
