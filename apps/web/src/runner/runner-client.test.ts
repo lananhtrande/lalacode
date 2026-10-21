@@ -3,6 +3,7 @@ import { createRunner, DEFAULT_TIMEOUT_MS, LOAD_TIMEOUT_MS, MAX_TIMEOUT_MS } fro
 import {
   PROTOCOL_VERSION,
   isRunnerResponse,
+  type DrawCommand,
   type RunnerRequest,
   type RunnerResponse,
 } from './protocol';
@@ -98,6 +99,7 @@ describe('runner client — chạy bình thường', () => {
     expect(outcome).toEqual({
       ok: true,
       result: { stdout: 'Xin chào\n', stderr: '', durationMs: 3 },
+      drawing: [],
     });
   });
 
@@ -253,6 +255,52 @@ describe('runner client — hết giờ và dựng lại worker', () => {
     runner.dispose();
     expect(workers[0]?.terminated).toBe(true);
     expect(workers).toHaveLength(1);
+  });
+});
+
+describe('runner client — hình vẽ của rùa', () => {
+  const square: DrawCommand[] = [
+    { op: 'line', x1: 0, y1: 0, x2: 60, y2: 0, color: 'red', width: 2 },
+    { op: 'turtle', x: 60, y: 0, heading: 0, visible: true },
+  ];
+
+  it('gom lệnh vẽ gửi kèm kết quả', async () => {
+    const { runner } = makeRunner((request, send) => {
+      if (request.type === 'run') {
+        send({ type: 'started', id: request.id, payload: { loadedMs: 0 } });
+        send({ type: 'drawing', id: request.id, payload: { commands: square } });
+        send({
+          type: 'result',
+          id: request.id,
+          payload: { stdout: '', stderr: '', durationMs: 4 },
+        });
+      }
+    });
+    const outcome = await runner.run('import turtle');
+    expect(outcome.drawing).toEqual(square);
+  });
+
+  it('code lỗi giữa chừng vẫn giữ phần đã vẽ được', async () => {
+    const { runner } = makeRunner((request, send) => {
+      if (request.type === 'run') {
+        send({ type: 'started', id: request.id, payload: { loadedMs: 0 } });
+        send({ type: 'drawing', id: request.id, payload: { commands: square } });
+        send({
+          type: 'error',
+          id: request.id,
+          payload: { kind: 'python', message: 'NameError: name `x` is not defined' },
+        });
+      }
+    });
+    const outcome = await runner.run('import turtle');
+    expect(outcome.ok).toBe(false);
+    expect(outcome.drawing).toHaveLength(2);
+  });
+
+  it('bài không dùng turtle thì danh sách lệnh vẽ rỗng', async () => {
+    const { runner } = makeRunner(replyWithResult('ok\n'));
+    const outcome = await runner.run('print("ok")');
+    expect(outcome.drawing).toEqual([]);
   });
 });
 

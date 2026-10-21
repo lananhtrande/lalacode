@@ -100,6 +100,22 @@ describeWithPython('grader.py', () => {
     expect(report.results[0].message).toBe('Thử lại nhé em.');
   });
 
+  it('chấm được bài dùng rùa turtle, dù CPython ở đây không có tkinter', async () => {
+    // `import turtle` thật sẽ hỏng vì thiếu _tkinter; runGrader gửi kèm rùa tự viết.
+    const code = [
+      'import turtle',
+      'for i in range(4):',
+      '    turtle.forward(60)',
+      '    turtle.left(90)',
+      'print(round(turtle.xcor()), round(turtle.ycor()))',
+    ].join('\n');
+    const { report } = await grade(code, [
+      { type: 'stdout_equals', expected: '0 0\n', message: 'Rùa phải quay về chỗ cũ.' },
+      { type: 'python_assert', code: 'assert round(turtle.heading()) == 0', message: 'm' },
+    ]);
+    expect(report.passed).toBe(true);
+  });
+
   it('dừng tiến trình khi code lặp vô hạn', async () => {
     const result = await runGrader(
       python.command,

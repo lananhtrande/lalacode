@@ -60,7 +60,11 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - **Đồng hồ chỉ chạy khi code của trẻ thật sự chạy.** Worker gửi `started` sau khi Pyodide sẵn sàng; main thread bấm giờ từ đó. Việc nạp Pyodide (≈13 MB WASM, máy yếu mất hàng chục giây) có đồng hồ riêng 60 s. Nếu không tách, lần chạy đầu sau mỗi lần dựng lại worker sẽ bị tính oan là "vòng lặp vô hạn" — đã gặp thật trên WebKit khi chạy e2e.
 - Huỷ (`cancel`) cũng đi qua đúng đường đó: `terminate()` + dựng lại, vì worker đang kẹt không trả lời message.
 - `input()` → **input dựng sẵn trong đề** (`stdin` của từng test), nạp vào Pyodide bằng `setStdin`. Cách này **không cần `SharedArrayBuffer`**, nên **không phải bật COOP/COEP** — đỡ rắc rối và không chặn nhúng video YouTube. Hộp nhập tương tác (cần Atomics) để sau, nếu thật sự cần.
-- `turtle` → module Python tự viết vẽ lên `OffscreenCanvas`/lệnh vẽ gửi về main thread.
+- `turtle` → **module Python tự viết** (`apps/web/src/runner/turtle.py`): nó **ghi lại lệnh vẽ** (`line`, `dot`, `fill`, `turtle`, `clear`) rồi gửi về main thread qua message `drawing`; `turtle-canvas.ts` vẽ lên `<canvas>`. Không vẽ trực tiếp trong worker nên không cần `OffscreenCanvas`.
+  - Rùa được cài vào `sys.modules['turtle']` ngay sau khi nạp Pyodide, nên `import turtle` trong bài của trẻ dùng đúng rùa này.
+  - **`content:verify` cũng cần rùa này**: CPython thật `import turtle` sẽ hỏng vì thiếu `_tkinter` (không có màn hình). `scripts/lib/run-grader.mjs` gửi kèm nguồn `turtle.py`, `grader.py` cài vào `sys.modules` trước khi chạy code.
+  - Code lỗi giữa chừng vẫn gửi phần đã vẽ được, để trẻ thấy hình dừng ở đâu.
+  - Giới hạn 20.000 lệnh vẽ cho một lần chạy, tránh vòng lặp làm phình bộ nhớ.
 - Grader: `apps/web/src/runner/grader.py` — **cùng một file** mà `content:verify` chạy bằng CPython. Mỗi test chạy code học sinh trong namespace mới rồi kiểm tra theo khai báo trong `content-format.md`, trả `{passed, results[]}` với `message` tiếng Việt của người viết bài và `detail` kỹ thuật ("cần ... nhận ...").
 - Worker `exec` grader vào một module riêng thay vì `runPython` thẳng: `runPython` đặt `__name__ = "__main__"` nên khối CLI của grader sẽ chạy và treo worker.
 - Lỗi Python → thông báo tiếng Việt thân thiện (`errors-vi.ts`), **giữ số dòng** của code trẻ và giữ nguyên văn dòng lỗi (để gỡ rối và để gửi cho dịch vụ gợi ý AI).

@@ -178,6 +178,44 @@ test.describe('runner Pyodide', () => {
     }
   });
 
+  test('rùa turtle vẽ được hình lên canvas', async ({ page }) => {
+    await page.goto('/thu-runner');
+    await page
+      .getByLabel('Code Python')
+      .fill(
+        'import turtle\nturtle.pencolor("red")\nfor i in range(4):\n    turtle.forward(60)\n    turtle.left(90)\n',
+      );
+    await page.getByRole('button', { name: 'Chạy' }).click();
+
+    // Hình vuông = 4 nét.
+    await expect(page.getByTestId('runner-draw-count')).toHaveText('4', { timeout: 120_000 });
+
+    // Canvas thật sự có mực, không phải vẫn trắng tinh.
+    const inked = await page.evaluate(() => {
+      const canvas = document.querySelector<HTMLCanvasElement>('[data-testid="runner-canvas"]');
+      const context = canvas?.getContext('2d');
+      if (!canvas || !context) return -1;
+      const { data } = context.getImageData(0, 0, canvas.width, canvas.height);
+      let count = 0;
+      for (let index = 3; index < data.length; index += 4) if ((data[index] ?? 0) > 0) count += 1;
+      return count;
+    });
+    expect(inked).toBeGreaterThan(100);
+  });
+
+  test('code dùng turtle bị lỗi giữa chừng vẫn giữ phần đã vẽ', async ({ page }) => {
+    await page.goto('/thu-runner');
+    await page
+      .getByLabel('Code Python')
+      .fill('import turtle\nturtle.forward(50)\nturtle.left(90)\nturtle.forward(sai_ten)\n');
+    await page.getByRole('button', { name: 'Chạy' }).click();
+    await expect(page.getByTestId('runner-status')).toContainText('lỗi (python)', {
+      timeout: 120_000,
+    });
+    await expect(page.getByTestId('runner-draw-count')).toHaveText('1');
+    await expect(page.getByTestId('runner-output')).toContainText('Python chưa biết tên');
+  });
+
   test('Pyodide tải từ chính domain của mình, không qua CDN ngoài', async ({ page }) => {
     const externalRequests: string[] = [];
     page.on('request', (request) => {

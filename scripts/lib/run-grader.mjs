@@ -1,5 +1,6 @@
 // Gọi grader.py trong một tiến trình con, có giới hạn thời gian.
 import { spawn } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { projectDir } from './read-content.mjs';
 
@@ -15,6 +16,8 @@ export const PROCESS_MARGIN_MS = 5000;
 /**
  * @returns {Promise<{report?: object, timedOut?: true, crashed?: string}>}
  */
+export const TURTLE = path.join(projectDir, 'apps', 'web', 'src', 'runner', 'turtle.py');
+
 export function runGrader(python, job, timeoutMs, marginMs = PROCESS_MARGIN_MS) {
   return new Promise((resolve) => {
     const child = spawn(python, [GRADER], { cwd: projectDir });
@@ -44,6 +47,7 @@ export function runGrader(python, job, timeoutMs, marginMs = PROCESS_MARGIN_MS) 
       }
     });
 
-    child.stdin.end(JSON.stringify(job));
+    // Gửi kèm rùa tự viết: bài dùng `import turtle` phải chạy được không cần màn hình.
+    child.stdin.end(JSON.stringify({ ...job, turtle_source: readFileSync(TURTLE, 'utf8') }));
   });
 }

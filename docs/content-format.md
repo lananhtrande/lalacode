@@ -112,6 +112,23 @@ Việc chạy thật lời giải và starter là của `npm run content:verify`
 - Đừng viết đáp án trong `prompt`, `hints` hay `message` của test.
 - `solution` chỉ dùng cho `content:verify` và (sau này) cho dịch vụ gợi ý AI ở phía server.
 
+### Bài có vẽ hình (`turtle: true`)
+
+Rùa là **bản tự viết** (`apps/web/src/runner/turtle.py`), không phải `turtle` của CPython — bản thật cần tkinter nên không chạy được cả trên web lẫn trong `content:verify`. Chỉ dùng những lệnh có trong bảng này; cần thêm lệnh thì sửa `turtle.py` trước, đừng để bài học tự chế:
+
+| Nhóm | Lệnh |
+| --- | --- |
+| Di chuyển | `forward`/`fd`, `backward`/`bk`, `right`/`rt`, `left`/`lt`, `goto`/`setpos`, `setx`, `sety`, `setheading`/`seth`, `home`, `circle`, `dot` |
+| Bút | `penup`/`pu`, `pendown`/`pd`, `pensize`/`width`, `pencolor`, `color`, `fillcolor`, `begin_fill`, `end_fill` |
+| Hiển thị | `hideturtle`/`ht`, `showturtle`/`st`, `speed` (không có tác dụng), `clear`, `reset`, `done`, `exitonclick`, `mainloop` |
+| Đọc trạng thái | `position`/`pos`, `xcor`, `ycor`, `heading`, `isdown` |
+
+Dùng được cả `import turtle` rồi `turtle.forward(60)`, lẫn `t = turtle.Turtle()`.
+
+Toạ độ như turtle thật: gốc ở giữa, trục y hướng lên, 0 độ là hướng phải. Màu nhận tên tiếng Anh (`"red"`, `"blue"`) hoặc mã hex.
+
+Test cho bài vẽ hình: dùng `python_assert` hoặc `variable_equals` để kiểm tra **vị trí/hướng của rùa** (`turtle.xcor()`, `turtle.heading()`), vì hiện chưa có cách so sánh hình vẽ.
+
 ## Nguyên tắc sư phạm (trẻ 10–15 tuổi)
 
 - **Một khái niệm mới mỗi bài.** 2 phút đọc/xem + 3–5 bài tập, tổng ≤ 15 phút.

@@ -5,12 +5,13 @@
  * - Chỉ truyền JSON thuần, không hàm, không object phức tạp.
  * - Đổi hình dạng message → tăng `PROTOCOL_VERSION` và sửa test.
  *
- * Phiên bản 3: `init`, `run`, `grade`; worker báo `started` ngay trước khi chạy
+ * Phiên bản 4: `init`, `run`, `grade`; worker gửi thêm `drawing` khi bài dùng
+ * rùa `turtle` (lệnh vẽ, không phải ảnh); worker báo `started` ngay trước khi chạy
  * code để main thread bấm giờ đúng lúc (không tính thời gian nạp Pyodide).
  * Không có `cancel` — một vòng lặp vô hạn không trả lời message nào cả, nên huỷ
  * thật sự là `terminate()` ở main thread (S0-07).
  */
-export const PROTOCOL_VERSION = 3;
+export const PROTOCOL_VERSION = 4;
 
 export interface RunPayload {
   code: string;
@@ -58,6 +59,29 @@ export interface RunnerErrorPayload {
   message: string;
 }
 
+/**
+ * Lệnh vẽ của rùa (`turtle.py`). Toạ độ theo hệ của turtle: gốc ở giữa, y hướng
+ * lên — `turtle-canvas.ts` lo đổi sang toạ độ canvas.
+ */
+export type DrawCommand =
+  | {
+      op: 'line';
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+      color: string;
+      width: number;
+    }
+  | { op: 'dot'; x: number; y: number; size: number; color: string }
+  | { op: 'fill'; points: [number, number][]; color: string }
+  | { op: 'turtle'; x: number; y: number; heading: number; visible: boolean }
+  | { op: 'clear' };
+
+export interface DrawingPayload {
+  commands: DrawCommand[];
+}
+
 export interface TestResult {
   index: number;
   /** Loại test trong docs/content-format.md, ví dụ `stdout_equals`. */
@@ -82,6 +106,7 @@ export type RunnerResponse =
   | { type: 'stderr'; id: string; payload: OutputPayload }
   | { type: 'result'; id: string; payload: ResultPayload }
   | { type: 'graded'; id: string; payload: GradedPayload }
+  | { type: 'drawing'; id: string; payload: DrawingPayload }
   | { type: 'error'; id: string; payload: RunnerErrorPayload };
 
 /** Kiểm tra message nhận được đúng hình dạng — worker và main thread có thể lệch phiên bản. */
@@ -97,6 +122,7 @@ export function isRunnerResponse(value: unknown): value is RunnerResponse {
     message['type'] === 'stderr' ||
     message['type'] === 'result' ||
     message['type'] === 'graded' ||
+    message['type'] === 'drawing' ||
     message['type'] === 'error'
   );
 }
