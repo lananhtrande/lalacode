@@ -29,3 +29,6 @@ infra/**/*.tfvars
 
 # bundle nội dung do scripts/content-build.mjs sinh ra
 apps/web/public/content/
+
+# bản Pyodide tự host do scripts/copy-pyodide.mjs chép vào
+apps/web/public/pyodide/

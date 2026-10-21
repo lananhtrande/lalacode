@@ -10,11 +10,11 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-02 `packages/content-schema` (zod) + `scripts/content-check.mjs`
 - [x] S0-03 `scripts/content-verify.mjs` (chạy solution/starter bằng CPython) — thêm `content:verify` vào CI (setup-python 3.12)
 - [x] S0-04 Khung app React: router, layout, i18n `vi.ts`, theme token, trang chủ tĩnh
-- [ ] S0-04b Walking skeleton lên AWS: Terraform tối thiểu (S3 private, CloudFront + OAC, response headers CSP/COOP/COEP/HSTS, SPA fallback, GitHub OIDC role) + workflow `deploy-web.yml`: build → upload `releases/<sha>/` → trỏ CloudFront → invalidate; preview cho PR
+- [ ] S0-04b Walking skeleton lên AWS: Terraform tối thiểu (S3 private, CloudFront + OAC, response headers CSP/HSTS — **không cần COOP/COEP**, xem architecture §2, SPA fallback, cache `immutable` cho `/pyodide/*` và `/content/lessons/*`, cache ngắn cho `/content/index.json`, GitHub OIDC role) + workflow `deploy-web.yml`: build → upload `releases/<sha>/` → trỏ CloudFront → invalidate; preview cho PR
 - [x] S0-05 Loader nội dung: build `content/` thành JSON bundle có hash
 
 ## M2 — Runner & chấm bài (tuần 2–4)
-- [ ] S0-06 Pyodide tự host + Web Worker + protocol có version — kiểm tra cache/headers WASM trên CloudFront thật
+- [x] S0-06 Pyodide tự host + Web Worker + protocol có version
 - [ ] S0-07 Timeout & terminate/restart worker
 - [ ] S0-08 Grader Python cho 5 loại test
 - [ ] S0-09 Dịch lỗi Python sang tiếng Việt (`errors-vi.ts`) cho 15 lỗi phổ biến

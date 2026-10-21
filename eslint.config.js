@@ -11,6 +11,8 @@ export default tseslint.config(
       '**/dist/**',
       '**/coverage/**',
       'playwright-report/**',
+      // file sinh ra / chép vào: bundle nội dung và bản Pyodide tự host
+      'apps/web/public/**',
       'test-results/**',
       '.claude/**',
     ],

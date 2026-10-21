@@ -12,6 +12,9 @@ export const routes: RouteObject[] = [
   {
     path: '/',
     Component: RootLayout,
+    // Router cần phần tử này cho lần dựng đầu khi có route lazy; màn hình trắng
+    // chớp nhoáng tốt hơn là một spinner nhấp nháy.
+    HydrateFallback: () => null,
     children: [
       { index: true, Component: HomePage },
       {
@@ -46,6 +49,17 @@ export const routes: RouteObject[] = [
         path: 'gioi-thieu',
         lazy: async () => ({ Component: (await import('../features/about/AboutPage')).AboutPage }),
       },
+      // Trang thử runner chỉ tồn tại khi chạy dev; bản phát hành không có.
+      ...(import.meta.env.DEV
+        ? [
+            {
+              path: 'thu-runner',
+              lazy: async () => ({
+                Component: (await import('../features/dev/RunnerSandboxPage')).RunnerSandboxPage,
+              }),
+            },
+          ]
+        : []),
       { path: '*', Component: NotFoundPage },
     ],
   },

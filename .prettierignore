@@ -4,6 +4,7 @@ coverage/
 playwright-report/
 test-results/
 *.tsbuildinfo
+apps/web/public/
 
 # tài liệu viết tay: giữ nguyên cách xuống dòng và bảng của người viết
 docs/
