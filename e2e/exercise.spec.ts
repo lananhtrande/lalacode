@@ -1,6 +1,22 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const EXERCISE = '/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao';
+
+/**
+ * Đặt nội dung ô code một cách chắc chắn.
+ *
+ * Trước đây test gõ bằng bàn phím (`Ctrl/Cmd+A` rồi `type`). Trên máy CI (Linux)
+ * cách đó không ổn định: nội dung cũ không bị chọn hết nên chữ mới trộn vào chữ
+ * cũ, và lỗi hiện ra là một `SyntaxError` khó hiểu ở tận bước sau. `fill()` ghi
+ * thẳng vào contenteditable, rồi mình kiểm tra lại nội dung ngay — sai là biết
+ * liền, không phải lần ngược từ triệu chứng.
+ */
+async function setCode(page: Page, code: string): Promise<void> {
+  const editor = page.locator('.cm-content');
+  await editor.waitFor();
+  await editor.fill(code);
+  await expect(editor).toHaveText(code.replace(/\n$/, ''), { useInnerText: true });
+}
 
 /**
  * Luồng chính số 1 trong docs/testing.md: mở bài tập → làm sai → thấy báo lỗi
@@ -22,13 +38,8 @@ test.describe('màn bài tập', () => {
 
   test('làm sai rồi sửa đúng: báo lỗi tiếng Việt rồi đạt hết', async ({ page }) => {
     await page.goto(EXERCISE);
-    const editor = page.locator('.cm-content');
-    await expect(editor).toBeVisible();
-
     // Lần 1: in thiếu chữ → chưa đạt, hiện câu nhắc của người viết bài.
-    await editor.click();
-    await page.keyboard.press('ControlOrMeta+a');
-    await page.keyboard.type('print("Xin chào")');
+    await setCode(page, 'print("Xin chào")');
     await page.getByRole('button', { name: 'Nộp bài' }).click();
     await expect(page.getByText('Gần được rồi. Em xem lại phần chưa đạt nhé.')).toBeVisible({
       timeout: 120_000,
@@ -36,9 +47,7 @@ test.describe('màn bài tập', () => {
     await expect(page.getByText(/Test 1: Chưa đạt/)).toBeVisible();
 
     // Lần 2: sửa cho đúng → đạt hết.
-    await editor.click();
-    await page.keyboard.press('ControlOrMeta+a');
-    await page.keyboard.type('print("Xin chào, Python!")');
+    await setCode(page, 'print("Xin chào, Python!")');
     await page.getByRole('button', { name: 'Nộp bài' }).click();
     await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
       timeout: 120_000,
@@ -48,16 +57,11 @@ test.describe('màn bài tập', () => {
 
   test('chạy thử hiện output, code lỗi hiện tiếng Việt kèm số dòng', async ({ page }) => {
     await page.goto(EXERCISE);
-    const editor = page.locator('.cm-content');
-    await editor.click();
-    await page.keyboard.press('ControlOrMeta+a');
-    await page.keyboard.type('print("thử xem")');
+    await setCode(page, 'print("thử xem")');
     await page.getByRole('button', { name: 'Chạy thử' }).click();
     await expect(page.getByTestId('exercise-output')).toHaveText('thử xem\n', { timeout: 120_000 });
 
-    await editor.click();
-    await page.keyboard.press('ControlOrMeta+a');
-    await page.keyboard.type('print(ten_chua_co)');
+    await setCode(page, 'print(ten_chua_co)');
     await page.getByRole('button', { name: 'Chạy thử' }).click();
     const panel = page.getByTestId('exercise-error');
     await expect(panel).toContainText('Python chưa biết tên', { timeout: 120_000 });
