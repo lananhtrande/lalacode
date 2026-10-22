@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.07-lam-di-lam-lai.01-ba-lan-xin-chao",
+  "title": "Ba lần xin chào",
+  "kind": "code",
+  "prompt": "Dùng vòng lặp in chữ `Xin chào` đúng 3 lần, mỗi lần một dòng.",
+  "starterCode": "print(\"Xin chào\")\n",
+  "solution": "for i in range(3):\n    print(\"Xin chào\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Xin chào\nXin chào\nXin chào\n",
+      "message": "Cần đúng ba dòng Xin chào."
+    }
+  ],
+  "hints": [
+    "`range(3)` cho ba lượt chạy.",
+    "Dòng cần lặp phải thụt vào sau dấu hai chấm.",
+    "Ví dụ tương tự: `for i in range(2):` rồi `print(\"Hi\")` in hai dòng."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

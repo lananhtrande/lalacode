@@ -1,0 +1,23 @@
+{
+  "id": "py-khoi-dong.04-may-hoi-em-tra-loi.03-hai-cau-hoi",
+  "title": "Hai câu hỏi",
+  "kind": "code",
+  "prompt": "Nhận tên ở dòng 1 và môn học yêu thích ở dòng 2, rồi in: `Lan thích môn Toán` (thay bằng dữ liệu nhận được).",
+  "starterCode": "ten = input()\n",
+  "solution": "ten = input()\nmon = input()\nprint(f\"{ten} thích môn {mon}\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Lan thích môn Toán\n",
+      "stdin": "Lan\nToán\n",
+      "message": "Câu in ra cần có cả tên và môn học."
+    }
+  ],
+  "hints": [
+    "Mỗi lần gọi `input()` là nhận thêm một dòng.",
+    "Em cần hai biến rồi ghép cả hai vào một câu.",
+    "Ví dụ tương tự: `print(f\"{ban} học lớp {lop}\")`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

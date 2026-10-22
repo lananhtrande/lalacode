@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.03-rua-ve-hinh.02-goc-vuong",
+  "title": "Góc vuông",
+  "kind": "code",
+  "prompt": "Cho rùa đi 80 bước, quay trái 90 độ, rồi đi tiếp 80 bước. Em sẽ được một góc vuông.",
+  "starterCode": "import turtle\n\nturtle.forward(80)\n# quay trái rồi đi tiếp\n",
+  "solution": "import turtle\n\nturtle.forward(80)\nturtle.left(90)\nturtle.forward(80)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.xcor()) == 80 and round(turtle.ycor()) == 80, 'rùa chưa dừng đúng chỗ'",
+      "message": "Sau hai nét, rùa phải ở góc trên bên phải."
+    },
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.heading()) == 90, 'rùa chưa quay trái 90 độ'",
+      "message": "Rùa cần quay trái đúng 90 độ."
+    }
+  ],
+  "hints": [
+    "Quay trái là `left`, số độ đặt trong ngoặc.",
+    "Góc vuông là 90 độ.",
+    "Ví dụ tương tự: đi 30, `turtle.left(90)`, rồi đi 30 nữa."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

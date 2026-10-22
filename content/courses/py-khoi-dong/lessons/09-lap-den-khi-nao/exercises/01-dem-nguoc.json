@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.09-lap-den-khi-nao.01-dem-nguoc",
+  "title": "Đếm ngược",
+  "kind": "code",
+  "prompt": "Đoạn code dưới mới in được một số rồi dừng. Sửa thành vòng lặp `while` để in 3, 2, 1.",
+  "starterCode": "dem = 3\n\nif dem >= 1:\n    print(dem)\n    dem = dem - 1\n",
+  "solution": "dem = 3\n\nwhile dem >= 1:\n    print(dem)\n    dem = dem - 1\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "3\n2\n1\n",
+      "message": "Cần in 3, 2, 1 — mỗi số một dòng."
+    }
+  ],
+  "hints": [
+    "`if` chỉ kiểm tra một lần, `while` kiểm tra lại sau mỗi lượt.",
+    "Đổi `if` thành `while` rồi xem chuyện gì xảy ra.",
+    "Ví dụ tương tự: `while so <= 5:` lặp tới khi `so` vượt quá 5."
+  ],
+  "timeoutMs": 6000,
+  "turtle": false
+}

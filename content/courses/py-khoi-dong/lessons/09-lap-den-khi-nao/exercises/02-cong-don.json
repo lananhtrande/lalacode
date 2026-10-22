@@ -1,0 +1,28 @@
+{
+  "id": "py-khoi-dong.09-lap-den-khi-nao.02-cong-don",
+  "title": "Cộng dồn",
+  "kind": "code",
+  "prompt": "Tính tổng các số từ 1 đến 10 bằng `while`, rồi in ra tổng.",
+  "starterCode": "tong = 0\nso = 1\n\n# lặp tới khi so vượt quá 10\nprint(tong)\n",
+  "solution": "tong = 0\nso = 1\n\nwhile so <= 10:\n    tong = tong + so\n    so = so + 1\n\nprint(tong)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "55\n",
+      "message": "Tổng 1 tới 10 là 55."
+    },
+    {
+      "type": "variable_equals",
+      "name": "tong",
+      "expected": 55,
+      "message": "Biến `tong` phải giữ kết quả cộng dồn."
+    }
+  ],
+  "hints": [
+    "Mỗi lượt cộng `so` vào `tong` rồi tăng `so` lên 1.",
+    "Điều kiện dừng là khi `so` vượt quá 10.",
+    "Ví dụ tương tự: cộng từ 1 tới 5 thì điều kiện là `so <= 5`."
+  ],
+  "timeoutMs": 6000,
+  "turtle": false
+}

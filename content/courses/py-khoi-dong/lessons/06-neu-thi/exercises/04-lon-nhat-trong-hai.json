@@ -1,0 +1,35 @@
+{
+  "id": "py-khoi-dong.06-neu-thi.04-lon-nhat-trong-hai",
+  "title": "Số nào lớn hơn",
+  "kind": "code",
+  "prompt": "Nhận hai số (mỗi số một dòng) rồi in ra số lớn hơn. Nếu hai số bằng nhau thì in `Bằng nhau`.",
+  "starterCode": "a = int(input())\nb = int(input())\n",
+  "solution": "a = int(input())\nb = int(input())\n\nif a > b:\n    print(a)\nelif b > a:\n    print(b)\nelse:\n    print(\"Bằng nhau\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "9\n",
+      "stdin": "9\n4\n",
+      "message": "9 lớn hơn 4."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "7\n",
+      "stdin": "3\n7\n",
+      "message": "7 lớn hơn 3."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Bằng nhau\n",
+      "stdin": "5\n5\n",
+      "message": "Hai số bằng nhau thì in Bằng nhau."
+    }
+  ],
+  "hints": [
+    "Có ba trường hợp, nên cần thêm một nhánh ở giữa.",
+    "`elif` nghĩa là *không phải trường hợp trên, nhưng nếu…*.",
+    "Ví dụ tương tự: `if x > 0:` … `elif x < 0:` … `else:` …"
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

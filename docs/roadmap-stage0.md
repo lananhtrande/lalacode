@@ -35,7 +35,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-20 Bộ eval prompt (30 case) và kết quả lưu trong repo
 
 ## M5 — Nội dung & phát hành (song song, tuần 3–8)
-- [ ] S0-21 10 bài đầu + bài tập (đã verify, đã review)
+- [x] S0-21 10 bài đầu + bài tập (đã verify, đã review)
 - [ ] S0-22 10 bài tiếp
 - [ ] S0-23 Trang giới thiệu cho phụ huynh + trang quyền riêng tư
 - [ ] S0-24 Hoàn thiện infra: budget alarm 20 USD, CloudWatch alarm lỗi/độ trễ Lambda, rà soát quyền IAM tối thiểu (bật model access Claude trong Bedrock — làm tay một lần)

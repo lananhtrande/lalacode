@@ -1,0 +1,23 @@
+{
+  "id": "py-khoi-dong.05-so-va-phep-tinh.03-tuoi-sang-nam",
+  "title": "Tuổi sang năm",
+  "kind": "code",
+  "prompt": "Nhận tuổi người dùng gõ vào, rồi in ra tuổi của họ vào năm sau.",
+  "starterCode": "tuoi = input()\nprint(tuoi + 1)\n",
+  "solution": "tuoi = int(input())\nprint(tuoi + 1)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "13\n",
+      "stdin": "12\n",
+      "message": "Nhớ đổi chữ nhận được thành số trước khi cộng."
+    }
+  ],
+  "hints": [
+    "`input()` trả về chữ, cộng chữ với số thì Python báo lỗi.",
+    "Bọc `int(...)` quanh `input()` để đổi thành số.",
+    "Ví dụ tương tự: `so = int(input())` rồi `print(so * 2)`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

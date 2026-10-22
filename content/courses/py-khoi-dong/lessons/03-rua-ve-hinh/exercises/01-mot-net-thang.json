@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.03-rua-ve-hinh.01-mot-net-thang",
+  "title": "Một nét thẳng",
+  "kind": "code",
+  "prompt": "Gọi rùa ra rồi cho rùa đi thẳng 100 bước.",
+  "starterCode": "import turtle\n\n# cho rùa đi thẳng 100 bước\n",
+  "solution": "import turtle\n\nturtle.forward(100)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.xcor()) == 100, 'rùa chưa đi đủ 100 bước'",
+      "message": "Rùa phải đi thẳng đúng 100 bước."
+    }
+  ],
+  "hints": [
+    "Lệnh đi thẳng là `forward`, số bước đặt trong ngoặc.",
+    "Nhớ viết `turtle.` phía trước tên lệnh.",
+    "Ví dụ tương tự: `turtle.forward(50)` cho rùa đi 50 bước."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

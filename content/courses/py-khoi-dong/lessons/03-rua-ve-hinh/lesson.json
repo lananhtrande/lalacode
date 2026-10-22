@@ -1,0 +1,16 @@
+{
+  "id": "py-khoi-dong.03-rua-ve-hinh",
+  "title": "Rùa vẽ hình",
+  "concepts": [
+    "turtle",
+    "góc quay"
+  ],
+  "estimatedMinutes": 15,
+  "exercises": [
+    "01-mot-net-thang",
+    "02-goc-vuong",
+    "03-hinh-vuong-mau-do",
+    "04-bac-thang"
+  ],
+  "status": "draft"
+}

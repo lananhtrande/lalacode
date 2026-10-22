@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.08-danh-sach-cua-em.02-phan-tu-dau-tien",
+  "title": "Phần tử đầu tiên",
+  "kind": "code",
+  "prompt": "Danh sách `ban` đã có sẵn. In ra tên **người đầu tiên** trong danh sách.",
+  "starterCode": "ban = [\"Lan\", \"Minh\", \"Hoa\"]\nprint(ban[1])\n",
+  "solution": "ban = [\"Lan\", \"Minh\", \"Hoa\"]\nprint(ban[0])\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Lan\n",
+      "message": "Người đầu tiên trong danh sách là Lan."
+    }
+  ],
+  "hints": [
+    "Python đếm từ 0 chứ không từ 1.",
+    "Phần tử đầu tiên có số thứ tự là 0.",
+    "Ví dụ tương tự: `mau[0]` cho màu đầu tiên trong danh sách `mau`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

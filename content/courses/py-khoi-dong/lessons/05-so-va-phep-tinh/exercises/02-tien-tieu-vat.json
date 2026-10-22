@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.05-so-va-phep-tinh.02-tien-tieu-vat",
+  "title": "Tiền tiêu vặt",
+  "kind": "code",
+  "prompt": "Mỗi ngày em để dành 5000 đồng. Tạo biến `moi_ngay` bằng 5000, rồi in số tiền để dành được sau 7 ngày.",
+  "starterCode": "moi_ngay = 5000\n# in số tiền sau 7 ngày\n",
+  "solution": "moi_ngay = 5000\nprint(moi_ngay * 7)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "35000\n",
+      "message": "Bảy ngày thì nhân cho 7 nhé."
+    }
+  ],
+  "hints": [
+    "Để dành 7 ngày là lấy số tiền mỗi ngày nhân 7.",
+    "Dấu nhân trong Python là `*`.",
+    "Ví dụ tương tự: `print(gia * 3)` ra giá của ba món."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

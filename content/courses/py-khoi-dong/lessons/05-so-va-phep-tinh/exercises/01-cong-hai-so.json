@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.05-so-va-phep-tinh.01-cong-hai-so",
+  "title": "Cộng hai số",
+  "kind": "code",
+  "prompt": "In ra kết quả của 125 cộng 47.",
+  "starterCode": "print(125)\n",
+  "solution": "print(125 + 47)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "172\n",
+      "message": "Kết quả phép cộng chưa đúng."
+    }
+  ],
+  "hints": [
+    "Em viết thẳng phép tính vào trong `print`.",
+    "Dấu cộng trong Python cũng là `+`.",
+    "Ví dụ tương tự: `print(10 + 5)` in ra 15."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

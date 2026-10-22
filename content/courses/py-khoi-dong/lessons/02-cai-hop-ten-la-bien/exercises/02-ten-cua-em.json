@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.02-cai-hop-ten-la-bien.02-ten-cua-em",
+  "title": "Tên của em",
+  "kind": "code",
+  "prompt": "Tạo biến `ten` chứa chữ `Lan` rồi in ra. Chú ý chữ phải nằm trong dấu nháy.",
+  "starterCode": "ten = Lan\nprint(ten)\n",
+  "solution": "ten = \"Lan\"\nprint(ten)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Lan\n",
+      "message": "Màn hình cần hiện đúng chữ Lan."
+    }
+  ],
+  "hints": [
+    "Chữ trong Python phải nằm giữa hai dấu nháy kép.",
+    "Không có dấu nháy, Python tưởng `Lan` là tên một cái hộp khác.",
+    "Ví dụ tương tự: `mon = \"Toán\"` rồi `print(mon)`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

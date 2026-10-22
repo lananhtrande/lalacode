@@ -1,9 +1,23 @@
 {
   "id": "py-khoi-dong",
   "title": "Python khởi động",
-  "summary": "Làm quen với Python qua những bài học ngắn, mỗi ngày 15 phút.",
-  "ageRange": [10, 15],
+  "summary": "Mười bài ngắn đưa em từ dòng print đầu tiên tới tự viết hàm và vẽ hình bằng code.",
+  "ageRange": [
+    10,
+    15
+  ],
   "authorId": "core",
-  "order": ["01-xin-chao"],
+  "order": [
+    "01-xin-chao",
+    "02-cai-hop-ten-la-bien",
+    "03-rua-ve-hinh",
+    "04-may-hoi-em-tra-loi",
+    "05-so-va-phep-tinh",
+    "06-neu-thi",
+    "07-lam-di-lam-lai",
+    "08-danh-sach-cua-em",
+    "09-lap-den-khi-nao",
+    "10-tu-lam-lenh-rieng"
+  ],
   "status": "draft"
 }

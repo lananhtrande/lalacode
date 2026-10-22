@@ -1,0 +1,16 @@
+{
+  "id": "py-khoi-dong.09-lap-den-khi-nao",
+  "title": "Lặp đến khi nào",
+  "concepts": [
+    "while",
+    "điều kiện dừng"
+  ],
+  "estimatedMinutes": 15,
+  "exercises": [
+    "01-dem-nguoc",
+    "02-cong-don",
+    "03-doan-so",
+    "04-xoan-oc"
+  ],
+  "status": "draft"
+}

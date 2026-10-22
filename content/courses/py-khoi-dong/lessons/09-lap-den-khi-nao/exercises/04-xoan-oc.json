@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.09-lap-den-khi-nao.04-xoan-oc",
+  "title": "Xoắn ốc của rùa",
+  "kind": "code",
+  "prompt": "Đoạn code dưới vẽ một hình vuông cạnh 5. Sửa thành `while` để cạnh dài thêm 5 sau mỗi lượt, dừng khi cạnh vượt quá 100.",
+  "starterCode": "import turtle\n\ncanh = 5\n\nfor i in range(4):\n    turtle.forward(canh)\n    turtle.right(90)\n",
+  "solution": "import turtle\n\ncanh = 5\n\nwhile canh <= 100:\n    turtle.forward(canh)\n    turtle.right(90)\n    canh = canh + 5\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert canh > 100, 'vòng lặp chưa có gì làm cạnh dài ra'",
+      "message": "Cạnh phải dài dần ra thì mới thành xoắn ốc."
+    }
+  ],
+  "hints": [
+    "`for` chạy đúng 4 lượt, còn ở đây em chưa biết phải vẽ bao nhiêu lượt.",
+    "Dùng `while canh <= 100:` rồi tăng `canh` trong vòng lặp.",
+    "Ví dụ tương tự: `while buoc <= 50:` rồi `buoc = buoc + 10`."
+  ],
+  "timeoutMs": 6000,
+  "turtle": true
+}

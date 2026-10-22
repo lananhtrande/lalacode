@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.10-tu-lam-lenh-rieng.05-ham-ve-hinh",
+  "title": "Hàm vẽ hình vuông",
+  "kind": "code",
+  "prompt": "Viết hàm `ve_vuong(canh)` vẽ một hình vuông, rồi gọi nó hai lần với cạnh 40 và 70.",
+  "starterCode": "import turtle\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n\nve_vuong(40)\n",
+  "solution": "import turtle\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nve_vuong(40)\nve_vuong(70)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.xcor()) == 0 and round(turtle.ycor()) == 0, 'hình chưa khép kín'",
+      "message": "Hình vuông khép kín thì rùa về đúng chỗ cũ."
+    },
+    {
+      "type": "python_assert",
+      "code": "import turtle as _t\n_t.drain_commands()\nve_vuong(10)\nimport json as _j\n_c = _j.loads(_t.drain_commands())\nassert sum(1 for x in _c if x['op'] == 'line') == 4, 'hàm phải vẽ đúng 4 cạnh'",
+      "message": "Mỗi lần gọi hàm phải vẽ đủ bốn cạnh."
+    }
+  ],
+  "hints": [
+    "Hình vuông cần cả đi lẫn quay trong mỗi lượt.",
+    "Viết hàm xong thì gọi nó hai lần với hai cạnh khác nhau.",
+    "Ví dụ tương tự: `def ve_tam_giac(canh):` với `turtle.left(120)`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.03-rua-ve-hinh.03-hinh-vuong-mau-do",
+  "title": "Hình vuông màu đỏ",
+  "kind": "code",
+  "prompt": "Đổi bút sang màu đỏ rồi vẽ một hình vuông cạnh 60. Hình vuông có 4 cạnh và 4 góc vuông.",
+  "starterCode": "import turtle\n\nturtle.pencolor(\"red\")\nturtle.forward(60)\nturtle.left(90)\n",
+  "solution": "import turtle\n\nturtle.pencolor(\"red\")\nfor canh in range(4):\n    turtle.forward(60)\n    turtle.left(90)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert turtle.pencolor() == 'red', 'bút chưa đổi sang màu đỏ'",
+      "message": "Bút phải là màu đỏ."
+    },
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.xcor()) == 0 and round(turtle.ycor()) == 0, 'rùa chưa về chỗ cũ'",
+      "message": "Vẽ đủ 4 cạnh thì rùa quay về đúng chỗ xuất phát."
+    }
+  ],
+  "hints": [
+    "Hình vuông là bốn lần: đi một cạnh rồi quay trái 90 độ.",
+    "Em viết bốn lần hai dòng đó: đi rồi quay, đi rồi quay.",
+    "Ví dụ tương tự: vẽ tam giác là ba lần đi rồi `turtle.left(120)`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.08-danh-sach-cua-em.04-tong-va-trung-binh",
+  "title": "Tổng và trung bình",
+  "kind": "code",
+  "prompt": "Danh sách `diem` đã có sẵn. In tổng điểm ở dòng 1 và điểm trung bình ở dòng 2.",
+  "starterCode": "diem = [8, 9, 7, 8]\nprint(sum(diem))\n",
+  "solution": "diem = [8, 9, 7, 8]\nprint(sum(diem))\nprint(sum(diem) / len(diem))\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "32\n8.0\n",
+      "message": "Dòng 1 là tổng, dòng 2 là trung bình."
+    }
+  ],
+  "hints": [
+    "`sum` cộng hết, `len` đếm số phần tử.",
+    "Trung bình là tổng chia cho số lượng.",
+    "Ví dụ tương tự: `print(sum(gia) / len(gia))` cho giá trung bình."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

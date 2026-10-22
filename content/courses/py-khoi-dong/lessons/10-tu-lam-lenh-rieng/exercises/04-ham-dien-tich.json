@@ -1,0 +1,42 @@
+{
+  "id": "py-khoi-dong.10-tu-lam-lenh-rieng.04-ham-dien-tich",
+  "title": "Diện tích hình chữ nhật",
+  "kind": "code",
+  "prompt": "Viết hàm `dien_tich(dai, rong)` trả về diện tích, rồi in diện tích của hình dài 8 rộng 3.",
+  "starterCode": "def dien_tich(dai, rong):\n    return 0\n\nprint(dien_tich(8, 3))\n",
+  "solution": "def dien_tich(dai, rong):\n    return dai * rong\n\nprint(dien_tich(8, 3))\n",
+  "tests": [
+    {
+      "type": "function_returns",
+      "name": "dien_tich",
+      "args": [
+        8,
+        3
+      ],
+      "expected": 24,
+      "message": "Diện tích hình 8 x 3 là 24."
+    },
+    {
+      "type": "function_returns",
+      "name": "dien_tich",
+      "args": [
+        5,
+        5
+      ],
+      "expected": 25,
+      "message": "Hình vuông cạnh 5 có diện tích 25."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "24\n",
+      "message": "Nhớ in kết quả của hình 8 x 3 ra màn hình."
+    }
+  ],
+  "hints": [
+    "Diện tích hình chữ nhật là dài nhân rộng.",
+    "Hàm đang trả về 0, em sửa thành phép nhân.",
+    "Ví dụ tương tự: `def chu_vi(a, b): return (a + b) * 2`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}
