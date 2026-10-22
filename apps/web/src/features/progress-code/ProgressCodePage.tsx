@@ -8,6 +8,7 @@ import {
   ProgressCodeError,
 } from '../../progress/share-code';
 import { vi } from '../../shared/i18n/vi';
+import { DeleteDataPanel } from './DeleteDataPanel';
 
 type ImportState = { kind: 'idle' } | { kind: 'done' } | { kind: 'error'; message: string };
 
@@ -132,6 +133,7 @@ export function ProgressCodePage() {
           </p>
         )}
       </div>
+      <DeleteDataPanel onDeleted={() => setCode('')} />
     </section>
   );
 }

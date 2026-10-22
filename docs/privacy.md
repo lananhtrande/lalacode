@@ -31,7 +31,7 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 
 - **S0-12**: tiến độ nằm trong IndexedDB trên máy. Hồ sơ chỉ có: ngày tạo, ngày học gần nhất, số ngày liên tiếp, danh sách huy hiệu, và **biệt danh tuỳ chọn — hiện chưa có ô nhập trong UI**, chỉ có chỗ trong schema. Không có ô nào hỏi tên thật, tuổi, trường lớp.
 - Code nháp của trẻ lưu trên máy để mở lại bài là thấy nguyên bài đang làm dở. Có test e2e khẳng định **không request nào mang code của trẻ rời khỏi máy**.
-- Nút xoá toàn bộ dữ liệu (S0-16) gọi `clearAllProgress()` — đã có sẵn và có test.
+- **S0-16 nút xoá toàn bộ dữ liệu** nằm ở trang `/tien-do`: hỏi lại một lần ngay trong giao diện (không dùng hộp thoại `confirm()` của trình duyệt), nhắc trẻ sao chép mã tiến độ trước nếu muốn giữ, rồi `deleteAllData()` dọn sạch từng store **và xoá hẳn database**. Màn hình tự dọn theo. Có test e2e: xoá → bản đồ về 0/2, huy hiệu về 0/6, **tải lại trang vẫn sạch**.
 - **S0-15 link báo cáo**: dùng lại mã tiến độ, đặt sau dấu `#` nên **trình duyệt không gửi lên máy chủ** (có test e2e khẳng định). Trang chỉ hiện số liệu; không có họ tên, không có code của trẻ. Hai giới hạn phải nói thật:
   - Phần sau `#` không đi theo request nào, **nhưng extension trình duyệt hoặc tính năng đồng bộ lịch sử vẫn đọc được địa chỉ đang mở**. Đây là giới hạn chung của mọi thiết kế giấu dữ liệu sau `#`, không riêng lalacode. Vì vậy link chỉ nên chứa thứ không nhạy cảm — và nó đúng là vậy.
   - **Mã không có chữ ký**, nên ai biết cấu trúc đều tự ghép được một báo cáo đẹp. Link này để bố mẹ theo dõi cho vui, **không dùng làm bằng chứng chấm điểm**.

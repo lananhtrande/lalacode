@@ -60,6 +60,51 @@ test.describe('mã tiến độ', () => {
     await expect(page.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('1/2');
   });
 
+  test('xoá toàn bộ dữ liệu: hỏi lại, xoá sạch, và sạch cả sau khi tải lại', async ({ page }) => {
+    test.setTimeout(240_000);
+
+    await page.goto('/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao');
+    await page.locator('.cm-content').fill('print("Xin chào, Python!")');
+    await page.getByRole('button', { name: 'Nộp bài' }).click();
+    await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
+      timeout: 120_000,
+    });
+
+    await page.goto('/ban-do');
+    await expect(page.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('1/2');
+
+    // Bấm xoá thì phải hỏi lại trước đã.
+    await page.goto('/tien-do');
+    await expect(page.getByTestId('progress-code')).toBeVisible();
+    await page.getByTestId('delete-start').click();
+    await expect(page.getByTestId('delete-confirm')).toBeVisible();
+
+    // Đổi ý thì không mất gì.
+    await page.getByRole('button', { name: 'Thôi, giữ lại' }).click();
+    await expect(page.getByTestId('delete-confirm')).toBeHidden();
+    await page.goto('/ban-do');
+    await expect(page.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('1/2');
+
+    // Xoá thật.
+    await page.goto('/tien-do');
+    await page.getByTestId('delete-start').click();
+    await page.getByTestId('delete-yes').click();
+    await expect(page.getByTestId('delete-done')).toBeVisible();
+    // Màn hình phải dọn theo ngay, không để lại mã cũ.
+    await expect(page.getByTestId('progress-code')).toBeHidden();
+
+    await page.goto('/ban-do');
+    await expect(page.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('0/2');
+    await page.goto('/huy-hieu');
+    await expect(page.getByTestId('badge-count')).toContainText('0/6');
+
+    // Tải lại trang vẫn sạch: dữ liệu mất thật, không phải chỉ ẩn đi.
+    await page.reload();
+    await expect(page.getByTestId('badge-count')).toContainText('0/6');
+    await page.goto('/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao');
+    await expect(page.locator('.cm-content')).toContainText('Viết code của em');
+  });
+
   test('chưa học gì thì chưa có mã để sao chép', async ({ page }) => {
     await page.goto('/tien-do');
     await expect(page.getByTestId('no-code')).toBeVisible();

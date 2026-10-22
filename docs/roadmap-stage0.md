@@ -26,7 +26,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-13 Bản đồ nhiệm vụ, streak, 6 huy hiệu đầu
 - [x] S0-14 Mã tiến độ xuất/nhập — **không đưa `draftCode` vào mã chia sẻ** (code trẻ tự gõ, có thể vô tình chứa tên thật)
 - [x] S0-15 Link báo cáo cho bố mẹ (`#fragment`) + trang báo cáo — chỉ hiện số liệu tiến độ, **không hiện code của trẻ**
-- [ ] S0-16 Nút xoá toàn bộ dữ liệu trên máy (`clearAllProgress()` đã có từ S0-12) — nhớ dọn luôn state đang hiển thị trên màn hình, và e2e: xoá → tải lại → sạch
+- [x] S0-16 Nút xoá toàn bộ dữ liệu trên máy (`clearAllProgress()` đã có từ S0-12) — nhớ dọn luôn state đang hiển thị trên màn hình, và e2e: xoá → tải lại → sạch
 
 ## M4 — Gợi ý AI (tuần 5–6)
 - [x] S0-17 Lambda `ai-hint`: validate, sanitize, prompt, gọi Claude qua Bedrock (IAM role, profile global)
