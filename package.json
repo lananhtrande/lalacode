@@ -25,6 +25,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:csp": "PLAYWRIGHT_CSP=1 playwright test",
+    "eval:hints": "npm run eval:hints -w @lalacode/ai-hint",
     "content:check": "node scripts/content-check.mjs",
     "content:build": "node scripts/content-build.mjs",
     "pyodide:copy": "node scripts/copy-pyodide.mjs",

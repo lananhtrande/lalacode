@@ -9,7 +9,7 @@
 | Runner thật | Playwright + Pyodide | `npm run test:e2e -- runner` | Đổi runner, protocol, phiên bản Pyodide |
 | E2E luồng chính | Playwright | `npm run test:e2e` | Đổi UI của bài học/bài tập/báo cáo |
 | Lambda | Vitest, mock Bedrock Runtime & DynamoDB (`aws-sdk-client-mock`) | `npm run test -w @lalacode/ai-hint` | Mọi thay đổi `services/ai-hint` |
-| Prompt AI | Bộ case cố định (`prompt.cases.json`) chạy thủ công với Bedrock thật (profile AWS có quyền) | `npm run eval:hints` | Đổi prompt hoặc model |
+| Prompt AI | 30 case cố định (`services/ai-hint/eval/cases.json`) chạy thủ công với Bedrock thật | `npm run eval:hints` | Đổi prompt hoặc model |
 
 ## Chấm bài: một bản cài đặt, hai nơi chạy
 
@@ -40,6 +40,15 @@ Nâng phiên bản Pyodide thì chạy lại bộ e2e này: nếu Pyodide đổi
 1. **Prompt hệ thống** (`prompt.test.ts`): khẳng định prompt có đủ các luật của CLAUDE.md §4 — cấm đưa lời giải đầy đủ, cấm hỏi thông tin cá nhân, cấm chê trẻ, đủ ba mức gợi ý. Đây là thứ duy nhất đứng giữa một mô hình ngôn ngữ và một đứa trẻ, nên nó phải có test.
 2. **Bộ lọc** (`sanitize.test.ts`): email, số điện thoại Việt Nam nhiều kiểu viết, dãy số dài, đường link đều bị che; code bình thường thì **không** bị đụng tới.
 3. **Log** (`index.test.ts`): chạy handler rồi bắt `console.log`, khẳng định log **không** chứa code của trẻ, lỗi Python, hay token.
+
+## Bộ eval prompt (30 case)
+
+Xem `services/ai-hint/eval/README.md`. Điểm chính:
+
+- Chạy **tay**, không trong CI: gọi Bedrock thật nên tốn tiền và cần quyền AWS.
+- Chạy **mỗi khi đổi prompt hoặc đổi model**, rồi **commit kết quả** trong `eval/results/` để so sánh được với lần trước.
+- Luật chấm (`checks.ts`) là hàm thuần và **có unit test riêng**, chạy trong `npm run check` mà không cần AWS — bộ chấm sai thì biết ngay, không phải đoán.
+- Máy chỉ chấm được phần luật (tiếng Việt, độ dài, không lộ lời giải, không hỏi thông tin cá nhân, không nghe theo code, lạc đề thì kéo về bài). Chất lượng sư phạm vẫn phải người đọc.
 
 ## Luồng E2E tối thiểu
 1. Mở trang chủ → vào bài 1 → đọc → làm bài tập 1 sai → thấy thông báo lỗi tiếng Việt → sửa đúng → huy hiệu.

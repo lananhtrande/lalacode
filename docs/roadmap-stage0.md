@@ -32,7 +32,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-17 Lambda `ai-hint`: validate, sanitize, prompt, gọi Claude qua Bedrock (IAM role, profile global)
 - [x] S0-18 Rate limit DynamoDB + giới hạn toàn cục + công tắc tắt — Terraform thêm Lambda, Function URL sau CloudFront, DynamoDB, IAM `bedrock:InvokeModel`; workflow `deploy-ai-hint.yml`
 - [x] S0-19 Panel gợi ý 3 mức trong UI + gợi ý tĩnh dự phòng — **bắt buộc có câu nhắc trẻ đừng gõ tên thật/địa chỉ vào code** trước khi gửi cho AI (bộ lọc không bắt được tên viết trơ trọi, xem privacy.md)
-- [ ] S0-20 Bộ eval prompt (30 case) và kết quả lưu trong repo
+- [x] S0-20 Bộ eval prompt (30 case) và kết quả lưu trong repo
 
 ## M5 — Nội dung & phát hành (song song, tuần 3–8)
 - [ ] S0-21 10 bài đầu + bài tập (đã verify, đã review)

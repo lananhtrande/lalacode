@@ -51,7 +51,14 @@ export default tseslint.config(
   },
   {
     // Script và test chạy ở terminal: in ra màn hình là chuyện bình thường.
-    files: ['scripts/**', 'e2e/**', '**/*.config.{ts,js,mjs}', '**/*.test.{ts,tsx}'],
+    files: [
+      'scripts/**',
+      'e2e/**',
+      // Bộ eval prompt là công cụ chạy tay ở terminal, in ra là việc của nó.
+      'services/*/eval/**',
+      '**/*.config.{ts,js,mjs}',
+      '**/*.test.{ts,tsx}',
+    ],
     rules: { 'no-console': 'off' },
   },
   eslintConfigPrettier,
