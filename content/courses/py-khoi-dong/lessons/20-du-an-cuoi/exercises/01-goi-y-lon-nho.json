@@ -1,0 +1,35 @@
+{
+  "id": "py-khoi-dong.20-du-an-cuoi.01-goi-y-lon-nho",
+  "title": "Gợi ý lớn hơn hay nhỏ hơn",
+  "kind": "code",
+  "prompt": "Số bí mật là 12. Nhận một số đoán, in `Lớn hơn nhé` nếu đoán nhỏ hơn bí mật, `Nhỏ hơn nhé` nếu đoán lớn hơn, `Đúng rồi!` nếu trúng.",
+  "starterCode": "bi_mat = 12\ndoan = int(input())\n\nif doan == bi_mat:\n    print(\"Đúng rồi!\")\n",
+  "solution": "bi_mat = 12\ndoan = int(input())\n\nif doan == bi_mat:\n    print(\"Đúng rồi!\")\nelif doan < bi_mat:\n    print(\"Lớn hơn nhé\")\nelse:\n    print(\"Nhỏ hơn nhé\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Đúng rồi!\n",
+      "stdin": "12\n",
+      "message": "Đoán trúng thì khen em một câu."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Lớn hơn nhé\n",
+      "stdin": "5\n",
+      "message": "Đoán 5 mà bí mật là 12 thì phải gợi ý lớn hơn."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Nhỏ hơn nhé\n",
+      "stdin": "18\n",
+      "message": "Đoán 18 thì phải gợi ý nhỏ hơn."
+    }
+  ],
+  "hints": [
+    "Có ba trường hợp: trúng, nhỏ quá, lớn quá.",
+    "Dùng `elif` cho trường hợp ở giữa.",
+    "Ví dụ tương tự: so sánh điểm với mức chuẩn rồi in ba loại nhận xét."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

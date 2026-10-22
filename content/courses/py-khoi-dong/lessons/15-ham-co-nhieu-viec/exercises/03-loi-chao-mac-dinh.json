@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.15-ham-co-nhieu-viec.03-loi-chao-mac-dinh",
+  "title": "Lời chào mặc định",
+  "kind": "code",
+  "prompt": "Viết hàm `chao(ten, loi=\"Xin chào\")` in ra `Xin chào Lan!`. Gọi một lần chỉ với tên, một lần với lời chào `Chào buổi sáng`.",
+  "starterCode": "def chao(ten, loi):\n    print(f\"{loi} {ten}!\")\n\nchao(\"Lan\")\nchao(\"Minh\", \"Chào buổi sáng\")\n",
+  "solution": "def chao(ten, loi=\"Xin chào\"):\n    print(f\"{loi} {ten}!\")\n\nchao(\"Lan\")\nchao(\"Minh\", \"Chào buổi sáng\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Xin chào Lan!\nChào buổi sáng Minh!\n",
+      "message": "Gọi thiếu lời chào thì dùng lời mặc định."
+    }
+  ],
+  "hints": [
+    "Gọi `chao(\"Lan\")` đang thiếu tham số thứ hai.",
+    "Cho `loi` một giá trị mặc định ngay trong dòng `def`.",
+    "Ví dụ tương tự: `def tinh(a, b=10): return a + b`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

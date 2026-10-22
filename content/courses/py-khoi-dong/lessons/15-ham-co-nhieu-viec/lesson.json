@@ -1,0 +1,16 @@
+{
+  "id": "py-khoi-dong.15-ham-co-nhieu-viec",
+  "title": "Hàm có nhiều việc",
+  "concepts": [
+    "nhiều tham số",
+    "giá trị mặc định"
+  ],
+  "estimatedMinutes": 14,
+  "exercises": [
+    "01-gioi-thieu",
+    "02-xep-loai",
+    "03-loi-chao-mac-dinh",
+    "04-tinh-tien"
+  ],
+  "status": "draft"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.11-choi-voi-chu.03-chu-cai-dau",
+  "title": "Chữ cái đầu",
+  "kind": "code",
+  "prompt": "Nhận một tên rồi in ra chữ cái đầu tiên, viết hoa. Ví dụ `lan` thì in `L`.",
+  "starterCode": "ten = input()\nprint(ten[0])\n",
+  "solution": "ten = input()\nprint(ten[0].upper())\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "L\n",
+      "stdin": "lan\n",
+      "message": "Chữ cái đầu phải viết hoa."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "M\n",
+      "stdin": "minh\n",
+      "message": "Thử với tên khác xem sao."
+    }
+  ],
+  "hints": [
+    "`ten[0]` cho em ký tự đầu tiên.",
+    "Ký tự cũng là một chuỗi, nên `.upper()` dùng được cho nó.",
+    "Ví dụ tương tự: `print(mon[0].lower())`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

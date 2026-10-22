@@ -36,7 +36,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 
 ## M5 — Nội dung & phát hành (song song, tuần 3–8)
 - [x] S0-21 10 bài đầu + bài tập (đã verify, đã review)
-- [ ] S0-22 10 bài tiếp
+- [x] S0-22 10 bài tiếp — bài 11–20, khoá đủ 20 bài / 79 bài tập (đã verify, đã review). Bài 20 là dự án cuối, dài ~20 phút: ngoại lệ đã ghi trong `docs/content-format.md`.
 - [ ] S0-23 Trang giới thiệu cho phụ huynh + trang quyền riêng tư
 - [ ] S0-24 Hoàn thiện infra: budget alarm 20 USD, CloudWatch alarm lỗi/độ trễ Lambda, rà soát quyền IAM tối thiểu (bật model access Claude trong Bedrock — làm tay một lần)
 - [ ] S0-25 Hoàn thiện CI/CD: **preview cho từng PR** (dời từ S0-04b), workflow `rollback-web.yml` (trỏ về `releases/<sha>` trước), `terraform plan` đăng vào PR, dọn preview cũ, Dependabot

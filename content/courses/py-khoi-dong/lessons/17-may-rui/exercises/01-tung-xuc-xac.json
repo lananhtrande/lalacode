@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.17-may-rui.01-tung-xuc-xac",
+  "title": "Tung xúc xắc",
+  "kind": "code",
+  "prompt": "Tạo biến `so` là một số ngẫu nhiên từ 1 đến 6 rồi in ra.",
+  "starterCode": "import random\n\nso = 7\nprint(so)\n",
+  "solution": "import random\n\nso = random.randint(1, 6)\nprint(so)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert 1 <= so <= 6, f'số {so} không nằm trong 1..6'",
+      "message": "Xúc xắc chỉ có mặt từ 1 đến 6 thôi."
+    }
+  ],
+  "hints": [
+    "`random.randint(a, b)` cho số ngẫu nhiên từ a tới b.",
+    "Thay số 1 cố định bằng lời gọi đó.",
+    "Ví dụ tương tự: `random.randint(1, 100)` cho số từ 1 tới 100."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.15-ham-co-nhieu-viec.01-gioi-thieu",
+  "title": "Giới thiệu bản thân",
+  "kind": "code",
+  "prompt": "Viết hàm `gioi_thieu(ten, tuoi)` in ra `Lan, 12 tuổi`, rồi gọi với Lan và 12.",
+  "starterCode": "def gioi_thieu(ten, tuoi):\n    print(f\"{ten} tuổi\")\n\ngioi_thieu(\"Lan\", 12)\n",
+  "solution": "def gioi_thieu(ten, tuoi):\n    print(f\"{ten}, {tuoi} tuổi\")\n\ngioi_thieu(\"Lan\", 12)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Lan, 12 tuổi\n",
+      "message": "Câu in ra cần có cả tên và tuổi, cách nhau bằng dấu phẩy."
+    }
+  ],
+  "hints": [
+    "Tham số `tuoi` đang bị bỏ quên trong câu in.",
+    "Đặt `{tuoi}` vào đúng chỗ trong f-string.",
+    "Ví dụ tương tự: `print(f\"{mon} được {diem} điểm\")`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

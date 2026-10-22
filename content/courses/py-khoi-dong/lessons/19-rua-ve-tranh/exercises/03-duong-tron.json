@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.19-rua-ve-tranh.03-duong-tron",
+  "title": "Khuôn mặt tròn",
+  "kind": "code",
+  "prompt": "Vẽ một đường tròn bán kính 50, rồi nhấc bút dời tới (0, 80) và chấm một chấm vàng to 25.",
+  "starterCode": "import turtle\n\nturtle.circle(50)\n",
+  "solution": "import turtle\n\nturtle.circle(50)\nturtle.penup()\nturtle.goto(0, 80)\nturtle.pendown()\nturtle.dot(25, \"yellow\")\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\nassert sum(1 for x in _c if x['op'] == 'line') > 10, 'chưa thấy đường tròn'",
+      "message": "Đường tròn được vẽ bằng nhiều đoạn thẳng nhỏ."
+    },
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\n_d = [x for x in _c if x['op'] == 'dot']\nassert _d and _d[0]['color'] == 'yellow', 'chưa thấy chấm vàng'",
+      "message": "Cần thêm một chấm màu vàng ở trên."
+    }
+  ],
+  "hints": [
+    "`circle` nhận bán kính.",
+    "Dời chỗ thì nhớ `penup()` trước và `pendown()` sau.",
+    "Ví dụ tương tự: `turtle.circle(20)` vẽ đường tròn nhỏ."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

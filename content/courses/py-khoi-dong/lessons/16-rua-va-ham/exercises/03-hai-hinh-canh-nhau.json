@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.16-rua-va-ham.03-hai-hinh-canh-nhau",
+  "title": "Hai hình cạnh nhau",
+  "kind": "code",
+  "prompt": "Vẽ một hình vuông cạnh 40, rồi nhấc bút dời sang phải 100 bước và vẽ hình vuông thứ hai cạnh 40.",
+  "starterCode": "import turtle\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nve_vuong(40)\nturtle.goto(100, 0)\nve_vuong(40)\n",
+  "solution": "import turtle\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nve_vuong(40)\nturtle.penup()\nturtle.goto(100, 0)\nturtle.pendown()\nve_vuong(40)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\nassert sum(1 for x in _c if x['op'] == 'line') == 8, 'phải có đúng 8 nét: hai hình vuông, không có nét thừa khi dời chỗ'",
+      "message": "Hai hình vuông là 8 nét. Dời chỗ mà quên nhấc bút sẽ thừa một nét."
+    }
+  ],
+  "hints": [
+    "Khi dời chỗ, rùa đang kéo theo một đường kẻ.",
+    "Nhấc bút bằng `penup()` trước khi dời, rồi `pendown()` sau khi tới nơi.",
+    "Ví dụ tương tự: nhấc bút, `goto(0, 100)`, đặt bút, rồi vẽ tiếp."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

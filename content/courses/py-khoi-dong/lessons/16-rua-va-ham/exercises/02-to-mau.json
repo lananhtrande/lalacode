@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.16-rua-va-ham.02-to-mau",
+  "title": "Tô màu hình vuông",
+  "kind": "code",
+  "prompt": "Tô một hình vuông cạnh 60 bằng màu cam. Dùng `fillcolor`, `begin_fill` và `end_fill`.",
+  "starterCode": "import turtle\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nturtle.fillcolor(\"orange\")\nve_vuong(60)\n",
+  "solution": "import turtle\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nturtle.fillcolor(\"orange\")\nturtle.begin_fill()\nve_vuong(60)\nturtle.end_fill()\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\n_f = [x for x in _c if x['op'] == 'fill']\nassert _f and _f[0]['color'] == 'orange', 'chưa thấy mảng tô màu cam'",
+      "message": "Hình vuông cần được tô màu cam bên trong."
+    }
+  ],
+  "hints": [
+    "Đặt `begin_fill()` trước khi vẽ và `end_fill()` sau khi vẽ xong.",
+    "Màu tô chọn bằng `fillcolor` trước đó.",
+    "Ví dụ tương tự: tô tam giác bằng `fillcolor(\"blue\")` rồi `begin_fill()`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

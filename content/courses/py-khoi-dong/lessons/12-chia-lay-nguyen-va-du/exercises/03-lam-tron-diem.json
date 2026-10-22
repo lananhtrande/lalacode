@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.12-chia-lay-nguyen-va-du.03-lam-tron-diem",
+  "title": "Làm tròn điểm",
+  "kind": "code",
+  "prompt": "Nhận ba điểm kiểm tra rồi in điểm trung bình, làm tròn tới một chữ số sau dấu phẩy.",
+  "starterCode": "a = int(input())\nb = int(input())\nc = int(input())\nprint((a + b + c) / 3)\n",
+  "solution": "a = int(input())\nb = int(input())\nc = int(input())\nprint(round((a + b + c) / 3, 1))\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "7.7\n",
+      "stdin": "7\n8\n8\n",
+      "message": "Trung bình của 7, 8, 8 làm tròn là 7.7."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "8.0\n",
+      "stdin": "7\n8\n9\n",
+      "message": "Trung bình của 7, 8, 9 là 8.0."
+    }
+  ],
+  "hints": [
+    "`round` nhận thêm số chữ số muốn giữ lại.",
+    "`round(x, 1)` giữ một chữ số sau dấu phẩy.",
+    "Ví dụ tương tự: `round(3.14159, 2)` ra 3.14."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

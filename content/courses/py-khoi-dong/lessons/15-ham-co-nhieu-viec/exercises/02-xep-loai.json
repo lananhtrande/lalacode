@@ -1,0 +1,44 @@
+{
+  "id": "py-khoi-dong.15-ham-co-nhieu-viec.02-xep-loai",
+  "title": "Xếp loại học lực",
+  "kind": "code",
+  "prompt": "Viết hàm `xep_loai(diem)` trả về `Giỏi` nếu điểm từ 8, `Khá` nếu từ 6.5, còn lại `Cần cố gắng`.",
+  "starterCode": "def xep_loai(diem):\n    return \"Giỏi\"\n",
+  "solution": "def xep_loai(diem):\n    if diem >= 8:\n        return \"Giỏi\"\n    if diem >= 6.5:\n        return \"Khá\"\n    return \"Cần cố gắng\"\n",
+  "tests": [
+    {
+      "type": "function_returns",
+      "name": "xep_loai",
+      "args": [
+        9
+      ],
+      "expected": "Giỏi",
+      "message": "9 điểm là Giỏi."
+    },
+    {
+      "type": "function_returns",
+      "name": "xep_loai",
+      "args": [
+        7
+      ],
+      "expected": "Khá",
+      "message": "7 điểm là Khá."
+    },
+    {
+      "type": "function_returns",
+      "name": "xep_loai",
+      "args": [
+        5
+      ],
+      "expected": "Cần cố gắng",
+      "message": "5 điểm thì cần cố gắng thêm."
+    }
+  ],
+  "hints": [
+    "Hàm đang trả về Giỏi cho mọi điểm.",
+    "Dùng `if` để tách ba trường hợp, mỗi trường hợp một `return`.",
+    "Ví dụ tương tự: `if tuoi >= 18: return \"Người lớn\"`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

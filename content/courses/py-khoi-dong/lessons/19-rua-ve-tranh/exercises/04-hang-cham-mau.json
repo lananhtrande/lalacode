@@ -1,0 +1,32 @@
+{
+  "id": "py-khoi-dong.19-rua-ve-tranh.04-hang-cham-mau",
+  "title": "Hàng chấm nhiều màu",
+  "kind": "code",
+  "prompt": "Dùng vòng lặp chấm 4 chấm to 20, cách nhau 50 bước theo chiều ngang, bắt đầu từ (-75, 0). Màu lấy lần lượt từ danh sách `mau`.",
+  "starterCode": "import turtle\n\nmau = [\"red\", \"orange\", \"green\", \"blue\"]\nx = -75\n\nturtle.penup()\nfor m in mau:\n    turtle.goto(x, 0)\n",
+  "solution": "import turtle\n\nmau = [\"red\", \"orange\", \"green\", \"blue\"]\nx = -75\n\nturtle.penup()\nfor m in mau:\n    turtle.goto(x, 0)\n    turtle.dot(20, m)\n    x = x + 50\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\n_d = [x for x in _c if x['op'] == 'dot']\nassert len(_d) == 4, f'mới có {len(_d)} chấm'",
+      "message": "Cần đúng bốn chấm."
+    },
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\n_m = [x['color'] for x in _c if x['op'] == 'dot']\nassert _m == ['red', 'orange', 'green', 'blue'], f'màu đang là {_m}'",
+      "message": "Bốn chấm phải đúng bốn màu theo thứ tự trong danh sách."
+    },
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\n_x = [round(x['x']) for x in _c if x['op'] == 'dot']\nassert _x == [-75, -25, 25, 75], f'vị trí đang là {_x}'",
+      "message": "Các chấm phải cách nhau 50 bước."
+    }
+  ],
+  "hints": [
+    "Trong vòng lặp còn thiếu việc chấm và việc dời `x`.",
+    "Sau mỗi chấm, tăng `x` thêm 50 để chấm sau nằm bên phải.",
+    "Ví dụ tương tự: `y = y + 30` để xếp chấm theo chiều dọc."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

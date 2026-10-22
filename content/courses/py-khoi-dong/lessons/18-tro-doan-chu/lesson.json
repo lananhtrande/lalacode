@@ -1,0 +1,16 @@
+{
+  "id": "py-khoi-dong.18-tro-doan-chu",
+  "title": "Trò đoán chữ",
+  "concepts": [
+    "in",
+    "vòng lặp với chuỗi"
+  ],
+  "estimatedMinutes": 15,
+  "exercises": [
+    "01-co-chu-khong",
+    "02-doc-tung-chu",
+    "03-dem-nguyen-am",
+    "04-doan-chu-cai"
+  ],
+  "status": "draft"
+}

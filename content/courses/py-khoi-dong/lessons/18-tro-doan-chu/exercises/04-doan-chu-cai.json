@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.18-tro-doan-chu.04-doan-chu-cai",
+  "title": "Đoán chữ cái",
+  "kind": "code",
+  "prompt": "Từ bí mật là `mèo`. Nhận từng chữ cái cho tới khi người chơi đoán trúng một chữ có trong từ. Sai thì in `Chưa có`, trúng thì in `Có rồi!` và dừng.",
+  "starterCode": "tu = \"mèo\"\nchu = input()\n\nif chu in tu:\n    print(\"Có rồi!\")\n",
+  "solution": "tu = \"mèo\"\nchu = input()\n\nwhile chu not in tu:\n    print(\"Chưa có\")\n    chu = input()\n\nprint(\"Có rồi!\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Có rồi!\n",
+      "stdin": "m\n",
+      "message": "Đoán trúng ngay thì chỉ in Có rồi!"
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Chưa có\nChưa có\nCó rồi!\n",
+      "stdin": "z\nk\no\n",
+      "message": "Mỗi lần đoán sai in một dòng Chưa có."
+    }
+  ],
+  "hints": [
+    "Lặp chừng nào chữ đoán **chưa** nằm trong từ.",
+    "`not in` là ngược lại của `in`.",
+    "Ví dụ tương tự: `while tra_loi not in \"cd\":` lặp tới khi gõ c hoặc d."
+  ],
+  "timeoutMs": 6000,
+  "turtle": false
+}

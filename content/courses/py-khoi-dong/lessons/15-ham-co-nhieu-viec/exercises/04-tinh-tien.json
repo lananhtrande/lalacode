@@ -1,0 +1,36 @@
+{
+  "id": "py-khoi-dong.15-ham-co-nhieu-viec.04-tinh-tien",
+  "title": "Tính tiền mua vở",
+  "kind": "code",
+  "prompt": "Viết hàm `tinh_tien(so_quyen, gia=7000)` trả về tổng tiền. Mua 3 quyển giá mặc định thì trả về 21000.",
+  "starterCode": "def tinh_tien(so_quyen, gia=7000):\n    return so_quyen\n",
+  "solution": "def tinh_tien(so_quyen, gia=7000):\n    return so_quyen * gia\n",
+  "tests": [
+    {
+      "type": "function_returns",
+      "name": "tinh_tien",
+      "args": [
+        3
+      ],
+      "expected": 21000,
+      "message": "3 quyển giá 7000 là 21000 đồng."
+    },
+    {
+      "type": "function_returns",
+      "name": "tinh_tien",
+      "args": [
+        2,
+        5000
+      ],
+      "expected": 10000,
+      "message": "Đưa giá khác vào thì tính theo giá đó."
+    }
+  ],
+  "hints": [
+    "Tổng tiền là số quyển nhân giá.",
+    "Hàm đang trả về số quyển thôi.",
+    "Ví dụ tương tự: `return so_ngay * tien_moi_ngay`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

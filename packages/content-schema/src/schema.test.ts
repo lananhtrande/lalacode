@@ -60,6 +60,15 @@ describe('exerciseSchema', () => {
     expect(exerciseSchema.safeParse({ ...validExercise, tests }).success).toBe(true);
   });
 
+  it('mọi loại test đều nhận được `stdin` (bài có input)', () => {
+    const tests = [
+      { type: 'variable_equals', name: 'ten', expected: 'Lan', stdin: 'Lan\n', message: 'm' },
+      { type: 'function_returns', name: 'f', args: [], expected: 1, stdin: '1\n', message: 'm' },
+      { type: 'python_assert', code: 'assert True', stdin: '7\n', message: 'm' },
+    ];
+    expect(exerciseSchema.safeParse({ ...validExercise, tests }).success).toBe(true);
+  });
+
   it('từ chối loại test không có trong danh sách', () => {
     const result = exerciseSchema.safeParse({
       ...validExercise,

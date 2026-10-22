@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.13-danh-sach-thong-minh-hon.04-ban-ten-dai",
+  "title": "Bạn nào tên dài",
+  "kind": "code",
+  "prompt": "Từ danh sách `ban`, in ra những tên dài hơn 3 ký tự, mỗi tên một dòng.",
+  "starterCode": "ban = [\"Lan\", \"Minh\", \"Hoa\", \"Phương\"]\n\nfor b in ban:\n    print(b)\n",
+  "solution": "ban = [\"Lan\", \"Minh\", \"Hoa\", \"Phương\"]\n\nfor b in ban:\n    if len(b) > 3:\n        print(b)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Minh\nPhương\n",
+      "message": "Chỉ in tên dài hơn 3 ký tự."
+    }
+  ],
+  "hints": [
+    "`len(b)` cho độ dài của từng tên.",
+    "Đặt `if` bên trong vòng lặp, trước khi in.",
+    "Ví dụ tương tự: in số lớn hơn 10 trong danh sách."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

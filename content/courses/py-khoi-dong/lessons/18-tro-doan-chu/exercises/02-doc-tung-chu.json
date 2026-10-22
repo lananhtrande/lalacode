@@ -1,0 +1,23 @@
+{
+  "id": "py-khoi-dong.18-tro-doan-chu.02-doc-tung-chu",
+  "title": "Đọc từng chữ",
+  "kind": "code",
+  "prompt": "Nhận một từ rồi in từng chữ cái của nó, mỗi chữ một dòng.",
+  "starterCode": "tu = input()\nprint(tu)\n",
+  "solution": "tu = input()\n\nfor chu in tu:\n    print(chu)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "m\nè\no\n",
+      "stdin": "mèo\n",
+      "message": "Mỗi chữ cái một dòng."
+    }
+  ],
+  "hints": [
+    "Vòng lặp `for` đi qua từng chữ của chuỗi.",
+    "Viết `for chu in tu:` rồi in `chu`.",
+    "Ví dụ tương tự: `for c in ten: print(c)`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

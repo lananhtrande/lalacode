@@ -1,0 +1,41 @@
+{
+  "id": "py-khoi-dong.20-du-an-cuoi.04-tro-choi-hoan-chinh",
+  "title": "Trò chơi hoàn chỉnh",
+  "kind": "code",
+  "prompt": "Ghép tất cả: máy nghĩ số từ 1 đến 20, gợi ý lớn/nhỏ sau mỗi lần đoán sai, khi trúng in `Đúng rồi!` rồi in số lần đã đoán dạng `Em đoán 3 lần`.",
+  "starterCode": "import random\n\nbi_mat = random.randint(1, 20)\nso_lan = 1\ndoan = int(input())\n",
+  "solution": "import random\n\nbi_mat = random.randint(1, 20)\nso_lan = 1\ndoan = int(input())\n\nwhile doan != bi_mat:\n    if doan < bi_mat:\n        print(\"Lớn hơn nhé\")\n    else:\n        print(\"Nhỏ hơn nhé\")\n    doan = int(input())\n    so_lan = so_lan + 1\n\nprint(\"Đúng rồi!\")\nprint(f\"Em đoán {so_lan} lần\")\n",
+  "tests": [
+    {
+      "type": "stdout_contains",
+      "expected": "Đúng rồi!",
+      "stdin": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n",
+      "message": "Đoán trúng rồi thì phải báo cho người chơi biết."
+    },
+    {
+      "type": "stdout_contains",
+      "expected": "Em đoán",
+      "stdin": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n",
+      "message": "Cuối trò chơi nhớ in ra số lần đã đoán."
+    },
+    {
+      "type": "python_assert",
+      "stdin": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n",
+      "code": "assert 1 <= bi_mat <= 20, 'số bí mật phải trong 1..20'",
+      "message": "Số bí mật phải nằm trong khoảng 1 đến 20."
+    },
+    {
+      "type": "python_assert",
+      "stdin": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n",
+      "code": "assert doan == bi_mat, 'vòng lặp phải chạy tới khi đoán trúng'",
+      "message": "Trò chơi chỉ dừng khi người chơi đoán trúng."
+    }
+  ],
+  "hints": [
+    "Ghép bài 1 (gợi ý lớn nhỏ) với bài 2 (đếm số lần).",
+    "Vòng lặp chạy tới khi đoán trúng, bên trong vừa gợi ý vừa đếm.",
+    "Ví dụ tương tự: `while doan != bi_mat:` rồi bên trong `print(\"Lớn hơn nhé\")` và `so_lan = so_lan + 1`."
+  ],
+  "timeoutMs": 8000,
+  "turtle": false
+}

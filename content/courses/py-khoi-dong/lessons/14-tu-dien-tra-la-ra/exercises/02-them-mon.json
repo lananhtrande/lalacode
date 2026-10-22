@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.14-tu-dien-tra-la-ra.02-them-mon",
+  "title": "Thêm một môn",
+  "kind": "code",
+  "prompt": "Thêm môn `Sử` với điểm 10 vào từ điển `diem`, rồi in cả từ điển ra.",
+  "starterCode": "diem = {\"Toán\": 9, \"Văn\": 7}\n\nprint(diem)\n",
+  "solution": "diem = {\"Toán\": 9, \"Văn\": 7}\ndiem[\"Sử\"] = 10\nprint(diem)\n",
+  "tests": [
+    {
+      "type": "variable_equals",
+      "name": "diem",
+      "expected": {
+        "Toán": 9,
+        "Văn": 7,
+        "Sử": 10
+      },
+      "message": "Từ điển cần có thêm môn Sử với điểm 10."
+    }
+  ],
+  "hints": [
+    "Thêm mục mới bằng cách gán cho một khoá chưa có.",
+    "Viết `diem[\"Sử\"] = 10`.",
+    "Ví dụ tương tự: `tuoi[\"Nam\"] = 12`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

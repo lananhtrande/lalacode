@@ -1,0 +1,23 @@
+{
+  "id": "py-khoi-dong.11-choi-voi-chu.04-the-ten",
+  "title": "Thẻ tên",
+  "kind": "code",
+  "prompt": "Nhận họ ở dòng 1 và tên ở dòng 2, in ra `NGUYỄN LAN` (cả hai viết hoa, cách nhau một dấu cách).",
+  "starterCode": "ho = input()\nten = input()\n",
+  "solution": "ho = input()\nten = input()\nprint(f\"{ho.upper()} {ten.upper()}\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "NGUYỄN LAN\n",
+      "stdin": "nguyễn\nlan\n",
+      "message": "Cả họ và tên đều viết hoa, cách nhau một dấu cách."
+    }
+  ],
+  "hints": [
+    "Em cần viết hoa cả hai phần.",
+    "f-string đặt được cả `{ho.upper()}` vào trong.",
+    "Ví dụ tương tự: `print(f\"{mon.upper()} - {lop}\")`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

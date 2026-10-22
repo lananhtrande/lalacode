@@ -1,0 +1,16 @@
+{
+  "id": "py-khoi-dong.16-rua-va-ham",
+  "title": "Rùa và hàm",
+  "concepts": [
+    "hàm vẽ hình",
+    "begin_fill"
+  ],
+  "estimatedMinutes": 15,
+  "exercises": [
+    "01-ham-tam-giac",
+    "02-to-mau",
+    "03-hai-hinh-canh-nhau",
+    "04-ba-hinh-ba-mau"
+  ],
+  "status": "draft"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "py-khoi-dong.14-tu-dien-tra-la-ra",
+  "title": "Từ điển: tra là ra",
+  "concepts": [
+    "dict",
+    "khoá và giá trị"
+  ],
+  "estimatedMinutes": 14,
+  "exercises": [
+    "01-tra-diem",
+    "02-them-mon",
+    "03-liet-ke-bang-diem",
+    "04-mon-diem-cao"
+  ],
+  "status": "draft"
+}

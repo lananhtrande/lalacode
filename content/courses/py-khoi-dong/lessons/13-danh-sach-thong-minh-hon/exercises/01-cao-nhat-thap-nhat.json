@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.13-danh-sach-thong-minh-hon.01-cao-nhat-thap-nhat",
+  "title": "Cao nhất, thấp nhất",
+  "kind": "code",
+  "prompt": "Danh sách `diem` đã có sẵn. In điểm cao nhất ở dòng 1, điểm thấp nhất ở dòng 2.",
+  "starterCode": "diem = [8, 5, 10, 7]\nprint(max(diem))\n",
+  "solution": "diem = [8, 5, 10, 7]\nprint(max(diem))\nprint(min(diem))\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "10\n5\n",
+      "message": "Dòng 1 là điểm cao nhất, dòng 2 là thấp nhất."
+    }
+  ],
+  "hints": [
+    "`max` cho số lớn nhất, còn số nhỏ nhất thì có lệnh tương tự.",
+    "Lệnh đó là `min`.",
+    "Ví dụ tương tự: `print(min(gia))` cho giá rẻ nhất."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

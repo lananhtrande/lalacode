@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.19-rua-ve-tranh.02-hai-con-mat",
+  "title": "Hai con mắt",
+  "kind": "code",
+  "prompt": "Chấm hai chấm đen to 20 làm hai con mắt: một ở toạ độ (-40, 0), một ở (40, 0). Nhớ nhấc bút khi dời chỗ.",
+  "starterCode": "import turtle\n\nturtle.penup()\nturtle.goto(-40, 0)\nturtle.dot(20, \"black\")\n",
+  "solution": "import turtle\n\nturtle.penup()\nturtle.goto(-40, 0)\nturtle.dot(20, \"black\")\nturtle.goto(40, 0)\nturtle.dot(20, \"black\")\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\n_d = [x for x in _c if x['op'] == 'dot']\nassert len(_d) == 2, f'mới có {len(_d)} con mắt'",
+      "message": "Cần đúng hai con mắt."
+    },
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\n_x = sorted(round(x['x']) for x in _c if x['op'] == 'dot')\nassert _x == [-40, 40], f'vị trí mắt đang là {_x}'",
+      "message": "Hai mắt phải ở đúng hai vị trí -40 và 40."
+    }
+  ],
+  "hints": [
+    "Em mới chấm được một mắt.",
+    "Dời sang toạ độ thứ hai rồi chấm thêm một chấm nữa.",
+    "Ví dụ tương tự: `turtle.goto(0, 60)` rồi `turtle.dot(15, \"green\")`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

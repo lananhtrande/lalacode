@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.17-may-rui.02-chon-dai-mot-mon",
+  "title": "Chọn đại một môn",
+  "kind": "code",
+  "prompt": "Danh sách `mon` đã có sẵn. Chọn ngẫu nhiên một môn, cất vào biến `chon` rồi in ra.",
+  "starterCode": "import random\n\nmon = [\"Toán\", \"Văn\", \"Anh\"]\nchon = \"Lý\"\nprint(chon)\n",
+  "solution": "import random\n\nmon = [\"Toán\", \"Văn\", \"Anh\"]\nchon = random.choice(mon)\nprint(chon)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert chon in mon, f'{chon} không có trong danh sách'",
+      "message": "Môn được chọn phải nằm trong danh sách."
+    }
+  ],
+  "hints": [
+    "`random.choice` nhận cả danh sách và trả về một phần tử.",
+    "Không cần số thứ tự, cứ đưa cả danh sách vào.",
+    "Ví dụ tương tự: `random.choice(ban)` chọn đại một bạn."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

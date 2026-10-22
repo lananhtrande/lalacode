@@ -1,0 +1,16 @@
+{
+  "id": "py-khoi-dong.20-du-an-cuoi",
+  "title": "Dự án cuối: trò chơi của em",
+  "concepts": [
+    "ghép mọi thứ",
+    "dự án nhỏ"
+  ],
+  "estimatedMinutes": 20,
+  "exercises": [
+    "01-goi-y-lon-nho",
+    "02-dem-so-lan",
+    "03-ham-nhan-xet",
+    "04-tro-choi-hoan-chinh"
+  ],
+  "status": "draft"
+}
