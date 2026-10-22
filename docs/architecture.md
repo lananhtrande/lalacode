@@ -123,6 +123,9 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - Đề bài lấy từ bundle đã phát hành qua HTTP (cache 5 phút trong container), nên Lambda không phải build lại mỗi lần sửa nội dung. Bundle công khai này **không có lời giải**, nên AI cũng không thấy lời giải.
 - Client gửi kèm trường lạ (ví dụ tự đính đề bài) thì **từ chối cả request** chứ không im lặng bỏ qua — `strictObject` của zod.
 - Có công tắc tắt AI (biến môi trường) → frontend hiển thị gợi ý tĩnh viết sẵn trong bài.
+- Panel gợi ý (`features/exercise/HintPanel.tsx`): mỗi lần bấm xin một mức sâu hơn (1→2→3). **Trẻ luôn nhận được gợi ý**: AI tắt, hết lượt, hay mạng hỏng thì rơi về gợi ý viết sẵn kèm một câu giải thích đúng lý do.
+- Code chỉ rời máy **khi trẻ tự bấm xin trợ giúp** — chạy thử và nộp bài không gọi `/api/hint` (có test e2e).
+- Token ẩn danh nằm trong hồ sơ IndexedDB, tạo khi dùng lần đầu, **không đi theo mã tiến độ** (hai máy dùng chung token thì chung luôn hạn mức, mà mã lại hay bị dán chỗ công khai).
 
 ### 5. Analytics gộp (chưa chốt — xem ADR 0005)
 - Chỉ sự kiện gộp: `lesson_started`, `lesson_completed`, `exercise_passed`, `returned_after_7d`. Không ID người dùng, không cookie, không IP lưu trữ.

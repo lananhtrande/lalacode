@@ -4,6 +4,7 @@ import { Play, RotateCcw, Send, Square } from 'lucide-react';
 import { loadExercise, lessonIdOfExercise } from '../../content/loader';
 import {
   awardBadges,
+  getAiToken,
   exportSnapshot,
   getExerciseProgress,
   markLessonCompleted,
@@ -32,6 +33,7 @@ export function ExercisePage() {
   const [exercise, setExercise] = useState<PublicExercise | null>(null);
   const [lessonTitle, setLessonTitle] = useState('');
   const [restoredDraft, setRestoredDraft] = useState(false);
+  const [aiToken, setAiToken] = useState<string | undefined>(undefined);
   /** Mã các bài tập của bài học này, để biết khi nào bài học coi như xong. */
   const [lessonExerciseIds, setLessonExerciseIds] = useState<readonly string[]>([]);
   const [loadFailed, setLoadFailed] = useState(false);
@@ -43,6 +45,17 @@ export function ExercisePage() {
   const [results, setResults] = useState<readonly TestResult[] | null>(null);
   const [drawing, setDrawing] = useState<readonly DrawCommand[]>([]);
   const runnerRef = useRef<Runner | null>(null);
+
+  // Token ẩn danh cho gợi ý AI; không lấy được thì panel chỉ dùng gợi ý viết sẵn.
+  useEffect(() => {
+    let active = true;
+    void quietly(() => getAiToken()).then((token) => {
+      if (active && token !== undefined) setAiToken(token);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   // Một runner cho cả màn hình; nạp Pyodide ngầm ngay khi trẻ mở bài tập.
   useEffect(() => {
@@ -276,7 +289,13 @@ export function ExercisePage() {
 
       {results && <TestResultList results={results} />}
 
-      <HintPanel hints={exercise.hints} />
+      <HintPanel
+        hints={exercise.hints}
+        exerciseId={exercise.id}
+        getCode={() => code}
+        getError={() => error?.raw}
+        {...(aiToken === undefined ? {} : { aiToken })}
+      />
     </article>
   );
 }

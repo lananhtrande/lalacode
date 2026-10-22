@@ -86,9 +86,12 @@ async function inflate(bytes: Uint8Array<ArrayBuffer>): Promise<string> {
 
 /** Bỏ `draftCode` khỏi mọi bài tập trước khi đóng gói. */
 export function toSharedProgress(snapshot: ProgressSnapshot): SharedProgress {
+  // Token AI là của riêng máy này: mang sang máy khác thì hai máy dùng chung
+  // một hạn mức, mà mã lại hay bị dán ở chỗ công khai.
+  const { aiToken: _aiToken, ...profile } = snapshot.profile;
   return {
     schemaVersion: snapshot.schemaVersion,
-    profile: snapshot.profile,
+    profile,
     lessons: snapshot.lessons,
     exercises: snapshot.exercises.map(({ draftCode: _draftCode, ...rest }) => rest),
   };
