@@ -41,7 +41,7 @@ export const vi = {
     forParentsTitle: 'Bố mẹ muốn tìm hiểu?',
     forParentsBody:
       'lalacode không thu thập thông tin cá nhân của trẻ: không tài khoản, không quảng cáo, không theo dõi.',
-    forParentsLink: 'Đọc trang giới thiệu & quyền riêng tư',
+    forParentsLink: 'Đọc trang dành cho bố mẹ',
   },
   map: {
     title: 'Bản đồ nhiệm vụ',
@@ -210,6 +210,124 @@ export const vi = {
     confirmNo: 'Thôi, giữ lại',
     done: 'Đã xoá xong. Máy này giờ sạch như lúc mới bắt đầu.',
   },
+  // Hai trang dưới đây bố mẹ đọc, không phải trẻ: xưng "mình" với "bạn", câu
+  // dài hơn được, nhưng vẫn không dùng từ chuyên môn chưa giải thích.
+  about: {
+    title: 'lalacode là gì?',
+    lead: 'lalacode dạy trẻ 10–15 tuổi viết Python bằng tiếng Việt. Mỗi bài khoảng 15 phút: đọc một đoạn ngắn, rồi tự viết code và chạy thử ngay trong trình duyệt. Không cần cài phần mềm, không cần tài khoản.',
+    howTitle: 'Con học như thế nào?',
+    how: [
+      {
+        title: 'Đọc ngắn, làm nhiều',
+        body: 'Mỗi bài chỉ dạy một ý mới, rồi 3–5 bài tập để con tự làm. Phần lớn thời gian là con gõ code, không phải ngồi xem.',
+      },
+      {
+        title: 'Máy chấm và chỉ chỗ chưa đúng',
+        body: 'Con bấm Nộp bài, máy chạy thử code rồi nói bằng tiếng Việt chỗ nào chưa đạt. Không chấm điểm, không xếp hạng, không chê bai.',
+      },
+      {
+        title: 'Sai bao nhiêu lần cũng được',
+        body: 'Số lần thử lại được ghi lại như một điều đáng khen, không phải điểm trừ. Có huy hiệu riêng cho việc kiên trì làm lại.',
+      },
+      {
+        title: 'Vẽ hình bằng code',
+        body: 'Con dùng "rùa" turtle để vẽ ngôi sao, bông hoa, hoa văn. Thấy hình hiện ra thì học dễ vào hơn nhiều.',
+      },
+    ],
+    pythonTitle: 'Python chạy ở đâu?',
+    pythonBody:
+      'Ngay trong trình duyệt trên máy của con, bằng một bản Python thật (Pyodide). Code con viết không được gửi lên máy chủ nào để chạy. Lần đầu mở bài tập máy cần tải Python về nên hơi lâu, những lần sau là nhanh.',
+    stageTitle: 'Dự án đang ở đâu',
+    stageBody:
+      'Đây là giai đoạn thử nghiệm. Khoá "Python khởi động" có 20 bài, tất cả còn là bản nháp và sẽ còn sửa theo phản hồi của các gia đình dùng thử. Hiện tại dùng miễn phí.',
+    stageHonest:
+      'Nói thật để bạn khỏi kỳ vọng nhầm: nội dung chưa qua thẩm định của hội đồng chuyên môn nào, và vì không có tài khoản nên nếu con đổi máy hoặc xoá dữ liệu trình duyệt thì tiến độ sẽ mất, trừ khi con tự lưu mã tiến độ.',
+    parentsTitle: 'Bố mẹ theo dõi bằng cách nào?',
+    parentsBody:
+      'Con tự tạo một đường link báo cáo trên máy mình rồi gửi cho bạn. Link đó chỉ hiện số bài đã xong, số ngày học liên tiếp và huy hiệu — không có họ tên, không có code con viết. Mọi số liệu nằm ngay trong đường link, không có máy chủ nào lưu.',
+    parentsLink: 'Xem trang báo cáo',
+    contactTitle: 'Hỏi thêm',
+    contactBody:
+      'Trong giai đoạn thử nghiệm, bạn nhắn trực tiếp trong nhóm mà gia đình mình đã tham gia. lalacode không có ô nào trên web để thu email hay số điện thoại của bạn hoặc của con.',
+    privacyLink: 'Đọc trang quyền riêng tư',
+  },
+  privacy: {
+    title: 'Quyền riêng tư',
+    updated: 'Cập nhật ngày 22/10/2026',
+    lead: 'Tóm tắt một câu: lalacode không có tài khoản và không lưu thông tin cá nhân của con trên máy chủ. Mọi thứ con học nằm trong trình duyệt trên máy của gia đình.',
+    whereTitle: 'Dữ liệu nằm ở đâu',
+    whereIntro: 'Đây là toàn bộ những gì lalacode giữ, và giữ ở đâu:',
+    rowLabels: {
+      where: 'Nằm ở đâu',
+      sent: 'Có rời khỏi máy không?',
+    },
+    rows: [
+      {
+        what: 'Bài đã xong, số lần thử, chuỗi ngày học, huy hiệu',
+        where: 'Trong trình duyệt trên máy của con (IndexedDB)',
+        sent: 'Không',
+      },
+      {
+        what: 'Những dòng code con đang viết dở',
+        where: 'Trong trình duyệt trên máy của con',
+        sent: 'Không — trừ khi con tự bấm "Hỏi trợ giúp" (xem bên dưới)',
+      },
+      {
+        what: 'Biệt danh con tự đặt (tuỳ chọn, hiện chưa có ô nhập nào trên web)',
+        where: 'Trong trình duyệt trên máy của con',
+        sent: 'Không — nhưng nếu sau này có ô nhập thì biệt danh sẽ nằm trong mã tiến độ con gửi đi',
+      },
+      {
+        what: 'Mã tiến độ và link báo cáo',
+        where: 'Con tự sao chép rồi tự gửi cho ai con muốn',
+        sent: 'Không',
+      },
+      {
+        what: 'Một dãy ký tự ngẫu nhiên để đếm số lượt hỏi trợ giúp',
+        where: 'Trên máy con; máy chủ chỉ giữ bản mã hoá của nó trong 48 giờ',
+        sent: 'Có — nhưng nó không gắn với tên tuổi ai cả',
+      },
+    ],
+    noAccountTitle: 'Không có chỗ nào hỏi thông tin của con',
+    noAccountBody:
+      'Không đăng ký, không đăng nhập, không ô nhập họ tên, ngày sinh, trường lớp, email hay số điện thoại. Không có ảnh, không có giọng nói. lalacode cũng không biết con là ai.',
+    aiTitle: 'Khi con bấm "Hỏi trợ giúp"',
+    aiBody:
+      'Đây là lần duy nhất code của con rời khỏi máy, và chỉ khi chính con bấm nút. Chạy thử và nộp bài hoàn toàn diễn ra trên máy. Lúc hỏi trợ giúp, lalacode gửi đi: mã bài tập, đoạn code trong ô, thông báo lỗi nếu có, và mức gợi ý. Không gửi tên, không gửi tiến độ, không gửi gì nhận ra con.',
+    aiProvider:
+      'Phần gợi ý do trợ lý Claude của Anthropic trả lời, gọi qua dịch vụ Amazon Bedrock. Dữ liệu có thể được xử lý ở máy chủ ngoài Việt Nam. Đó chính là lý do lalacode tuyệt đối không gửi thông tin cá nhân sang đó.',
+    aiNoLog: 'Máy chủ của lalacode không ghi lại nội dung code con gửi.',
+    aiNoSolution:
+      'Trợ lý được yêu cầu chỉ gợi ý theo ba mức, từ nhẹ tới rõ dần, và không đưa lời giải hoàn chỉnh.',
+    aiFilterTitle: 'Bộ lọc, và giới hạn thật của nó',
+    aiFilterBody:
+      'Nói cho đúng từng chặng: code đi từ máy con tới máy chủ của lalacode nguyên văn (máy chủ không ghi lại nó), rồi máy chủ che email, số điện thoại, dãy số dài, đường link và phần đứng sau những câu kiểu "em tên là…", "nhà ở…" — xong mới chuyển cho AI.',
+    aiFilterLimit:
+      'Nhưng phải nói thẳng: bộ lọc đoán theo mẫu chứ không hiểu nội dung. Một cái tên viết trơ trọi trong code — ví dụ in ra họ tên thật — vẫn có thể lọt qua. Vì vậy ngay trên màn hình bài tập, trước khi con bấm hỏi lần đầu, lalacode nhắc con đừng viết tên thật, địa chỉ hay số điện thoại vào code. Mong bạn nhắc con thêm một lần.',
+    notDoingTitle: 'Những thứ lalacode không làm',
+    notDoing: [
+      'Không quảng cáo, không bán dữ liệu — không có dữ liệu để bán.',
+      'Không cookie theo dõi, không Google Analytics, không Facebook Pixel hay công cụ đo đạc bên thứ ba nào.',
+      'Không bảng xếp hạng, không trang công khai liệt kê người học.',
+      'Không tải font hay mã nguồn từ máy chủ bên ngoài, nên không bên nào khác biết con đang mở trang này.',
+      'Hiện chưa bài học nào có video. Nếu sau này có, lalacode sẽ dùng bản nhúng YouTube không đặt cookie và ghi rõ ở đây.',
+    ],
+    reportTitle: 'Về link báo cáo và mã tiến độ',
+    reportBody:
+      'Số liệu nằm sau dấu # trong đường link, mà phần sau dấu # thì trình duyệt không gửi lên máy chủ. Nói cách khác, bạn mở link báo cáo thì không ai ngoài máy bạn thấy nội dung đó.',
+    reportLimits: [
+      'Phần sau dấu # không đi theo request nào, nhưng tiện ích mở rộng của trình duyệt hoặc tính năng đồng bộ lịch sử vẫn đọc được địa chỉ đang mở. Đây là giới hạn chung của mọi cách giấu dữ liệu sau dấu #. Vì vậy link chỉ chứa thứ không nhạy cảm.',
+      'Mã không có chữ ký, nên ai biết cấu trúc đều tự ghép được một báo cáo đẹp. Link này để bạn theo dõi cho vui, đừng dùng làm căn cứ chấm điểm con.',
+    ],
+    deleteTitle: 'Xoá hết dữ liệu',
+    deleteBody:
+      'Vào trang Mã tiến độ, bấm "Xoá dữ liệu". Máy sẽ hỏi lại một lần rồi xoá sạch bài đã xong, huy hiệu, chuỗi ngày học và code đang viết dở trên máy này. Xoá xong là không lấy lại được, nên nếu muốn giữ thì sao chép mã tiến độ trước.',
+    deleteLink: 'Tới trang Mã tiến độ',
+    lawTitle: 'Về pháp luật',
+    lawBody:
+      'lalacode làm theo hướng thu thập ít nhất có thể, đúng tinh thần Luật Bảo vệ dữ liệu cá nhân 2025 đối với dữ liệu của trẻ em: cách chắc chắn nhất để không làm lộ dữ liệu của con là ngay từ đầu không thu thập nó.',
+    backToAbout: 'Về trang giới thiệu',
+  },
   comingSoon: {
     badge: 'Đang xây',
     body: 'Phần này mình đang làm. Em quay lại sau nhé!',
@@ -222,7 +340,6 @@ export const vi = {
     exercise: 'Bài tập',
     badges: 'Huy hiệu',
     report: 'Báo cáo cho bố mẹ',
-    about: 'Giới thiệu & quyền riêng tư',
   },
   notFound: {
     title: 'Không tìm thấy trang này',

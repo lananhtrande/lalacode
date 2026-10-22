@@ -58,6 +58,9 @@ export function RootLayout() {
               {vi.pages.progressCode}
             </Link>
             <Link to="/gioi-thieu" className="flex min-h-tap items-center underline">
+              {vi.nav.about}
+            </Link>
+            <Link to="/quyen-rieng-tu" className="flex min-h-tap items-center underline">
               {vi.footer.privacy}
             </Link>
           </span>

@@ -37,11 +37,12 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 ## M5 — Nội dung & phát hành (song song, tuần 3–8)
 - [x] S0-21 10 bài đầu + bài tập (đã verify, đã review)
 - [x] S0-22 10 bài tiếp — bài 11–20, khoá đủ 20 bài / 79 bài tập (đã verify, đã review). Bài 20 là dự án cuối, dài ~20 phút: ngoại lệ đã ghi trong `docs/content-format.md`.
-- [ ] S0-23 Trang giới thiệu cho phụ huynh + trang quyền riêng tư
+- [x] S0-23 Trang giới thiệu cho phụ huynh + trang quyền riêng tư — `/gioi-thieu` và `/quyen-rieng-tu`, có test chốt hai lời thú nhận bắt buộc. **Chưa có kênh liên hệ thật**: trang đang nói bố mẹ nhắn trong nhóm beta; trước khi mở rộng phải có cách liên hệ đàng hoàng (gộp vào S0-27).
 - [ ] S0-24 Hoàn thiện infra: budget alarm 20 USD, CloudWatch alarm lỗi/độ trễ Lambda, rà soát quyền IAM tối thiểu (bật model access Claude trong Bedrock — làm tay một lần)
 - [ ] S0-25 Hoàn thiện CI/CD: **preview cho từng PR** (dời từ S0-04b), workflow `rollback-web.yml` (trỏ về `releases/<sha>` trước), `terraform plan` đăng vào PR, dọn preview cũ, Dependabot
 - [ ] S0-26 Analytics gộp (sau khi chốt ADR 0005)
-- [ ] S0-27 Beta kín 50–100 trẻ, thu phản hồi qua nhóm Zalo
+- [ ] S0-27 Beta kín 50–100 trẻ, thu phản hồi qua nhóm Zalo — kèm kênh liên hệ thật ghi trên `/quyen-rieng-tu`
+- [ ] S0-28 **Màn bài học**: `/bai-hoc/:id` hiện đang là khung "Đang xây", nên từ bản đồ bấm vào bài là trẻ không tới được bài tập. Cần đọc `lesson.md`, hiện video nếu có, và liệt kê bài tập của bài. **Chặn beta** — phải làm trước S0-27.
 
 ## Tiêu chí chuyển sang giai đoạn 1
 - ≥ 70% trẻ hoàn thành bài 1; ≥ 40% quay lại sau 7 ngày; ≥ 30 phụ huynh xác nhận sẵn sàng trả phí.

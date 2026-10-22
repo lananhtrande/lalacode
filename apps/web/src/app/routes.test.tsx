@@ -33,7 +33,8 @@ describe('router', () => {
     ['/ban-do', strings.pages.map],
     ['/huy-hieu', strings.pages.badges],
     ['/bao-cao', strings.pages.report],
-    ['/gioi-thieu', strings.pages.about],
+    ['/gioi-thieu', strings.about.title],
+    ['/quyen-rieng-tu', strings.privacy.title],
     ['/bai-hoc/01-xin-chao', strings.pages.lesson],
   ])('đường dẫn %s mở đúng trang "%s"', async (path, title) => {
     renderAt(path);

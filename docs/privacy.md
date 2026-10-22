@@ -44,13 +44,15 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
   - Mã nhập vào được kiểm **từng trường** trước khi ghi, và chặn mã quá dài hoặc nén phình bất thường — một mã "đùa" không được phép làm hỏng tiến độ hay treo máy trẻ.
 
 ## Minh bạch
-- Trang "Quyền riêng tư" viết cho phụ huynh, ngôn ngữ dễ hiểu: dữ liệu nằm trên máy, gửi gì cho AI, cách xoá (nút "Xoá toàn bộ dữ liệu trên máy này").
-- Nhúng YouTube: dùng `youtube-nocookie.com`, ghi rõ trên trang quyền riêng tư.
+- **S0-23 đã làm**: hai trang cho phụ huynh, `/gioi-thieu` (lalacode là gì, học thế nào, dự án đang ở đâu) và `/quyen-rieng-tu` (dữ liệu nằm đâu, gửi gì cho AI, cách xoá). Chữ nằm ở `apps/web/src/shared/i18n/vi.ts` (`about`, `privacy`), trang ở `apps/web/src/features/about/`.
+- Trang `/quyen-rieng-tu` **phải** nói thẳng hai giới hạn: bộ lọc không bắt được tên viết trơ trọi, và mã báo cáo không có chữ ký. Có unit test (`about-pages.test.tsx`) và e2e (`e2e/about.spec.ts`) chốt lại — rút gọn hai câu đó là test đỏ.
+- Nhúng YouTube: dùng `youtube-nocookie.com`, ghi rõ trên trang quyền riêng tư. **Hiện chưa bài học nào có video**, và trang quyền riêng tư đang nói đúng như vậy — thêm video đầu tiên thì sửa câu đó.
 
 ## Liên hệ ngoài web
 Danh sách phụ huynh quan tâm thu qua nhóm Zalo/Facebook là dữ liệu cá nhân: thu tối thiểu, có câu đồng ý, xoá khi kết thúc giai đoạn 0 hoặc khi chuyển sang hệ thống chính thức.
 
 ## Checklist cho mỗi thay đổi
+0. **Thay đổi này có làm trang `/quyen-rieng-tu` nói sai không?** Một trang quyền riêng tư lỗi thời còn tệ hơn không có trang.
 1. Có dữ liệu nào mới rời khỏi máy người dùng không? Nếu có → cập nhật bảng trên và hỏi người duy trì.
 2. Có log mới không? In những trường nào?
 3. Có bên thứ ba mới nhận request từ trình duyệt không (CDN, font, script)? Mặc định tự host.
