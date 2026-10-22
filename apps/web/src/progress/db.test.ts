@@ -123,3 +123,30 @@ describe('khi trình duyệt không cho lưu', () => {
     await expect(quietly(() => Promise.resolve('ok'))).resolves.toBe('ok');
   });
 });
+
+describe('xoá toàn bộ dữ liệu trên máy', () => {
+  it('xoá sạch mọi store, kể cả hồ sơ', async () => {
+    const { deleteAllData } = await import('./db');
+    await recordAttempt(EXERCISE, LESSON, true, 'đúng');
+    await markLessonStarted(LESSON, 'py-khoi-dong');
+
+    await deleteAllData();
+
+    const snapshot = await exportSnapshot();
+    expect(snapshot.exercises).toEqual([]);
+    expect(snapshot.lessons).toEqual([]);
+    expect(snapshot.profile.streakDays).toBe(0);
+    expect(snapshot.profile.badges).toEqual([]);
+  });
+
+  it('xoá xong vẫn học tiếp được ngay, không phải tải lại trang', async () => {
+    const { deleteAllData } = await import('./db');
+    await recordAttempt(EXERCISE, LESSON, true, 'đúng');
+    await deleteAllData();
+
+    await recordAttempt(EXERCISE, LESSON, true, 'làm lại từ đầu');
+    const progress = await getExerciseProgress(EXERCISE);
+    expect(progress?.attempts).toBe(1);
+    expect(progress?.draftCode).toBe('làm lại từ đầu');
+  });
+});

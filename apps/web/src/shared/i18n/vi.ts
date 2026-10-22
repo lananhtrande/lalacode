@@ -186,6 +186,17 @@ export const vi = {
       'Link này chỉ để bố mẹ theo dõi cho vui. Nó không có cách xác thực ai tạo ra, nên đừng dùng làm căn cứ chấm điểm.',
     attemptsNote: 'Số lần nộp bài cho thấy con thử lại bao nhiêu lần — thử nhiều là chuyện tốt.',
   },
+  deleteData: {
+    title: 'Xoá toàn bộ dữ liệu trên máy này',
+    lead: 'Xoá sạch bài đã xong, huy hiệu, chuỗi ngày học và code em đang viết dở trên máy này.',
+    warning: 'Xoá rồi là không lấy lại được.',
+    saveFirst: 'Muốn giữ lại thì sao chép mã tiến độ ở trên trước khi xoá nhé.',
+    button: 'Xoá dữ liệu',
+    confirmQuestion: 'Em chắc chắn muốn xoá hết chứ?',
+    confirmYes: 'Đúng, xoá hết',
+    confirmNo: 'Thôi, giữ lại',
+    done: 'Đã xoá xong. Máy này giờ sạch như lúc mới bắt đầu.',
+  },
   comingSoon: {
     badge: 'Đang xây',
     body: 'Phần này mình đang làm. Em quay lại sau nhé!',
