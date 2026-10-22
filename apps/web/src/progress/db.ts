@@ -203,6 +203,20 @@ export async function exportSnapshot(): Promise<ProgressSnapshot> {
   return { schemaVersion: PROGRESS_SCHEMA_VERSION, profile, lessons, exercises };
 }
 
+/** Ghi đè toàn bộ tiến độ bằng ảnh chụp đã gộp (dùng khi nhập mã tiến độ). */
+export async function importSnapshot(snapshot: ProgressSnapshot): Promise<void> {
+  const db = await openProgressDb();
+  const transaction = db.transaction(['exercises', 'lessons', 'profile'], 'readwrite');
+  const exercises = transaction.objectStore('exercises');
+  const lessons = transaction.objectStore('lessons');
+  await Promise.all([
+    ...snapshot.exercises.map((exercise) => exercises.put(exercise)),
+    ...snapshot.lessons.map((lesson) => lessons.put(lesson)),
+    transaction.objectStore('profile').put({ ...snapshot.profile, id: PROFILE_KEY }),
+  ]);
+  await transaction.done;
+}
+
 /** Nút "Xoá toàn bộ dữ liệu trên máy này" (S0-16) gọi hàm này. */
 export async function clearAllProgress(): Promise<void> {
   const db = await openProgressDb();

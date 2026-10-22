@@ -36,6 +36,9 @@ test.describe('tiến độ và huy hiệu', () => {
   });
 
   test('xong hết bài tập thì bài học được đánh dấu Xong và có thêm huy hiệu', async ({ page }) => {
+    // Hai lần giải = hai lần nạp Pyodide. Chạy song song nhiều trình duyệt thì
+    // ngân sách mặc định (90 giây) hơi chật, nên nới riêng cho test này.
+    test.setTimeout(240_000);
     await solve(page, EXERCISE_1, 'print("Xin chào, Python!")');
     await solve(page, EXERCISE_2, 'print("Em thích Python")\nprint("Python cũng thích em")');
 
