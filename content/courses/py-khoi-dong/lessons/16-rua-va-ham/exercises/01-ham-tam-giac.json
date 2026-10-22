@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.16-rua-va-ham.01-ham-tam-giac",
+  "title": "Hàm vẽ tam giác",
+  "kind": "code",
+  "prompt": "Viết hàm `ve_tam_giac(canh)` vẽ tam giác đều, rồi gọi với cạnh 60. Tam giác đều quay 120 độ mỗi góc.",
+  "starterCode": "import turtle\n\ndef ve_tam_giac(canh):\n    for i in range(3):\n        turtle.forward(canh)\n\nve_tam_giac(60)\n",
+  "solution": "import turtle\n\ndef ve_tam_giac(canh):\n    for i in range(3):\n        turtle.forward(canh)\n        turtle.left(120)\n\nve_tam_giac(60)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.xcor()) == 0 and round(turtle.ycor()) == 0, 'tam giác chưa khép kín'",
+      "message": "Tam giác khép kín thì rùa về đúng chỗ xuất phát."
+    },
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\nassert sum(1 for x in _c if x['op'] == 'line') == 3, 'phải có đúng ba cạnh'",
+      "message": "Tam giác có đúng ba cạnh."
+    }
+  ],
+  "hints": [
+    "Tam giác cần cả đi lẫn quay trong mỗi lượt.",
+    "Góc quay của tam giác đều là 120 độ.",
+    "Ví dụ tương tự: hình vuông quay 90 độ mỗi góc."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

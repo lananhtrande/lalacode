@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.19-rua-ve-tranh.01-cham-tron",
+  "title": "Chấm tròn đầu tiên",
+  "kind": "code",
+  "prompt": "Chấm một chấm màu đỏ to 30 ở giữa màn hình.",
+  "starterCode": "import turtle\n\n# chấm một chấm to 30, màu đỏ\n",
+  "solution": "import turtle\n\nturtle.dot(30, \"red\")\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\n_d = [x for x in _c if x['op'] == 'dot']\nassert _d and _d[0]['color'] == 'red' and round(_d[0]['size']) == 30, 'chưa thấy chấm đỏ to 30'",
+      "message": "Cần một chấm màu đỏ, kích thước 30."
+    }
+  ],
+  "hints": [
+    "Lệnh chấm tròn là `dot`.",
+    "Nó nhận hai thứ: độ to và màu.",
+    "Ví dụ tương tự: `turtle.dot(10, \"blue\")`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

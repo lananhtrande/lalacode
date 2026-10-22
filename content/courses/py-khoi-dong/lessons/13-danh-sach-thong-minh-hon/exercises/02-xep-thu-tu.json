@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.13-danh-sach-thong-minh-hon.02-xep-thu-tu",
+  "title": "Xếp theo thứ tự",
+  "kind": "code",
+  "prompt": "Nhận danh sách `tuoi` có sẵn, in ra danh sách đã xếp từ bé tới lớn.",
+  "starterCode": "tuoi = [12, 10, 15, 11]\nprint(tuoi)\n",
+  "solution": "tuoi = [12, 10, 15, 11]\nprint(sorted(tuoi))\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "[10, 11, 12, 15]\n",
+      "message": "Danh sách cần được xếp từ bé tới lớn."
+    }
+  ],
+  "hints": [
+    "`sorted` xếp lại danh sách.",
+    "Nó trả về danh sách mới, nên em in kết quả của nó.",
+    "Ví dụ tương tự: `print(sorted(ten))` xếp tên theo bảng chữ cái."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

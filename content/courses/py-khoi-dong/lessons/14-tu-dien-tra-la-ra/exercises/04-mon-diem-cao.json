@@ -1,0 +1,28 @@
+{
+  "id": "py-khoi-dong.14-tu-dien-tra-la-ra.04-mon-diem-cao",
+  "title": "Môn điểm cao nhất",
+  "kind": "code",
+  "prompt": "Tìm môn có điểm cao nhất trong từ điển `diem` rồi in tên môn đó.",
+  "starterCode": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 10}\ncao_nhat = \"\"\n\nprint(cao_nhat)\n",
+  "solution": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 10}\ncao_nhat = \"\"\n\nfor mon in diem:\n    if cao_nhat == \"\" or diem[mon] > diem[cao_nhat]:\n        cao_nhat = mon\n\nprint(cao_nhat)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Anh\n",
+      "message": "Môn điểm cao nhất ở đây là Anh."
+    },
+    {
+      "type": "variable_equals",
+      "name": "cao_nhat",
+      "expected": "Anh",
+      "message": "Biến `cao_nhat` phải giữ tên môn."
+    }
+  ],
+  "hints": [
+    "Đi qua từng môn và so sánh với môn đang giữ kỷ lục.",
+    "Lần đầu chưa có môn nào, nên nhận luôn môn đầu tiên.",
+    "Ví dụ tương tự: tìm bạn cao nhất trong từ điển chiều cao."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

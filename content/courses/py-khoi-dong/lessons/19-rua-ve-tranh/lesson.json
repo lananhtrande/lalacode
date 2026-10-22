@@ -1,0 +1,17 @@
+{
+  "id": "py-khoi-dong.19-rua-ve-tranh",
+  "title": "Rùa vẽ tranh",
+  "concepts": [
+    "ghép hình",
+    "dot",
+    "toạ độ"
+  ],
+  "estimatedMinutes": 15,
+  "exercises": [
+    "01-cham-tron",
+    "02-hai-con-mat",
+    "03-duong-tron",
+    "04-hang-cham-mau"
+  ],
+  "status": "draft"
+}

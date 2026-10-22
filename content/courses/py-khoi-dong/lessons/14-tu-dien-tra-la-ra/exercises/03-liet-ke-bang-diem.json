@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.14-tu-dien-tra-la-ra.03-liet-ke-bang-diem",
+  "title": "Liệt kê bảng điểm",
+  "kind": "code",
+  "prompt": "In từng môn và điểm, mỗi dòng dạng `Toán: 9`, theo đúng thứ tự trong từ điển.",
+  "starterCode": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 8}\n\nfor mon in diem:\n    print(mon)\n",
+  "solution": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 8}\n\nfor mon in diem:\n    print(f\"{mon}: {diem[mon]}\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Toán: 9\nVăn: 7\nAnh: 8\n",
+      "message": "Mỗi dòng cần cả tên môn và điểm."
+    }
+  ],
+  "hints": [
+    "Vòng lặp đang cho em tên môn, còn thiếu điểm.",
+    "Lấy điểm bằng `diem[mon]`.",
+    "Ví dụ tương tự: `print(f\"{ban}: {tuoi[ban]}\")`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

@@ -1,0 +1,32 @@
+{
+  "id": "py-khoi-dong.13-danh-sach-thong-minh-hon.03-chon-diem-gioi",
+  "title": "Chọn điểm giỏi",
+  "kind": "code",
+  "prompt": "Từ danh sách `diem`, tạo danh sách `gioi` chỉ gồm những điểm từ 8 trở lên, rồi in ra.",
+  "starterCode": "diem = [8, 5, 10, 7, 9]\ngioi = []\n\nprint(gioi)\n",
+  "solution": "diem = [8, 5, 10, 7, 9]\ngioi = []\n\nfor d in diem:\n    if d >= 8:\n        gioi.append(d)\n\nprint(gioi)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "[8, 10, 9]\n",
+      "message": "Chỉ giữ lại điểm từ 8 trở lên, đúng thứ tự cũ."
+    },
+    {
+      "type": "variable_equals",
+      "name": "gioi",
+      "expected": [
+        8,
+        10,
+        9
+      ],
+      "message": "Danh sách `gioi` chưa đúng."
+    }
+  ],
+  "hints": [
+    "Duyệt qua từng điểm bằng `for`.",
+    "Gặp điểm thoả điều kiện thì `append` vào danh sách mới.",
+    "Ví dụ tương tự: lọc số chẵn thì kiểm tra `so % 2 == 0`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

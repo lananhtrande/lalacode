@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.11-choi-voi-chu.01-dem-chu",
+  "title": "Đếm chữ",
+  "kind": "code",
+  "prompt": "Nhận một chuỗi từ người dùng rồi in ra số ký tự của chuỗi đó.",
+  "starterCode": "chu = input()\nprint(chu)\n",
+  "solution": "chu = input()\nprint(len(chu))\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "7\n",
+      "stdin": "lan anh\n",
+      "message": "Đếm cả dấu cách nhé."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "3\n",
+      "stdin": "mèo\n",
+      "message": "Thử với chuỗi ngắn hơn xem sao."
+    }
+  ],
+  "hints": [
+    "`len` cho biết chuỗi dài bao nhiêu ký tự.",
+    "Em đặt `len(...)` ngay trong `print`.",
+    "Ví dụ tương tự: `print(len(mon))`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

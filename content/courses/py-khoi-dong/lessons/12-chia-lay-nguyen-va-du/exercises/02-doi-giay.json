@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.12-chia-lay-nguyen-va-du.02-doi-giay",
+  "title": "Đổi giây sang phút",
+  "kind": "code",
+  "prompt": "Nhận số giây từ người dùng, in ra dạng `2 phút 15 giây`.",
+  "starterCode": "giay = int(input())\n",
+  "solution": "giay = int(input())\nprint(f\"{giay // 60} phút {giay % 60} giây\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "2 phút 15 giây\n",
+      "stdin": "135\n",
+      "message": "135 giây là 2 phút 15 giây."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "1 phút 0 giây\n",
+      "stdin": "60\n",
+      "message": "Đúng 60 giây là 1 phút 0 giây."
+    }
+  ],
+  "hints": [
+    "Một phút có 60 giây.",
+    "Phút là `giay // 60`, giây lẻ là `giay % 60`.",
+    "Ví dụ tương tự: đổi phút sang giờ cũng chia cho 60."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

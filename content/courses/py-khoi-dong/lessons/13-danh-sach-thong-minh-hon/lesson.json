@@ -1,0 +1,18 @@
+{
+  "id": "py-khoi-dong.13-danh-sach-thong-minh-hon",
+  "title": "Danh sách thông minh hơn",
+  "concepts": [
+    "max",
+    "min",
+    "sorted",
+    "lọc"
+  ],
+  "estimatedMinutes": 14,
+  "exercises": [
+    "01-cao-nhat-thap-nhat",
+    "02-xep-thu-tu",
+    "03-chon-diem-gioi",
+    "04-ban-ten-dai"
+  ],
+  "status": "draft"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.20-du-an-cuoi.02-dem-so-lan",
+  "title": "Đếm số lần đoán",
+  "kind": "code",
+  "prompt": "Số bí mật là 7. Nhận các số đoán cho tới khi trúng, rồi in `Em đoán 3 lần` (thay 3 bằng số lần thật sự).",
+  "starterCode": "bi_mat = 7\nso_lan = 0\ndoan = int(input())\n",
+  "solution": "bi_mat = 7\nso_lan = 1\ndoan = int(input())\n\nwhile doan != bi_mat:\n    doan = int(input())\n    so_lan = so_lan + 1\n\nprint(f\"Em đoán {so_lan} lần\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Em đoán 1 lần\n",
+      "stdin": "7\n",
+      "message": "Trúng ngay lần đầu là 1 lần."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Em đoán 3 lần\n",
+      "stdin": "2\n9\n7\n",
+      "message": "Đoán ba lần mới trúng thì in 3."
+    }
+  ],
+  "hints": [
+    "Mỗi lần nhận số đoán mới thì tăng bộ đếm.",
+    "Lần đoán đầu tiên cũng được tính.",
+    "Ví dụ tương tự: đếm số lần lặp bằng `dem = dem + 1` trong vòng lặp."
+  ],
+  "timeoutMs": 6000,
+  "turtle": false
+}

@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.17-may-rui.03-hai-xuc-xac",
+  "title": "Hai con xúc xắc",
+  "kind": "code",
+  "prompt": "Tung hai xúc xắc vào hai biến `xuc_xac_1` và `xuc_xac_2`, rồi in tổng điểm của cả hai vào biến `tong`. Tổng phải nằm trong khoảng 2 đến 12.",
+  "starterCode": "import random\n\nxuc_xac_1 = random.randint(1, 6)\ntong = xuc_xac_1\nprint(tong)\n",
+  "solution": "import random\n\nxuc_xac_1 = random.randint(1, 6)\nxuc_xac_2 = random.randint(1, 6)\ntong = xuc_xac_1 + xuc_xac_2\nprint(tong)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert 2 <= tong <= 12, f'tổng {tong} không hợp lệ cho hai xúc xắc'",
+      "message": "Hai xúc xắc cho tổng từ 2 đến 12."
+    },
+    {
+      "type": "python_assert",
+      "code": "assert globals().get('xuc_xac_2') is not None, 'chưa thấy biến xuc_xac_2'",
+      "message": "Em cần tung đủ hai con xúc xắc, con thứ hai đặt tên là xuc_xac_2."
+    }
+  ],
+  "hints": [
+    "Em mới tung một con thôi.",
+    "Tung thêm con thứ hai rồi cộng hai số lại.",
+    "Ví dụ tương tự: `tong = a + b` sau khi có cả a và b."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

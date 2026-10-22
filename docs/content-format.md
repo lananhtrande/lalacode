@@ -131,7 +131,7 @@ Test cho bài vẽ hình: dùng `python_assert` hoặc `variable_equals` để k
 
 ## Nguyên tắc sư phạm (trẻ 10–15 tuổi)
 
-- **Một khái niệm mới mỗi bài.** 2 phút đọc/xem + 3–5 bài tập, tổng ≤ 15 phút.
+- **Một khái niệm mới mỗi bài.** 2 phút đọc/xem + 3–5 bài tập, tổng ≤ 15 phút. Ngoại lệ duy nhất: **bài dự án cuối khoá** được dài hơn (khoảng 20 phút), vì nó ghép lại mọi thứ đã học chứ không dạy khái niệm mới.
 - **Làm trước, giải thích sau:** bài tập đầu tiên luôn chạy được ngay bằng cách sửa 1 dòng.
 - **Ví dụ gần gũi trẻ Việt:** điểm kiểm tra, tiền tiêu vặt, đội bóng, nấu ăn, trò chơi — tránh ví dụ người lớn (lương, thuế, hẹn hò).
 - **Có hình:** ít nhất 1/3 bài tập trong khoá đầu dùng `turtle` hoặc mini-game chữ.

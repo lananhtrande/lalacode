@@ -81,6 +81,7 @@ export const testSchema = z.discriminatedUnion('type', [
     type: z.literal('variable_equals'),
     name: pyName,
     expected: jsonValue,
+    stdin: z.string().optional(),
     message: friendlyMessage,
   }),
   z.strictObject({
@@ -88,11 +89,15 @@ export const testSchema = z.discriminatedUnion('type', [
     name: pyName,
     args: z.array(jsonValue),
     expected: jsonValue,
+    stdin: z.string().optional(),
     message: friendlyMessage,
   }),
   z.strictObject({
     type: z.literal('python_assert'),
     code: z.string().min(1, 'không được để trống'),
+    // Bài có `input()` cần dữ liệu nhập cho **mọi** loại test, không riêng
+    // stdout_*: thiếu nó thì code của trẻ chết vì EOFError ngay khi chấm.
+    stdin: z.string().optional(),
     message: friendlyMessage,
   }),
 ]);

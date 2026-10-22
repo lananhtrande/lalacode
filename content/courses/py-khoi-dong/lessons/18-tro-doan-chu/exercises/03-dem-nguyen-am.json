@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.18-tro-doan-chu.03-dem-nguyen-am",
+  "title": "Đếm nguyên âm",
+  "kind": "code",
+  "prompt": "Nhận một từ, đếm xem có bao nhiêu chữ cái nằm trong `aeiou` rồi in số đếm được.",
+  "starterCode": "tu = input()\ndem = 0\n\nprint(dem)\n",
+  "solution": "tu = input()\ndem = 0\n\nfor chu in tu:\n    if chu in \"aeiou\":\n        dem = dem + 1\n\nprint(dem)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "3\n",
+      "stdin": "con meo\n",
+      "message": "Từ con meo có ba nguyên âm: o, e, o."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "4\n",
+      "stdin": "hoa mai\n",
+      "message": "Thử đếm lại từ hoa mai nhé."
+    }
+  ],
+  "hints": [
+    "Đi qua từng chữ rồi kiểm tra chữ đó có trong `aeiou` không.",
+    "Gặp nguyên âm thì tăng `dem` lên 1.",
+    "Ví dụ tương tự: đếm chữ a thì kiểm tra `if chu == \"a\"`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

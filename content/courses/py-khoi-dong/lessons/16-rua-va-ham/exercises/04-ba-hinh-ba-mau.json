@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.16-rua-va-ham.04-ba-hinh-ba-mau",
+  "title": "Ba hình ba màu",
+  "kind": "code",
+  "prompt": "Dùng vòng lặp vẽ 3 hình vuông cạnh 50, mỗi hình một màu trong danh sách `mau`, sau mỗi hình quay trái 120 độ.",
+  "starterCode": "import turtle\n\nmau = [\"red\", \"green\", \"blue\"]\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nfor m in mau:\n    ve_vuong(50)\n",
+  "solution": "import turtle\n\nmau = [\"red\", \"green\", \"blue\"]\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nfor m in mau:\n    turtle.pencolor(m)\n    ve_vuong(50)\n    turtle.left(120)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "import json, turtle\n_c = json.loads(turtle.drain_commands())\n_m = {x['color'] for x in _c if x['op'] == 'line'}\nassert _m == {'red', 'green', 'blue'}, f'mới thấy các màu: {_m}'",
+      "message": "Mỗi hình vuông phải một màu khác nhau."
+    },
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.heading()) % 360 == 0, 'chưa quay đủ ba lần 120 độ'",
+      "message": "Ba lần quay 120 độ là tròn một vòng."
+    }
+  ],
+  "hints": [
+    "Trong vòng lặp, `m` lần lượt là từng màu.",
+    "Đổi màu bút bằng `turtle.pencolor(m)` trước khi vẽ.",
+    "Ví dụ tương tự: đổi màu rồi vẽ tam giác, quay 90 độ."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

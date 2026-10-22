@@ -1,0 +1,23 @@
+{
+  "id": "py-khoi-dong.11-choi-voi-chu.02-in-hoa",
+  "title": "Hô to lên",
+  "kind": "code",
+  "prompt": "Nhận một chuỗi rồi in ra bản chữ in hoa của nó.",
+  "starterCode": "chu = input()\n",
+  "solution": "chu = input()\nprint(chu.upper())\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "XIN CHÀO\n",
+      "stdin": "xin chào\n",
+      "message": "Cần in ra chữ in hoa."
+    }
+  ],
+  "hints": [
+    "Lệnh đổi sang chữ in hoa là `.upper()`.",
+    "Viết sau tên biến, có dấu chấm ở giữa.",
+    "Ví dụ tương tự: `print(ten.lower())` cho chữ thường."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

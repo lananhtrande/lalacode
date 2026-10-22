@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.17-may-rui.04-doan-so-may-rui",
+  "title": "Máy nghĩ một số",
+  "kind": "code",
+  "prompt": "Máy nghĩ một số từ 1 đến 10 (biến `bi_mat`). Nhận một số em đoán, in `Đúng rồi!` nếu trúng, ngược lại in `Sai rồi, số đó là` kèm số bí mật.",
+  "starterCode": "import random\n\nbi_mat = random.randint(1, 10)\ndoan = int(input())\n",
+  "solution": "import random\n\nbi_mat = random.randint(1, 10)\ndoan = int(input())\n\nif doan == bi_mat:\n    print(\"Đúng rồi!\")\nelse:\n    print(f\"Sai rồi, số đó là {bi_mat}\")\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "stdin": "5\n",
+      "code": "assert 1 <= bi_mat <= 10, 'số bí mật phải trong 1..10'",
+      "message": "Số bí mật phải nằm trong khoảng 1 đến 10."
+    },
+    {
+      "type": "stdout_contains",
+      "expected": "rồi",
+      "stdin": "5\n",
+      "message": "Dù đúng hay sai cũng phải in một câu trả lời."
+    }
+  ],
+  "hints": [
+    "So sánh số đoán với số bí mật bằng `==`.",
+    "Nhánh `else` cần in cả số bí mật ra.",
+    "Ví dụ tương tự: `print(f\"Đáp án là {dap_an}\")`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

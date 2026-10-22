@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.12-chia-lay-nguyen-va-du.01-chia-keo",
+  "title": "Chia kẹo",
+  "kind": "code",
+  "prompt": "Có 17 cái kẹo chia đều cho 5 bạn. In số kẹo mỗi bạn nhận được ở dòng 1, số kẹo thừa ở dòng 2.",
+  "starterCode": "keo = 17\nban = 5\nprint(keo / ban)\n",
+  "solution": "keo = 17\nban = 5\nprint(keo // ban)\nprint(keo % ban)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "3\n2\n",
+      "message": "Mỗi bạn 3 cái, thừa 2 cái."
+    }
+  ],
+  "hints": [
+    "Phép chia thường cho số lẻ, em cần phần nguyên.",
+    "`//` cho phần nguyên, `%` cho phần dư.",
+    "Ví dụ tương tự: `print(20 // 6)` ra 3."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

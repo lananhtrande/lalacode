@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.14-tu-dien-tra-la-ra.01-tra-diem",
+  "title": "Tra điểm một môn",
+  "kind": "code",
+  "prompt": "Từ điển `diem` đã có sẵn. In ra điểm môn Văn.",
+  "starterCode": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 8}\nprint(diem[\"Toán\"])\n",
+  "solution": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 8}\nprint(diem[\"Văn\"])\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "7\n",
+      "message": "Điểm môn Văn là 7."
+    }
+  ],
+  "hints": [
+    "Tra từ điển bằng khoá đặt trong ngoặc vuông.",
+    "Khoá ở đây là tên môn, viết trong dấu nháy.",
+    "Ví dụ tương tự: `print(gia[\"bút\"])`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

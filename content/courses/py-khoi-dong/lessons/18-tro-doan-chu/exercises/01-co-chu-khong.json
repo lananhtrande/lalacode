@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.18-tro-doan-chu.01-co-chu-khong",
+  "title": "Có chữ đó không",
+  "kind": "code",
+  "prompt": "Nhận một chữ cái từ người dùng. In `Có` nếu chữ đó nằm trong từ `con mèo`, ngược lại in `Không`.",
+  "starterCode": "tu = \"con mèo\"\nchu = input()\n",
+  "solution": "tu = \"con mèo\"\nchu = input()\n\nif chu in tu:\n    print(\"Có\")\nelse:\n    print(\"Không\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Có\n",
+      "stdin": "m\n",
+      "message": "Chữ m có trong từ con mèo."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Không\n",
+      "stdin": "z\n",
+      "message": "Chữ z không có trong từ đó."
+    }
+  ],
+  "hints": [
+    "Từ khoá `in` kiểm tra một chữ có nằm trong chuỗi không.",
+    "Viết `if chu in tu:` rồi thêm nhánh `else`.",
+    "Ví dụ tương tự: `if \"a\" in ten:` kiểm tra tên có chữ a."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

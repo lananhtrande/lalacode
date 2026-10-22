@@ -1,0 +1,44 @@
+{
+  "id": "py-khoi-dong.20-du-an-cuoi.03-ham-nhan-xet",
+  "title": "Hàm nhận xét",
+  "kind": "code",
+  "prompt": "Viết hàm `nhan_xet(so_lan)` trả về `Siêu quá!` nếu đoán dưới 3 lần, `Giỏi lắm!` nếu dưới 6 lần, còn lại `Lần sau nhanh hơn nhé`.",
+  "starterCode": "def nhan_xet(so_lan):\n    return \"Giỏi lắm!\"\n",
+  "solution": "def nhan_xet(so_lan):\n    if so_lan < 3:\n        return \"Siêu quá!\"\n    if so_lan < 6:\n        return \"Giỏi lắm!\"\n    return \"Lần sau nhanh hơn nhé\"\n",
+  "tests": [
+    {
+      "type": "function_returns",
+      "name": "nhan_xet",
+      "args": [
+        2
+      ],
+      "expected": "Siêu quá!",
+      "message": "Đoán 2 lần là rất nhanh."
+    },
+    {
+      "type": "function_returns",
+      "name": "nhan_xet",
+      "args": [
+        4
+      ],
+      "expected": "Giỏi lắm!",
+      "message": "Đoán 4 lần vẫn giỏi."
+    },
+    {
+      "type": "function_returns",
+      "name": "nhan_xet",
+      "args": [
+        9
+      ],
+      "expected": "Lần sau nhanh hơn nhé",
+      "message": "Đoán 9 lần thì động viên em lần sau."
+    }
+  ],
+  "hints": [
+    "Ba mức thì cần ba `return`.",
+    "Kiểm tra mức nhỏ nhất trước.",
+    "Ví dụ tương tự: xếp loại điểm với `if diem >= 8: return \"Giỏi\"`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}
