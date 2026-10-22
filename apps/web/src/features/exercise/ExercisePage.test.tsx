@@ -44,6 +44,9 @@ vitest.mock('../../content/loader', async (importOriginal) => {
 const getExerciseProgress = vitest.fn();
 const recordAttempt = vitest.fn();
 const saveDraft = vitest.fn();
+const markLessonCompleted = vitest.fn();
+const awardBadges = vitest.fn();
+const exportSnapshot = vitest.fn();
 vitest.mock('../../progress/db', () => ({
   quietly: async (work: () => Promise<unknown>) => {
     try {
@@ -56,7 +59,25 @@ vitest.mock('../../progress/db', () => ({
   recordAttempt: (...args: unknown[]) => recordAttempt(...args) as unknown,
   saveDraft: (...args: unknown[]) => saveDraft(...args) as unknown,
   markLessonStarted: () => Promise.resolve(),
+  markLessonCompleted: (...args: unknown[]) => markLessonCompleted(...args) as unknown,
+  awardBadges: (...args: unknown[]) => awardBadges(...args) as unknown,
+  exportSnapshot: () => exportSnapshot() as unknown,
 }));
+
+/** Ảnh chụp tiến độ giả, dùng cho phần xét bài học xong và huy hiệu. */
+const snapshotWith = (doneIds: string[]) => ({
+  schemaVersion: 1,
+  profile: { id: 'me', createdAt: 'x', streakDays: 1, lastActiveDay: 'x', badges: [] },
+  lessons: [],
+  exercises: doneIds.map((id) => ({
+    exerciseId: id,
+    lessonId: 'py-khoi-dong.01-xin-chao',
+    status: 'xong',
+    attempts: 1,
+    draftCode: '',
+    updatedAt: 'x',
+  })),
+});
 
 const run = vitest.fn<() => Promise<RunOutcome>>();
 const grade = vitest.fn<() => Promise<GradeOutcome>>();
@@ -82,8 +103,16 @@ beforeEach(() => {
   getExerciseProgress.mockResolvedValue(undefined);
   recordAttempt.mockResolvedValue(undefined);
   saveDraft.mockResolvedValue(undefined);
+  markLessonCompleted.mockResolvedValue(undefined);
+  awardBadges.mockResolvedValue(undefined);
+  exportSnapshot.mockResolvedValue(snapshotWith([exercise.id]));
   loadExercise.mockResolvedValue({
-    lesson: { version: 1, lesson: { title: 'Xin chào, Python!' }, markdown: '', exercises: [] },
+    lesson: {
+      version: 1,
+      lesson: { title: 'Xin chào, Python!' },
+      markdown: '',
+      exercises: [{ id: exercise.id }],
+    },
     exercise,
   });
   run.mockResolvedValue({
@@ -258,6 +287,40 @@ describe('ExercisePage', () => {
       true,
       exercise.starterCode,
     );
+  });
+
+  it('làm xong hết bài tập của bài học thì đánh dấu bài học đã trọn', async () => {
+    const user = userEvent.setup();
+    renderPage();
+    await user.click(await screen.findByRole('button', { name: strings.exercise.submit }));
+    await waitFor(() => expect(markLessonCompleted).toHaveBeenCalledTimes(1));
+    expect(markLessonCompleted).toHaveBeenCalledWith('py-khoi-dong.01-xin-chao', 'py-khoi-dong');
+  });
+
+  it('còn bài tập khác chưa xong thì chưa đánh dấu bài học trọn', async () => {
+    loadExercise.mockResolvedValue({
+      lesson: {
+        version: 1,
+        lesson: { title: 'Xin chào, Python!' },
+        markdown: '',
+        // Bài học có hai bài tập, trẻ mới xong một.
+        exercises: [{ id: exercise.id }, { id: 'py-khoi-dong.01-xin-chao.02-in-hai-dong' }],
+      },
+      exercise,
+    });
+    const user = userEvent.setup();
+    renderPage();
+    await user.click(await screen.findByRole('button', { name: strings.exercise.submit }));
+    await waitFor(() => expect(recordAttempt).toHaveBeenCalled());
+    expect(markLessonCompleted).not.toHaveBeenCalled();
+  });
+
+  it('nhận huy hiệu "Bài đầu tiên" ngay sau khi làm đạt bài đầu', async () => {
+    const user = userEvent.setup();
+    renderPage();
+    await user.click(await screen.findByRole('button', { name: strings.exercise.submit }));
+    await waitFor(() => expect(awardBadges).toHaveBeenCalledTimes(1));
+    expect(awardBadges.mock.calls[0]?.[0]).toContain('bai-dau-tien');
   });
 
   it('chỉ chạy thử thì không tính là một lần nộp bài', async () => {
