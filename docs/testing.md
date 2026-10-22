@@ -46,6 +46,7 @@ Chạy trên Chromium desktop và WebKit (iPhone 13, iPad).
 
 - `npm run test:e2e` — dev server, nhanh, dùng khi đang làm.
 - `PLAYWRIGHT_PREVIEW=1 npm run test:e2e` — **build rồi chạy trên bản phát hành thật** (`vite preview`). CI dùng chế độ này ở job `e2e`, chạy sau khi `check` xanh; đỏ thì chặn deploy.
+- `npm run test:e2e:csp` — build rồi chạy sau một server trả **đúng header của CloudFront**, đọc từ `infra/csp.txt`. Chạy cái này mỗi khi đổi CSP hoặc đổi cách nạp Pyodide/worker: CSP sai thì trẻ chỉ thấy màn hình trắng, và lỗi đó không lộ ra ở dev server.
 - Trang `/thu-runner` chỉ có ở dev nên `runner.spec.ts` tự bỏ qua ở chế độ preview. Luồng của trẻ (`smoke.spec.ts`, `exercise.spec.ts`) chạy ở cả hai chế độ.
 
 ## Quy tắc

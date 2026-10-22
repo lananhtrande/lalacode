@@ -1,0 +1,78 @@
+name: Deploy web
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Hai lần deploy chồng nhau sẽ tranh thư mục current/ trên S3.
+concurrency:
+  group: deploy-web
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write # để lấy token OIDC
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Chỉ chạy khi hạ tầng đã dựng xong và biến repo đã được đặt.
+    if: vars.AWS_DEPLOY_ROLE_ARN != ''
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+
+      - name: Cài dependency
+        run: npm ci
+
+      # Không deploy thứ chưa qua kiểm tra, dù CI đã chạy ở PR.
+      - name: npm run check
+        run: npm run check
+
+      - name: npm run content:verify
+        run: npm run content:verify
+
+      - name: Build
+        run: npm run build
+
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ap-southeast-1
+
+      # Mỗi bản build giữ nguyên ở releases/<sha>/ để còn rollback (S0-25).
+      - name: Tải bản build lên releases/
+        run: |
+          aws s3 sync apps/web/dist/ "s3://${{ vars.AWS_WEB_BUCKET }}/releases/${{ github.sha }}/" \
+            --delete --only-show-errors
+
+      # File có hash trong tên: cache vĩnh viễn. index.html và index.json: luôn hỏi lại.
+      - name: Chuyển sang bản đang chạy
+        run: |
+          aws s3 sync "s3://${{ vars.AWS_WEB_BUCKET }}/releases/${{ github.sha }}/" \
+            "s3://${{ vars.AWS_WEB_BUCKET }}/current/" --delete --only-show-errors \
+            --cache-control 'public, max-age=31536000, immutable' \
+            --exclude 'index.html' --exclude 'content/index.json'
+          aws s3 cp "s3://${{ vars.AWS_WEB_BUCKET }}/releases/${{ github.sha }}/index.html" \
+            "s3://${{ vars.AWS_WEB_BUCKET }}/current/index.html" \
+            --cache-control 'no-cache' --content-type 'text/html; charset=utf-8' --only-show-errors
+          aws s3 cp "s3://${{ vars.AWS_WEB_BUCKET }}/releases/${{ github.sha }}/content/index.json" \
+            "s3://${{ vars.AWS_WEB_BUCKET }}/current/content/index.json" \
+            --cache-control 'no-cache' --content-type 'application/json; charset=utf-8' --only-show-errors
+
+      - name: Xoá cache CloudFront cho file không có hash
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.AWS_CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --paths '/index.html' '/content/index.json' --no-cli-pager

@@ -10,7 +10,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-02 `packages/content-schema` (zod) + `scripts/content-check.mjs`
 - [x] S0-03 `scripts/content-verify.mjs` (chạy solution/starter bằng CPython) — thêm `content:verify` vào CI (setup-python 3.12)
 - [x] S0-04 Khung app React: router, layout, i18n `vi.ts`, theme token, trang chủ tĩnh
-- [ ] S0-04b Walking skeleton lên AWS: Terraform tối thiểu (S3 private, CloudFront + OAC, response headers CSP/HSTS — **không cần COOP/COEP**, xem architecture §2, SPA fallback, cache `immutable` cho `/pyodide/*` và `/content/lessons/*`, cache ngắn cho `/content/index.json`, GitHub OIDC role) + workflow `deploy-web.yml`: build → upload `releases/<sha>/` → trỏ CloudFront → invalidate; preview cho PR
+- [x] S0-04b Walking skeleton lên AWS: Terraform tối thiểu (S3 private, CloudFront + OAC, response headers CSP/HSTS — **không cần COOP/COEP**, xem architecture §2, SPA fallback, cache `immutable` cho `/pyodide/*` và `/content/lessons/*`, cache ngắn cho `/content/index.json`, GitHub OIDC role) + workflow `deploy-web.yml`: build → upload `releases/<sha>/` → trỏ CloudFront → invalidate; preview cho PR
 - [x] S0-05 Loader nội dung: build `content/` thành JSON bundle có hash
 
 ## M2 — Runner & chấm bài (tuần 2–4)
@@ -39,7 +39,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [ ] S0-22 10 bài tiếp
 - [ ] S0-23 Trang giới thiệu cho phụ huynh + trang quyền riêng tư
 - [ ] S0-24 Hoàn thiện infra: budget alarm 20 USD, CloudWatch alarm lỗi/độ trễ Lambda, rà soát quyền IAM tối thiểu (bật model access Claude trong Bedrock — làm tay một lần)
-- [ ] S0-25 Hoàn thiện CI/CD: workflow `rollback-web.yml` (trỏ về `releases/<sha>` trước), `terraform plan` đăng vào PR, dọn preview cũ, Dependabot
+- [ ] S0-25 Hoàn thiện CI/CD: **preview cho từng PR** (dời từ S0-04b), workflow `rollback-web.yml` (trỏ về `releases/<sha>` trước), `terraform plan` đăng vào PR, dọn preview cũ, Dependabot
 - [ ] S0-26 Analytics gộp (sau khi chốt ADR 0005)
 - [ ] S0-27 Beta kín 50–100 trẻ, thu phản hồi qua nhóm Zalo
 

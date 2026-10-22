@@ -56,7 +56,7 @@ Pipeline được dựng sớm và lớn dần cùng sản phẩm, không để 
 | --- | --- |
 | S0-01b | `ci.yml`: `npm ci` → `npm run check` trên mỗi PR; `main` bắt buộc CI xanh |
 | S0-03 | `content:verify` (Python 3.12) trong CI |
-| S0-04b | Terraform tối thiểu + `deploy-web.yml`: build → S3 `releases/<sha>/` → CloudFront; preview cho PR; OIDC, không access key |
+| S0-04b | ✅ Terraform tối thiểu (S3 + CloudFront OAC + CSP/HSTS + OIDC role) và `deploy-web.yml`: check → build → S3 `releases/<sha>/` → `current/` → invalidate. Preview cho PR dời sang S0-25 |
 | S0-11 | Job Playwright e2e trên bản build, chặn deploy nếu đỏ |
 | S0-18 | `deploy-ai-hint.yml` cho Lambda; Terraform thêm Lambda/DynamoDB/IAM Bedrock |
 | S0-25 | Rollback, `terraform plan` vào PR, dọn preview, Dependabot |

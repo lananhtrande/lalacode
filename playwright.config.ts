@@ -5,7 +5,13 @@ import { defineConfig, devices } from '@playwright/test';
  * chạy trên **bản phát hành thật** — CI dùng chế độ này trước khi deploy.
  */
 const preview = Boolean(process.env['PLAYWRIGHT_PREVIEW']);
-const PORT = preview ? 4173 : 5173;
+/**
+ * `PLAYWRIGHT_CSP=1`: chạy bản build sau một server trả **đúng header của
+ * CloudFront** (infra/csp.txt). CSP sai thì Pyodide không chạy nổi, mà lỗi đó
+ * chỉ lộ ra trên hạ tầng thật nếu không kiểm trước.
+ */
+const csp = Boolean(process.env['PLAYWRIGHT_CSP']);
+const PORT = csp ? 4174 : preview ? 4173 : 5173;
 const baseURL = `http://localhost:${PORT}`;
 
 // Trẻ dùng điện thoại/tablet là chính → luôn chạy cả WebKit mobile.
@@ -26,9 +32,11 @@ export default defineConfig({
     { name: 'ipad', use: { ...devices['iPad (gen 7)'] } },
   ],
   webServer: {
-    command: preview
-      ? `npm run build -w @lalacode/web && npm run preview -w @lalacode/web -- --port ${PORT} --strictPort`
-      : `npm run dev -w @lalacode/web -- --port ${PORT} --strictPort`,
+    command: csp
+      ? `npm run build -w @lalacode/web && node scripts/serve-dist.mjs ${PORT}`
+      : preview
+        ? `npm run build -w @lalacode/web && npm run preview -w @lalacode/web -- --port ${PORT} --strictPort`
+        : `npm run dev -w @lalacode/web -- --port ${PORT} --strictPort`,
     url: baseURL,
     reuseExistingServer: !process.env['CI'],
     timeout: 180_000,
