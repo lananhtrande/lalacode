@@ -54,6 +54,17 @@ describe('trang quyền riêng tư', () => {
     expect(screen.getByTestId('privacy-report-limits')).toHaveTextContent('Mã không có chữ ký');
   });
 
+  it('có địa chỉ liên hệ, và nói rõ xoá dữ liệu thì không cần viết thư', () => {
+    renderPage(PrivacyPage);
+    expect(screen.getByRole('link', { name: strings.app.contactEmail })).toHaveAttribute(
+      'href',
+      `mailto:${strings.app.contactEmail}`,
+    );
+    expect(screen.getByText(strings.privacy.contactNote)).toHaveTextContent(
+      'không cần viết thư',
+    );
+  });
+
   it('nói code chỉ rời máy khi trẻ tự bấm hỏi trợ giúp, và có đường tới nút xoá', () => {
     renderPage(PrivacyPage);
     expect(screen.getByText(strings.privacy.aiBody)).toHaveTextContent('chỉ khi chính con bấm nút');

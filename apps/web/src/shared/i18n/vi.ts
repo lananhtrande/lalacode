@@ -3,6 +3,7 @@
 export const vi = {
   app: {
     name: 'lalacode',
+    contactEmail: 'hello@teacherkit.help',
     tagline: 'Học Python bằng tiếng Việt, mỗi ngày 15 phút.',
   },
   nav: {
@@ -248,7 +249,7 @@ export const vi = {
     parentsLink: 'Xem trang báo cáo',
     contactTitle: 'Hỏi thêm',
     contactBody:
-      'Trong giai đoạn thử nghiệm, bạn nhắn trực tiếp trong nhóm mà gia đình mình đã tham gia. lalacode không có ô nào trên web để thu email hay số điện thoại của bạn hoặc của con.',
+      'Có gì chưa rõ, bạn viết thư cho mình. Trong giai đoạn thử nghiệm, bạn cũng có thể nhắn trong nhóm mà gia đình mình đã tham gia. lalacode không có ô nào trên web để thu email hay số điện thoại của bạn hoặc của con.',
     privacyLink: 'Đọc trang quyền riêng tư',
   },
   privacy: {
@@ -323,6 +324,11 @@ export const vi = {
     deleteBody:
       'Vào trang Mã tiến độ, bấm "Xoá dữ liệu". Máy sẽ hỏi lại một lần rồi xoá sạch bài đã xong, huy hiệu, chuỗi ngày học và code đang viết dở trên máy này. Xoá xong là không lấy lại được, nên nếu muốn giữ thì sao chép mã tiến độ trước.',
     deleteLink: 'Tới trang Mã tiến độ',
+    contactTitle: 'Hỏi mình',
+    contactBody: 'Có gì chưa rõ về dữ liệu của con, bạn viết thư cho mình ở địa chỉ này:',
+    // Phải nói luôn, kẻo bố mẹ tưởng viết thư là cách duy nhất để xoá dữ liệu.
+    contactNote:
+      'Khi bạn viết thư thì mình thấy địa chỉ email của bạn — email hoạt động như vậy. Mình chỉ dùng nó để trả lời bạn, không đưa vào danh sách gửi tin nào cả. Còn muốn xoá dữ liệu của con thì không cần viết thư: bấm nút "Xoá dữ liệu" là xong ngay trên máy, vì bên mình không giữ bản sao nào để mà xoá hộ.',
     lawTitle: 'Về pháp luật',
     lawBody:
       'lalacode làm theo hướng thu thập ít nhất có thể, đúng tinh thần Luật Bảo vệ dữ liệu cá nhân 2025 đối với dữ liệu của trẻ em: cách chắc chắn nhất để không làm lộ dữ liệu của con là ngay từ đầu không thu thập nó.',

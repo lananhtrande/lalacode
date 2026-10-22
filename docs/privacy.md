@@ -48,6 +48,9 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 - Trang `/quyen-rieng-tu` **phải** nói thẳng hai giới hạn: bộ lọc không bắt được tên viết trơ trọi, và mã báo cáo không có chữ ký. Có unit test (`about-pages.test.tsx`) và e2e (`e2e/about.spec.ts`) chốt lại — rút gọn hai câu đó là test đỏ.
 - Nhúng YouTube: dùng `youtube-nocookie.com`, ghi rõ trên trang quyền riêng tư. **Hiện chưa bài học nào có video**, và trang quyền riêng tư đang nói đúng như vậy — thêm video đầu tiên thì sửa câu đó.
 
+## Liên hệ
+Địa chỉ công khai trên `/gioi-thieu` và `/quyen-rieng-tu`: **hello@teacherkit.help** (một chỗ duy nhất trong code: `vi.app.contactEmail`). Thư phụ huynh gửi tới chỉ dùng để trả lời, không đưa vào danh sách gửi tin. Yêu cầu xoá dữ liệu **không cần qua email** — không có bản sao nào trên server để xoá; trang nói thẳng điều đó.
+
 ## Liên hệ ngoài web
 Danh sách phụ huynh quan tâm thu qua nhóm Zalo/Facebook là dữ liệu cá nhân: thu tối thiểu, có câu đồng ý, xoá khi kết thúc giai đoạn 0 hoặc khi chuyển sang hệ thống chính thức.
 
