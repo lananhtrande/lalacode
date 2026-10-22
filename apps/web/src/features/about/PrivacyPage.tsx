@@ -94,6 +94,18 @@ export function PrivacyPage() {
       </section>
 
       <section className="mt-10">
+        <h2 className="text-xl font-bold">{vi.privacy.contactTitle}</h2>
+        <p className="mt-2 text-ink-muted">{vi.privacy.contactBody}</p>
+        <a
+          href={`mailto:${vi.app.contactEmail}`}
+          className="mt-1 inline-flex min-h-tap items-center font-semibold text-brand-600 underline"
+        >
+          {vi.app.contactEmail}
+        </a>
+        <p className="mt-2 text-ink-muted">{vi.privacy.contactNote}</p>
+      </section>
+
+      <section className="mt-10">
         <h2 className="text-xl font-bold">{vi.privacy.lawTitle}</h2>
         <p className="mt-2 text-ink-muted">{vi.privacy.lawBody}</p>
       </section>

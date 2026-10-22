@@ -59,6 +59,12 @@ export function AboutPage() {
       <section className="mt-10">
         <h2 className="text-xl font-bold">{vi.about.contactTitle}</h2>
         <p className="mt-2 text-ink-muted">{vi.about.contactBody}</p>
+        <a
+          href={`mailto:${vi.app.contactEmail}`}
+          className="mt-1 inline-flex min-h-tap items-center font-semibold text-brand-600 underline"
+        >
+          {vi.app.contactEmail}
+        </a>
       </section>
 
       <section className="mt-10">
