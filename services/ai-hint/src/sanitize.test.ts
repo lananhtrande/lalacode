@@ -52,3 +52,32 @@ describe('lọc trước khi gửi cho AI', () => {
     expect(sanitizeForAi('', 4000)).toEqual({ text: '', redacted: false, truncated: false });
   });
 });
+
+describe('trẻ tự khai thông tin bằng chữ', () => {
+  it.each([
+    'print("Em tên là Nguyễn Lan Anh")',
+    'print("Mình tên Lan, học lớp 6A2")',
+    'ten = "tôi tên Minh"',
+    'print("nhà ở 12 Trần Phú, Đà Nẵng")',
+    'print("trường Nguyễn Du")',
+  ])('che phần sau cụm tự giới thiệu: %s', (input) => {
+    const result = sanitizeForAi(input, 4000);
+    expect(result.redacted).toBe(true);
+    for (const name of ['Nguyễn Lan Anh', 'Lan, học lớp 6A2', 'Minh', 'Trần Phú', 'Nguyễn Du']) {
+      if (input.includes(name)) expect(result.text).not.toContain(name);
+    }
+  });
+
+  it('code bình thường không có cụm đó thì không bị đụng', () => {
+    const code = 'ten = input()\nprint(f"Xin chào {ten}")';
+    expect(sanitizeForAi(code, 4000)).toMatchObject({ text: code, redacted: false });
+  });
+
+  it('bộ lọc chỉ đoán theo mẫu: tên viết trơ trọi vẫn lọt — giới hạn đã biết', () => {
+    // Test này ghi lại **giới hạn thật** của bộ lọc, để không ai tưởng nó
+    // chống được mọi trường hợp. docs/privacy.md nói rõ điều này.
+    const result = sanitizeForAi('print("Nguyễn Lan Anh")', 4000);
+    expect(result.text).toContain('Nguyễn Lan Anh');
+    expect(result.redacted).toBe(false);
+  });
+});

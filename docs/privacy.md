@@ -19,7 +19,8 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 - Ghi log `event.body`, code học sinh, hoặc header nhận dạng (IP, User-Agent đầy đủ) trong Lambda.
 - Gửi dữ liệu tiến độ lên server dưới bất kỳ hình thức nào (kể cả "tạm thời").
 - Bảng xếp hạng hiển thị danh tính; trang công khai liệt kê người tham gia.
-- Ô nhập tự do có thể khiến trẻ gõ thông tin cá nhân gửi lên AI — code học sinh gửi lên AI phải qua bộ lọc (`sanitizeInput`): cắt độ dài, loại chuỗi giống email/SĐT, cảnh báo nếu phát hiện.
+- Ô nhập tự do có thể khiến trẻ gõ thông tin cá nhân gửi lên AI — code học sinh gửi lên AI phải qua bộ lọc (`sanitizeForAi`): cắt độ dài, che email, số điện thoại, dãy số dài, đường link, và phần đứng sau các cụm tự giới thiệu ("em tên là…", "nhà ở…", "học lớp…").
+- **Giới hạn thật của bộ lọc, phải nói thẳng:** nó đoán theo mẫu. Một cái tên viết trơ trọi — `print("Nguyễn Lan Anh")` — **vẫn lọt qua** và sẽ tới Bedrock. Có test ghi lại đúng trường hợp này để không ai tưởng bộ lọc là tuyệt đối. Vì vậy panel gợi ý (S0-19) **phải** nhắc trẻ đừng gõ tên thật vào code trước khi bấm xin gợi ý.
 
 ## Yêu cầu với AI
 - Gọi qua Amazon Bedrock bằng profile global: dữ liệu gửi cho AI có thể được xử lý ở nước ngoài. Đây là lý do **tuyệt đối không** gửi dữ liệu cá nhân tới AI. Khi có pháp nhân, hỏi luật sư về thủ tục chuyển dữ liệu xuyên biên giới.
