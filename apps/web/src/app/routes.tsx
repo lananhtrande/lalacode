@@ -55,6 +55,12 @@ export const routes: RouteObject[] = [
         path: 'gioi-thieu',
         lazy: async () => ({ Component: (await import('../features/about/AboutPage')).AboutPage }),
       },
+      {
+        path: 'quyen-rieng-tu',
+        lazy: async () => ({
+          Component: (await import('../features/about/PrivacyPage')).PrivacyPage,
+        }),
+      },
       // Trang thử runner chỉ tồn tại khi chạy dev; bản phát hành không có.
       ...(import.meta.env.DEV
         ? [
