@@ -1,4 +1,4 @@
-import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
+import { deleteDB, openDB, type DBSchema, type IDBPDatabase } from 'idb';
 import {
   DB_NAME,
   PROFILE_KEY,
@@ -217,7 +217,31 @@ export async function importSnapshot(snapshot: ProgressSnapshot): Promise<void> 
   await transaction.done;
 }
 
-/** Nút "Xoá toàn bộ dữ liệu trên máy này" (S0-16) gọi hàm này. */
+/**
+ * Nút "Xoá toàn bộ dữ liệu trên máy này" (S0-16).
+ *
+ * Làm hai bước để lời hứa với bố mẹ luôn đúng:
+ * 1. Dọn sạch từng store — việc này chắc chắn chạy được.
+ * 2. Xoá hẳn database. Bước này có thể bị chặn nếu trẻ đang mở lalacode ở tab
+ *    khác, nên nó chỉ là dọn nốt cái vỏ rỗng; dữ liệu đã mất từ bước 1.
+ */
+export async function deleteAllData(): Promise<void> {
+  await clearAllProgress();
+  const db = await openProgressDb().catch(() => null);
+  db?.close();
+  dbPromise = null;
+  try {
+    await deleteDB(DB_NAME, {
+      blocked() {
+        /* tab khác đang mở: thôi, vỏ rỗng để lại cũng không sao */
+      },
+    });
+  } catch {
+    /* dữ liệu đã bị dọn ở bước 1 rồi */
+  }
+}
+
+/** Dọn sạch từng store. Giữ lại database rỗng. */
 export async function clearAllProgress(): Promise<void> {
   const db = await openProgressDb();
   const transaction = db.transaction(['exercises', 'lessons', 'profile'], 'readwrite');
