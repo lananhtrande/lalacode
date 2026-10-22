@@ -104,7 +104,10 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
   - **Không chứa `draftCode`.** Trẻ hay dán mã vào chỗ công khai (nhóm chat, ghi chú), mà code tự gõ có thể vô tình có tên thật. Chuyển máy chỉ cần biết bài nào xong.
   - Nhập mã là **gộp, không ghi đè**: bài đã xong ở một trong hai máy thì vẫn xong, số lần thử lấy lớn hơn, huy hiệu hợp nhất, streak lấy dài hơn, nháp của máy hiện tại giữ nguyên. Trẻ nhập mã cũ vào máy đã học vài bài sẽ không mất bài nào.
   - Mã của phiên bản schema mới hơn thì từ chối với thông báo riêng, không cố đoán.
-- **Link báo cáo cho bố mẹ:** `https://<domain>/bao-cao#<mã>` — phần sau `#` không bao giờ gửi lên server. Trang báo cáo giải mã và hiển thị.
+- **Link báo cáo cho bố mẹ:** `https://<domain>/bao-cao#<mã>` — dùng **chính mã tiến độ** của S0-14, nên cũng không mang code của trẻ. Phần sau `#` trình duyệt không gửi lên server; trang báo cáo tự giải mã và hiển thị.
+  - Chỉ hiện **số liệu**: bài tập đã xong, bài học trọn vẹn, streak, huy hiệu, số lần nộp bài, ngày học gần nhất, và tiến độ từng bài (tên bài lấy từ mục lục nội dung).
+  - Giọng văn trang này dành cho **người lớn**, khác hẳn các trang cho trẻ. Khi mở bằng link, ô "tạo link" bị ẩn đi vì nó nói chuyện với trẻ.
+  - Mục lục nội dung tải lỗi thì vẫn ra số liệu, chỉ thiếu tên bài.
 - Schema progress được thiết kế trùng với bảng PostgreSQL ở giai đoạn 1 để sau này "đồng bộ" một chạm.
 
 ### 4. AI hint proxy (`services/ai-hint`)

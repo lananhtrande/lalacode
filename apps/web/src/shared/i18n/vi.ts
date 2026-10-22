@@ -152,6 +152,40 @@ export const vi = {
     privacyNote:
       'Mã không chứa những dòng code em viết. Nó chỉ ghi bài nào xong, bài nào đang làm, số lần em thử và huy hiệu đã nhận.',
   },
+  report: {
+    title: 'Báo cáo cho bố mẹ',
+    // Trang này bố mẹ đọc, nên xưng hô khác với các trang dành cho trẻ.
+    lead: 'Đây là tóm tắt việc học của con, đọc từ chính đường link bạn đang mở. Trang không gửi dữ liệu này đi đâu cả.',
+    emptyTitle: 'Chưa có dữ liệu trong link',
+    emptyLead:
+      'Link báo cáo cần phần mã ở sau dấu #. Bạn hãy mở lại đúng đường link con gửi, hoặc tạo link mới ngay trên máy con.',
+    badLink: 'Link này mình đọc không được. Có thể lúc sao chép bị thiếu một phần ở cuối.',
+    createTitle: 'Tạo link báo cáo',
+    createLead:
+      'Bấm nút để tạo link từ tiến độ trên máy này, rồi gửi cho bố mẹ qua Zalo hay tin nhắn.',
+    createButton: 'Tạo link báo cáo',
+    createNothing: 'Em làm xong một bài tập rồi quay lại đây để tạo link nhé.',
+    copy: 'Sao chép link',
+    copied: 'Đã sao chép',
+    stats: {
+      exercises: 'bài tập đã xong',
+      lessons: 'bài học trọn vẹn',
+      streak: 'ngày học liên tiếp',
+      badges: 'huy hiệu',
+      attempts: 'lần nộp bài',
+      lastActive: 'Học gần nhất',
+    },
+    lessonsTitle: 'Từng bài học',
+    lessonDone: 'Xong',
+    lessonDoing: 'Đang làm',
+    noLessons: 'Con chưa bắt đầu bài nào.',
+    privacyTitle: 'Về dữ liệu trong link này',
+    privacyBody:
+      'Toàn bộ số liệu nằm sau dấu # trong đường link, nên trình duyệt không gửi nó lên máy chủ. Link không chứa họ tên, email hay số điện thoại, và cũng không chứa những dòng code con viết.',
+    honestyNote:
+      'Link này chỉ để bố mẹ theo dõi cho vui. Nó không có cách xác thực ai tạo ra, nên đừng dùng làm căn cứ chấm điểm.',
+    attemptsNote: 'Số lần nộp bài cho thấy con thử lại bao nhiêu lần — thử nhiều là chuyện tốt.',
+  },
   comingSoon: {
     badge: 'Đang xây',
     body: 'Phần này mình đang làm. Em quay lại sau nhé!',
