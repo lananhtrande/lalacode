@@ -61,6 +61,12 @@ data "aws_iam_policy_document" "github_deploy" {
   }
 
   statement {
+    sid       = "CapNhatCodeLambdaGoiY"
+    actions   = ["lambda:UpdateFunctionCode", "lambda:GetFunction"]
+    resources = [aws_lambda_function.ai_hint.arn]
+  }
+
+  statement {
     sid       = "XoaCacheSauKhiDeploy"
     actions   = ["cloudfront:CreateInvalidation", "cloudfront:GetInvalidation"]
     resources = [aws_cloudfront_distribution.web.arn]

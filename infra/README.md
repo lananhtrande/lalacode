@@ -38,6 +38,24 @@ build → s3://<bucket>/releases/<sha>/   (giữ 90 ngày, để rollback)
 
 CloudFront trỏ vào `current/` bằng `origin_path`, nên **rollback không phải sửa hạ tầng**: chép một release cũ đè lên `current/` rồi invalidate là xong (workflow riêng ở S0-25).
 
+## Hai bước cho lần dựng đầu
+
+Lambda gợi ý nằm **trong** origin của chính CloudFront, nên nó không thể tham chiếu ngược địa chỉ của distribution (Terraform báo vòng lặp phụ thuộc). Vì vậy:
+
+1. Apply lần đầu với `site_base_url` để trống.
+2. Lấy `terraform output site_url`, đặt vào `site_base_url` (trong `terraform.tfvars` hoặc `-var`), apply lần hai. Lambda cần biết địa chỉ này để tải bundle nội dung.
+
+Khi gắn tên miền riêng thì đặt `site_base_url` thành tên miền đó.
+
+## Gợi ý AI
+
+- Bảng `lalacode-hint-counter`: chỉ chứa `sha256(token)` + ngày + số đếm, TTL 48 giờ. Không nói lên trẻ nào, ở đâu.
+- Role của Lambda chỉ có đúng ba quyền: ghi log của chính nó, `dynamodb:UpdateItem` trên đúng bảng đó, và `bedrock:InvokeModel` trên **đúng model Haiku 5.5** (không mở cho mọi model).
+- Function URL để `AWS_IAM`, chỉ CloudFront gọi được qua OAC — không ai gọi thẳng vào Lambda được.
+- Log giữ 7 ngày.
+- Tắt AI: đặt `ai_hints_enabled = false` rồi apply, hoặc sửa biến môi trường `AI_HINTS_ENABLED` trên console cho nhanh khi có sự cố.
+- Code Lambda do workflow `deploy-ai-hint.yml` đẩy lên; Terraform chỉ tạo function với một gói rỗng rồi `ignore_changes` phần code.
+
 ## Cache
 
 | Đường dẫn | Cách cache | Vì sao |

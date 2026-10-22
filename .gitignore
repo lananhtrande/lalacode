@@ -32,3 +32,6 @@ apps/web/public/content/
 
 # bản Pyodide tự host do scripts/copy-pyodide.mjs chép vào
 apps/web/public/pyodide/
+
+# gói Lambda do esbuild dựng
+services/*/dist/

@@ -115,7 +115,10 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - AWS Lambda (Node 22, TS), gọi qua CloudFront path `/api/hint` (cùng origin → không cần CORS rộng).
 - Input: `{exerciseId, code ≤ 4 kB, error ≤ 2 kB, hintLevel 1–3, token}`. Server tự lấy đề bài theo `exerciseId` từ bundle nội dung — **không tin đề bài do client gửi**.
 - Model: Claude Haiku 5.5 qua **Amazon Bedrock**, inference profile `global.anthropic.claude-haiku-5-5` (Singapore chỉ hỗ trợ profile global — request có thể được xử lý ở bất kỳ vùng nào). Gọi bằng `@aws-sdk/client-bedrock-runtime` (Converse API) với IAM role của Lambda; không có API key. `max_tokens` thấp (~400). Prompt hệ thống: không đưa lời giải đầy đủ, tiếng Việt cho trẻ 10–15 tuổi, từ chối chủ đề ngoài bài.
-- Rate limit: `token` = UUID ngẫu nhiên tạo trên máy (không liên kết danh tính). Lambda lưu `sha256(token)` + ngày trong DynamoDB, TTL 48 h, ~5 lượt/ngày/token, cộng giới hạn toàn cục/ngày để chặn chi phí.
+- Rate limit: `token` = UUID ngẫu nhiên tạo trên máy (không liên kết danh tính). Lambda lưu `sha256(token)` + ngày trong DynamoDB, TTL 48 h, **5 lượt/ngày/token**, cộng **trần 2000 lượt/ngày toàn hệ thống** để chặn chi phí.
+  - Đếm bằng `UpdateItem` có `ConditionExpression`, không phải đọc-rồi-ghi: hai request cùng lúc không lách qua nhau được.
+  - Đếm **trước khi** gọi Bedrock — hết lượt thì không tốn một xu nào.
+  - Hết lượt của trẻ (`qua-nhieu-luot`) và hết hạn mức chung (`het-han-muc-ngay`) là hai mã khác nhau: cái sau không phải lỗi của trẻ nên UI nói khác đi.
 - Không ghi log body request/response. Chỉ log: thời gian, mã kết quả, độ trễ, số token AI. Tất cả đi qua `logger.ts` — chỗ **duy nhất** trong service được phép in ra, để không ai lỡ để lại `console.log` gỡ rối kèm nội dung.
 - Đề bài lấy từ bundle đã phát hành qua HTTP (cache 5 phút trong container), nên Lambda không phải build lại mỗi lần sửa nội dung. Bundle công khai này **không có lời giải**, nên AI cũng không thấy lời giải.
 - Client gửi kèm trường lạ (ví dụ tự đính đề bài) thì **từ chối cả request** chứ không im lặng bỏ qua — `strictObject` của zod.
