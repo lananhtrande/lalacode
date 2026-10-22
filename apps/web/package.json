@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node ../../scripts/content-build.mjs && node ../../scripts/copy-pyodide.mjs && vite",
     "build": "node ../../scripts/content-build.mjs && node ../../scripts/copy-pyodide.mjs && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run"
   },
   "dependencies": {
     "@codemirror/commands": "^6.11.1",

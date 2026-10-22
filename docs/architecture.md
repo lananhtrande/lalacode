@@ -115,7 +115,9 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - Input: `{exerciseId, code ≤ 4 kB, error ≤ 2 kB, hintLevel 1–3, token}`. Server tự lấy đề bài theo `exerciseId` từ bundle nội dung — **không tin đề bài do client gửi**.
 - Model: Claude Haiku 5.5 qua **Amazon Bedrock**, inference profile `global.anthropic.claude-haiku-5-5` (Singapore chỉ hỗ trợ profile global — request có thể được xử lý ở bất kỳ vùng nào). Gọi bằng `@aws-sdk/client-bedrock-runtime` (Converse API) với IAM role của Lambda; không có API key. `max_tokens` thấp (~400). Prompt hệ thống: không đưa lời giải đầy đủ, tiếng Việt cho trẻ 10–15 tuổi, từ chối chủ đề ngoài bài.
 - Rate limit: `token` = UUID ngẫu nhiên tạo trên máy (không liên kết danh tính). Lambda lưu `sha256(token)` + ngày trong DynamoDB, TTL 48 h, ~5 lượt/ngày/token, cộng giới hạn toàn cục/ngày để chặn chi phí.
-- Không ghi log body request/response. Chỉ log: thời gian, mã kết quả, độ trễ, số token AI.
+- Không ghi log body request/response. Chỉ log: thời gian, mã kết quả, độ trễ, số token AI. Tất cả đi qua `logger.ts` — chỗ **duy nhất** trong service được phép in ra, để không ai lỡ để lại `console.log` gỡ rối kèm nội dung.
+- Đề bài lấy từ bundle đã phát hành qua HTTP (cache 5 phút trong container), nên Lambda không phải build lại mỗi lần sửa nội dung. Bundle công khai này **không có lời giải**, nên AI cũng không thấy lời giải.
+- Client gửi kèm trường lạ (ví dụ tự đính đề bài) thì **từ chối cả request** chứ không im lặng bỏ qua — `strictObject` của zod.
 - Có công tắc tắt AI (biến môi trường) → frontend hiển thị gợi ý tĩnh viết sẵn trong bài.
 
 ### 5. Analytics gộp (chưa chốt — xem ADR 0005)

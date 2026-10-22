@@ -29,7 +29,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [ ] S0-16 Nút xoá toàn bộ dữ liệu trên máy (`clearAllProgress()` đã có từ S0-12) — nhớ dọn luôn state đang hiển thị trên màn hình, và e2e: xoá → tải lại → sạch
 
 ## M4 — Gợi ý AI (tuần 5–6)
-- [ ] S0-17 Lambda `ai-hint`: validate, sanitize, prompt, gọi Claude qua Bedrock (IAM role, profile global)
+- [x] S0-17 Lambda `ai-hint`: validate, sanitize, prompt, gọi Claude qua Bedrock (IAM role, profile global)
 - [ ] S0-18 Rate limit DynamoDB + giới hạn toàn cục + công tắc tắt — Terraform thêm Lambda, Function URL sau CloudFront, DynamoDB, IAM `bedrock:InvokeModel`; workflow `deploy-ai-hint.yml`
 - [ ] S0-19 Panel gợi ý 3 mức trong UI + gợi ý tĩnh dự phòng
 - [ ] S0-20 Bộ eval prompt (30 case) và kết quả lưu trong repo

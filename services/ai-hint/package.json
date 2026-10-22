@@ -1,0 +1,19 @@
+{
+  "name": "@lalacode/ai-hint",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lambda g\u1ee3i \u00fd AI \u2014 kh\u00f4ng tr\u1ea1ng th\u00e1i, kh\u00f4ng log n\u1ed9i dung, g\u1ecdi Claude qua Bedrock",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1155.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.164",
+    "aws-sdk-client-mock": "^4.1.0"
+  },
+  "scripts": {
+    "test": "vitest run"
+  }
+}
