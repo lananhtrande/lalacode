@@ -1,0 +1,35 @@
+{
+  "id": "py-khoi-dong.06-neu-thi.03-du-tien-khong",
+  "title": "Đủ tiền chưa",
+  "kind": "code",
+  "prompt": "Em có 20000 đồng. Nhận giá món đồ từ người dùng. In `Mua được` nếu giá nhỏ hơn hoặc bằng số tiền, ngược lại in `Để dành thêm`.",
+  "starterCode": "tien = 20000\ngia = int(input())\n",
+  "solution": "tien = 20000\ngia = int(input())\n\nif gia <= tien:\n    print(\"Mua được\")\nelse:\n    print(\"Để dành thêm\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Mua được\n",
+      "stdin": "15000\n",
+      "message": "15000 đồng thì mua được."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Để dành thêm\n",
+      "stdin": "50000\n",
+      "message": "50000 đồng thì chưa đủ tiền."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Mua được\n",
+      "stdin": "20000\n",
+      "message": "Đúng bằng số tiền thì vẫn mua được nhé."
+    }
+  ],
+  "hints": [
+    "Mua được khi giá nhỏ hơn **hoặc bằng** số tiền.",
+    "Dấu nhỏ hơn hoặc bằng viết là `<=`.",
+    "Ví dụ tương tự: `if can_nang <= 30:` in ra `Nhẹ`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

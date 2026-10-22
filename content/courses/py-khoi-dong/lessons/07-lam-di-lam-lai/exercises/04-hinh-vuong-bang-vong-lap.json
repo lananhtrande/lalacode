@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.07-lam-di-lam-lai.04-hinh-vuong-bang-vong-lap",
+  "title": "Hình vuông bằng vòng lặp",
+  "kind": "code",
+  "prompt": "Vẽ hình vuông cạnh 70 bằng vòng lặp, chỉ viết lệnh vẽ **một lần**.",
+  "starterCode": "import turtle\n\nfor canh in range(4):\n    turtle.forward(70)\n",
+  "solution": "import turtle\n\nfor canh in range(4):\n    turtle.forward(70)\n    turtle.left(90)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.xcor()) == 0 and round(turtle.ycor()) == 0, 'rùa chưa khép kín hình'",
+      "message": "Vẽ đủ bốn cạnh thì rùa về đúng chỗ xuất phát."
+    },
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.heading()) % 360 == 0, 'rùa chưa quay đủ bốn góc'",
+      "message": "Bốn góc vuông thì rùa quay đủ một vòng."
+    }
+  ],
+  "hints": [
+    "Hình vuông cần cả đi lẫn quay trong mỗi lượt.",
+    "Hai dòng bên trong vòng lặp phải thụt vào bằng nhau.",
+    "Ví dụ tương tự: tam giác là `range(3)` với `turtle.left(120)`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

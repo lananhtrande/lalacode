@@ -1,0 +1,37 @@
+{
+  "id": "py-khoi-dong.10-tu-lam-lenh-rieng.03-ham-cong",
+  "title": "Hàm cộng hai số",
+  "kind": "code",
+  "prompt": "Viết hàm `cong(a, b)` **trả về** tổng hai số. Đừng in trong hàm.",
+  "starterCode": "def cong(a, b):\n    print(a + b)\n",
+  "solution": "def cong(a, b):\n    return a + b\n",
+  "tests": [
+    {
+      "type": "function_returns",
+      "name": "cong",
+      "args": [
+        3,
+        4
+      ],
+      "expected": 7,
+      "message": "`cong(3, 4)` phải trả về 7."
+    },
+    {
+      "type": "function_returns",
+      "name": "cong",
+      "args": [
+        10,
+        25
+      ],
+      "expected": 35,
+      "message": "Thử với hai số khác xem sao nhé."
+    }
+  ],
+  "hints": [
+    "`print` chỉ hiện ra màn hình, không đưa giá trị về.",
+    "Muốn trả giá trị về thì dùng `return`.",
+    "Ví dụ tương tự: `def nhan(a, b): return a * b`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

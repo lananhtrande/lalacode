@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.09-lap-den-khi-nao.03-doan-so",
+  "title": "Trò đoán số",
+  "kind": "code",
+  "prompt": "Số bí mật là 7. Nhận từng số người chơi đoán cho tới khi đúng. Mỗi lần sai in `Chưa đúng`, khi đúng in `Chính xác!` rồi dừng.",
+  "starterCode": "bi_mat = 7\ndoan = int(input())\n\nif doan == bi_mat:\n    print(\"Chính xác!\")\n",
+  "solution": "bi_mat = 7\ndoan = int(input())\n\nwhile doan != bi_mat:\n    print(\"Chưa đúng\")\n    doan = int(input())\n\nprint(\"Chính xác!\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Chính xác!\n",
+      "stdin": "7\n",
+      "message": "Đoán trúng ngay lần đầu thì chỉ in Chính xác!"
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Chưa đúng\nChưa đúng\nChính xác!\n",
+      "stdin": "3\n9\n7\n",
+      "message": "Mỗi lần đoán sai in một dòng Chưa đúng."
+    }
+  ],
+  "hints": [
+    "Lặp chừng nào số đoán **khác** số bí mật.",
+    "Trong vòng lặp nhớ nhận số đoán mới, nếu không nó lặp mãi.",
+    "Ví dụ tương tự: `while tra_loi != \"có\":` rồi hỏi lại."
+  ],
+  "timeoutMs": 6000,
+  "turtle": false
+}

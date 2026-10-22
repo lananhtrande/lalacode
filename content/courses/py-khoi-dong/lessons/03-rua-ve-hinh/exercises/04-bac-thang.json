@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.03-rua-ve-hinh.04-bac-thang",
+  "title": "Bậc thang",
+  "kind": "code",
+  "prompt": "Vẽ hai bậc thang: đi lên 40, sang phải 40, lại lên 40, lại sang phải 40. Rùa bắt đầu quay sang phải.",
+  "starterCode": "import turtle\n\nturtle.left(90)\nturtle.forward(40)\n",
+  "solution": "import turtle\n\nturtle.left(90)\nturtle.forward(40)\nturtle.right(90)\nturtle.forward(40)\nturtle.left(90)\nturtle.forward(40)\nturtle.right(90)\nturtle.forward(40)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.xcor()) == 80 and round(turtle.ycor()) == 80, 'bậc thang chưa đủ'",
+      "message": "Hai bậc thang đưa rùa lên 80 và sang phải 80."
+    }
+  ],
+  "hints": [
+    "Lên là quay trái rồi đi, sang phải là quay phải rồi đi.",
+    "Mỗi bậc gồm bốn lệnh: quay, đi, quay, đi.",
+    "Ví dụ tương tự: một bậc cao 20 là `left(90)`, `forward(20)`, `right(90)`, `forward(20)`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

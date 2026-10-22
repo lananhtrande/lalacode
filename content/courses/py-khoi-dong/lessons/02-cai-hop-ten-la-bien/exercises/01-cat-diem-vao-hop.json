@@ -1,0 +1,28 @@
+{
+  "id": "py-khoi-dong.02-cai-hop-ten-la-bien.01-cat-diem-vao-hop",
+  "title": "Cất điểm vào hộp",
+  "kind": "code",
+  "prompt": "Tạo biến `diem` bằng 9 rồi in biến đó ra.",
+  "starterCode": "diem = \nprint(diem)\n",
+  "solution": "diem = 9\nprint(diem)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "9\n",
+      "message": "Chương trình cần in ra đúng số 9."
+    },
+    {
+      "type": "variable_equals",
+      "name": "diem",
+      "expected": 9,
+      "message": "Biến `diem` phải bằng 9."
+    }
+  ],
+  "hints": [
+    "Sau dấu `=` là giá trị em muốn cất vào hộp.",
+    "Số thì viết trần, không cần dấu nháy: `tuoi = 12`.",
+    "Ví dụ tương tự: `so_ban = 5` rồi `print(so_ban)` in ra 5."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

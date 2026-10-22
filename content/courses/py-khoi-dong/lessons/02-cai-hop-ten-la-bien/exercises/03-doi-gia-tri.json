@@ -1,0 +1,28 @@
+{
+  "id": "py-khoi-dong.02-cai-hop-ten-la-bien.03-doi-gia-tri",
+  "title": "Đổi giá trị trong hộp",
+  "kind": "code",
+  "prompt": "Biến `tien` đang là 10000. Em đổi nó thành 20000 rồi in ra.",
+  "starterCode": "tien = 10000\n# thêm một dòng ở đây\nprint(tien)\n",
+  "solution": "tien = 10000\ntien = 20000\nprint(tien)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "20000\n",
+      "message": "Số in ra phải là 20000."
+    },
+    {
+      "type": "variable_equals",
+      "name": "tien",
+      "expected": 20000,
+      "message": "Cuối chương trình, `tien` phải bằng 20000."
+    }
+  ],
+  "hints": [
+    "Gán lại cho cùng một cái hộp là giá trị cũ bị thay.",
+    "Em viết thêm một dòng `tien = ...` trước khi in.",
+    "Ví dụ tương tự: `so = 1` rồi `so = 7` thì hộp `so` còn 7."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

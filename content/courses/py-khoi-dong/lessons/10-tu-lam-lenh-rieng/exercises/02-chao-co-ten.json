@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.10-tu-lam-lenh-rieng.02-chao-co-ten",
+  "title": "Chào kèm tên",
+  "kind": "code",
+  "prompt": "Viết hàm `chao(ten)` in ra `Xin chào Lan!` khi gọi `chao(\"Lan\")`. Gọi hàm hai lần với Lan và Minh.",
+  "starterCode": "def chao(ten):\n    print(\"Xin chào!\")\n\nchao(\"Lan\")\nchao(\"Minh\")\n",
+  "solution": "def chao(ten):\n    print(f\"Xin chào {ten}!\")\n\nchao(\"Lan\")\nchao(\"Minh\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Xin chào Lan!\nXin chào Minh!\n",
+      "message": "Mỗi lần gọi phải chào đúng tên được đưa vào."
+    }
+  ],
+  "hints": [
+    "Tham số `ten` đang bị bỏ quên trong câu in.",
+    "Dùng f-string để đặt `ten` vào giữa câu.",
+    "Ví dụ tương tự: `def khen(mon): print(f\"{mon} hay quá\")`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

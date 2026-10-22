@@ -32,8 +32,20 @@ class StudentCodeError(Exception):
         self.message = message
 
 
+def reset_turtle() -> None:
+    """Đưa rùa về trạng thái ban đầu trước mỗi test.
+
+    `turtle` là module dùng chung: không đặt lại thì test thứ hai thấy con rùa
+    đang đứng ở chỗ test thứ nhất bỏ lại, và kết quả chấm sai hoàn toàn.
+    """
+    module = sys.modules.get("turtle")
+    if module is not None and hasattr(module, "_reset_for_grading"):
+        module._reset_for_grading()
+
+
 def run_student_code(code: str, stdin_text: str) -> tuple[dict[str, Any], str]:
     """Chạy code trong namespace riêng, trả về (namespace, stdout)."""
+    reset_turtle()
     namespace: dict[str, Any] = {"__name__": "__main__"}
     stdout = io.StringIO()
     original_stdin = sys.stdin
@@ -96,7 +108,10 @@ def check_test(test: dict[str, Any]) -> tuple[bool, str | None]:
             return False, f"không tìm thấy hàm `{name}`"
         args = test.get("args", [])
         try:
-            actual = function(*args)
+            # Hàm của trẻ có thể `print` bên trong. Không bắt lại thì chữ đó
+            # trộn vào JSON kết quả và cả bộ chấm hỏng theo.
+            with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                actual = function(*args)
         except BaseException as error:  # noqa: BLE001
             return False, f"gọi `{name}` bị lỗi: {format_exception(error)}"
         if actual == test["expected"]:

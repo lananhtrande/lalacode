@@ -1,0 +1,17 @@
+{
+  "id": "py-khoi-dong.06-neu-thi",
+  "title": "Nếu… thì…",
+  "concepts": [
+    "if",
+    "else",
+    "so sánh"
+  ],
+  "estimatedMinutes": 14,
+  "exercises": [
+    "01-dat-hay-chua",
+    "02-so-chan-hay-le",
+    "03-du-tien-khong",
+    "04-lon-nhat-trong-hai"
+  ],
+  "status": "draft"
+}

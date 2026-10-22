@@ -1,0 +1,15 @@
+{
+  "id": "py-khoi-dong.04-may-hoi-em-tra-loi",
+  "title": "Máy hỏi, em trả lời",
+  "concepts": [
+    "input",
+    "f-string"
+  ],
+  "estimatedMinutes": 12,
+  "exercises": [
+    "01-chao-nguoi-ta",
+    "02-xin-chao-ten",
+    "03-hai-cau-hoi"
+  ],
+  "status": "draft"
+}

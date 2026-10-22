@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.10-tu-lam-lenh-rieng.01-loi-chao-rieng",
+  "title": "Lời chào riêng",
+  "kind": "code",
+  "prompt": "Viết hàm `chao()` in ra `Xin chào!`, rồi gọi hàm đó một lần.",
+  "starterCode": "def chao():\n    print(\"Xin chào!\")\n\n# gọi hàm ở đây\n",
+  "solution": "def chao():\n    print(\"Xin chào!\")\n\nchao()\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Xin chào!\n",
+      "message": "Viết hàm xong phải gọi thì nó mới chạy."
+    }
+  ],
+  "hints": [
+    "Định nghĩa hàm thôi thì chưa có gì xảy ra.",
+    "Gọi hàm là viết tên hàm kèm cặp ngoặc.",
+    "Ví dụ tương tự: `def hat(): ...` rồi `hat()`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

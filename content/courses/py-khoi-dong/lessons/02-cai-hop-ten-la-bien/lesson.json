@@ -1,0 +1,16 @@
+{
+  "id": "py-khoi-dong.02-cai-hop-ten-la-bien",
+  "title": "Cái hộp tên là biến",
+  "concepts": [
+    "biến",
+    "gán giá trị"
+  ],
+  "estimatedMinutes": 12,
+  "exercises": [
+    "01-cat-diem-vao-hop",
+    "02-ten-cua-em",
+    "03-doi-gia-tri",
+    "04-hai-cai-hop"
+  ],
+  "status": "draft"
+}

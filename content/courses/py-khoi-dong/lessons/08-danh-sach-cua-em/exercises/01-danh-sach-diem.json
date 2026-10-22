@@ -1,0 +1,32 @@
+{
+  "id": "py-khoi-dong.08-danh-sach-cua-em.01-danh-sach-diem",
+  "title": "Danh sách điểm",
+  "kind": "code",
+  "prompt": "Tạo danh sách `diem` gồm 8, 9, 7 rồi in cả danh sách ra.",
+  "starterCode": "diem = \nprint(diem)\n",
+  "solution": "diem = [8, 9, 7]\nprint(diem)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "[8, 9, 7]\n",
+      "message": "Danh sách cần đúng ba số theo thứ tự đó."
+    },
+    {
+      "type": "variable_equals",
+      "name": "diem",
+      "expected": [
+        8,
+        9,
+        7
+      ],
+      "message": "Biến `diem` phải là danh sách ba số."
+    }
+  ],
+  "hints": [
+    "Danh sách viết trong dấu ngoặc vuông.",
+    "Các số cách nhau bằng dấu phẩy.",
+    "Ví dụ tương tự: `tuoi = [10, 11, 12]`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

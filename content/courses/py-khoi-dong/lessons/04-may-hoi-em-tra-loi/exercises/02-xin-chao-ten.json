@@ -1,0 +1,23 @@
+{
+  "id": "py-khoi-dong.04-may-hoi-em-tra-loi.02-xin-chao-ten",
+  "title": "Xin chào kèm tên",
+  "kind": "code",
+  "prompt": "Nhận tên rồi in ra câu `Xin chào Lan!` (thay Lan bằng tên nhận được). Dùng f-string.",
+  "starterCode": "ten = input()\nprint(\"Xin chào ten!\")\n",
+  "solution": "ten = input()\nprint(f\"Xin chào {ten}!\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Xin chào Minh!\n",
+      "stdin": "Minh\n",
+      "message": "Tên phải được thay vào câu chào, đừng in chữ \"ten\"."
+    }
+  ],
+  "hints": [
+    "Chữ `f` đặt ngay trước dấu nháy mở.",
+    "Tên biến phải nằm trong dấu ngoặc nhọn `{ }`.",
+    "Ví dụ tương tự: `print(f\"Món {mon} ngon quá\")`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

@@ -1,0 +1,35 @@
+{
+  "id": "py-khoi-dong.06-neu-thi.01-dat-hay-chua",
+  "title": "Đạt hay chưa đạt",
+  "kind": "code",
+  "prompt": "Nhận điểm từ người dùng. In `Đạt` nếu điểm từ 5 trở lên, ngược lại in `Chưa đạt`.",
+  "starterCode": "diem = int(input())\n\nif diem >= 5:\n    print(\"Đạt\")\n",
+  "solution": "diem = int(input())\n\nif diem >= 5:\n    print(\"Đạt\")\nelse:\n    print(\"Chưa đạt\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Đạt\n",
+      "stdin": "8\n",
+      "message": "Điểm 8 thì phải in Đạt."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Chưa đạt\n",
+      "stdin": "3\n",
+      "message": "Điểm 3 thì phải in Chưa đạt — em đã thêm nhánh else chưa?"
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Đạt\n",
+      "stdin": "5\n",
+      "message": "Đúng 5 điểm cũng là Đạt nhé."
+    }
+  ],
+  "hints": [
+    "Phần còn thiếu là nhánh `else`.",
+    "Sau `else` cũng có dấu hai chấm, và dòng bên trong thụt vào.",
+    "Ví dụ tương tự: `if tuoi >= 18:` … `else:` … in \"Chưa đủ tuổi\"."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

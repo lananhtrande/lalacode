@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.05-so-va-phep-tinh.04-diem-trung-binh",
+  "title": "Điểm trung bình",
+  "kind": "code",
+  "prompt": "Nhận hai điểm kiểm tra (mỗi điểm một dòng) rồi in điểm trung bình của hai bài.",
+  "starterCode": "diem1 = int(input())\ndiem2 = int(input())\n",
+  "solution": "diem1 = int(input())\ndiem2 = int(input())\nprint((diem1 + diem2) / 2)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "8.0\n",
+      "stdin": "7\n9\n",
+      "message": "Trung bình là cộng hai điểm rồi chia 2."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "6.5\n",
+      "stdin": "6\n7\n",
+      "message": "Thử lại với hai điểm khác xem sao nhé."
+    }
+  ],
+  "hints": [
+    "Trung bình = tổng chia cho số bài.",
+    "Nhớ đặt phép cộng trong ngoặc trước khi chia.",
+    "Ví dụ tương tự: `print((a + b + c) / 3)` cho ba số."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

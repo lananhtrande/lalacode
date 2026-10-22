@@ -1,0 +1,28 @@
+{
+  "id": "py-khoi-dong.02-cai-hop-ten-la-bien.04-hai-cai-hop",
+  "title": "Hai cái hộp",
+  "kind": "code",
+  "prompt": "Tạo biến `mon` chứa chữ `Toán` và biến `diem` bằng 8. In `mon` ở dòng 1, `diem` ở dòng 2.",
+  "starterCode": "mon = \"Toán\"\n",
+  "solution": "mon = \"Toán\"\ndiem = 8\nprint(mon)\nprint(diem)\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Toán\n8\n",
+      "message": "Cần in 2 dòng: tên môn trước, điểm sau."
+    },
+    {
+      "type": "variable_equals",
+      "name": "diem",
+      "expected": 8,
+      "message": "Biến `diem` phải bằng 8."
+    }
+  ],
+  "hints": [
+    "Mỗi lệnh `print` in ra một dòng.",
+    "Em cần tạo thêm biến `diem` rồi in hai biến theo đúng thứ tự.",
+    "Ví dụ tương tự: `lop = \"6A\"` và `si_so = 40`, in `lop` rồi in `si_so`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

@@ -1,0 +1,29 @@
+{
+  "id": "py-khoi-dong.06-neu-thi.02-so-chan-hay-le",
+  "title": "Chẵn hay lẻ",
+  "kind": "code",
+  "prompt": "Nhận một số từ người dùng. In `Chẵn` nếu số chia hết cho 2, ngược lại in `Lẻ`. Gợi ý: `so % 2` cho phần dư.",
+  "starterCode": "so = int(input())\n\n# kiểm tra phần dư\n",
+  "solution": "so = int(input())\n\nif so % 2 == 0:\n    print(\"Chẵn\")\nelse:\n    print(\"Lẻ\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Chẵn\n",
+      "stdin": "8\n",
+      "message": "Số 8 là số chẵn."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Lẻ\n",
+      "stdin": "7\n",
+      "message": "Số 7 là số lẻ."
+    }
+  ],
+  "hints": [
+    "`%` cho phần dư của phép chia.",
+    "Số chẵn là số chia 2 dư 0.",
+    "Ví dụ tương tự: `if n % 5 == 0:` kiểm tra chia hết cho 5."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

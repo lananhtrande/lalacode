@@ -277,6 +277,17 @@ for _name in (
     globals()[_name] = _export(_name)
 
 
+def _reset_for_grading() -> None:
+    """Xoá sạch lệnh vẽ và cho rùa về giữa màn hình.
+
+    Bộ chấm gọi hàm này trước mỗi test: cùng một module rùa chạy nhiều test
+    liên tiếp, không đặt lại thì test sau thấy trạng thái của test trước.
+    """
+    global _commands, _default
+    _commands = []
+    _default = None
+
+
 def exitonclick() -> None:
     """Không cần làm gì trên web; để bài học chép từ sách vẫn chạy được."""
 

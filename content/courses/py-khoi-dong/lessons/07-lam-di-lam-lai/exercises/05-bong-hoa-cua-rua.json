@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.07-lam-di-lam-lai.05-bong-hoa-cua-rua",
+  "title": "Bông hoa của rùa",
+  "kind": "code",
+  "prompt": "Vẽ 6 hình vuông cạnh 50, sau mỗi hình quay trái 60 độ. Em sẽ được một bông hoa.",
+  "starterCode": "import turtle\n\nfor hinh in range(6):\n    for canh in range(4):\n        turtle.forward(50)\n        turtle.left(90)\n",
+  "solution": "import turtle\n\nfor hinh in range(6):\n    for canh in range(4):\n        turtle.forward(50)\n        turtle.left(90)\n    turtle.left(60)\n",
+  "tests": [
+    {
+      "type": "python_assert",
+      "code": "import json, math, turtle\n_c = json.loads(turtle.drain_commands())\n_goc = {round(math.degrees(math.atan2(x['y2'] - x['y1'], x['x2'] - x['x1']))) % 360 for x in _c if x['op'] == 'line'}\nassert len(_goc) > 4, 'các hình vuông đang chồng khít lên nhau'",
+      "message": "Sáu hình vuông phải xoè ra các hướng khác nhau — em đã quay 60 độ sau mỗi hình chưa?"
+    },
+    {
+      "type": "python_assert",
+      "code": "assert round(turtle.xcor()) == 0 and round(turtle.ycor()) == 0, 'rùa chưa về chỗ cũ'",
+      "message": "Mỗi hình vuông khép kín nên rùa luôn về chỗ xuất phát."
+    }
+  ],
+  "hints": [
+    "Một vòng lặp nằm trong vòng lặp kia: ngoài là hình, trong là cạnh.",
+    "Lệnh quay 60 độ nằm ở vòng ngoài, sau khi vẽ xong một hình vuông.",
+    "Ví dụ tương tự: 4 tam giác, mỗi lần quay 90 độ."
+  ],
+  "timeoutMs": 5000,
+  "turtle": true
+}

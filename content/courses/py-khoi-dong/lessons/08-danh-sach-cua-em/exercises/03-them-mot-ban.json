@@ -1,0 +1,27 @@
+{
+  "id": "py-khoi-dong.08-danh-sach-cua-em.03-them-mot-ban",
+  "title": "Thêm một bạn",
+  "kind": "code",
+  "prompt": "Thêm tên `Nam` vào cuối danh sách `ban`, rồi in số lượng bạn trong danh sách.",
+  "starterCode": "ban = [\"Lan\", \"Minh\", \"Hoa\"]\n# thêm Nam rồi in số lượng\n",
+  "solution": "ban = [\"Lan\", \"Minh\", \"Hoa\"]\nban.append(\"Nam\")\nprint(len(ban))\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "4\n",
+      "message": "Thêm một bạn nữa là có 4 bạn."
+    },
+    {
+      "type": "python_assert",
+      "code": "assert ban[-1] == 'Nam', 'Nam phải ở cuối danh sách'",
+      "message": "Nam phải nằm ở cuối danh sách."
+    }
+  ],
+  "hints": [
+    "`append` thêm vào cuối danh sách.",
+    "`len(...)` đếm số phần tử.",
+    "Ví dụ tương tự: `mon.append(\"Lý\")` rồi `print(len(mon))`."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}
