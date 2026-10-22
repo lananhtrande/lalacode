@@ -193,6 +193,24 @@ export async function awardBadges(earned: readonly string[]): Promise<ProfileSta
   return next;
 }
 
+/**
+ * Token ẩn danh cho gợi ý AI, tạo khi cần và giữ trên máy.
+ * Không lưu được (chế độ riêng tư…) thì vẫn trả về một token dùng tạm cho
+ * phiên này — trẻ vẫn xin được gợi ý, chỉ là lượt không đếm xuyên phiên.
+ */
+export async function getAiToken(): Promise<string> {
+  const profile = await getProfile();
+  if (profile.aiToken !== undefined) return profile.aiToken;
+
+  const aiToken = crypto.randomUUID();
+  const saved = await quietly(async () => {
+    const db = await openProgressDb();
+    await db.put('profile', { ...profile, aiToken });
+    return true;
+  });
+  return saved === undefined ? aiToken : aiToken;
+}
+
 /** Toàn bộ tiến độ, dùng cho mã tiến độ và trang báo cáo (S0-14, S0-15). */
 export async function exportSnapshot(): Promise<ProgressSnapshot> {
   const [profile, lessons, exercises] = await Promise.all([

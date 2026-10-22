@@ -69,12 +69,72 @@ test.describe('màn bài tập', () => {
   });
 
   test('gợi ý mở dần, không lộ hết một lúc', async ({ page }) => {
+    // Chưa deploy Lambda ở môi trường test: /api/hint hỏng → rơi về gợi ý viết sẵn.
     await page.goto(EXERCISE);
-    await page.getByRole('button', { name: 'Mở gợi ý' }).click();
-    await expect(page.getByText(/Gợi ý 1:/)).toBeVisible();
-    await expect(page.getByText(/Gợi ý 2:/)).toBeHidden();
-    await page.getByRole('button', { name: 'Gợi ý tiếp theo' }).click();
-    await expect(page.getByText(/Gợi ý 2:/)).toBeVisible();
+    await expect(page.getByTestId('hint-privacy')).toContainText('đừng viết tên thật');
+
+    await page.getByTestId('hint-ask').click();
+    await expect(page.getByTestId('hint-list')).toContainText('Lệnh để in ra màn hình');
+    await expect(page.getByTestId('hint-list')).not.toContainText('Chữ cần in phải nằm');
+
+    await page.getByTestId('hint-ask').click();
+    await expect(page.getByTestId('hint-list')).toContainText('Chữ cần in phải nằm');
+  });
+
+  test('trợ lý trả lời được thì hiện câu của trợ lý, vẫn kèm gợi ý viết sẵn', async ({ page }) => {
+    await page.route('**/api/hint', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ hint: 'Em thử nghĩ xem lệnh nào dùng để in ra màn hình nhé.' }),
+      }),
+    );
+    await page.goto(EXERCISE);
+    await page.getByTestId('hint-ask').click();
+    await expect(page.getByTestId('ai-hints')).toContainText('lệnh nào dùng để in ra màn hình');
+  });
+
+  test('hết lượt hỏi thì nói rõ và vẫn cho gợi ý viết sẵn', async ({ page }) => {
+    await page.route('**/api/hint', (route) =>
+      route.fulfill({
+        status: 429,
+        contentType: 'application/json',
+        body: JSON.stringify({ error: 'qua-nhieu-luot' }),
+      }),
+    );
+    await page.goto(EXERCISE);
+    await page.getByTestId('hint-ask').click();
+    await expect(page.getByTestId('hint-fallback')).toContainText('đủ số lần hôm nay');
+    await expect(page.getByTestId('hint-list')).toContainText('Lệnh để in ra màn hình');
+  });
+
+  test('code của trẻ chỉ rời máy khi em tự bấm hỏi trợ giúp', async ({ page }) => {
+    const hintCalls: string[] = [];
+    await page.route('**/api/hint', (route) => {
+      hintCalls.push(route.request().postData() ?? '');
+      return route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ hint: 'gợi ý' }),
+      });
+    });
+
+    await page.goto(EXERCISE);
+    await setCode(page, 'print("thử xem")');
+    await page.getByRole('button', { name: 'Chạy thử' }).click();
+    await expect(page.getByTestId('exercise-output')).toHaveText('thử xem\n', { timeout: 120_000 });
+    await page.getByRole('button', { name: 'Nộp bài' }).click();
+    await expect(page.getByText(/Test 1:/)).toBeVisible({ timeout: 120_000 });
+    // Chạy và nộp bài: tuyệt đối không gọi tới trợ lý.
+    expect(hintCalls).toEqual([]);
+
+    await page.getByTestId('hint-ask').click();
+    await expect(page.getByTestId('ai-hints')).toBeVisible();
+    expect(hintCalls).toHaveLength(1);
+    const sent = JSON.parse(hintCalls[0] ?? '{}') as { code?: string; token?: string };
+    expect(sent.code).toBe('print("thử xem")');
+    // Token ẩn danh đi kèm để đếm lượt; server chỉ lưu bản băm của nó.
+    expect(sent.token).toMatch(/^[0-9a-f-]{36}$/);
   });
 
   test('vào bản đồ rồi mở bài học, bài tập đều đi được bằng chuột', async ({ page }) => {

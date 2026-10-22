@@ -225,12 +225,12 @@ describe('ExercisePage', () => {
   it('gợi ý mở dần từng mức, không hiện hết một lúc', async () => {
     const user = userEvent.setup();
     renderPage();
-    await user.click(await screen.findByRole('button', { name: strings.exercise.showHint }));
+    await user.click(await screen.findByTestId('hint-ask'));
     const hints = screen.getByTestId('hint-list');
     expect(hints).toHaveTextContent('Dùng print.');
     expect(hints).not.toHaveTextContent('Chữ trong ngoặc kép.');
 
-    await user.click(screen.getByRole('button', { name: strings.exercise.nextHint }));
+    await user.click(screen.getByTestId('hint-ask'));
     expect(hints).toHaveTextContent('Chữ trong ngoặc kép.');
   });
 
@@ -255,7 +255,7 @@ describe('ExercisePage', () => {
   it('hiện `code` trong đề bài và gợi ý thành chữ code, không phải dấu nháy ngược', async () => {
     const user = userEvent.setup();
     renderPage();
-    await user.click(await screen.findByRole('button', { name: strings.exercise.showHint }));
+    await user.click(await screen.findByTestId('hint-ask'));
     const hints = screen.getByTestId('hint-list');
     expect(hints.querySelector('code')).toHaveTextContent('print');
     expect(hints.textContent).not.toContain('`');

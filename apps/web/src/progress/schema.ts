@@ -48,6 +48,11 @@ export interface ProfileState {
   streakDays: number;
   /** Mã huy hiệu đã nhận (S0-13 định nghĩa danh sách). */
   badges: string[];
+  /**
+   * UUID ngẫu nhiên để giới hạn lượt gợi ý AI. **Không liên kết danh tính**:
+   * server chỉ thấy `sha256` của nó (docs/privacy.md). Xoá dữ liệu là mất luôn.
+   */
+  aiToken?: string;
 }
 
 export const PROFILE_KEY = 'me' as const;

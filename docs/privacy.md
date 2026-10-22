@@ -23,6 +23,9 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 - **Giới hạn thật của bộ lọc, phải nói thẳng:** nó đoán theo mẫu. Một cái tên viết trơ trọi — `print("Nguyễn Lan Anh")` — **vẫn lọt qua** và sẽ tới Bedrock. Có test ghi lại đúng trường hợp này để không ai tưởng bộ lọc là tuyệt đối. Vì vậy panel gợi ý (S0-19) **phải** nhắc trẻ đừng gõ tên thật vào code trước khi bấm xin gợi ý.
 
 ## Yêu cầu với AI
+- **Trẻ phải chủ động bấm xin trợ giúp** thì code mới rời máy. Chạy thử và nộp bài hoàn toàn cục bộ.
+- Panel gợi ý hiện câu nhắc **trước** khi trẻ bấm lần đầu: code sẽ được gửi đi, đừng viết tên thật/địa chỉ/số điện thoại trong code.
+- Token ẩn danh lưu trong hồ sơ trên máy, **không nằm trong mã tiến độ hay link báo cáo**.
 - Gọi qua Amazon Bedrock bằng profile global: dữ liệu gửi cho AI có thể được xử lý ở nước ngoài. Đây là lý do **tuyệt đối không** gửi dữ liệu cá nhân tới AI. Khi có pháp nhân, hỏi luật sư về thủ tục chuyển dữ liệu xuyên biên giới.
 - Không gửi gì ngoài mã bài, code (đã lọc), lỗi, mức gợi ý.
 - Prompt hệ thống buộc trả lời ngắn, tiếng Việt, đúng chủ đề bài, không hỏi thông tin cá nhân của trẻ.
