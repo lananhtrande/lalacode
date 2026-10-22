@@ -46,6 +46,10 @@ export const vi = {
   map: {
     title: 'Bản đồ nhiệm vụ',
     lead: 'Chọn một bài để bắt đầu. Mỗi bài khoảng 15 phút.',
+    done: 'Xong',
+    exercisesDone: 'bài tập đã xong',
+    continueLesson: 'Học tiếp',
+    startLesson: 'Bắt đầu',
     loading: 'Đang tải danh sách bài học…',
     error: 'Chưa tải được danh sách bài học. Em thử tải lại trang nhé.',
     empty: 'Chưa có bài học nào. Mình đang viết, em quay lại sau nhé!',
@@ -90,6 +94,46 @@ export const vi = {
       'Code chạy lâu quá rồi. Có thể em viết một vòng lặp không bao giờ dừng. Mình đã dừng giúp em, sửa lại rồi chạy tiếp nhé.',
     cancelled: 'Mình đã dừng chương trình. Em sửa code rồi chạy lại nhé.',
     internal: 'Máy chạy Python gặp trục trặc. Em thử tải lại trang giúp mình nhé.',
+  },
+  streak: {
+    none: 'Hôm nay em học một bài nhé, chuỗi ngày sẽ bắt đầu từ hôm nay.',
+    days: 'ngày học liên tiếp',
+    keepGoing: 'Giữ chuỗi nhé!',
+  },
+  badges: {
+    title: 'Huy hiệu',
+    lead: 'Mỗi huy hiệu ghi lại một cố gắng của em.',
+    earned: 'Đã nhận',
+    locked: 'Chưa nhận',
+    progress: 'Tiến trình',
+    seeAll: 'Xem tất cả huy hiệu',
+    countEarned: 'huy hiệu đã nhận',
+    items: {
+      'bai-dau-tien': {
+        name: 'Bài đầu tiên',
+        how: 'Làm xong một bài tập bất kỳ.',
+      },
+      'nam-bai-tap': {
+        name: 'Năm bài liền tay',
+        how: 'Làm xong 5 bài tập.',
+      },
+      'xong-bai-hoc': {
+        name: 'Trọn một bài học',
+        how: 'Làm xong tất cả bài tập của một bài học.',
+      },
+      'ba-ngay-lien': {
+        name: 'Ba ngày liên tiếp',
+        how: 'Học 3 ngày liền nhau.',
+      },
+      'bay-ngay-lien': {
+        name: 'Bảy ngày liên tiếp',
+        how: 'Học 7 ngày liền nhau.',
+      },
+      'kien-tri': {
+        name: 'Không bỏ cuộc',
+        how: 'Thử lại nhiều lần rồi làm đạt một bài tập.',
+      },
+    },
   },
   comingSoon: {
     badge: 'Đang xây',

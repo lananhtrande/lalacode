@@ -95,6 +95,9 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - IndexedDB (thư viện `idb`), schema có `version` để migrate. Ba store: `exercises` (khoá `exerciseId`, có index theo bài học), `lessons`, `profile` (một bản ghi duy nhất, khoá `'me'`).
 - `migrate.ts` giữ **danh sách bước nâng cấp**: `steps[n]` đưa dữ liệu từ phiên bản n lên n+1. Không bao giờ xoá dữ liệu cũ cho nhanh — trẻ mất tiến độ là mất động lực.
 - **Lưu tiến độ không bao giờ được làm hỏng buổi học**: Safari chế độ riêng tư, hết dung lượng hay người dùng chặn lưu trữ đều khiến IndexedDB ném lỗi. Mọi lời gọi đi qua `quietly()`; hỏng thì bỏ qua lặng lẽ, trẻ vẫn chạy và chấm code bình thường.
+- Huy hiệu (`progress/badges.ts`): **hàm thuần** tính từ ảnh chụp tiến độ, nên không hỏng khi nội dung khoá học thay đổi. Sáu huy hiệu đầu đều tính được chỉ từ tiến độ, không cần biết nội dung bài.
+- **Huy hiệu chỉ được thêm, không bị lấy lại**: streak đứt thì mất chuỗi ngày, nhưng huy hiệu đã nhận vẫn còn.
+- Bài học coi là xong khi **mọi bài tập của nó đã đạt**; màn bài tập xét điều này sau mỗi lần nộp rồi mới trao huy hiệu.
 - Mốc thời gian lưu ISO UTC (để sau này đồng bộ), còn "ngày" cho streak tính theo **lịch máy** — học 23h hôm nay và 7h sáng mai phải là hai ngày liền nhau.
 - Lưu: bài đã xong, số lần chạy, thời điểm, streak, huy hiệu, code nháp gần nhất mỗi bài. **Không** lưu tên thật; "biệt danh" (tuỳ chọn) chỉ ở máy.
 - **Mã tiến độ:** JSON → nén (`CompressionStream` deflate) → base64url; xuất/nhập để đổi máy.

@@ -137,6 +137,21 @@ Test cho bài vẽ hình: dùng `python_assert` hoặc `variable_equals` để k
 - **Có hình:** ít nhất 1/3 bài tập trong khoá đầu dùng `turtle` hoặc mini-game chữ.
 - Bám chương trình Tin học: khoá "Chuẩn bị lớp 10" dùng đúng thuật ngữ SGK Kết nối tri thức.
 
+## Huy hiệu (giai đoạn 0)
+
+Sáu huy hiệu đầu nằm ở `apps/web/src/progress/badges.ts`, chữ hiển thị ở `shared/i18n/vi.ts`. Tất cả **khen nỗ lực và thói quen**, không khen "giỏi":
+
+| Mã | Tên | Điều kiện |
+| --- | --- | --- |
+| `bai-dau-tien` | Bài đầu tiên | Xong một bài tập bất kỳ |
+| `nam-bai-tap` | Năm bài liền tay | Xong 5 bài tập |
+| `xong-bai-hoc` | Trọn một bài học | Xong hết bài tập của một bài học |
+| `ba-ngay-lien` | Ba ngày liên tiếp | Học 3 ngày liền nhau |
+| `bay-ngay-lien` | Bảy ngày liên tiếp | Học 7 ngày liền nhau |
+| `kien-tri` | Không bỏ cuộc | Thử lại ≥ 5 lần rồi làm đạt |
+
+Thêm huy hiệu mới thì thêm luật vào `badges.ts` **và** chữ vào `vi.ts`; điều kiện phải tính được chỉ từ tiến độ trên máy.
+
 ## Giọng văn
 - Xưng "em", gọi trẻ là "em"; hệ thống tự xưng "mình" hoặc tên linh vật.
 - Câu ngắn (≤ 20 từ), động từ chủ động. Khen nỗ lực, không khen "thông minh".

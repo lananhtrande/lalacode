@@ -179,6 +179,20 @@ export async function markLessonCompleted(
   });
 }
 
+/**
+ * Cập nhật danh sách huy hiệu đã nhận. Chỉ thêm, không bao giờ lấy lại
+ * (xem `badges.ts`), nên hàm này gộp chứ không ghi đè.
+ */
+export async function awardBadges(earned: readonly string[]): Promise<ProfileState> {
+  const db = await openProgressDb();
+  const profile = await getProfile();
+  const merged = [...new Set([...profile.badges, ...earned])];
+  if (merged.length === profile.badges.length) return profile;
+  const next: ProfileState = { ...profile, badges: merged };
+  await db.put('profile', next);
+  return next;
+}
+
 /** Toàn bộ tiến độ, dùng cho mã tiến độ và trang báo cáo (S0-14, S0-15). */
 export async function exportSnapshot(): Promise<ProgressSnapshot> {
   const [profile, lessons, exercises] = await Promise.all([

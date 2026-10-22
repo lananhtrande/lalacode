@@ -3,12 +3,17 @@ import { Link, useParams } from 'react-router';
 import { Play, RotateCcw, Send, Square } from 'lucide-react';
 import { loadExercise, lessonIdOfExercise } from '../../content/loader';
 import {
+  awardBadges,
+  exportSnapshot,
   getExerciseProgress,
+  markLessonCompleted,
   markLessonStarted,
   quietly,
   recordAttempt,
   saveDraft,
 } from '../../progress/db';
+import { evaluateBadges } from '../../progress/badges';
+import { dayKey } from '../../progress/streak';
 import type { PublicExercise } from '../../content/types';
 import type { DrawCommand, TestResult } from '../../runner/protocol';
 import { createRunner, type Runner } from '../../runner/runner-client';
@@ -27,6 +32,8 @@ export function ExercisePage() {
   const [exercise, setExercise] = useState<PublicExercise | null>(null);
   const [lessonTitle, setLessonTitle] = useState('');
   const [restoredDraft, setRestoredDraft] = useState(false);
+  /** Mã các bài tập của bài học này, để biết khi nào bài học coi như xong. */
+  const [lessonExerciseIds, setLessonExerciseIds] = useState<readonly string[]>([]);
   const [loadFailed, setLoadFailed] = useState(false);
   const [code, setCode] = useState('');
   const [phase, setPhase] = useState<Phase>('idle');
@@ -61,6 +68,7 @@ export function ExercisePage() {
         if (!active) return;
         setExercise(found);
         setLessonTitle(lesson.lesson.title);
+        setLessonExerciseIds(lesson.exercises.map((item) => item.id));
         setCode(saved?.draftCode ?? found.starterCode);
         setRestoredDraft(saved !== undefined);
         setLoadFailed(false);
@@ -112,12 +120,35 @@ export function ExercisePage() {
     setPhase('idle');
     if (outcome.ok) {
       setResults(outcome.report.results);
-      void quietly(() =>
-        recordAttempt(exercise.id, lessonIdOfExercise(exercise.id), outcome.report.passed, code),
-      );
+      void quietly(() => saveOutcome(exercise.id, outcome.report.passed, code));
     } else {
       setError(describeRunError(outcome.error));
     }
+  }
+
+  /**
+   * Ghi lần nộp, rồi xét bài học đã trọn chưa và trao huy hiệu.
+   * Làm sau khi đã hiện kết quả cho trẻ: lưu trữ không được giữ chân màn hình.
+   */
+  async function saveOutcome(exerciseId: string, passed: boolean, submittedCode: string) {
+    const lessonId = lessonIdOfExercise(exerciseId);
+    const courseId = exerciseId.split('.')[0] ?? '';
+    await recordAttempt(exerciseId, lessonId, passed, submittedCode);
+
+    const snapshot = await exportSnapshot();
+    const doneIds = new Set(
+      snapshot.exercises.filter((item) => item.status === 'xong').map((item) => item.exerciseId),
+    );
+    if (lessonExerciseIds.length > 0 && lessonExerciseIds.every((id) => doneIds.has(id))) {
+      await markLessonCompleted(lessonId, courseId);
+    }
+
+    // Xét huy hiệu trên ảnh chụp mới nhất (đã gồm cả bài học vừa xong).
+    const latest = await exportSnapshot();
+    const earned = evaluateBadges(latest, dayKey(new Date()))
+      .filter((badge) => badge.earned)
+      .map((badge) => badge.id);
+    if (earned.length > 0) await awardBadges(earned);
   }
 
   if (loadFailed) {
