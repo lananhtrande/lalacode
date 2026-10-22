@@ -32,6 +32,9 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 - **S0-12**: tiến độ nằm trong IndexedDB trên máy. Hồ sơ chỉ có: ngày tạo, ngày học gần nhất, số ngày liên tiếp, danh sách huy hiệu, và **biệt danh tuỳ chọn — hiện chưa có ô nhập trong UI**, chỉ có chỗ trong schema. Không có ô nào hỏi tên thật, tuổi, trường lớp.
 - Code nháp của trẻ lưu trên máy để mở lại bài là thấy nguyên bài đang làm dở. Có test e2e khẳng định **không request nào mang code của trẻ rời khỏi máy**.
 - Nút xoá toàn bộ dữ liệu (S0-16) gọi `clearAllProgress()` — đã có sẵn và có test.
+- **S0-15 link báo cáo**: dùng lại mã tiến độ, đặt sau dấu `#` nên **trình duyệt không gửi lên máy chủ** (có test e2e khẳng định). Trang chỉ hiện số liệu; không có họ tên, không có code của trẻ. Hai giới hạn phải nói thật:
+  - Phần sau `#` không đi theo request nào, **nhưng extension trình duyệt hoặc tính năng đồng bộ lịch sử vẫn đọc được địa chỉ đang mở**. Đây là giới hạn chung của mọi thiết kế giấu dữ liệu sau `#`, không riêng lalacode. Vì vậy link chỉ nên chứa thứ không nhạy cảm — và nó đúng là vậy.
+  - **Mã không có chữ ký**, nên ai biết cấu trúc đều tự ghép được một báo cáo đẹp. Link này để bố mẹ theo dõi cho vui, **không dùng làm bằng chứng chấm điểm**.
 - **S0-14 mã tiến độ**: chuỗi do trẻ tự sao chép, **không có request nào gửi nó đi** (có test e2e chặn). Mã chứa: mã bài tập/bài học, trạng thái (xong **hoặc đang làm**), số lần thử, mốc thời gian, streak, huy hiệu, và `nickname` nếu sau này có. **Không chứa code trẻ viết** — vì mã hay bị dán vào chỗ công khai.
   - ⚠️ **Khi nào thêm ô nhập biệt danh thì phải review lại chỗ này**: biệt danh sẽ đi theo mã tiến độ tới bất kỳ ai nhận được mã. Nếu giữ ô đó, hoặc loại biệt danh khỏi mã, hoặc nói rõ cho trẻ biết.
   - Mã nhập vào được kiểm **từng trường** trước khi ghi, và chặn mã quá dài hoặc nén phình bất thường — một mã "đùa" không được phép làm hỏng tiến độ hay treo máy trẻ.
