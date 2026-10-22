@@ -8,7 +8,7 @@ test.describe('runner Pyodide', () => {
   test.slow();
   // Trang /thu-runner chỉ có ở chế độ dev, nên bỏ qua khi chạy trên bản build.
   test.skip(
-    Boolean(process.env['PLAYWRIGHT_PREVIEW']),
+    Boolean(process.env['PLAYWRIGHT_PREVIEW']) || Boolean(process.env['PLAYWRIGHT_CSP']),
     'trang thử runner không có ở bản phát hành',
   );
 
