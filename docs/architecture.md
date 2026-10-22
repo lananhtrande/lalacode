@@ -100,7 +100,10 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - Bài học coi là xong khi **mọi bài tập của nó đã đạt**; màn bài tập xét điều này sau mỗi lần nộp rồi mới trao huy hiệu.
 - Mốc thời gian lưu ISO UTC (để sau này đồng bộ), còn "ngày" cho streak tính theo **lịch máy** — học 23h hôm nay và 7h sáng mai phải là hai ngày liền nhau.
 - Lưu: bài đã xong, số lần chạy, thời điểm, streak, huy hiệu, code nháp gần nhất mỗi bài. **Không** lưu tên thật; "biệt danh" (tuỳ chọn) chỉ ở máy.
-- **Mã tiến độ:** JSON → nén (`CompressionStream` deflate) → base64url; xuất/nhập để đổi máy.
+- **Mã tiến độ** (`progress/share-code.ts`): JSON → nén `deflate-raw` → base64url, có tiền tố phiên bản (`LLC1.` nén, `LLC0.` không nén cho trình duyệt thiếu `CompressionStream`).
+  - **Không chứa `draftCode`.** Trẻ hay dán mã vào chỗ công khai (nhóm chat, ghi chú), mà code tự gõ có thể vô tình có tên thật. Chuyển máy chỉ cần biết bài nào xong.
+  - Nhập mã là **gộp, không ghi đè**: bài đã xong ở một trong hai máy thì vẫn xong, số lần thử lấy lớn hơn, huy hiệu hợp nhất, streak lấy dài hơn, nháp của máy hiện tại giữ nguyên. Trẻ nhập mã cũ vào máy đã học vài bài sẽ không mất bài nào.
+  - Mã của phiên bản schema mới hơn thì từ chối với thông báo riêng, không cố đoán.
 - **Link báo cáo cho bố mẹ:** `https://<domain>/bao-cao#<mã>` — phần sau `#` không bao giờ gửi lên server. Trang báo cáo giải mã và hiển thị.
 - Schema progress được thiết kế trùng với bảng PostgreSQL ở giai đoạn 1 để sau này "đồng bộ" một chạm.
 

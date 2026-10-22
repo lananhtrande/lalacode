@@ -34,6 +34,12 @@ export const routes: RouteObject[] = [
         }),
       },
       {
+        path: 'tien-do',
+        lazy: async () => ({
+          Component: (await import('../features/progress-code/ProgressCodePage')).ProgressCodePage,
+        }),
+      },
+      {
         path: 'huy-hieu',
         lazy: async () => ({
           Component: (await import('../features/badges/BadgesPage')).BadgesPage,

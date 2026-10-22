@@ -36,7 +36,7 @@ Nâng phiên bản Pyodide thì chạy lại bộ e2e này: nếu Pyodide đổi
 ## Luồng E2E tối thiểu
 1. Mở trang chủ → vào bài 1 → đọc → làm bài tập 1 sai → thấy thông báo lỗi tiếng Việt → sửa đúng → huy hiệu.
 2. Vòng lặp vô hạn → hết giờ → thông báo → chạy lại được.
-3. Xuất mã tiến độ → mở trình duyệt mới → nhập mã → tiến độ khôi phục.
+3. Xuất mã tiến độ → mở trình duyệt mới → nhập mã → tiến độ khôi phục. ✅ `e2e/progress-code.spec.ts` (dùng context mới của Playwright làm "máy khác").
 4. Tạo link báo cáo → mở link → thấy đúng số bài đã xong; xác nhận không có request nào chứa dữ liệu tiến độ.
 5. Gợi ý AI (mock) → hết lượt → hiện gợi ý tĩnh.
 

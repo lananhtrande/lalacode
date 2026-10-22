@@ -53,9 +53,14 @@ export function RootLayout() {
       <footer className="border-t border-line text-sm text-ink-muted">
         <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-4">
           <span>{vi.footer.madeFor}</span>
-          <Link to="/gioi-thieu" className="flex min-h-tap items-center underline">
-            {vi.footer.privacy}
-          </Link>
+          <span className="flex flex-wrap gap-x-4">
+            <Link to="/tien-do" className="flex min-h-tap items-center underline">
+              {vi.pages.progressCode}
+            </Link>
+            <Link to="/gioi-thieu" className="flex min-h-tap items-center underline">
+              {vi.footer.privacy}
+            </Link>
+          </span>
         </div>
       </footer>
     </div>

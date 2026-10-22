@@ -1,4 +1,5 @@
 import { Award, Lock } from 'lucide-react';
+import { Link } from 'react-router';
 import { useProgress } from '../../progress/useProgress';
 import { vi } from '../../shared/i18n/vi';
 
@@ -15,6 +16,13 @@ export function BadgesPage() {
           {earnedCount}/{badges.length} {vi.badges.countEarned}
         </p>
       )}
+
+      <Link
+        to="/tien-do"
+        className="mt-3 inline-flex min-h-tap items-center font-semibold text-brand-600 underline"
+      >
+        {vi.progressCode.title}
+      </Link>
 
       <ul className="mt-6 grid gap-3 sm:grid-cols-2">
         {badges.map((badge) => {

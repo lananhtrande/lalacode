@@ -24,7 +24,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 ## M3 — Tiến độ & động lực (tuần 4–5)
 - [x] S0-12 IndexedDB progress + migrate
 - [x] S0-13 Bản đồ nhiệm vụ, streak, 6 huy hiệu đầu
-- [ ] S0-14 Mã tiến độ xuất/nhập — **không đưa `draftCode` vào mã chia sẻ** (code trẻ tự gõ, có thể vô tình chứa tên thật)
+- [x] S0-14 Mã tiến độ xuất/nhập — **không đưa `draftCode` vào mã chia sẻ** (code trẻ tự gõ, có thể vô tình chứa tên thật)
 - [ ] S0-15 Link báo cáo cho bố mẹ (`#fragment`) + trang báo cáo — chỉ hiện số liệu tiến độ, **không hiện code của trẻ**
 - [ ] S0-16 Nút xoá toàn bộ dữ liệu trên máy (`clearAllProgress()` đã có từ S0-12) — nhớ dọn luôn state đang hiển thị trên màn hình, và e2e: xoá → tải lại → sạch
 
