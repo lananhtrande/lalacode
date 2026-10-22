@@ -4,6 +4,7 @@ import { findExercise } from './content';
 import { logHint } from './logger';
 import { buildUserMessage } from './prompt';
 import { sanitizeForAi } from './sanitize';
+import { takeHintSlot } from './rate-limit';
 import { hintRequestSchema, MAX_CODE_LENGTH, MAX_ERROR_LENGTH, type HintErrorCode } from './schema';
 
 /**
@@ -16,6 +17,7 @@ const STATUS: Record<HintErrorCode, number> = {
   'khong-co-bai-tap': 404,
   'ai-dang-tat': 503,
   'qua-nhieu-luot': 429,
+  'het-han-muc-ngay': 429,
   'loi-he-thong': 500,
 };
 
@@ -60,7 +62,20 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
     return reply('loi-he-thong');
   }
 
+  const tableName = process.env['RATE_LIMIT_TABLE'];
+  if (tableName === undefined || tableName === '') {
+    done('thieu-cau-hinh');
+    return reply('loi-he-thong');
+  }
+
   try {
+    // Đếm lượt **trước khi** gọi Bedrock: hết lượt thì không tốn một xu nào.
+    const slot = await takeHintSlot({ tableName, token: request.token, now: new Date() });
+    if (slot !== 'ok') {
+      done(slot, { exerciseId: request.exerciseId, hintLevel: request.hintLevel });
+      return reply(slot);
+    }
+
     const exercise = await findExercise(request.exerciseId, baseUrl);
     if (!exercise) {
       done('khong-co-bai-tap', { exerciseId: request.exerciseId });

@@ -27,3 +27,15 @@ variable "create_github_oidc_provider" {
   type        = bool
   default     = true
 }
+
+variable "ai_hints_enabled" {
+  description = "Công tắc tắt gợi ý AI. Tắt thì Lambda trả 503 ngay, frontend quay về gợi ý viết sẵn."
+  type        = bool
+  default     = true
+}
+
+variable "site_base_url" {
+  description = "Địa chỉ web để Lambda tải bundle nội dung. Lần apply đầu để trống, sau đó lấy từ output `site_url`."
+  type        = string
+  default     = ""
+}

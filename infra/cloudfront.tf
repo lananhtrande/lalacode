@@ -1,3 +1,12 @@
+# OAC cho Lambda Function URL: CloudFront ký request, nên Function URL để
+# AWS_IAM và không ai gọi thẳng vào được.
+resource "aws_cloudfront_origin_access_control" "ai_hint" {
+  name                              = "lalacode-ai-hint-oac"
+  origin_access_control_origin_type = "lambda"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
 resource "aws_cloudfront_origin_access_control" "web" {
   name                              = "lalacode-web-oac"
   origin_access_control_origin_type = "s3"
@@ -9,6 +18,17 @@ resource "aws_cloudfront_origin_access_control" "web" {
 # File có hash trong tên (JS/CSS của Vite, Pyodide theo phiên bản, bài học theo
 # hash nội dung) thì cache vĩnh viễn. index.html và content/index.json phải
 # luôn hỏi lại, nếu không trẻ sẽ kẹt ở bản cũ sau khi mình phát hành.
+
+# Chính sách dựng sẵn của AWS, id cố định trên mọi tài khoản:
+# - CachingDisabled: không cache gì cả (gợi ý AI là của riêng từng trẻ).
+# - AllViewerExceptHostHeader: chuyển mọi header của người xem trừ Host —
+#   Lambda Function URL cần giữ Host của chính nó thì chữ ký SigV4 mới đúng.
+# Dùng thẳng id thay vì data source: tra theo tên đòi quyền `cloudfront:List*`
+# mà role deploy không cần có.
+locals {
+  managed_caching_disabled_id              = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+  managed_all_viewer_except_host_header_id = "b689b0a8-53d0-40ab-baf2-68738e2966ac"
+}
 
 resource "aws_cloudfront_cache_policy" "immutable" {
   name        = "lalacode-immutable"
@@ -91,6 +111,19 @@ resource "aws_cloudfront_distribution" "web" {
   is_ipv6_enabled     = true
 
   origin {
+    domain_name              = replace(replace(aws_lambda_function_url.ai_hint.function_url, "https://", ""), "/", "")
+    origin_id                = "lambda-ai-hint"
+    origin_access_control_id = aws_cloudfront_origin_access_control.ai_hint.id
+
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "https-only"
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
+  }
+
+  origin {
     domain_name              = aws_s3_bucket.web.bucket_regional_domain_name
     origin_id                = "s3-web"
     origin_access_control_id = aws_cloudfront_origin_access_control.web.id
@@ -105,6 +138,18 @@ resource "aws_cloudfront_distribution" "web" {
     compress                   = true
     cache_policy_id            = aws_cloudfront_cache_policy.always_revalidate.id
     response_headers_policy_id = aws_cloudfront_response_headers_policy.web.id
+  }
+
+  # Gợi ý AI: POST, không cache, chuyển tiếp thẳng tới Lambda.
+  ordered_cache_behavior {
+    path_pattern             = "/api/hint"
+    target_origin_id         = "lambda-ai-hint"
+    viewer_protocol_policy   = "https-only"
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    compress                 = true
+    cache_policy_id          = local.managed_caching_disabled_id
+    origin_request_policy_id = local.managed_all_viewer_except_host_header_id
   }
 
   ordered_cache_behavior {

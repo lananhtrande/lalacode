@@ -7,13 +7,16 @@
   "main": "src/index.ts",
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.1155.0",
+    "@aws-sdk/client-dynamodb": "^3.1155.0",
     "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.164",
-    "aws-sdk-client-mock": "^4.1.0"
+    "aws-sdk-client-mock": "^4.1.0",
+    "esbuild": "^0.28.2"
   },
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "bundle": "esbuild src/index.ts --bundle --platform=node --target=node22 --format=esm --outfile=dist/index.mjs --banner:js=\"import{createRequire}from'module';const require=createRequire(import.meta.url);\""
   }
 }

@@ -31,7 +31,14 @@ export interface HintResponse {
 
 /** Mã lỗi trả về cho client — đủ để UI chọn câu tiếng Việt, không lộ chi tiết nội bộ. */
 export type HintErrorCode =
-  'yeu-cau-khong-hop-le' | 'khong-co-bai-tap' | 'ai-dang-tat' | 'qua-nhieu-luot' | 'loi-he-thong';
+  | 'yeu-cau-khong-hop-le'
+  | 'khong-co-bai-tap'
+  | 'ai-dang-tat'
+  /** Trẻ này đã dùng hết lượt hôm nay. */
+  | 'qua-nhieu-luot'
+  /** Cả hệ thống hết hạn mức ngày — không phải lỗi của trẻ, UI nói khác đi. */
+  | 'het-han-muc-ngay'
+  | 'loi-he-thong';
 
 export interface HintError {
   error: HintErrorCode;

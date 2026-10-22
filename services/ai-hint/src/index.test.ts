@@ -1,11 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { mockClient } from 'aws-sdk-client-mock';
 import { BedrockRuntimeClient, ConverseCommand } from '@aws-sdk/client-bedrock-runtime';
+import {
+  ConditionalCheckFailedException,
+  DynamoDBClient,
+  UpdateItemCommand,
+} from '@aws-sdk/client-dynamodb';
 import { handler } from './index';
 import { resetContentCache } from './content';
 import { resetBedrockClient } from './bedrock';
+import { resetRateLimitClient } from './rate-limit';
 
 const bedrock = mockClient(BedrockRuntimeClient);
+const dynamo = mockClient(DynamoDBClient);
 
 const EXERCISE_ID = 'py-khoi-dong.01-xin-chao.01-in-loi-chao';
 const TOKEN = '6f1c2f4a-9b55-4c21-9f0f-2b6c0a1d3e44';
@@ -68,9 +75,13 @@ const status = (result: unknown) => (result as { statusCode: number }).statusCod
 
 beforeEach(() => {
   bedrock.reset();
+  dynamo.reset();
+  dynamo.on(UpdateItemCommand).resolves({});
   resetContentCache();
   resetBedrockClient();
+  resetRateLimitClient();
   process.env['CONTENT_BASE_URL'] = 'https://lalacode.example';
+  process.env['RATE_LIMIT_TABLE'] = 'bang-dem-luot';
   delete process.env['AI_HINTS_ENABLED'];
   mockContent();
   mockAi();
@@ -161,6 +172,41 @@ describe('POST /api/hint', () => {
   it('AI trả rỗng thì coi như lỗi, không đưa câu trống cho trẻ', async () => {
     mockAi('');
     expect(status(await handler(request()))).toBe(500);
+  });
+});
+
+describe('giới hạn lượt', () => {
+  it('hết lượt trong ngày thì trả 429 và **không gọi Bedrock** (không tốn tiền)', async () => {
+    dynamo
+      .on(UpdateItemCommand)
+      .rejects(new ConditionalCheckFailedException({ message: 'het', $metadata: {} }));
+    const result = await handler(request());
+    expect(status(result)).toBe(429);
+    expect(body(result)).toEqual({ error: 'qua-nhieu-luot' });
+    expect(bedrock.commandCalls(ConverseCommand)).toHaveLength(0);
+  });
+
+  it('hệ thống hết hạn mức ngày thì báo mã riêng, không đổ lỗi cho trẻ', async () => {
+    dynamo
+      .on(UpdateItemCommand)
+      .resolvesOnce({})
+      .rejectsOnce(new ConditionalCheckFailedException({ message: 'het', $metadata: {} }));
+    const result = await handler(request());
+    expect(status(result)).toBe(429);
+    expect(body(result)).toEqual({ error: 'het-han-muc-ngay' });
+    expect(bedrock.commandCalls(ConverseCommand)).toHaveLength(0);
+  });
+
+  it('đếm lượt trước khi tra đề bài và gọi AI', async () => {
+    await handler(request());
+    expect(dynamo.commandCalls(UpdateItemCommand).length).toBeGreaterThan(0);
+  });
+
+  it('thiếu cấu hình bảng đếm thì trả 500, không gọi AI', async () => {
+    delete process.env['RATE_LIMIT_TABLE'];
+    const result = await handler(request());
+    expect(status(result)).toBe(500);
+    expect(bedrock.commandCalls(ConverseCommand)).toHaveLength(0);
   });
 });
 
