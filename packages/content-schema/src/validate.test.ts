@@ -111,6 +111,23 @@ describe('validateCourseTree', () => {
     expect(errorsOf(empty).some((issue) => issue.message.includes('rỗng'))).toBe(true);
   });
 
+  it('báo lỗi khi lesson.md dùng ảnh hoặc thẻ HTML', () => {
+    const image = tree();
+    image[0]!.lessons[0]!.markdown = '# Bài\n\n![rùa](https://example.com/rua.png)\n';
+    expect(errorsOf(image).some((issue) => issue.message.includes('chưa hỗ trợ ảnh'))).toBe(true);
+
+    const html = tree();
+    html[0]!.lessons[0]!.markdown = '# Bài\n\n<div class="hop">Chào</div>\n';
+    expect(errorsOf(html).some((issue) => issue.message.includes('Thẻ HTML'))).toBe(true);
+  });
+
+  it('không báo lỗi khi thẻ hay ảnh chỉ nằm trong ví dụ code', () => {
+    const input = tree();
+    input[0]!.lessons[0]!.markdown =
+      '# Bài\n\nVí dụ:\n\n```html\n<p>Xin chào</p>\n```\n\nDùng `<` để so sánh.\n';
+    expect(errorsOf(input)).toEqual([]);
+  });
+
   it('báo lỗi khi gợi ý chứa nguyên lời giải', () => {
     const input = tree();
     const exercise = input[0]!.lessons[0]!.exercises[0]!.data as { hints: string[] };

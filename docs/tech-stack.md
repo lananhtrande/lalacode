@@ -16,7 +16,7 @@ Mọi thay đổi bảng này cần một ADR trong `docs/decisions/`.
 | Trạng thái UI | React state + Zustand cho store nhỏ | — | Không cần Redux |
 | Lưu trữ máy | IndexedDB qua `idb` | — | Dung lượng lớn hơn localStorage, async |
 | Schema nội dung | zod (`packages/content-schema`) | 3/4 | Một nguồn sự thật cho type + validate |
-| Markdown | `react-markdown` + `remark-gfm`, highlight bằng CodeMirror static | — | Nội dung bài viết bằng Markdown |
+| Markdown | `react-markdown` (CommonMark, **chưa cần** `remark-gfm`) | — | Nội dung bài viết bằng Markdown. 20 bài hiện chỉ dùng tiêu đề, danh sách, khối code, `code`, **đậm** — thêm `remark-gfm` khi nào có bài cần bảng. Route bài học: 37,8 kB gzip. |
 | Icon | lucide-react | — | Nhẹ, tree-shake |
 | Unit test | Vitest + Testing Library | — | Cùng hệ Vite |
 | E2E test | Playwright (Chromium, WebKit iPhone/iPad) | — | Kiểm tra Pyodide thật trên trình duyệt |

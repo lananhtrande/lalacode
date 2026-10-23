@@ -35,7 +35,9 @@ describe('router', () => {
     ['/bao-cao', strings.pages.report],
     ['/gioi-thieu', strings.about.title],
     ['/quyen-rieng-tu', strings.privacy.title],
-    ['/bai-hoc/01-xin-chao', strings.pages.lesson],
+    // Không có bundle nội dung trong jsdom nên màn bài học hiện đúng câu
+    // "không tìm thấy" — điều cần kiểm ở đây là route mở được và còn khung chung.
+    ['/bai-hoc/01-xin-chao', strings.lesson.notFound],
   ])('đường dẫn %s mở đúng trang "%s"', async (path, title) => {
     renderAt(path);
     expect(await screen.findByRole('heading', { name: title })).toBeInTheDocument();

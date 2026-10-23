@@ -42,7 +42,8 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [ ] S0-25 Hoàn thiện CI/CD: **preview cho từng PR** (dời từ S0-04b), workflow `rollback-web.yml` (trỏ về `releases/<sha>` trước), `terraform plan` đăng vào PR, dọn preview cũ, Dependabot
 - [ ] S0-26 Analytics gộp (sau khi chốt ADR 0005)
 - [ ] S0-27 Beta kín 50–100 trẻ, thu phản hồi qua nhóm Zalo
-- [ ] S0-28 **Màn bài học**: `/bai-hoc/:id` hiện đang là khung "Đang xây", nên từ bản đồ bấm vào bài là trẻ không tới được bài tập. Cần đọc `lesson.md`, hiện video nếu có, và liệt kê bài tập của bài. **Chặn beta** — phải làm trước S0-27.
+- [x] S0-28 **Màn bài học** — `/bai-hoc/:id` đọc `lesson.md` bằng `react-markdown`, liệt kê bài tập kèm trạng thái, nút đi thẳng tới bài chưa xong. Video nhúng theo kiểu bấm-mới-tải (chưa bài nào có video). Trang chỉ đọc, không ghi IndexedDB.
+- [ ] S0-29 Bài 01 chỉ có 2 bài tập, dưới mức 3–5 của `docs/content-format.md` (phát hiện khi làm S0-28). Viết thêm 1–2 bài tập cho bài mở đầu.
 
 ## Tiêu chí chuyển sang giai đoạn 1
 - ≥ 70% trẻ hoàn thành bài 1; ≥ 40% quay lại sau 7 ngày; ≥ 30 phụ huynh xác nhận sẵn sàng trả phí.

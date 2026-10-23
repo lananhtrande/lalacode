@@ -13,7 +13,7 @@
 ```
 app/            # router, layout, providers
 features/
-  lesson/       # xem bài học
+  lesson/       # xem bài học (chỉ đọc: không ghi gì vào IndexedDB)
   exercise/     # editor + chạy + chấm + gợi ý
   map/          # bản đồ nhiệm vụ
   badges/
