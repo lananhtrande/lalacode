@@ -73,6 +73,35 @@ function compareLists(
   };
 }
 
+/**
+ * Màn bài học render Markdown bằng `react-markdown`, **không** bật HTML thô và
+ * cố ý không nhận ảnh. Hai thứ dưới đây mà lọt vào bài thì ở `npm run dev`
+ * trông vẫn ổn nhưng lên bản thật sẽ im lặng biến mất (HTML) hoặc bị CSP chặn
+ * (ảnh ngoài). Thà báo lỗi ngay lúc viết bài còn hơn để người viết tưởng xong.
+ */
+function markdownSubsetIssues(markdown: string, where: string): Issue[] {
+  const issues: Issue[] = [];
+  // Bỏ khối code trước khi soi, kẻo ví dụ dạy HTML lại bị báo lỗi.
+  const prose = markdown.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '');
+
+  if (/!\[[^\]]*\]\(/.test(prose)) {
+    issues.push({
+      level: 'error',
+      where,
+      message: 'Bài học chưa hỗ trợ ảnh trong Markdown. Dùng `turtle` hoặc mô tả bằng chữ.',
+    });
+  }
+  const tag = /<\/?[a-zA-Z][^>]*>/.exec(prose);
+  if (tag) {
+    issues.push({
+      level: 'error',
+      where,
+      message: `Thẻ HTML \`${tag[0]}\` sẽ không hiện ra gì cả — viết bằng Markdown thuần.`,
+    });
+  }
+  return issues;
+}
+
 export function validateCourseTree(courses: readonly CourseDirInput[]): Issue[] {
   const issues: Issue[] = [];
   if (courses.length === 0) {
@@ -136,6 +165,8 @@ export function validateCourseTree(courses: readonly CourseDirInput[]): Issue[] 
           where: `${base}/lesson.md`,
           message: 'File `lesson.md` rỗng.',
         });
+      } else {
+        issues.push(...markdownSubsetIssues(lessonDir.markdown, `${base}/lesson.md`));
       }
 
       if (!lessonResult.success) continue;

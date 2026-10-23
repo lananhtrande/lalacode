@@ -49,6 +49,9 @@ export function LessonVideo({ video, title }: { video: Video; title: string }) {
       src={`https://www.youtube-nocookie.com/embed/${video.videoId}?autoplay=1&rel=0`}
       title={title}
       allow="accelerometer; autoplay; encrypted-media; picture-in-picture"
+      // Chỉ gửi tên miền cho YouTube, không gửi đường dẫn bài học em đang mở.
+      // Mặc định của trình duyệt cũng vậy, nhưng ghi rõ thì không phụ thuộc máy nào.
+      referrerPolicy="strict-origin-when-cross-origin"
       allowFullScreen
       data-testid="lesson-video"
       className="aspect-video w-full rounded-2xl border-0 bg-ink"

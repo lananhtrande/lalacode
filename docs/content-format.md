@@ -96,6 +96,7 @@ Schema (`packages/content-schema`) chạy ở chế độ chặt: **trường l�
 | `course.order` khớp đúng danh sách thư mục bài trên đĩa, không thiếu, không thừa, không trùng | lỗi |
 | `lesson.exercises` khớp đúng các file trong `exercises/`, không thiếu, không thừa, không trùng | lỗi |
 | `lesson.md` tồn tại và không rỗng | lỗi |
+| `lesson.md` không có ảnh `![]()` và không có thẻ HTML (ngoài khối code) | lỗi |
 | Không gợi ý nào chứa nguyên văn `solution` | lỗi |
 | Bài `published` nhưng có dưới 3 bài tập | cảnh báo |
 | Khoá `published` mà bài vẫn `draft` | cảnh báo |

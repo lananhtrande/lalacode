@@ -27,6 +27,11 @@ export function LessonBody({ markdown }: { markdown: string }) {
           ul: ({ children }) => <ul className="list-disc space-y-1 pl-6">{children}</ul>,
           ol: ({ children }) => <ol className="list-decimal space-y-1 pl-6">{children}</ol>,
           strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+          a: ({ children, href }) => (
+            <a href={href} rel="noopener noreferrer" className="text-brand-600 underline">
+              {children}
+            </a>
+          ),
           code: ({ children, className }) =>
             className?.startsWith('language-') ? (
               // Khối code: `pre` bên dưới lo phần khung và cuộn ngang.
