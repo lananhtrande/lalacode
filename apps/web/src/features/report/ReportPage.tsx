@@ -79,7 +79,7 @@ export function ReportPage() {
   return (
     <section className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold sm:text-3xl">{vi.report.title}</h1>
+        <h1 className="text-page-title">{vi.report.title}</h1>
         <p className="mt-2 text-ink-soft">{vi.report.lead}</p>
       </div>
 
@@ -91,7 +91,7 @@ export function ReportPage() {
 
       {state.kind === 'no-link' && (
         <div data-testid="report-empty">
-          <h2 className="text-lg font-bold">{vi.report.emptyTitle}</h2>
+          <h2 className="text-card-title">{vi.report.emptyTitle}</h2>
           <p className="mt-1 text-ink-soft">{vi.report.emptyLead}</p>
         </div>
       )}
@@ -100,8 +100,8 @@ export function ReportPage() {
 
       {/* Bố mẹ mở link thì không cần ô tạo link — và lời mời ở đó xưng hô với trẻ. */}
       {state.kind !== 'ready' && (
-        <div data-testid="report-create" className="rounded-2xl border border-line p-4">
-          <h2 className="flex items-center gap-2 text-lg font-bold">
+        <div data-testid="report-create" className="rounded-card border border-line p-4">
+          <h2 className="flex items-center gap-2 text-card-title">
             <Link2 aria-hidden="true" className="size-5" />
             {vi.report.createTitle}
           </h2>
@@ -124,7 +124,7 @@ export function ReportPage() {
                     data-testid="report-link"
                     value={link}
                     rows={3}
-                    className="block w-full rounded-xl border border-line p-3 font-mono text-sm break-all"
+                    className="block w-full rounded-xl border border-line p-3 font-mono text-small break-all"
                   />
                   <button
                     type="button"
@@ -147,7 +147,7 @@ export function ReportPage() {
         </div>
       )}
 
-      <div className="rounded-2xl bg-surface-muted p-4">
+      <div className="rounded-card bg-surface-muted p-4">
         <h2 className="font-bold">{vi.report.privacyTitle}</h2>
         <p className="mt-1 text-ink-soft">{vi.report.privacyBody}</p>
         <p className="mt-2 text-ink-soft">{vi.report.honestyNote}</p>
@@ -168,10 +168,10 @@ function ReportBody({ report }: { report: ProgressReport }) {
     <div data-testid="report-body" className="space-y-6">
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map((stat) => (
-          <li key={stat.label} className="rounded-2xl border border-line p-4">
+          <li key={stat.label} className="rounded-card border border-line p-4">
             <stat.icon aria-hidden="true" className="size-5 text-accent-strong" />
-            <p className="mt-2 text-2xl font-bold">{stat.value}</p>
-            <p className="text-sm text-ink-soft">{stat.label}</p>
+            <p className="mt-2 text-page-title">{stat.value}</p>
+            <p className="text-small text-ink-soft">{stat.label}</p>
           </li>
         ))}
       </ul>
@@ -190,7 +190,7 @@ function ReportBody({ report }: { report: ProgressReport }) {
       )}
 
       <div>
-        <h2 className="text-lg font-bold">{vi.report.lessonsTitle}</h2>
+        <h2 className="text-card-title">{vi.report.lessonsTitle}</h2>
         {report.lessons.length === 0 ? (
           <p className="mt-1 text-ink-soft">{vi.report.noLessons}</p>
         ) : (

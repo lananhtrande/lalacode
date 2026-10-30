@@ -5,7 +5,7 @@ import { buttonClasses } from '../shared/ui/button-classes';
 export function NotFoundPage() {
   return (
     <section className="mx-auto max-w-prose text-center">
-      <h1 className="text-2xl font-bold sm:text-3xl">{vi.notFound.title}</h1>
+      <h1 className="text-page-title">{vi.notFound.title}</h1>
       <p className="mt-3 text-ink-soft">{vi.notFound.body}</p>
       <Link
         to="/"

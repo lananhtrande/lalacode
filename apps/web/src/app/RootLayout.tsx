@@ -49,65 +49,71 @@ export function RootLayout() {
         {vi.nav.skipToContent}
       </a>
 
-      <aside className="sticky top-0 z-20 border-b border-line bg-surface lg:flex lg:h-dvh lg:flex-col lg:border-r lg:border-b-0">
-        <div className="flex items-center justify-between gap-2 px-4 py-2 lg:px-5 lg:pt-6 lg:pb-4">
-          <Link to="/" className="flex min-h-tap items-center gap-2 text-card-title font-bold">
-            <Turtle aria-hidden="true" className="size-6 text-accent-strong" />
-            {vi.app.name}
-          </Link>
-          <IconButton
-            label={menuOpen ? vi.nav.closeMenu : vi.nav.openMenu}
-            icon={menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-            aria-expanded={menuOpen}
-            aria-controls="menu-chinh"
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden"
-          />
-        </div>
+      {/*
+        Khung trắng cao hết cột để sidebar không "hụt" trên trang dài. Màn hẹp
+        dùng `contents` để thanh trên cùng vẫn dính theo cả trang.
+      */}
+      <div className="contents lg:block lg:border-r lg:border-line lg:bg-surface">
+        <aside className="sticky top-0 z-20 border-b border-line bg-surface lg:flex lg:h-dvh lg:flex-col lg:border-b-0">
+          <div className="flex items-center justify-between gap-2 px-4 py-2 lg:px-5 lg:pt-6 lg:pb-4">
+            <Link to="/" className="flex min-h-tap items-center gap-2 text-card-title font-bold">
+              <Turtle aria-hidden="true" className="size-6 text-accent-strong" />
+              {vi.app.name}
+            </Link>
+            <IconButton
+              label={menuOpen ? vi.nav.closeMenu : vi.nav.openMenu}
+              icon={menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+              aria-expanded={menuOpen}
+              aria-controls="menu-chinh"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="lg:hidden"
+            />
+          </div>
 
-        <nav
-          id="menu-chinh"
-          aria-label={vi.nav.menu}
-          className={[
-            'flex-1 flex-col justify-between px-3 pb-4 lg:flex',
-            menuOpen ? 'flex' : 'hidden',
-          ].join(' ')}
-        >
-          <ul className="space-y-1">
-            {navItems.map((item) => (
-              <li key={item.to}>
-                <NavLink
-                  to={item.to}
-                  end={item.end}
-                  className={({ isActive }) =>
-                    [
-                      'flex min-h-tap items-center gap-3 rounded-full px-4 text-label',
-                      isActive
-                        ? 'bg-ink text-surface'
-                        : 'font-medium text-ink-soft hover:bg-surface-muted hover:text-ink',
-                    ].join(' ')
-                  }
-                >
-                  <item.icon aria-hidden="true" className="size-5" />
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-          <ul className="mt-4 border-t border-line pt-3 text-small">
-            {secondaryLinks.map((item) => (
-              <li key={item.to}>
-                <Link
-                  to={item.to}
-                  className="flex min-h-tap items-center px-4 text-ink-soft underline hover:text-ink"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </aside>
+          <nav
+            id="menu-chinh"
+            aria-label={vi.nav.menu}
+            className={[
+              'flex-1 flex-col justify-between px-3 pb-4 lg:flex',
+              menuOpen ? 'flex' : 'hidden',
+            ].join(' ')}
+          >
+            <ul className="space-y-1">
+              {navItems.map((item) => (
+                <li key={item.to}>
+                  <NavLink
+                    to={item.to}
+                    end={item.end}
+                    className={({ isActive }) =>
+                      [
+                        'flex min-h-tap items-center gap-3 rounded-full px-4 text-label',
+                        isActive
+                          ? 'bg-ink text-surface'
+                          : 'font-medium text-ink-soft hover:bg-surface-muted hover:text-ink',
+                      ].join(' ')
+                    }
+                  >
+                    <item.icon aria-hidden="true" className="size-5" />
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+            <ul className="mt-4 border-t border-line pt-3 text-small">
+              {secondaryLinks.map((item) => (
+                <li key={item.to}>
+                  <Link
+                    to={item.to}
+                    className="flex min-h-tap items-center px-4 text-ink-soft underline hover:text-ink"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
+      </div>
 
       <div className="flex min-w-0 flex-col">
         <main
