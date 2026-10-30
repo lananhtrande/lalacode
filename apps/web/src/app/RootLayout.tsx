@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation } from 'react-router';
+import { Link, NavLink, Outlet, useLocation, useMatches } from 'react-router';
 import { Award, House, Info, Map, Menu, Turtle, X } from 'lucide-react';
 import { IconButton } from '../shared/ui/IconButton';
 import { vi } from '../shared/i18n/vi';
@@ -27,6 +27,8 @@ export function RootLayout() {
   const [openedAt, setOpenedAt] = useState<string | null>(null);
   const { pathname } = useLocation();
   const menuOpen = openedAt === pathname;
+  // Route khai báo `handle: { wide: true }` thì không bọc trong thẻ trắng hẹp.
+  const wide = useMatches().some((match) => isWide(match.handle));
   const setMenuOpen = (open: boolean) => setOpenedAt(open ? pathname : null);
 
   useEffect(() => {
@@ -108,10 +110,20 @@ export function RootLayout() {
       </aside>
 
       <div className="flex min-w-0 flex-col">
-        <main id="noi-dung" className="w-full flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-10">
-          <div className="mx-auto w-full max-w-5xl rounded-card bg-surface p-5 shadow-card sm:p-8">
+        <main
+          id="noi-dung"
+          className={[
+            'w-full flex-1 px-4 sm:px-6',
+            wide ? 'py-4 lg:px-6 lg:py-6' : 'py-6 lg:px-10 lg:py-10',
+          ].join(' ')}
+        >
+          {wide ? (
             <Outlet />
-          </div>
+          ) : (
+            <div className="mx-auto w-full max-w-5xl rounded-card bg-surface p-5 shadow-card sm:p-8">
+              <Outlet />
+            </div>
+          )}
         </main>
 
         <footer className="text-small text-ink-soft">
@@ -133,4 +145,8 @@ export function RootLayout() {
       </div>
     </div>
   );
+}
+
+function isWide(handle: unknown): boolean {
+  return typeof handle === 'object' && handle !== null && 'wide' in handle && handle.wide === true;
 }

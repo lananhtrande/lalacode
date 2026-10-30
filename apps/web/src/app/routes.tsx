@@ -29,6 +29,8 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'bai-tap/:exerciseId',
+        // Màn bài tập dùng gần hết chiều rộng cho 2 cột editor/kết quả (S0-32).
+        handle: { wide: true },
         lazy: async () => ({
           Component: (await import('../features/exercise/ExercisePage')).ExercisePage,
         }),

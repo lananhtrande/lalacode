@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router';
-import { Play, RotateCcw, Send, Square } from 'lucide-react';
 import { loadExercise, lessonIdOfExercise } from '../../content/loader';
 import {
   awardBadges,
@@ -19,11 +18,14 @@ import type { DrawCommand, TestResult } from '../../runner/protocol';
 import { createRunner, type Runner } from '../../runner/runner-client';
 import { describeRunError, type RunErrorInfo } from '../../runner/messages';
 import { CodeEditor } from '../../shared/ui/CodeEditor';
-import { RichText } from '../../shared/ui/RichText';
 import { vi } from '../../shared/i18n/vi';
 import { HintPanel } from './HintPanel';
 import { TestResultList } from './TestResultList';
 import { TurtleCanvas } from './TurtleCanvas';
+import { ErrorPanel } from './ErrorPanel';
+import { ExercisePrompt } from './ExercisePrompt';
+import { ExerciseToolbar } from './ExerciseToolbar';
+import { OutputConsole } from './OutputConsole';
 import { buttonClasses } from '../../shared/ui/button-classes';
 
 type Phase = 'idle' | 'running' | 'grading';
@@ -48,6 +50,9 @@ export function ExercisePage() {
   const [results, setResults] = useState<readonly TestResult[] | null>(null);
   const [drawing, setDrawing] = useState<readonly DrawCommand[]>([]);
   const runnerRef = useRef<Runner | null>(null);
+  const resultsRef = useRef<HTMLDivElement | null>(null);
+  /** Tăng mỗi khi chạy/nộp xong, để đưa khu kết quả vào tầm mắt. */
+  const [revealTick, setRevealTick] = useState(0);
 
   // Token ẩn danh cho gợi ý AI; không lấy được thì panel chỉ dùng gợi ý viết sẵn.
   useEffect(() => {
@@ -124,6 +129,7 @@ export function ExercisePage() {
     setDrawing(outcome.drawing);
     if (outcome.ok) setStdout(outcome.result.stdout + outcome.result.stderr);
     else setError(describeRunError(outcome.error));
+    setRevealTick((tick) => tick + 1);
   }
 
   async function submit() {
@@ -144,7 +150,15 @@ export function ExercisePage() {
     } else {
       setError(describeRunError(outcome.error));
     }
+    setRevealTick((tick) => tick + 1);
   }
+
+  // Chạy/nộp xong: màn rộng thì cuộn cột kết quả lên đầu (phần vừa cập nhật nằm
+  // trên cùng); màn hẹp thì cuộn trang tới khu kết quả. Tôn trọng giảm chuyển động.
+  useEffect(() => {
+    if (revealTick === 0) return;
+    revealResults(resultsRef.current);
+  }, [revealTick]);
 
   /**
    * Ghi lần nộp (kèm dấu trọn bài học, cùng một transaction), rồi trao huy hiệu.
@@ -187,141 +201,106 @@ export function ExercisePage() {
   const busy = phase !== 'idle';
 
   return (
-    <article className="space-y-6" data-save-state={saveState}>
-      <header>
-        <Link
-          to={`/bai-hoc/${lessonIdOfExercise(exercise.id)}`}
-          className="text-sm font-medium text-accent-strong underline"
-        >
-          ← {lessonTitle}
-        </Link>
-        <h1 className="mt-1 text-2xl font-bold sm:text-3xl">{exercise.title}</h1>
-        <p className="mt-2 whitespace-pre-line">
-          <RichText text={exercise.prompt} />
-        </p>
-      </header>
-
-      <section aria-labelledby="code-cua-em">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 id="code-cua-em" className="text-lg font-bold">
-            {vi.exercise.yourCode}
-          </h2>
-          {restoredDraft && (
-            <p className="text-sm text-ink-soft" data-testid="restored-draft">
-              {vi.exercise.restored}
-            </p>
-          )}
-          <p className="text-sm text-ink-soft" data-testid="python-status">
+    <article
+      data-save-state={saveState}
+      // Màn hẹp chừa chỗ cho thanh nút dính đáy; màn rộng cao đúng một màn hình.
+      className="flex flex-col gap-4 pb-28 lg:h-[calc(100dvh-3rem)] lg:pb-0"
+    >
+      <header className="rounded-card bg-surface p-4 shadow-card sm:p-5">
+        <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
+          <div className="min-w-0">
+            <Link
+              to={`/bai-hoc/${lessonIdOfExercise(exercise.id)}`}
+              className="text-small font-medium text-accent-strong underline"
+            >
+              ← {lessonTitle}
+            </Link>
+            <h1 className="mt-1 text-section-title sm:text-[1.75rem] sm:leading-9 sm:font-bold">
+              {exercise.title}
+            </h1>
+          </div>
+          <p
+            className="flex items-center gap-2 rounded-full bg-surface-muted px-3 py-1 text-small text-ink-soft"
+            data-testid="python-status"
+          >
+            <span
+              aria-hidden="true"
+              className={['size-2 rounded-full', pythonReady ? 'bg-success' : 'bg-attention'].join(' ')}
+            />
             {pythonReady ? vi.exercise.ready : vi.exercise.preparing}
           </p>
         </div>
-        <div className="mt-2">
-          <CodeEditor
-            value={code}
-            onChange={setCode}
-            label={vi.exercise.yourCode}
-            readOnly={busy}
-          />
-        </div>
+        <ExercisePrompt text={exercise.prompt} />
+      </header>
 
-        <div className="mt-3 flex flex-wrap gap-3">
-          <button
-            type="button"
-            onClick={() => void run()}
-            disabled={busy}
-            className={buttonClasses('dark', 'md')}
-          >
-            <Play aria-hidden="true" className="size-4" />
-            {phase === 'running' ? vi.exercise.running : vi.exercise.run}
-          </button>
-          <button
-            type="button"
-            onClick={() => void submit()}
-            disabled={busy}
-            className={buttonClasses('primary', 'md')}
-          >
-            <Send aria-hidden="true" className="size-4" />
-            {phase === 'grading' ? vi.exercise.grading : vi.exercise.submit}
-          </button>
-          {busy && (
-            <button
-              type="button"
-              onClick={() => runnerRef.current?.cancel()}
-              className={buttonClasses('outline', 'md')}
-            >
-              <Square aria-hidden="true" className="size-4" />
-              {vi.exercise.stop}
-            </button>
-          )}
-          <button
-            type="button"
-            onClick={() => {
+      <div className="grid gap-4 lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:gap-6">
+        <section aria-labelledby="code-cua-em" className="flex flex-col lg:min-h-0">
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-card bg-code-bg shadow-card">
+            <div className="flex flex-wrap items-center justify-between gap-2 bg-code-gutter px-4 py-2 text-code-text">
+              <h2 id="code-cua-em" className="text-label">
+                {vi.exercise.yourCode}
+              </h2>
+              {restoredDraft && (
+                <p className="text-small text-code-muted" data-testid="restored-draft">
+                  {vi.exercise.restored}
+                </p>
+              )}
+            </div>
+            <CodeEditor
+              value={code}
+              onChange={setCode}
+              label={vi.exercise.yourCode}
+              readOnly={busy}
+              // Tối thiểu ~16 dòng ở màn rộng, ~10 dòng ở điện thoại.
+              className="min-h-64 lg:min-h-[26rem] lg:flex-1"
+            />
+          </div>
+          <ExerciseToolbar
+            phase={phase}
+            onRun={() => void run()}
+            onSubmit={() => void submit()}
+            onStop={() => runnerRef.current?.cancel()}
+            onReset={() => {
               setCode(exercise.starterCode);
               clearOutcome();
               setDrawing([]);
             }}
-            disabled={busy}
-            className={buttonClasses('ghost', 'md')}
-          >
-            <RotateCcw aria-hidden="true" className="size-4" />
-            {vi.exercise.reset}
-          </button>
-        </div>
-      </section>
+          />
+        </section>
 
-      {error && <ErrorPanel info={error} />}
-
-      <section aria-labelledby="ket-qua-chay">
-        <h2 id="ket-qua-chay" className="text-lg font-bold">
-          {vi.exercise.outputTitle}
-        </h2>
-        <pre
-          data-testid="exercise-output"
-          className="mt-2 min-h-16 overflow-x-auto rounded-xl bg-surface-muted p-3 font-mono text-sm"
+        <div
+          ref={resultsRef}
+          data-testid="exercise-results"
+          className="scroll-mt-20 space-y-4 lg:min-h-0 lg:overflow-y-auto lg:pr-1"
         >
-          {stdout || vi.exercise.outputEmpty}
-        </pre>
-      </section>
-
-      {exercise.turtle && <TurtleCanvas commands={drawing} />}
-
-      {results && <TestResultList results={results} />}
-
-      <HintPanel
-        hints={exercise.hints}
-        exerciseId={exercise.id}
-        getCode={() => code}
-        getError={() => error?.raw}
-        {...(aiToken === undefined ? {} : { aiToken })}
-      />
+          {/* Thứ tự ưu tiên: lỗi → output → hình rùa → kết quả chấm. */}
+          <div aria-live="polite" className="space-y-4">
+            {error && <ErrorPanel info={error} />}
+            <OutputConsole output={stdout} />
+            {exercise.turtle && <TurtleCanvas commands={drawing} />}
+            {results && <TestResultList results={results} />}
+          </div>
+          <HintPanel
+            hints={exercise.hints}
+            exerciseId={exercise.id}
+            getCode={() => code}
+            getError={() => error?.raw}
+            {...(aiToken === undefined ? {} : { aiToken })}
+          />
+        </div>
+      </div>
     </article>
   );
 }
 
-function ErrorPanel({ info }: { info: RunErrorInfo }) {
-  return (
-    <section
-      role="alert"
-      data-testid="exercise-error"
-      className="rounded-2xl border border-attention/40 bg-attention-surface p-4"
-    >
-      <h2 className="font-bold">{vi.exercise.errorTitle}</h2>
-      <p className="mt-1">
-        {info.title}
-        {info.line !== undefined && (
-          <span className="text-ink-soft">
-            {' '}
-            ({vi.exercise.errorLine} {info.line})
-          </span>
-        )}
-      </p>
-      {info.hint !== undefined && <p className="mt-1 text-ink-soft">{info.hint}</p>}
-      {info.raw !== undefined && (
-        <details className="mt-2">
-          <summary className="cursor-pointer text-sm text-ink-soft">{vi.exercise.showRaw}</summary>
-          <pre className="mt-1 overflow-x-auto font-mono text-sm">{info.raw}</pre>
-        </details>
-      )}
-    </section>
-  );
+function revealResults(target: HTMLElement | null) {
+  if (!target) return;
+  const media = (query: string) =>
+    typeof window.matchMedia === 'function' && window.matchMedia(query).matches;
+  const behavior: ScrollBehavior = media('(prefers-reduced-motion: reduce)') ? 'auto' : 'smooth';
+  if (media('(min-width: 1024px)')) {
+    if (typeof target.scrollTo === 'function') target.scrollTo({ top: 0, behavior });
+  } else if (typeof target.scrollIntoView === 'function') {
+    target.scrollIntoView({ block: 'start', behavior });
+  }
 }

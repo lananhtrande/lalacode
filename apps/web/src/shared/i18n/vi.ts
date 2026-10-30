@@ -94,6 +94,8 @@ export const vi = {
     restored: 'Mình giữ lại bài em đang làm dở',
     resetConfirm: 'Xoá code hiện tại và quay về code ban đầu nhé?',
     outputTitle: 'Kết quả chạy',
+    promptMore: 'Xem cả đề bài',
+    promptLess: 'Thu gọn đề bài',
     outputEmpty: 'Bấm "Chạy thử" để xem chương trình in ra gì.',
     drawingTitle: 'Hình rùa vẽ',
     preparing: 'Đang chuẩn bị Python…',
