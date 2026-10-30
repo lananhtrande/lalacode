@@ -36,7 +36,7 @@ test.describe('báo cáo cho bố mẹ', () => {
     await expect(body).toBeVisible();
     await expect(body).toContainText('1');
     await expect(parentPage.getByTestId('report-lesson-py-khoi-dong.01-xin-chao')).toContainText(
-      '1/2',
+      '1/4',
     );
 
     // Phần sau dấu # không bao giờ đi theo request nào.
@@ -48,7 +48,7 @@ test.describe('báo cáo cho bố mẹ', () => {
 
     // Máy bố mẹ không hề có tiến độ của riêng nó.
     await parentPage.goto('/ban-do');
-    await expect(parentPage.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('0/2');
+    await expect(parentPage.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('0/4');
     await parent.close();
   });
 

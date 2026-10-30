@@ -44,6 +44,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [ ] S0-27 Beta kín 50–100 trẻ, thu phản hồi qua nhóm Zalo
 - [x] S0-28 **Màn bài học** — `/bai-hoc/:id` đọc `lesson.md` bằng `react-markdown`, liệt kê bài tập kèm trạng thái, nút đi thẳng tới bài chưa xong. Video nhúng theo kiểu bấm-mới-tải (chưa bài nào có video). Trang chỉ đọc, không ghi IndexedDB.
 - [x] S0-29 Bài 01 chỉ có 2 bài tập, dưới mức 3–5 của `docs/content-format.md` (phát hiện khi làm S0-28). Viết thêm 1–2 bài tập cho bài mở đầu.
+- [ ] S0-30 Lỗi race khi xong bài tập cuối (phát hiện khi làm S0-29): `ExercisePage.saveOutcome` chạy ngầm sau khi đã hiện lời khen, nên rời trang ngay thì `recordAttempt` đã ghi mà `markLessonCompleted` chưa chạy. Bản đồ vẫn hiện "Xong" (đếm từ bài tập) nhưng bài học không bao giờ có `completedAt`, mất huy hiệu "Trọn một bài học" và thiếu trong báo cáo phụ huynh. Làm e2e `progress.spec.ts` chập chờn trên ipad. Hướng sửa: suy ra bài học xong từ bài tập thay vì chỉ ghi lúc nộp, hoặc sửa bù khi mở bản đồ. Cần privacy-reviewer.
 
 ## Tiêu chí chuyển sang giai đoạn 1
 - ≥ 70% trẻ hoàn thành bài 1; ≥ 40% quay lại sau 7 ngày; ≥ 30 phụ huynh xác nhận sẵn sàng trả phí.
