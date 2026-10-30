@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.01-xin-chao.04-cay-thong-sao",
+  "title": "Cây thông bằng dấu sao",
+  "kind": "code",
+  "prompt": "Dùng dấu `*` để vẽ một cây thông 3 tầng: tầng 1 có 1 sao, tầng 2 có 3 sao, tầng 3 có 5 sao. Dòng đầu đã có sẵn, em viết tiếp 2 dòng còn lại. Dấu cách cũng phải nằm trong dấu ngoặc kép: tầng 1 đứng sau 2 dấu cách, tầng 2 sau 1 dấu cách, tầng 3 không có dấu cách nào.",
+  "starterCode": "print(\"  *\")\n",
+  "solution": "print(\"  *\")\nprint(\" ***\")\nprint(\"*****\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "  *\n ***\n*****\n",
+      "message": "Cây chưa giống mô tả. Em so từng dòng: số sao và số dấu cách ở đầu dòng nhé."
+    }
+  ],
+  "hints": [
+    "Mỗi tầng của cây là một lệnh `print`.",
+    "Dấu cách nằm bên trong dấu ngoặc kép cũng được in ra, nên nó đẩy dấu sao sang phải.",
+    "Ví dụ tương tự: `print(\" ##\")` in ra một dấu cách rồi tới hai dấu thăng."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}
