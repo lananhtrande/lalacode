@@ -76,22 +76,38 @@ Footer (`contentinfo`) nằm cuối cột nội dung ở mọi khổ màn hình,
 | --- | --- | --- |
 | ![](design/screenshots/s031-ban-do-1440.png) | ![](design/screenshots/s031-ban-do-820.png) | ![](design/screenshots/s031-menu-390.png) |
 
-## Editor tối (S0-32)
+## Editor và console tối
 
-Bảng màu đã kiểm AA trên nền editor và trên dòng đang đứng, dùng cho theme CodeMirror tự viết ở S0-32:
+Theme CodeMirror **tự viết** trong `apps/web/src/shared/ui/code-theme.ts` (không dùng `@codemirror/theme-one-dark` hay `basicSetup`, ADR 0007). Màu là token `--color-code-*` trong `index.css`; `tokens.test.ts` đòi mọi màu chữ đạt AA trên nền, dòng đang đứng và gutter. Khối `@theme` là `static` để các biến này luôn có mặt dù không class nào dùng.
 
-| Vai trò | Màu | Tương phản trên `#0D1B1E` |
-| --- | --- | --- |
-| Nền | `#0D1B1E` | — |
-| Gutter | `#122428` | — |
-| Dòng đang đứng | `#16292D` | — |
-| Chữ thường | `#E4F0F0` | 15.1:1 |
-| Số dòng | `#8DA2A6` | 6.6:1 (6.0:1 trên gutter) |
-| keyword | `#FF9AC1` | 8.9:1 |
-| string | `#A5E3A0` | 11.8:1 |
-| number | `#FFC57A` | 11.3:1 |
-| comment | `#9AAEB2` | 7.6:1 |
-| function | `#7CC6FF` | 9.5:1 |
-| builtin (`print`, `range`…) | `#5FE3D2` | 11.2:1 |
-| Con trỏ, viền focus | `accent` `#2DD4BF` | 9.5:1 |
-| Vùng chọn | `accent` ở 25% độ mờ | — |
+| Token | Màu | Dùng cho | Tương phản trên `code-bg` |
+| --- | --- | --- | --- |
+| `code-bg` | `#0D1B1E` | Nền editor và console | — |
+| `code-gutter` | `#122428` | Cột số dòng, thanh tiêu đề "Code của em" / "Kết quả chạy" | — |
+| `code-active` | `#16292D` | Dòng đang đứng | — |
+| `code-text` | `#E4F0F0` | Chữ thường, toán tử | 15.1:1 |
+| `code-muted` | `#8DA2A6` | Số dòng, chữ chờ trong console | 6.6:1 |
+| `code-keyword` | `#FF9AC1` | `import`, `for`, `if`, `def`, `in`… | 8.9:1 |
+| `code-string` | `#A5E3A0` | Chuỗi | 11.8:1 |
+| `code-number` | `#FFC57A` | Số, `True`/`False`/`None` | 11.3:1 |
+| `code-comment` | `#9AAEB2` | Comment (trẻ đọc gợi ý trong code khởi đầu) | 7.6:1 |
+| `code-function` | `#7CC6FF` | Gọi hàm, `turtle.forward` | 9.5:1 |
+| `code-builtin` | `#5FE3D2` | `print`, `range`, `len`, `input`… (tô bằng `MatchDecorator` vì ngữ pháp Python không phân biệt) | 11.2:1 |
+
+Con trỏ, viền focus 3px và vùng chọn (25% độ mờ) dùng `accent`. Cỡ chữ code 16px, 15px dưới 640px, dòng cao 1.6. Đang chạy (chỉ đọc): chữ mờ đi, con trỏ ẩn.
+
+## Màn bài tập
+
+| Màn | Bố cục |
+| --- | --- |
+| ≥ 1024px | Đề bài trong thẻ trên cùng (dài quá 180 ký tự thì có nút thu gọn). Dưới là 2 cột ~55/45, cao đúng phần còn lại của màn hình, **mỗi cột tự cuộn**: trái là editor tối (tối thiểu ~16 dòng) và thanh nút ngay dưới; phải là lỗi → kết quả chạy → hình rùa → kết quả chấm → gợi ý. |
+| < 1024px | Xếp dọc: đề bài → editor → kết quả → gợi ý. Thanh nút **dính đáy màn hình**; dưới 640px nút "Làm lại từ đầu" chỉ còn icon để thanh nằm một hàng. |
+
+Chạy/nộp xong: màn rộng cuộn cột phải lên đầu, màn hẹp cuộn trang tới khu kết quả (`prefers-reduced-motion` thì nhảy thẳng, không trượt). Khu kết quả có `aria-live="polite"`. Hình rùa vuông, rộng theo cột (tối đa 560px), vẽ theo `devicePixelRatio`; toạ độ vẫn tính trên khung 320×320 mà bài học viết theo.
+
+Nút: "Nộp bài" `primary`, "Chạy thử" `dark`, "Dừng" `outline`, "Làm lại từ đầu" `ghost`.
+
+| | 1440 | 1180 (tablet ngang) | 820 (tablet dọc) | 390 |
+| --- | --- | --- | --- | --- |
+| Trước | ![](design/screenshots/s032-truoc-bai-tap-rua-1440.png) | — | ![](design/screenshots/s032-truoc-bai-tap-rua-820.png) | ![](design/screenshots/s032-truoc-bai-tap-rua-390.png) |
+| Sau | ![](design/screenshots/s032-sau-bai-tap-rua-1440.png) | ![](design/screenshots/s032-sau-bai-tap-rua-1180.png) | ![](design/screenshots/s032-sau-bai-tap-rua-820.png) | ![](design/screenshots/s032-sau-bai-tap-rua-390.png) |

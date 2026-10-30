@@ -72,8 +72,8 @@ export function HintPanel({ hints, exerciseId, getCode, getError, aiToken }: Hin
   }
 
   return (
-    <section aria-labelledby="goi-y" className="rounded-2xl border border-line p-4">
-      <h2 id="goi-y" className="flex items-center gap-2 text-lg font-bold">
+    <section aria-labelledby="goi-y" className="rounded-card bg-ai-surface p-4">
+      <h2 id="goi-y" className="flex items-center gap-2 text-card-title">
         <Lightbulb aria-hidden="true" className="size-5 text-accent-strong" />
         {vi.exercise.hintsTitle}
       </h2>
@@ -91,7 +91,7 @@ export function HintPanel({ hints, exerciseId, getCode, getError, aiToken }: Hin
       {aiHints.length > 0 && (
         <ol data-testid="ai-hints" className="mt-3 space-y-2">
           {aiHints.map((hint, index) => (
-            <li key={`${index}-${hint.slice(0, 12)}`} className="rounded-xl bg-ai-surface p-3">
+            <li key={`${index}-${hint.slice(0, 12)}`} className="rounded-xl bg-surface p-3">
               <span className="flex items-center gap-1 text-sm font-semibold text-accent-strong">
                 <Sparkles aria-hidden="true" className="size-4" />
                 {vi.exercise.aiLabel}

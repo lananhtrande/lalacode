@@ -52,6 +52,25 @@ describe('token màu trong index.css', () => {
     expect(contrastRatio(color(text), color(background))).toBeGreaterThanOrEqual(WCAG_AA);
   });
 
+  it.each([
+    'code-text',
+    'code-muted',
+    'code-keyword',
+    'code-string',
+    'code-number',
+    'code-comment',
+    'code-function',
+    'code-builtin',
+  ])('chữ %s trong editor tối đạt AA trên nền, dòng đang đứng và gutter', (text) => {
+    for (const background of ['code-bg', 'code-active', 'code-gutter']) {
+      expect(contrastRatio(color(text), color(background))).toBeGreaterThanOrEqual(WCAG_AA);
+    }
+  });
+
+  it('con trỏ và viền focus màu nhấn nhìn rõ trên nền editor', () => {
+    expect(contrastRatio(color('accent'), color('code-bg'))).toBeGreaterThanOrEqual(3);
+  });
+
   it('viền focus (màu ink) nhìn rõ trên cả nền trắng lẫn nút màu nhấn', () => {
     expect(contrastRatio(color('ink'), color('surface'))).toBeGreaterThanOrEqual(3);
     expect(contrastRatio(color('ink'), color('accent'))).toBeGreaterThanOrEqual(3);
