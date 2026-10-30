@@ -104,8 +104,12 @@
  * Token của design system, đặt tên theo **vai trò** chứ không theo màu.
  * Mọi màu viết dạng #rrggbb: test `tokens.test.ts` đọc file này và đòi mọi
  * cặp chữ/nền đạt WCAG AA (≥ 4.5:1). Thêm màu chữ mới thì thêm cặp vào test.
+ *
+ * `static`: luôn xuất mọi biến ra CSS, kể cả biến không có class nào dùng.
+ * Theme của editor đọc `var(--color-code-*)` trực tiếp; thiếu `static` thì
+ * Tailwind bỏ các biến đó và code mất màu cú pháp.
  */
-@theme {
+@theme static {
   --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
 
@@ -132,6 +136,23 @@
   --color-success-surface: #e7f6ec;
   --color-attention: #a64b00;
   --color-attention-surface: #fff3e0;
+
+  /*
+   * Editor và console: luôn nền tối, kể cả khi trang sáng (ADR 0008).
+   * Mọi màu chữ ở đây đạt AA trên cả `code-bg` lẫn `code-active`.
+   */
+  --color-code-bg: #0d1b1e;
+  --color-code-gutter: #122428;
+  --color-code-active: #16292d;
+  --color-code-text: #e4f0f0;
+  /* Số dòng, chữ chờ trong console */
+  --color-code-muted: #8da2a6;
+  --color-code-keyword: #ff9ac1;
+  --color-code-string: #a5e3a0;
+  --color-code-number: #ffc57a;
+  --color-code-comment: #9aaeb2;
+  --color-code-function: #7cc6ff;
+  --color-code-builtin: #5fe3d2;
 
   /* Thang chữ: 6 kiểu theo vai trò. Chữ thân tối thiểu 16/24, chữ phụ 14/20. */
   --text-page-title: 2rem;

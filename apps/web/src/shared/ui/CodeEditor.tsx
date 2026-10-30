@@ -8,13 +8,9 @@ import {
   lineNumbers,
 } from '@codemirror/view';
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
-import {
-  bracketMatching,
-  indentOnInput,
-  syntaxHighlighting,
-  defaultHighlightStyle,
-} from '@codemirror/language';
+import { bracketMatching, indentOnInput, syntaxHighlighting } from '@codemirror/language';
 import { python } from '@codemirror/lang-python';
+import { darkEditorTheme, darkHighlightStyle, highlightBuiltins } from './code-theme';
 
 /**
  * Ô viết code. CodeMirror quản lý DOM của nó, nên React chỉ dựng một lần rồi
@@ -26,9 +22,23 @@ export interface CodeEditorProps {
   label: string;
   /** Khoá ô code khi đang chạy, để trẻ không sửa giữa chừng. */
   readOnly?: boolean;
+  /** Class cho khung bọc ngoài (ví dụ để editor cao hết cột ở màn rộng). */
+  className?: string;
 }
 
-export function CodeEditor({ value, onChange, label, readOnly = false }: CodeEditorProps) {
+/** Chỉ đọc = không sửa được + class `cm-readonly` để theme làm mờ và ẩn con trỏ. */
+const readOnlyExtensions = (readOnly: boolean) => [
+  EditorView.editable.of(!readOnly),
+  EditorView.editorAttributes.of({ class: readOnly ? 'cm-readonly' : '' }),
+];
+
+export function CodeEditor({
+  value,
+  onChange,
+  label,
+  readOnly = false,
+  className = '',
+}: CodeEditorProps) {
   // Compartment cho phép đổi một phần cấu hình sau khi editor đã dựng.
   const [editableCompartment] = useState(() => new Compartment());
   const hostRef = useRef<HTMLDivElement | null>(null);
@@ -58,10 +68,11 @@ export function CodeEditor({ value, onChange, label, readOnly = false }: CodeEdi
           highlightActiveLine(),
           indentOnInput(),
           bracketMatching(),
-          syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+          syntaxHighlighting(darkHighlightStyle),
+          highlightBuiltins,
           keymap.of([...defaultKeymap, ...historyKeymap]),
           python(),
-          editableCompartment.of(EditorView.editable.of(!readOnly)),
+          editableCompartment.of(readOnlyExtensions(readOnly)),
           // Tab thụt dòng thay vì nhảy ra khỏi ô — trẻ gõ Python cần thụt dòng.
           keymap.of([indentWithTab]),
           EditorView.lineWrapping,
@@ -69,11 +80,7 @@ export function CodeEditor({ value, onChange, label, readOnly = false }: CodeEdi
             if (update.docChanged) onChangeRef.current(update.state.doc.toString());
           }),
           EditorView.contentAttributes.of({ 'aria-label': label }),
-          EditorView.theme({
-            '&': { fontSize: '15px' },
-            '.cm-content': { fontFamily: 'var(--font-mono)', minHeight: '9rem' },
-            '&.cm-focused': { outline: '3px solid var(--color-accent)' },
-          }),
+          darkEditorTheme,
         ],
       }),
     });
@@ -96,8 +103,8 @@ export function CodeEditor({ value, onChange, label, readOnly = false }: CodeEdi
   useEffect(() => {
     const view = viewRef.current;
     if (!view) return;
-    view.dispatch({ effects: editableCompartment.reconfigure(EditorView.editable.of(!readOnly)) });
+    view.dispatch({ effects: editableCompartment.reconfigure(readOnlyExtensions(readOnly)) });
   }, [readOnly, editableCompartment]);
 
-  return <div ref={hostRef} className="overflow-hidden rounded-xl border border-line" />;
+  return <div ref={hostRef} className={['overflow-hidden bg-code-bg', className].join(' ')} />;
 }
