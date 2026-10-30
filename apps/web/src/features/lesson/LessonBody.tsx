@@ -16,13 +16,13 @@ export function stripLeadingTitle(markdown: string): string {
 
 export function LessonBody({ markdown }: { markdown: string }) {
   return (
-    <div className="mt-6 space-y-4 text-lg leading-relaxed" data-testid="lesson-body">
+    <div className="mt-6 space-y-4 text-card-title font-normal leading-relaxed" data-testid="lesson-body">
       <Markdown
         components={{
           // Markdown trong bài không được phá cấu trúc tiêu đề của trang.
-          h1: ({ children }) => <h2 className="mt-8 text-xl font-bold">{children}</h2>,
-          h2: ({ children }) => <h2 className="mt-8 text-xl font-bold">{children}</h2>,
-          h3: ({ children }) => <h3 className="mt-6 text-lg font-semibold">{children}</h3>,
+          h1: ({ children }) => <h2 className="mt-8 text-section-title">{children}</h2>,
+          h2: ({ children }) => <h2 className="mt-8 text-section-title">{children}</h2>,
+          h3: ({ children }) => <h3 className="mt-6 text-card-title">{children}</h3>,
           p: ({ children }) => <p>{children}</p>,
           ul: ({ children }) => <ul className="list-disc space-y-1 pl-6">{children}</ul>,
           ol: ({ children }) => <ol className="list-decimal space-y-1 pl-6">{children}</ol>,
@@ -35,14 +35,14 @@ export function LessonBody({ markdown }: { markdown: string }) {
           code: ({ children, className }) =>
             className?.startsWith('language-') ? (
               // Khối code: `pre` bên dưới lo phần khung và cuộn ngang.
-              <code className="font-mono text-base">{children}</code>
+              <code className="font-mono text-[15px]">{children}</code>
             ) : (
               <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-[0.9em]">
                 {children}
               </code>
             ),
           pre: ({ children }) => (
-            <pre className="overflow-x-auto rounded-2xl bg-ink p-4 text-surface">{children}</pre>
+            <pre className="overflow-x-auto rounded-card bg-code-bg p-4 text-code-text">{children}</pre>
           ),
         }}
       >

@@ -52,7 +52,7 @@ export function LessonPage() {
   if (state.status === 'not-found') {
     return (
       <section>
-        <h1 className="text-2xl font-bold">{vi.lesson.notFound}</h1>
+        <h1 className="text-page-title">{vi.lesson.notFound}</h1>
         <Link
           to="/ban-do"
           className="mt-4 inline-flex min-h-tap items-center font-semibold text-accent-strong underline"
@@ -78,7 +78,7 @@ export function LessonPage() {
         {vi.lesson.backToMap}
       </Link>
 
-      <h1 className="mt-2 text-2xl font-bold sm:text-3xl">{lesson.title}</h1>
+      <h1 className="mt-2 text-page-title">{lesson.title}</h1>
       <p className="mt-2 flex flex-wrap items-center gap-x-4 text-ink-soft">
         <span className="flex items-center gap-1">
           <Clock aria-hidden="true" className="size-4" />
@@ -99,7 +99,7 @@ export function LessonPage() {
       <LessonBody markdown={markdown} />
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold">{vi.lesson.exercisesTitle}</h2>
+        <h2 className="text-section-title">{vi.lesson.exercisesTitle}</h2>
         <p className="mt-1 text-ink-soft">{vi.lesson.exercisesLead}</p>
 
         <ol className="mt-4 space-y-2" data-testid="lesson-exercises">
@@ -110,7 +110,7 @@ export function LessonPage() {
                 <Link
                   to={`/bai-tap/${exercise.id}`}
                   className={[
-                    'flex min-h-tap items-center gap-3 rounded-2xl border p-3 hover:bg-surface-muted',
+                    'flex min-h-tap items-center gap-3 rounded-card border p-3 hover:bg-surface-muted',
                     status === 'xong' ? 'border-success/50 bg-success-surface' : 'border-line',
                   ].join(' ')}
                 >
@@ -130,7 +130,7 @@ export function LessonPage() {
                   </span>
                   <span className="font-medium">{exercise.title}</span>
                   {status && (
-                    <span className="ml-auto text-sm text-ink-soft">
+                    <span className="ml-auto text-small text-ink-soft">
                       {status === 'xong' ? vi.lesson.exerciseDone : vi.lesson.exerciseDoing}
                     </span>
                   )}
@@ -152,7 +152,7 @@ export function LessonPage() {
         ) : (
           <p
             data-testid="lesson-all-done"
-            className="mt-6 flex items-center gap-2 rounded-2xl border border-success/50 bg-success-surface p-4 font-medium"
+            className="mt-6 flex items-center gap-2 rounded-card border border-success/50 bg-success-surface p-4 font-medium"
           >
             <PartyPopper aria-hidden="true" className="size-5 shrink-0 text-success" />
             {vi.lesson.allDone}

@@ -20,7 +20,7 @@ export function LessonVideo({ video, title }: { video: Video; title: string }) {
         controls
         preload="none"
         src={video.src}
-        className="aspect-video w-full rounded-2xl bg-ink"
+        className="aspect-video w-full rounded-card bg-ink"
         data-testid="lesson-video"
       />
     );
@@ -28,7 +28,7 @@ export function LessonVideo({ video, title }: { video: Video; title: string }) {
 
   if (!playing) {
     return (
-      <div className="rounded-2xl border border-line bg-surface-muted p-6 text-center">
+      <div className="rounded-card border border-line bg-surface-muted p-6 text-center">
         <button
           type="button"
           onClick={() => setPlaying(true)}
@@ -39,7 +39,7 @@ export function LessonVideo({ video, title }: { video: Video; title: string }) {
           {vi.lesson.videoPlay}
           {minutes > 0 && ` · ${minutes} ${vi.lesson.videoMinutes}`}
         </button>
-        <p className="mt-2 text-sm text-ink-soft">{vi.lesson.videoNote}</p>
+        <p className="mt-2 text-small text-ink-soft">{vi.lesson.videoNote}</p>
       </div>
     );
   }
@@ -55,7 +55,7 @@ export function LessonVideo({ video, title }: { video: Video; title: string }) {
       referrerPolicy="strict-origin-when-cross-origin"
       allowFullScreen
       data-testid="lesson-video"
-      className="aspect-video w-full rounded-2xl border-0 bg-ink"
+      className="aspect-video w-full rounded-card border-0 bg-ink"
     />
   );
 }

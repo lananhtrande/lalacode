@@ -215,7 +215,7 @@ export function ExercisePage() {
             >
               ← {lessonTitle}
             </Link>
-            <h1 className="mt-1 text-section-title sm:text-[1.75rem] sm:leading-9 sm:font-bold">
+            <h1 className="mt-1 text-section-title sm:text-page-title">
               {exercise.title}
             </h1>
           </div>
