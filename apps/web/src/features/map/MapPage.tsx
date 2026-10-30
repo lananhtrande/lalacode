@@ -34,7 +34,7 @@ export function MapPage() {
 
   return (
     <section>
-      <h1 className="text-2xl font-bold sm:text-3xl">{vi.map.title}</h1>
+      <h1 className="text-page-title">{vi.map.title}</h1>
       <p className="mt-2 text-ink-soft">{vi.map.lead}</p>
 
       <div className="mt-4">
@@ -96,7 +96,7 @@ function LessonCard({
       to={`/bai-hoc/${lesson.id}`}
       data-testid={`lesson-${lesson.id}`}
       className={[
-        'flex min-h-tap flex-col rounded-2xl border p-4 hover:bg-surface-muted',
+        'flex min-h-tap flex-col rounded-card border p-4 hover:bg-surface-muted',
         finished ? 'border-success/50 bg-success-surface' : 'border-line',
       ].join(' ')}
     >
@@ -111,18 +111,18 @@ function LessonCard({
         </span>
         <span className="font-semibold">{lesson.title}</span>
         {finished && (
-          <span className="rounded-full bg-success-surface px-2 py-0.5 text-xs font-medium text-success">
+          <span className="rounded-full bg-success-surface px-2 py-0.5 text-small font-semibold text-success">
             {vi.map.done}
           </span>
         )}
         {!finished && lesson.status === 'draft' && (
-          <span className="rounded-full bg-accent-soft px-2 py-0.5 text-xs font-medium text-accent-strong">
+          <span className="rounded-full bg-accent-soft px-2 py-0.5 text-small font-semibold text-accent-strong">
             {vi.map.draftBadge}
           </span>
         )}
       </span>
 
-      <span className="mt-2 flex flex-wrap gap-x-4 text-sm text-ink-soft">
+      <span className="mt-2 flex flex-wrap gap-x-4 text-small text-ink-soft">
         <span className="flex items-center gap-1">
           <Clock aria-hidden="true" className="size-4" />
           {lesson.estimatedMinutes} {vi.map.minutes}

@@ -41,7 +41,7 @@ Font **Be Vietnam Pro** (OFL), tự host ở `apps/web/public/fonts/be-vietnam-p
 
 | Class | Cỡ / dòng | Đậm | Dùng cho |
 | --- | --- | --- | --- |
-| `text-page-title` | 32 / 40 | 700 | Tiêu đề trang (`h1`) |
+| `text-page-title` | 28 / 36 | 700 | Tiêu đề trang (`h1`); trang chủ phóng to hơn ở màn rộng |
 | `text-section-title` | 22 / 30 | 600 | Tiêu đề mục (`h2`) |
 | `text-card-title` | 18 / 26 | 600 | Tiêu đề thẻ, tên logo |
 | `text-body` | 16 / 24 | 400 | Chữ thân (mặc định của `body`) |
@@ -60,6 +60,27 @@ Font **Be Vietnam Pro** (OFL), tự host ở `apps/web/public/fonts/be-vietnam-p
 | `AiPanel` | Khung nền `ai-surface` cho nội dung do AI tạo. |
 
 Mọi nút cao tối thiểu 44px (`min-h-tap`) và bo tròn hẳn. Viền focus: 3px `ink`, cách 2px — 17:1 trên nền trắng, 9.5:1 trên nút màu nhấn.
+
+## Áp vào từng màn
+
+Quy tắc chung (S0-33), để màn mới viết ra trông giống màn cũ:
+
+| Thứ | Class |
+| --- | --- |
+| `h1` của trang | `text-page-title` (trang chủ: phóng to ở màn rộng) |
+| `h2` mục lớn | `text-section-title` |
+| `h2` trong một khối, `h3` | `text-card-title` |
+| Lời dẫn dưới tiêu đề, thân bài học | `text-card-title font-normal` (18px, dễ đọc đoạn dài) |
+| Chữ phụ, chip trạng thái | `text-small` — **không dùng `text-xs`** |
+| Khối có viền bên trong trang | `rounded-card border border-line p-4` (không bóng: đã nằm trong thẻ trắng của khung) |
+| Khối code trong bài học | `bg-code-bg text-code-text`, cùng nền với editor |
+
+Không viết `text-xl`, `text-2xl font-bold`… trực tiếp: chọn một trong sáu kiểu chữ ở trên.
+
+| | 1440 | 820 | 390 |
+| --- | --- | --- | --- |
+| Trước (S0-31) | ![](design/screenshots/s031-ban-do-1440.png) | ![](design/screenshots/s031-ban-do-820.png) | — |
+| Sau (S0-33) | ![](design/screenshots/s033-sau-ban-do-1440.png) | ![](design/screenshots/s033-sau-ban-do-820.png) | ![](design/screenshots/s033-sau-ban-do-390.png) |
 
 ## Khung trang
 

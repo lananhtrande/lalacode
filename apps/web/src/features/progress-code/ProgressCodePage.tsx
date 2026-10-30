@@ -65,13 +65,13 @@ export function ProgressCodePage() {
   return (
     <section className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold sm:text-3xl">{vi.progressCode.title}</h1>
+        <h1 className="text-page-title">{vi.progressCode.title}</h1>
         <p className="mt-2 text-ink-soft">{vi.progressCode.lead}</p>
-        <p className="mt-1 text-sm text-ink-soft">{vi.progressCode.privacyNote}</p>
+        <p className="mt-1 text-small text-ink-soft">{vi.progressCode.privacyNote}</p>
       </div>
 
       <div>
-        <h2 className="flex items-center gap-2 text-lg font-bold">
+        <h2 className="flex items-center gap-2 text-card-title">
           <Download aria-hidden="true" className="size-5" />
           {vi.progressCode.yourCode}
         </h2>
@@ -87,7 +87,7 @@ export function ProgressCodePage() {
               data-testid="progress-code"
               value={code}
               rows={3}
-              className="mt-2 block w-full rounded-xl border border-line p-3 font-mono text-sm break-all"
+              className="mt-2 block w-full rounded-xl border border-line p-3 font-mono text-small break-all"
             />
             <button
               type="button"
@@ -102,7 +102,7 @@ export function ProgressCodePage() {
       </div>
 
       <div>
-        <h2 className="flex items-center gap-2 text-lg font-bold">
+        <h2 className="flex items-center gap-2 text-card-title">
           <Upload aria-hidden="true" className="size-5" />
           {vi.progressCode.importTitle}
         </h2>
@@ -112,7 +112,7 @@ export function ProgressCodePage() {
           value={pasted}
           onChange={(event) => setPasted(event.target.value)}
           rows={3}
-          className="mt-2 block w-full rounded-xl border border-line p-3 font-mono text-sm break-all"
+          className="mt-2 block w-full rounded-xl border border-line p-3 font-mono text-small break-all"
         />
         <button
           type="button"
