@@ -14,6 +14,8 @@ async function solve(page: Page, url: string, code: string): Promise<void> {
   await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
     timeout: 120_000,
   });
+  // Lời khen hiện trước khi lưu xong; rời trang sớm là mất lần nộp (S0-30).
+  await expect(page.locator('article[data-save-state="saved"]')).toBeAttached();
 }
 
 /** Tiến độ, streak và huy hiệu — tất cả đọc từ IndexedDB trên máy. */

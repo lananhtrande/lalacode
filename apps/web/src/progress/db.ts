@@ -122,16 +122,26 @@ export async function saveDraft(
   });
 }
 
-/** Ghi nhận một lần nộp bài; `passed` thì đánh dấu xong (và không bao giờ bỏ dấu đó). */
+/**
+ * Ghi nhận một lần nộp bài; `passed` thì đánh dấu xong (và không bao giờ bỏ dấu đó).
+ *
+ * `lessonExerciseIds` là mọi bài tập của bài học. Nếu lần nộp này làm trọn bài
+ * học thì `completedAt` được ghi **trong cùng transaction** với bài tập: trẻ
+ * đóng trang giữa chừng thì hoặc cả hai đã lưu, hoặc chưa có gì — không bao giờ
+ * có bài học đủ bài tập mà thiếu dấu xong (S0-30).
+ */
 export async function recordAttempt(
   exerciseId: string,
   lessonId: string,
   passed: boolean,
   draftCode: string,
+  lessonExerciseIds: readonly string[] = [],
   now: Date = new Date(),
 ): Promise<ExerciseProgress> {
   const db = await openProgressDb();
-  const current = await db.get('exercises', exerciseId);
+  const transaction = db.transaction(['exercises', 'lessons'], 'readwrite');
+  const exercises = transaction.objectStore('exercises');
+  const current = await exercises.get(exerciseId);
   const alreadyPassed = current?.status === 'xong';
   const next: ExerciseProgress = {
     exerciseId,
@@ -146,7 +156,27 @@ export async function recordAttempt(
         ? { passedAt: now.toISOString() }
         : {}),
   };
-  await db.put('exercises', next);
+  await exercises.put(next);
+
+  if (next.status === 'xong' && lessonExerciseIds.length > 0) {
+    const done = new Set(
+      (await exercises.index('by-lesson').getAll(lessonId))
+        .filter((item) => item.status === 'xong')
+        .map((item) => item.exerciseId),
+    );
+    const lessons = transaction.objectStore('lessons');
+    const lesson = await lessons.get(lessonId);
+    if (lesson?.completedAt === undefined && lessonExerciseIds.every((id) => done.has(id))) {
+      await lessons.put({
+        lessonId,
+        courseId: lessonId.split('.')[0] ?? '',
+        startedAt: lesson?.startedAt ?? now.toISOString(),
+        completedAt: now.toISOString(),
+      });
+    }
+  }
+  await transaction.done;
+
   await touchActivity(now);
   return next;
 }
@@ -160,23 +190,6 @@ export async function markLessonStarted(
   const current = await db.get('lessons', lessonId);
   if (current) return;
   await db.put('lessons', { lessonId, courseId, startedAt: now.toISOString() });
-}
-
-/** Bài học xong khi mọi bài tập của nó đã xong; người gọi quyết định điều đó. */
-export async function markLessonCompleted(
-  lessonId: string,
-  courseId: string,
-  now: Date = new Date(),
-): Promise<void> {
-  const db = await openProgressDb();
-  const current = await db.get('lessons', lessonId);
-  if (current?.completedAt !== undefined) return;
-  await db.put('lessons', {
-    lessonId,
-    courseId,
-    startedAt: current?.startedAt ?? now.toISOString(),
-    completedAt: now.toISOString(),
-  });
 }
 
 /**

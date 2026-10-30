@@ -7,7 +7,6 @@ import {
   getAiToken,
   exportSnapshot,
   getExerciseProgress,
-  markLessonCompleted,
   markLessonStarted,
   quietly,
   recordAttempt,
@@ -27,6 +26,8 @@ import { TestResultList } from './TestResultList';
 import { TurtleCanvas } from './TurtleCanvas';
 
 type Phase = 'idle' | 'running' | 'grading';
+/** Lưu lần nộp vào máy: chạy ngầm, nhưng e2e cần biết khi nào xong. */
+type SaveState = 'idle' | 'saving' | 'saved';
 
 export function ExercisePage() {
   const { exerciseId = '' } = useParams();
@@ -39,6 +40,7 @@ export function ExercisePage() {
   const [loadFailed, setLoadFailed] = useState(false);
   const [code, setCode] = useState('');
   const [phase, setPhase] = useState<Phase>('idle');
+  const [saveState, setSaveState] = useState<SaveState>('idle');
   const [pythonReady, setPythonReady] = useState(false);
   const [stdout, setStdout] = useState('');
   const [error, setError] = useState<RunErrorInfo | null>(null);
@@ -133,28 +135,23 @@ export function ExercisePage() {
     setPhase('idle');
     if (outcome.ok) {
       setResults(outcome.report.results);
-      void quietly(() => saveOutcome(exercise.id, outcome.report.passed, code));
+      setSaveState('saving');
+      // quietly() không bao giờ ném lỗi: lưu hỏng thì vẫn coi như đã xong lượt lưu.
+      void quietly(() => saveOutcome(exercise.id, outcome.report.passed, code)).then(() =>
+        setSaveState('saved'),
+      );
     } else {
       setError(describeRunError(outcome.error));
     }
   }
 
   /**
-   * Ghi lần nộp, rồi xét bài học đã trọn chưa và trao huy hiệu.
+   * Ghi lần nộp (kèm dấu trọn bài học, cùng một transaction), rồi trao huy hiệu.
    * Làm sau khi đã hiện kết quả cho trẻ: lưu trữ không được giữ chân màn hình.
    */
   async function saveOutcome(exerciseId: string, passed: boolean, submittedCode: string) {
     const lessonId = lessonIdOfExercise(exerciseId);
-    const courseId = exerciseId.split('.')[0] ?? '';
-    await recordAttempt(exerciseId, lessonId, passed, submittedCode);
-
-    const snapshot = await exportSnapshot();
-    const doneIds = new Set(
-      snapshot.exercises.filter((item) => item.status === 'xong').map((item) => item.exerciseId),
-    );
-    if (lessonExerciseIds.length > 0 && lessonExerciseIds.every((id) => doneIds.has(id))) {
-      await markLessonCompleted(lessonId, courseId);
-    }
+    await recordAttempt(exerciseId, lessonId, passed, submittedCode, lessonExerciseIds);
 
     // Xét huy hiệu trên ảnh chụp mới nhất (đã gồm cả bài học vừa xong).
     const latest = await exportSnapshot();
@@ -189,7 +186,7 @@ export function ExercisePage() {
   const busy = phase !== 'idle';
 
   return (
-    <article className="space-y-6">
+    <article className="space-y-6" data-save-state={saveState}>
       <header>
         <Link
           to={`/bai-hoc/${lessonIdOfExercise(exercise.id)}`}

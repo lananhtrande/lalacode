@@ -44,7 +44,6 @@ vitest.mock('../../content/loader', async (importOriginal) => {
 const getExerciseProgress = vitest.fn();
 const recordAttempt = vitest.fn();
 const saveDraft = vitest.fn();
-const markLessonCompleted = vitest.fn();
 const awardBadges = vitest.fn();
 const exportSnapshot = vitest.fn();
 vitest.mock('../../progress/db', () => ({
@@ -59,7 +58,6 @@ vitest.mock('../../progress/db', () => ({
   recordAttempt: (...args: unknown[]) => recordAttempt(...args) as unknown,
   saveDraft: (...args: unknown[]) => saveDraft(...args) as unknown,
   markLessonStarted: () => Promise.resolve(),
-  markLessonCompleted: (...args: unknown[]) => markLessonCompleted(...args) as unknown,
   awardBadges: (...args: unknown[]) => awardBadges(...args) as unknown,
   exportSnapshot: () => exportSnapshot() as unknown,
 }));
@@ -103,7 +101,6 @@ beforeEach(() => {
   getExerciseProgress.mockResolvedValue(undefined);
   recordAttempt.mockResolvedValue(undefined);
   saveDraft.mockResolvedValue(undefined);
-  markLessonCompleted.mockResolvedValue(undefined);
   awardBadges.mockResolvedValue(undefined);
   exportSnapshot.mockResolvedValue(snapshotWith([exercise.id]));
   loadExercise.mockResolvedValue({
@@ -286,18 +283,11 @@ describe('ExercisePage', () => {
       'py-khoi-dong.01-xin-chao',
       true,
       exercise.starterCode,
+      [exercise.id],
     );
   });
 
-  it('làm xong hết bài tập của bài học thì đánh dấu bài học đã trọn', async () => {
-    const user = userEvent.setup();
-    renderPage();
-    await user.click(await screen.findByRole('button', { name: strings.exercise.submit }));
-    await waitFor(() => expect(markLessonCompleted).toHaveBeenCalledTimes(1));
-    expect(markLessonCompleted).toHaveBeenCalledWith('py-khoi-dong.01-xin-chao', 'py-khoi-dong');
-  });
-
-  it('còn bài tập khác chưa xong thì chưa đánh dấu bài học trọn', async () => {
+  it('gửi kèm đủ bài tập của bài học, để dấu trọn bài được ghi cùng lần nộp', async () => {
     loadExercise.mockResolvedValue({
       lesson: {
         version: 1,
@@ -312,7 +302,22 @@ describe('ExercisePage', () => {
     renderPage();
     await user.click(await screen.findByRole('button', { name: strings.exercise.submit }));
     await waitFor(() => expect(recordAttempt).toHaveBeenCalled());
-    expect(markLessonCompleted).not.toHaveBeenCalled();
+    expect(recordAttempt.mock.calls[0]?.[4]).toEqual([
+      exercise.id,
+      'py-khoi-dong.01-xin-chao.02-in-hai-dong',
+    ]);
+  });
+
+  it('báo trạng thái lưu: đang lưu ngay sau khi chấm, đã lưu khi ghi xong', async () => {
+    let finishSave: () => void = () => undefined;
+    recordAttempt.mockReturnValue(new Promise<void>((resolve) => (finishSave = resolve)));
+    const user = userEvent.setup();
+    const { container } = renderPage();
+    await user.click(await screen.findByRole('button', { name: strings.exercise.submit }));
+    const article = container.querySelector('article');
+    await waitFor(() => expect(article).toHaveAttribute('data-save-state', 'saving'));
+    finishSave();
+    await waitFor(() => expect(article).toHaveAttribute('data-save-state', 'saved'));
   });
 
   it('nhận huy hiệu "Bài đầu tiên" ngay sau khi làm đạt bài đầu', async () => {
@@ -342,6 +347,10 @@ describe('ExercisePage', () => {
     expect(editor).toHaveValue(exercise.starterCode);
     await user.click(screen.getByRole('button', { name: strings.exercise.submit }));
     expect(await screen.findByText(strings.exercise.allPassed)).toBeInTheDocument();
+    // Lưu hỏng vẫn phải kết thúc lượt lưu, không treo ở "đang lưu".
+    await waitFor(() =>
+      expect(document.querySelector('article')).toHaveAttribute('data-save-state', 'saved'),
+    );
   });
 
   it('bài tập không có thì mời trẻ về bản đồ', async () => {
