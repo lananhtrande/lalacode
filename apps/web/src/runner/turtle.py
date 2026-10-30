@@ -1,4 +1,4 @@
-"""Rùa vẽ hình cho lalacode — bản tự viết, không cần tkinter.
+"""Rùa vẽ hình cho lalakode — bản tự viết, không cần tkinter.
 
 Pyodide không có `turtle` thật (nó cần tkinter), còn CPython khi chạy
 `content:verify` thì không có màn hình. Nên module này ghi lại **lệnh vẽ** thay

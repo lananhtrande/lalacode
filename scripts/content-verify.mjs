@@ -2,7 +2,7 @@
 // Chạy thật lời giải mẫu và starter code của từng bài tập bằng CPython:
 // solution phải pass TẤT CẢ test, starterCode phải fail ÍT NHẤT MỘT test.
 import process from 'node:process';
-import { exerciseSchema } from '@lalacode/content-schema';
+import { exerciseSchema } from '@lalakode/content-schema';
 import { readContentTree } from './lib/read-content.mjs';
 import { printIssues } from './lib/report.mjs';
 import { findPython } from './lib/python.mjs';

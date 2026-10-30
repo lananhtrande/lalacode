@@ -17,7 +17,7 @@ const done = lines.filter((l) => /^- \[x\]/i.test(l)).length;
 const total = done + lines.filter((l) => /^- \[( |~)\]/.test(l)).length;
 
 const out = [
-  'Dự án lalacode — GIAI ĐOẠN 0 (web tĩnh, không lưu dữ liệu người dùng trên server). Luật: CLAUDE.md.',
+  'Dự án lalakode — GIAI ĐOẠN 0 (web tĩnh, không lưu dữ liệu người dùng trên server). Luật: CLAUDE.md.',
   `Roadmap: ${done}/${total} mục xong.`,
   inProgress.length ? `Đang làm: ${inProgress.join(' · ')}` : null,
   next.length ? `Tiếp theo: ${next.join(' · ')}` : null,

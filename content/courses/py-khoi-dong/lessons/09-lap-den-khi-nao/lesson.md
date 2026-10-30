@@ -14,7 +14,7 @@ while dem <= 3:
 
 Dòng `dem = dem + 1` **cực kỳ quan trọng**. Thiếu nó, `dem` mãi mãi bằng 1, điều kiện mãi mãi đúng, và chương trình chạy không bao giờ dừng. Người ta gọi đó là *vòng lặp vô hạn*.
 
-Nếu lỡ viết vòng lặp vô hạn, đừng lo: lalacode tự dừng sau vài giây và báo cho em.
+Nếu lỡ viết vòng lặp vô hạn, đừng lo: lalakode tự dừng sau vài giây và báo cho em.
 
 Mẹo nhỏ: `dem += 1` là cách viết ngắn của `dem = dem + 1`.
 

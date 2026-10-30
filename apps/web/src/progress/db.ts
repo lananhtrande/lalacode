@@ -253,7 +253,7 @@ export async function importSnapshot(snapshot: ProgressSnapshot): Promise<void> 
  *
  * Làm hai bước để lời hứa với bố mẹ luôn đúng:
  * 1. Dọn sạch từng store — việc này chắc chắn chạy được.
- * 2. Xoá hẳn database. Bước này có thể bị chặn nếu trẻ đang mở lalacode ở tab
+ * 2. Xoá hẳn database. Bước này có thể bị chặn nếu trẻ đang mở lalakode ở tab
  *    khác, nên nó chỉ là dọn nốt cái vỏ rỗng; dữ liệu đã mất từ bước 1.
  */
 export async function deleteAllData(): Promise<void> {

@@ -1,4 +1,4 @@
-import type { Exercise, Lesson } from '@lalacode/content-schema';
+import type { Exercise, Lesson } from '@lalakode/content-schema';
 
 /**
  * Kiểu của bundle do `scripts/content-build.mjs` sinh ra.

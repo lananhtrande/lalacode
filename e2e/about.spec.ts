@@ -9,7 +9,7 @@ test.describe('trang cho phụ huynh', () => {
     await page.goto('/');
     await page.getByRole('link', { name: 'Đọc trang dành cho bố mẹ' }).click();
     await expect(page).toHaveURL(/\/gioi-thieu$/);
-    await expect(page.getByRole('heading', { name: 'lalacode là gì?' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'lalakode là gì?' })).toBeVisible();
 
     await page.getByRole('link', { name: 'Đọc trang quyền riêng tư' }).click();
     await expect(page).toHaveURL(/\/quyen-rieng-tu$/);

@@ -15,7 +15,10 @@ import {
  * biết bài nào xong, không cần bài làm dở.
  */
 
-/** Mã nén; `LLC0` là bản dự phòng không nén khi trình duyệt thiếu CompressionStream. */
+/**
+ * Mã nén; `LLC0` là bản dự phòng không nén khi trình duyệt thiếu CompressionStream.
+ * `LLC` có từ hồi còn tên lalacode; giữ nguyên để mã đã phát ra vẫn nhập được.
+ */
 const PREFIX_DEFLATE = 'LLC1';
 const PREFIX_PLAIN = 'LLC0';
 
@@ -193,7 +196,7 @@ export async function decodeProgressCode(code: string): Promise<SharedProgress> 
     throw new ProgressCodeError('Nội dung mã không hợp lệ', 'khong-doc-duoc');
   }
   if (data.schemaVersion > PROGRESS_SCHEMA_VERSION) {
-    throw new ProgressCodeError('Mã tạo bởi phiên bản mới hơn của lalacode', 'phien-ban-moi-hon');
+    throw new ProgressCodeError('Mã tạo bởi phiên bản mới hơn của lalakode', 'phien-ban-moi-hon');
   }
   return data;
 }

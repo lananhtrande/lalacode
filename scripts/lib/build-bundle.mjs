@@ -1,7 +1,7 @@
 // Biến cây nội dung thành bundle JSON cho trình duyệt.
 // Hàm thuần: nhận dữ liệu đã đọc, trả về các file sẽ ghi — dễ unit test.
 import { createHash } from 'node:crypto';
-import { exerciseSchema } from '@lalacode/content-schema';
+import { exerciseSchema } from '@lalakode/content-schema';
 
 export const BUNDLE_VERSION = 1;
 

@@ -6,7 +6,7 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 
 | Dữ liệu | Ở đâu | Gửi lên server? |
 | --- | --- | --- |
-| Tiến độ, code nháp, streak, huy hiệu, biệt danh (tuỳ chọn) | IndexedDB trên máy (DB `lalacode`, store `exercises`/`lessons`/`profile`) | **Không** |
+| Tiến độ, code nháp, streak, huy hiệu, biệt danh (tuỳ chọn) | IndexedDB trên máy (DB `lalacode` — giữ tên từ trước khi đổi tên dự án để không mất tiến độ; store `exercises`/`lessons`/`profile`) | **Không** |
 | Mã tiến độ / link báo cáo | Do người dùng tự sao chép; dữ liệu nằm sau `#` | **Không** |
 | Token ẩn danh (UUID ngẫu nhiên) | Máy; server lưu `sha256(token)` + bộ đếm, TTL 48 h | Có — chỉ để giới hạn lượt AI |
 | Yêu cầu gợi ý AI | `exerciseId`, `code`, `error`, `hintLevel` | Có — không log body; chuyển tới Claude trên Amazon Bedrock (profile global, có thể xử lý ngoài châu Á) |
@@ -37,14 +37,14 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 - Code nháp của trẻ lưu trên máy để mở lại bài là thấy nguyên bài đang làm dở. Có test e2e khẳng định **không request nào mang code của trẻ rời khỏi máy**.
 - **S0-16 nút xoá toàn bộ dữ liệu** nằm ở trang `/tien-do`: hỏi lại một lần ngay trong giao diện (không dùng hộp thoại `confirm()` của trình duyệt), nhắc trẻ sao chép mã tiến độ trước nếu muốn giữ, rồi `deleteAllData()` dọn sạch từng store **và xoá hẳn database**. Màn hình tự dọn theo. Có test e2e: xoá → bản đồ về 0/4, huy hiệu về 0/6, **tải lại trang vẫn sạch**.
 - **S0-15 link báo cáo**: dùng lại mã tiến độ, đặt sau dấu `#` nên **trình duyệt không gửi lên máy chủ** (có test e2e khẳng định). Trang chỉ hiện số liệu; không có họ tên, không có code của trẻ. Hai giới hạn phải nói thật:
-  - Phần sau `#` không đi theo request nào, **nhưng extension trình duyệt hoặc tính năng đồng bộ lịch sử vẫn đọc được địa chỉ đang mở**. Đây là giới hạn chung của mọi thiết kế giấu dữ liệu sau `#`, không riêng lalacode. Vì vậy link chỉ nên chứa thứ không nhạy cảm — và nó đúng là vậy.
+  - Phần sau `#` không đi theo request nào, **nhưng extension trình duyệt hoặc tính năng đồng bộ lịch sử vẫn đọc được địa chỉ đang mở**. Đây là giới hạn chung của mọi thiết kế giấu dữ liệu sau `#`, không riêng lalakode. Vì vậy link chỉ nên chứa thứ không nhạy cảm — và nó đúng là vậy.
   - **Mã không có chữ ký**, nên ai biết cấu trúc đều tự ghép được một báo cáo đẹp. Link này để bố mẹ theo dõi cho vui, **không dùng làm bằng chứng chấm điểm**.
 - **S0-14 mã tiến độ**: chuỗi do trẻ tự sao chép, **không có request nào gửi nó đi** (có test e2e chặn). Mã chứa: mã bài tập/bài học, trạng thái (xong **hoặc đang làm**), số lần thử, mốc thời gian, streak, huy hiệu, và `nickname` nếu sau này có. **Không chứa code trẻ viết** — vì mã hay bị dán vào chỗ công khai.
   - ⚠️ **Khi nào thêm ô nhập biệt danh thì phải review lại chỗ này**: biệt danh sẽ đi theo mã tiến độ tới bất kỳ ai nhận được mã. Nếu giữ ô đó, hoặc loại biệt danh khỏi mã, hoặc nói rõ cho trẻ biết.
   - Mã nhập vào được kiểm **từng trường** trước khi ghi, và chặn mã quá dài hoặc nén phình bất thường — một mã "đùa" không được phép làm hỏng tiến độ hay treo máy trẻ.
 
 ## Minh bạch
-- **S0-23 đã làm**: hai trang cho phụ huynh, `/gioi-thieu` (lalacode là gì, học thế nào, dự án đang ở đâu) và `/quyen-rieng-tu` (dữ liệu nằm đâu, gửi gì cho AI, cách xoá). Chữ nằm ở `apps/web/src/shared/i18n/vi.ts` (`about`, `privacy`), trang ở `apps/web/src/features/about/`.
+- **S0-23 đã làm**: hai trang cho phụ huynh, `/gioi-thieu` (lalakode là gì, học thế nào, dự án đang ở đâu) và `/quyen-rieng-tu` (dữ liệu nằm đâu, gửi gì cho AI, cách xoá). Chữ nằm ở `apps/web/src/shared/i18n/vi.ts` (`about`, `privacy`), trang ở `apps/web/src/features/about/`.
 - Trang `/quyen-rieng-tu` **phải** nói thẳng hai giới hạn: bộ lọc không bắt được tên viết trơ trọi, và mã báo cáo không có chữ ký. Có unit test (`about-pages.test.tsx`) và e2e (`e2e/about.spec.ts`) chốt lại — rút gọn hai câu đó là test đỏ.
 - Nhúng YouTube: dùng `youtube-nocookie.com`, ghi rõ trên trang quyền riêng tư. **Hiện chưa bài học nào có video**, và trang quyền riêng tư đang nói đúng như vậy — thêm video đầu tiên thì sửa câu đó.
 

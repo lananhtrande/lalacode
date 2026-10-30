@@ -2,7 +2,7 @@
 // Giọng văn: xưng "mình", gọi trẻ là "em"; câu ngắn, thân thiện.
 export const vi = {
   app: {
-    name: 'lalacode',
+    name: 'lalakode',
     contactEmail: 'hello@teacherkit.help',
     tagline: 'Học Python bằng tiếng Việt, mỗi ngày 15 phút.',
   },
@@ -41,7 +41,7 @@ export const vi = {
     ],
     forParentsTitle: 'Bố mẹ muốn tìm hiểu?',
     forParentsBody:
-      'lalacode không thu thập thông tin cá nhân của trẻ: không tài khoản, không quảng cáo, không theo dõi.',
+      'lalakode không thu thập thông tin cá nhân của trẻ: không tài khoản, không quảng cáo, không theo dõi.',
     forParentsLink: 'Đọc trang dành cho bố mẹ',
   },
   map: {
@@ -182,7 +182,7 @@ export const vi = {
     importButton: 'Nhập mã',
     importDone: 'Xong! Tiến độ đã được gộp vào máy này.',
     importBadCode: 'Mã này mình đọc không được. Em kiểm tra xem đã sao chép đủ chưa nhé.',
-    importTooNew: 'Mã này tạo bởi phiên bản lalacode mới hơn. Em cập nhật trang rồi thử lại nhé.',
+    importTooNew: 'Mã này tạo bởi phiên bản lalakode mới hơn. Em cập nhật trang rồi thử lại nhé.',
     privacyNote:
       'Mã không chứa những dòng code em viết. Nó chỉ ghi bài nào xong, bài nào đang làm, số lần em thử và huy hiệu đã nhận.',
   },
@@ -234,8 +234,8 @@ export const vi = {
   // Hai trang dưới đây bố mẹ đọc, không phải trẻ: xưng "mình" với "bạn", câu
   // dài hơn được, nhưng vẫn không dùng từ chuyên môn chưa giải thích.
   about: {
-    title: 'lalacode là gì?',
-    lead: 'lalacode dạy trẻ 10–15 tuổi viết Python bằng tiếng Việt. Mỗi bài khoảng 15 phút: đọc một đoạn ngắn, rồi tự viết code và chạy thử ngay trong trình duyệt. Không cần cài phần mềm, không cần tài khoản.',
+    title: 'lalakode là gì?',
+    lead: 'lalakode dạy trẻ 10–15 tuổi viết Python bằng tiếng Việt. Mỗi bài khoảng 15 phút: đọc một đoạn ngắn, rồi tự viết code và chạy thử ngay trong trình duyệt. Không cần cài phần mềm, không cần tài khoản.',
     howTitle: 'Con học như thế nào?',
     how: [
       {
@@ -269,15 +269,15 @@ export const vi = {
     parentsLink: 'Xem trang báo cáo',
     contactTitle: 'Hỏi thêm',
     contactBody:
-      'Có gì chưa rõ, bạn viết thư cho mình. Trong giai đoạn thử nghiệm, bạn cũng có thể nhắn trong nhóm mà gia đình mình đã tham gia. lalacode không có ô nào trên web để thu email hay số điện thoại của bạn hoặc của con.',
+      'Có gì chưa rõ, bạn viết thư cho mình. Trong giai đoạn thử nghiệm, bạn cũng có thể nhắn trong nhóm mà gia đình mình đã tham gia. lalakode không có ô nào trên web để thu email hay số điện thoại của bạn hoặc của con.',
     privacyLink: 'Đọc trang quyền riêng tư',
   },
   privacy: {
     title: 'Quyền riêng tư',
     updated: 'Cập nhật ngày 22/10/2026',
-    lead: 'Tóm tắt một câu: lalacode không có tài khoản và không lưu thông tin cá nhân của con trên máy chủ. Mọi thứ con học nằm trong trình duyệt trên máy của gia đình.',
+    lead: 'Tóm tắt một câu: lalakode không có tài khoản và không lưu thông tin cá nhân của con trên máy chủ. Mọi thứ con học nằm trong trình duyệt trên máy của gia đình.',
     whereTitle: 'Dữ liệu nằm ở đâu',
-    whereIntro: 'Đây là toàn bộ những gì lalacode giữ, và giữ ở đâu:',
+    whereIntro: 'Đây là toàn bộ những gì lalakode giữ, và giữ ở đâu:',
     rowLabels: {
       where: 'Nằm ở đâu',
       sent: 'Có rời khỏi máy không?',
@@ -311,27 +311,27 @@ export const vi = {
     ],
     noAccountTitle: 'Không có chỗ nào hỏi thông tin của con',
     noAccountBody:
-      'Không đăng ký, không đăng nhập, không ô nhập họ tên, ngày sinh, trường lớp, email hay số điện thoại. Không có ảnh, không có giọng nói. lalacode cũng không biết con là ai.',
+      'Không đăng ký, không đăng nhập, không ô nhập họ tên, ngày sinh, trường lớp, email hay số điện thoại. Không có ảnh, không có giọng nói. lalakode cũng không biết con là ai.',
     aiTitle: 'Khi con bấm "Hỏi trợ giúp"',
     aiBody:
-      'Đây là lần duy nhất code của con rời khỏi máy, và chỉ khi chính con bấm nút. Chạy thử và nộp bài hoàn toàn diễn ra trên máy. Lúc hỏi trợ giúp, lalacode gửi đi: mã bài tập, đoạn code trong ô, thông báo lỗi nếu có, và mức gợi ý. Không gửi tên, không gửi tiến độ, không gửi gì nhận ra con.',
+      'Đây là lần duy nhất code của con rời khỏi máy, và chỉ khi chính con bấm nút. Chạy thử và nộp bài hoàn toàn diễn ra trên máy. Lúc hỏi trợ giúp, lalakode gửi đi: mã bài tập, đoạn code trong ô, thông báo lỗi nếu có, và mức gợi ý. Không gửi tên, không gửi tiến độ, không gửi gì nhận ra con.',
     aiProvider:
-      'Phần gợi ý do trợ lý Claude của Anthropic trả lời, gọi qua dịch vụ Amazon Bedrock. Dữ liệu có thể được xử lý ở máy chủ ngoài Việt Nam. Đó chính là lý do lalacode tuyệt đối không gửi thông tin cá nhân sang đó.',
-    aiNoLog: 'Máy chủ của lalacode không ghi lại nội dung code con gửi.',
+      'Phần gợi ý do trợ lý Claude của Anthropic trả lời, gọi qua dịch vụ Amazon Bedrock. Dữ liệu có thể được xử lý ở máy chủ ngoài Việt Nam. Đó chính là lý do lalakode tuyệt đối không gửi thông tin cá nhân sang đó.',
+    aiNoLog: 'Máy chủ của lalakode không ghi lại nội dung code con gửi.',
     aiNoSolution:
       'Trợ lý được yêu cầu chỉ gợi ý theo ba mức, từ nhẹ tới rõ dần, và không đưa lời giải hoàn chỉnh.',
     aiFilterTitle: 'Bộ lọc, và giới hạn thật của nó',
     aiFilterBody:
-      'Nói cho đúng từng chặng: code đi từ máy con tới máy chủ của lalacode nguyên văn (máy chủ không ghi lại nó), rồi máy chủ che email, số điện thoại, dãy số dài, đường link và phần đứng sau những câu kiểu "em tên là…", "nhà ở…" — xong mới chuyển cho AI.',
+      'Nói cho đúng từng chặng: code đi từ máy con tới máy chủ của lalakode nguyên văn (máy chủ không ghi lại nó), rồi máy chủ che email, số điện thoại, dãy số dài, đường link và phần đứng sau những câu kiểu "em tên là…", "nhà ở…" — xong mới chuyển cho AI.',
     aiFilterLimit:
-      'Nhưng phải nói thẳng: bộ lọc đoán theo mẫu chứ không hiểu nội dung. Một cái tên viết trơ trọi trong code — ví dụ in ra họ tên thật — vẫn có thể lọt qua. Vì vậy ngay trên màn hình bài tập, trước khi con bấm hỏi lần đầu, lalacode nhắc con đừng viết tên thật, địa chỉ hay số điện thoại vào code. Mong bạn nhắc con thêm một lần.',
-    notDoingTitle: 'Những thứ lalacode không làm',
+      'Nhưng phải nói thẳng: bộ lọc đoán theo mẫu chứ không hiểu nội dung. Một cái tên viết trơ trọi trong code — ví dụ in ra họ tên thật — vẫn có thể lọt qua. Vì vậy ngay trên màn hình bài tập, trước khi con bấm hỏi lần đầu, lalakode nhắc con đừng viết tên thật, địa chỉ hay số điện thoại vào code. Mong bạn nhắc con thêm một lần.',
+    notDoingTitle: 'Những thứ lalakode không làm',
     notDoing: [
       'Không quảng cáo, không bán dữ liệu — không có dữ liệu để bán.',
       'Không cookie theo dõi, không Google Analytics, không Facebook Pixel hay công cụ đo đạc bên thứ ba nào.',
       'Không bảng xếp hạng, không trang công khai liệt kê người học.',
       'Không tải font hay mã nguồn từ máy chủ bên ngoài, nên không bên nào khác biết con đang mở trang này.',
-      'Hiện chưa bài học nào có video. Nếu sau này có, lalacode sẽ dùng bản nhúng YouTube không đặt cookie và ghi rõ ở đây.',
+      'Hiện chưa bài học nào có video. Nếu sau này có, lalakode sẽ dùng bản nhúng YouTube không đặt cookie và ghi rõ ở đây.',
     ],
     reportTitle: 'Về link báo cáo và mã tiến độ',
     reportBody:
@@ -351,7 +351,7 @@ export const vi = {
       'Khi bạn viết thư thì mình thấy địa chỉ email của bạn — email hoạt động như vậy. Mình chỉ dùng nó để trả lời bạn, không đưa vào danh sách gửi tin nào cả. Còn muốn xoá dữ liệu của con thì không cần viết thư: bấm nút "Xoá dữ liệu" là xong ngay trên máy, vì bên mình không giữ bản sao nào để mà xoá hộ.',
     lawTitle: 'Về pháp luật',
     lawBody:
-      'lalacode làm theo hướng thu thập ít nhất có thể, đúng tinh thần Luật Bảo vệ dữ liệu cá nhân 2025 đối với dữ liệu của trẻ em: cách chắc chắn nhất để không làm lộ dữ liệu của con là ngay từ đầu không thu thập nó.',
+      'lalakode làm theo hướng thu thập ít nhất có thể, đúng tinh thần Luật Bảo vệ dữ liệu cá nhân 2025 đối với dữ liệu của trẻ em: cách chắc chắn nhất để không làm lộ dữ liệu của con là ngay từ đầu không thu thập nó.',
     backToAbout: 'Về trang giới thiệu',
   },
   comingSoon: {
