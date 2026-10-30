@@ -188,3 +188,64 @@ test.describe('màn bài tập', () => {
     expect(overflow).toBeLessThanOrEqual(0);
   });
 });
+
+/** Bố cục 2 cột (S0-32): editor bên trái, kết quả bên phải; xếp dọc dưới 1024px. */
+test.describe('bố cục màn bài tập', () => {
+  test.slow();
+
+  test('màn rộng: editor và kết quả cùng nằm trong khung nhìn, kết quả bên phải', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto(EXERCISE);
+    const editor = page.locator('.cm-editor');
+    const output = page.getByTestId('exercise-output');
+    await expect(editor).toBeInViewport();
+    await expect(output).toBeInViewport();
+    await expect(page.getByRole('button', { name: 'Nộp bài' })).toBeInViewport();
+
+    const editorBox = await editor.boundingBox();
+    const outputBox = await output.boundingBox();
+    expect(editorBox).not.toBeNull();
+    expect(outputBox).not.toBeNull();
+    expect(outputBox!.x).toBeGreaterThanOrEqual(editorBox!.x + editorBox!.width);
+  });
+
+  test('điện thoại: bấm Chạy thử thì khu kết quả tự vào tầm mắt', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(EXERCISE);
+    await setCode(page, 'print("Xin chào, Python!")');
+    // Thanh nút dính đáy: luôn bấm được mà không phải cuộn.
+    const run = page.getByRole('button', { name: 'Chạy thử' });
+    await expect(run).toBeInViewport();
+    await run.click();
+    const output = page.getByTestId('exercise-output');
+    await expect(output).toContainText('Xin chào, Python!', { timeout: 120_000 });
+    await expect(output).toBeInViewport();
+  });
+
+  test('bài có rùa: hình vẽ hiện ở khu kết quả', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/bai-tap/py-khoi-dong.03-rua-ve-hinh.02-goc-vuong');
+    await setCode(page, 'import turtle\nturtle.forward(100)\nturtle.left(90)\nturtle.forward(100)');
+    await page.getByRole('button', { name: 'Chạy thử' }).click();
+    const canvas = page.getByTestId('turtle-canvas');
+    await expect(canvas).toBeInViewport();
+    // Có điểm ảnh được vẽ (không chỉ là khung trống).
+    await expect
+      .poll(
+        () =>
+          canvas.evaluate((element: HTMLCanvasElement) => {
+            const context = element.getContext('2d');
+            if (!context) return 0;
+            const { data } = context.getImageData(0, 0, element.width, element.height);
+            let painted = 0;
+            for (let index = 3; index < data.length; index += 4)
+              if ((data[index] ?? 0) > 0) painted++;
+            return painted;
+          }),
+        { timeout: 120_000 },
+      )
+      .toBeGreaterThan(100);
+  });
+});
