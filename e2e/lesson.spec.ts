@@ -31,15 +31,15 @@ test.describe('màn bài học', () => {
   test('bài học liệt kê đủ bài tập, mỗi bài một đường dẫn', async ({ page }) => {
     await page.goto(LESSON);
     const links = page.getByTestId('lesson-exercises').getByRole('link');
-    // Bài 01 có đúng 2 bài tập; con số lấy từ chính bundle nội dung.
-    await expect(links).toHaveCount(2);
+    // Bài 01 có đúng 4 bài tập; con số lấy từ chính bundle nội dung.
+    await expect(links).toHaveCount(4);
     await expect(links.first()).toHaveAttribute(
       'href',
       '/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao',
     );
     await expect(links.last()).toHaveAttribute(
       'href',
-      '/bai-tap/py-khoi-dong.01-xin-chao.02-in-hai-dong',
+      '/bai-tap/py-khoi-dong.01-xin-chao.04-cay-thong-sao',
     );
   });
 
@@ -47,7 +47,8 @@ test.describe('màn bài học', () => {
     const external: string[] = [];
     page.on('request', (request) => {
       const url = new URL(request.url());
-      if (url.hostname !== 'localhost' && url.hostname !== '127.0.0.1') external.push(request.url());
+      if (url.hostname !== 'localhost' && url.hostname !== '127.0.0.1')
+        external.push(request.url());
     });
     await page.goto(LESSON);
     await expect(page.getByTestId('lesson-body')).toBeVisible();
