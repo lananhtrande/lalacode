@@ -1,84 +1,119 @@
-import { useState } from 'react';
-import { PALETTES } from './design-palettes';
-import { PalettePreview } from './PalettePreview';
-import './design-fonts.css';
+import {
+  CircleCheck,
+  Lightbulb,
+  Play,
+  RotateCcw,
+  Send,
+  Sparkles,
+  Square,
+  TriangleAlert,
+} from 'lucide-react';
+import { AiPanel } from '../../shared/ui/AiPanel';
+import { Button } from '../../shared/ui/Button';
+import { Card } from '../../shared/ui/Card';
+import { IconButton } from '../../shared/ui/IconButton';
 
-const FONTS = [
-  {
-    family: 'Be Vietnam Pro',
-    note: 'Thiết kế riêng cho tiếng Việt, dấu đặt gọn, nét hiện đại. Hơi "người lớn" hơn hai font kia.',
-  },
-  {
-    family: 'Lexend',
-    note: 'Thiết kế để dễ đọc cho người mới tập đọc: chữ rộng, khoảng cách thoáng. Tốn chỗ hơn.',
-  },
-  {
-    family: 'Nunito',
-    note: 'Đầu nét tròn, thân thiện, trẻ trung nhất. Ở cỡ nhỏ hơi mềm.',
-  },
+const COLORS = [
+  'ink',
+  'ink-soft',
+  'surface',
+  'surface-muted',
+  'line',
+  'accent',
+  'on-accent',
+  'accent-strong',
+  'accent-soft',
+  'ai-surface',
+  'success',
+  'success-surface',
+  'attention',
+  'attention-surface',
 ] as const;
 
-const SAMPLE = 'Hoàn thành! Ổ bánh mì, ước mơ, Đội bóng';
+const TYPE_SCALE = [
+  ['text-page-title', 'Tiêu đề trang · 32/40 đậm'],
+  ['text-section-title', 'Tiêu đề mục · 22/30'],
+  ['text-card-title', 'Tiêu đề thẻ · 18/26'],
+  ['text-body', 'Chữ thân · 16/24'],
+  ['text-small text-ink-soft', 'Chữ phụ · 14/20'],
+  ['text-label', 'Nhãn nút · 16/24 đậm vừa'],
+] as const;
 
 /**
- * Trang chọn design system — **chỉ có ở chế độ dev** (xem app/routes.tsx).
- * Người duy trì xem hai bảng màu và ba font ở đây rồi chọn (S0-31).
- * Chữ ở đây không nằm trong i18n vì trẻ không bao giờ thấy trang này.
+ * Trang mẫu design system — **chỉ có ở chế độ dev** (xem app/routes.tsx).
+ * Hiển thị token và component thật, dùng để chụp ảnh cho docs/design-system.md
+ * và để tự soát khi đổi token. Chữ ở đây không nằm trong i18n vì trẻ không thấy trang này.
  */
 export function DesignPreviewPage() {
-  const [font, setFont] = useState<(typeof FONTS)[number]['family']>(FONTS[0].family);
-
   return (
-    <div style={{ fontFamily: `'${font}', system-ui, sans-serif` }} className="space-y-8">
-      <header className="space-y-2">
-        <h1 className="text-3xl font-bold">Chọn design system (chỉ dev)</h1>
-        <p>Chọn một font và một bảng màu. Mọi cặp chữ/nền dưới đây đã được test là đạt WCAG AA.</p>
-      </header>
+    <div className="space-y-6">
+      <h1 className="text-page-title">Design system lalakode (chỉ dev)</h1>
 
-      <section aria-labelledby="chon-font" className="space-y-3">
-        <h2 id="chon-font" className="text-xl font-semibold">
-          Font (tự host, giấy phép OFL)
+      <Card as="section" aria-labelledby="mau">
+        <h2 id="mau" className="text-section-title">
+          Màu (token theo vai trò)
         </h2>
-        <div role="radiogroup" aria-label="Font" className="flex flex-wrap gap-2">
-          {FONTS.map((item) => (
-            <button
-              key={item.family}
-              type="button"
-              role="radio"
-              aria-checked={font === item.family}
-              onClick={() => setFont(item.family)}
-              className={[
-                'min-h-tap rounded-full border-2 px-5 font-semibold',
-                font === item.family ? 'border-ink bg-ink text-surface' : 'border-line',
-              ].join(' ')}
-              style={{ fontFamily: `'${item.family}', system-ui, sans-serif` }}
-            >
-              {item.family}
-            </button>
+        <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+          {COLORS.map((name) => (
+            <li key={name} className="text-small">
+              <span
+                className="block h-12 rounded-xl border border-line"
+                style={{ background: `var(--color-${name})` }}
+              />
+              <code className="mt-1 block">{name}</code>
+            </li>
           ))}
-        </div>
-        <div className="grid gap-3 md:grid-cols-3" data-testid="font-samples">
-          {FONTS.map((item) => (
-            <div
-              key={item.family}
-              className="rounded-2xl border border-line p-4"
-              style={{ fontFamily: `'${item.family}', system-ui, sans-serif` }}
-            >
-              <p className="text-sm font-semibold">{item.family}</p>
-              <p className="mt-1 text-[28px] leading-9 font-bold">{SAMPLE}</p>
-              <p className="mt-2 text-[22px] leading-[30px] font-semibold">{SAMPLE}</p>
-              <p className="mt-2 text-base">{SAMPLE}</p>
-              <p className="mt-2 text-sm">{item.note}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+        </ul>
+      </Card>
 
-      <div className="grid gap-6 xl:grid-cols-2">
-        {PALETTES.map((palette) => (
-          <PalettePreview key={palette.id} palette={palette} />
-        ))}
-      </div>
+      <Card as="section" aria-labelledby="chu">
+        <h2 id="chu" className="text-section-title">
+          Chữ · Be Vietnam Pro
+        </h2>
+        <div className="mt-4 space-y-3">
+          {TYPE_SCALE.map(([className, label]) => (
+            <p key={className} className={className}>
+              {label} — Hoàn thành! Ổ bánh mì, ước mơ, Đội bóng
+            </p>
+          ))}
+        </div>
+      </Card>
+
+      <Card as="section" aria-labelledby="nut">
+        <h2 id="nut" className="text-section-title">
+          Nút
+        </h2>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <Button icon={<Send aria-hidden className="size-4" />}>Nộp bài</Button>
+          <Button variant="dark" icon={<Play aria-hidden className="size-4" />}>
+            Chạy thử
+          </Button>
+          <Button variant="outline" icon={<Square aria-hidden className="size-4" />}>
+            Dừng
+          </Button>
+          <Button variant="ghost" icon={<RotateCcw aria-hidden className="size-4" />}>
+            Làm lại từ đầu
+          </Button>
+          <IconButton label="Gợi ý" icon={<Lightbulb aria-hidden className="size-5" />} />
+          <Button size="lg">Bắt đầu học</Button>
+          <Button disabled>Đang chấm…</Button>
+        </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <span className="inline-flex items-center gap-2 rounded-full bg-success-surface px-3 py-1.5 text-small font-semibold text-success">
+            <CircleCheck aria-hidden className="size-4" /> Test 1: Đạt
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full bg-attention-surface px-3 py-1.5 text-small font-semibold text-attention">
+            <TriangleAlert aria-hidden className="size-4" /> Test 2: Chưa đạt, thử lại nhé
+          </span>
+        </div>
+      </Card>
+
+      <AiPanel>
+        <p className="flex items-center gap-2 text-card-title">
+          <Sparkles aria-hidden className="size-5" /> Gợi ý từ trợ lý
+        </p>
+        <p className="mt-1">Em thử đếm xem rùa đã quay mấy lần rồi nhé.</p>
+      </AiPanel>
     </div>
   );
 }

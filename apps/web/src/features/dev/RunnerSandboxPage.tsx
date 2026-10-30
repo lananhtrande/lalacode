@@ -3,6 +3,7 @@ import { createRunner, type Runner } from '../../runner/runner-client';
 import { runnerErrorMessage } from '../../runner/messages';
 import { drawTurtleCommands } from '../../runner/turtle-canvas';
 import type { DrawCommand } from '../../runner/protocol';
+import { buttonClasses } from '../../shared/ui/button-classes';
 
 const CANVAS_SIZE = { width: 320, height: 320 };
 
@@ -98,7 +99,7 @@ export function RunnerSandboxPage() {
   return (
     <section className="space-y-4">
       <h1 className="text-2xl font-bold">Thử runner</h1>
-      <p className="text-ink-muted">Trang nội bộ để kiểm tra Pyodide. Không có ở bản phát hành.</p>
+      <p className="text-ink-soft">Trang nội bộ để kiểm tra Pyodide. Không có ở bản phát hành.</p>
 
       <label className="block">
         <span className="font-medium">Code</span>
@@ -148,21 +149,21 @@ export function RunnerSandboxPage() {
         <button
           type="button"
           onClick={() => void preload()}
-          className="min-h-tap rounded-xl border border-line px-4 font-semibold"
+          className={buttonClasses('outline', 'md')}
         >
           Nạp Pyodide
         </button>
         <button
           type="button"
           onClick={() => void run()}
-          className="min-h-tap rounded-xl bg-brand-500 px-5 font-semibold text-white"
+          className={buttonClasses('primary', 'md')}
         >
           Chạy
         </button>
         <button
           type="button"
           onClick={() => void grade()}
-          className="min-h-tap rounded-xl bg-brand-500 px-5 font-semibold text-white"
+          className={buttonClasses('primary', 'md')}
         >
           Chấm
         </button>
@@ -170,7 +171,7 @@ export function RunnerSandboxPage() {
           type="button"
           disabled={!running}
           onClick={() => runnerRef.current?.cancel()}
-          className="min-h-tap rounded-xl border border-line px-4 font-semibold disabled:opacity-50"
+          className={buttonClasses('outline', 'md')}
         >
           Dừng
         </button>

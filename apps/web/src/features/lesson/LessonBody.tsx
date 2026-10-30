@@ -28,7 +28,7 @@ export function LessonBody({ markdown }: { markdown: string }) {
           ol: ({ children }) => <ol className="list-decimal space-y-1 pl-6">{children}</ol>,
           strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
           a: ({ children, href }) => (
-            <a href={href} rel="noopener noreferrer" className="text-brand-600 underline">
+            <a href={href} rel="noopener noreferrer" className="text-accent-strong underline">
               {children}
             </a>
           ),

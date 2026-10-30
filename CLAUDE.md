@@ -9,6 +9,7 @@ Nền tảng học Python tiếng Việt cho học sinh 10–15 tuổi: bài gi�
 | Khi bạn sắp… | Đọc |
 | --- | --- |
 | Viết hoặc sửa code bất kỳ | `docs/architecture.md`, `docs/conventions.md` |
+| Sửa giao diện (màu, chữ, nút, bố cục) | `docs/design-system.md` |
 | Thêm thư viện, đổi công nghệ | `docs/tech-stack.md`, rồi viết ADR mới trong `docs/decisions/` |
 | Viết bài học / bài tập | `docs/content-format.md` (hoặc dùng skill `new-lesson`) |
 | Chạm vào bất cứ thứ gì liên quan dữ liệu, log, analytics, AI | `docs/privacy.md` — **bắt buộc** |
