@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { BookOpenCheck, CircleCheckBig, Palette, RefreshCcw } from 'lucide-react';
 import { vi } from '../../shared/i18n/vi';
+import { buttonClasses } from '../../shared/ui/button-classes';
 
 // Thứ tự khớp với vi.about.how.
 const icons = [BookOpenCheck, CircleCheckBig, RefreshCcw, Palette];
@@ -15,7 +16,7 @@ export function AboutPage() {
     <div className="mx-auto max-w-prose">
       <section>
         <h1 className="text-2xl font-bold sm:text-3xl">{vi.about.title}</h1>
-        <p className="mt-3 text-lg text-ink-muted">{vi.about.lead}</p>
+        <p className="mt-3 text-lg text-ink-soft">{vi.about.lead}</p>
       </section>
 
       <section className="mt-10">
@@ -25,9 +26,9 @@ export function AboutPage() {
             const Icon = icons[index] ?? BookOpenCheck;
             return (
               <li key={item.title} className="rounded-2xl border border-line bg-surface-muted p-5">
-                <Icon aria-hidden="true" className="size-7 text-brand-600" />
+                <Icon aria-hidden="true" className="size-7 text-accent-strong" />
                 <h3 className="mt-3 text-lg font-semibold">{item.title}</h3>
-                <p className="mt-1 text-ink-muted">{item.body}</p>
+                <p className="mt-1 text-ink-soft">{item.body}</p>
               </li>
             );
           })}
@@ -36,21 +37,21 @@ export function AboutPage() {
 
       <section className="mt-10">
         <h2 className="text-xl font-bold">{vi.about.pythonTitle}</h2>
-        <p className="mt-2 text-ink-muted">{vi.about.pythonBody}</p>
+        <p className="mt-2 text-ink-soft">{vi.about.pythonBody}</p>
       </section>
 
       <section className="mt-10 rounded-2xl border border-line p-6">
         <h2 className="text-xl font-bold">{vi.about.stageTitle}</h2>
-        <p className="mt-2 text-ink-muted">{vi.about.stageBody}</p>
-        <p className="mt-2 text-ink-muted">{vi.about.stageHonest}</p>
+        <p className="mt-2 text-ink-soft">{vi.about.stageBody}</p>
+        <p className="mt-2 text-ink-soft">{vi.about.stageHonest}</p>
       </section>
 
       <section className="mt-10">
         <h2 className="text-xl font-bold">{vi.about.parentsTitle}</h2>
-        <p className="mt-2 text-ink-muted">{vi.about.parentsBody}</p>
+        <p className="mt-2 text-ink-soft">{vi.about.parentsBody}</p>
         <Link
           to="/bao-cao"
-          className="mt-2 inline-flex min-h-tap items-center font-semibold text-brand-600 underline"
+          className="mt-2 inline-flex min-h-tap items-center font-semibold text-accent-strong underline"
         >
           {vi.about.parentsLink}
         </Link>
@@ -58,10 +59,10 @@ export function AboutPage() {
 
       <section className="mt-10">
         <h2 className="text-xl font-bold">{vi.about.contactTitle}</h2>
-        <p className="mt-2 text-ink-muted">{vi.about.contactBody}</p>
+        <p className="mt-2 text-ink-soft">{vi.about.contactBody}</p>
         <a
           href={`mailto:${vi.app.contactEmail}`}
-          className="mt-1 inline-flex min-h-tap items-center font-semibold text-brand-600 underline"
+          className="mt-1 inline-flex min-h-tap items-center font-semibold text-accent-strong underline"
         >
           {vi.app.contactEmail}
         </a>
@@ -70,7 +71,7 @@ export function AboutPage() {
       <section className="mt-10">
         <Link
           to="/quyen-rieng-tu"
-          className="inline-flex min-h-tap items-center rounded-xl bg-brand-500 px-5 font-semibold text-white hover:bg-brand-600"
+          className={buttonClasses('primary', 'md')}
         >
           {vi.about.privacyLink}
         </Link>

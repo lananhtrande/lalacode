@@ -24,6 +24,7 @@ import { vi } from '../../shared/i18n/vi';
 import { HintPanel } from './HintPanel';
 import { TestResultList } from './TestResultList';
 import { TurtleCanvas } from './TurtleCanvas';
+import { buttonClasses } from '../../shared/ui/button-classes';
 
 type Phase = 'idle' | 'running' | 'grading';
 /** Lưu lần nộp vào máy: chạy ngầm, nhưng e2e cần biết khi nào xong. */
@@ -167,7 +168,7 @@ export function ExercisePage() {
         <h1 className="text-2xl font-bold">{vi.exercise.notFound}</h1>
         <Link
           to="/ban-do"
-          className="mt-4 inline-flex min-h-tap items-center rounded-xl bg-brand-500 px-5 font-semibold text-white"
+          className={buttonClasses('primary', 'md', 'mt-4')}
         >
           {vi.exercise.backToMap}
         </Link>
@@ -177,7 +178,7 @@ export function ExercisePage() {
 
   if (!exercise) {
     return (
-      <p role="status" className="text-ink-muted">
+      <p role="status" className="text-ink-soft">
         {vi.exercise.loading}
       </p>
     );
@@ -190,7 +191,7 @@ export function ExercisePage() {
       <header>
         <Link
           to={`/bai-hoc/${lessonIdOfExercise(exercise.id)}`}
-          className="text-sm font-medium text-brand-600 underline"
+          className="text-sm font-medium text-accent-strong underline"
         >
           ← {lessonTitle}
         </Link>
@@ -206,11 +207,11 @@ export function ExercisePage() {
             {vi.exercise.yourCode}
           </h2>
           {restoredDraft && (
-            <p className="text-sm text-ink-muted" data-testid="restored-draft">
+            <p className="text-sm text-ink-soft" data-testid="restored-draft">
               {vi.exercise.restored}
             </p>
           )}
-          <p className="text-sm text-ink-muted" data-testid="python-status">
+          <p className="text-sm text-ink-soft" data-testid="python-status">
             {pythonReady ? vi.exercise.ready : vi.exercise.preparing}
           </p>
         </div>
@@ -228,7 +229,7 @@ export function ExercisePage() {
             type="button"
             onClick={() => void run()}
             disabled={busy}
-            className="inline-flex min-h-tap items-center gap-2 rounded-xl border border-line px-5 font-semibold disabled:opacity-60"
+            className={buttonClasses('dark', 'md')}
           >
             <Play aria-hidden="true" className="size-4" />
             {phase === 'running' ? vi.exercise.running : vi.exercise.run}
@@ -237,7 +238,7 @@ export function ExercisePage() {
             type="button"
             onClick={() => void submit()}
             disabled={busy}
-            className="inline-flex min-h-tap items-center gap-2 rounded-xl bg-brand-500 px-5 font-semibold text-white disabled:opacity-60"
+            className={buttonClasses('primary', 'md')}
           >
             <Send aria-hidden="true" className="size-4" />
             {phase === 'grading' ? vi.exercise.grading : vi.exercise.submit}
@@ -246,7 +247,7 @@ export function ExercisePage() {
             <button
               type="button"
               onClick={() => runnerRef.current?.cancel()}
-              className="inline-flex min-h-tap items-center gap-2 rounded-xl border border-line px-4 font-semibold"
+              className={buttonClasses('outline', 'md')}
             >
               <Square aria-hidden="true" className="size-4" />
               {vi.exercise.stop}
@@ -260,7 +261,7 @@ export function ExercisePage() {
               setDrawing([]);
             }}
             disabled={busy}
-            className="inline-flex min-h-tap items-center gap-2 rounded-xl px-3 font-medium text-ink-muted underline disabled:opacity-60"
+            className={buttonClasses('ghost', 'md')}
           >
             <RotateCcw aria-hidden="true" className="size-4" />
             {vi.exercise.reset}
@@ -302,22 +303,22 @@ function ErrorPanel({ info }: { info: RunErrorInfo }) {
     <section
       role="alert"
       data-testid="exercise-error"
-      className="rounded-2xl border border-warn-500/40 bg-warn-500/5 p-4"
+      className="rounded-2xl border border-attention/40 bg-attention-surface p-4"
     >
       <h2 className="font-bold">{vi.exercise.errorTitle}</h2>
       <p className="mt-1">
         {info.title}
         {info.line !== undefined && (
-          <span className="text-ink-muted">
+          <span className="text-ink-soft">
             {' '}
             ({vi.exercise.errorLine} {info.line})
           </span>
         )}
       </p>
-      {info.hint !== undefined && <p className="mt-1 text-ink-muted">{info.hint}</p>}
+      {info.hint !== undefined && <p className="mt-1 text-ink-soft">{info.hint}</p>}
       {info.raw !== undefined && (
         <details className="mt-2">
-          <summary className="cursor-pointer text-sm text-ink-muted">{vi.exercise.showRaw}</summary>
+          <summary className="cursor-pointer text-sm text-ink-soft">{vi.exercise.showRaw}</summary>
           <pre className="mt-1 overflow-x-auto font-mono text-sm">{info.raw}</pre>
         </details>
       )}

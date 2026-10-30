@@ -10,7 +10,7 @@ export function BadgesPage() {
   return (
     <section>
       <h1 className="text-2xl font-bold sm:text-3xl">{vi.badges.title}</h1>
-      <p className="mt-2 text-ink-muted">{vi.badges.lead}</p>
+      <p className="mt-2 text-ink-soft">{vi.badges.lead}</p>
       {!loading && (
         <p className="mt-1 font-medium" data-testid="badge-count">
           {earnedCount}/{badges.length} {vi.badges.countEarned}
@@ -19,7 +19,7 @@ export function BadgesPage() {
 
       <Link
         to="/tien-do"
-        className="mt-3 inline-flex min-h-tap items-center font-semibold text-brand-600 underline"
+        className="mt-3 inline-flex min-h-tap items-center font-semibold text-accent-strong underline"
       >
         {vi.progressCode.title}
       </Link>
@@ -33,22 +33,22 @@ export function BadgesPage() {
               data-testid={`badge-${badge.id}`}
               className={[
                 'flex gap-3 rounded-2xl border p-4',
-                badge.earned ? 'border-accent-500 bg-accent-100/40' : 'border-line',
+                badge.earned ? 'border-accent bg-accent-soft' : 'border-line',
               ].join(' ')}
             >
               {badge.earned ? (
-                <Award aria-hidden="true" className="mt-0.5 size-6 shrink-0 text-accent-700" />
+                <Award aria-hidden="true" className="mt-0.5 size-6 shrink-0 text-accent-strong" />
               ) : (
-                <Lock aria-hidden="true" className="mt-0.5 size-6 shrink-0 text-ink-muted" />
+                <Lock aria-hidden="true" className="mt-0.5 size-6 shrink-0 text-ink-soft" />
               )}
               <div>
                 <h2 className="font-semibold">{text.name}</h2>
-                <p className="text-ink-muted">{text.how}</p>
+                <p className="text-ink-soft">{text.how}</p>
                 <p className="mt-1 text-sm font-medium">
                   {badge.earned ? (
                     vi.badges.earned
                   ) : (
-                    <span className="text-ink-muted">
+                    <span className="text-ink-soft">
                       {vi.badges.locked} · {vi.badges.progress} {badge.progress}/{badge.goal}
                     </span>
                   )}

@@ -23,13 +23,13 @@ export function TestResultList({ results }: { results: readonly TestResult[] }) 
             key={result.index}
             className={[
               'flex gap-3 rounded-xl border p-3',
-              result.passed ? 'border-ok-500/40 bg-ok-500/5' : 'border-warn-500/40 bg-warn-500/5',
+              result.passed ? 'border-success/40 bg-success-surface' : 'border-attention/40 bg-attention-surface',
             ].join(' ')}
           >
             {result.passed ? (
-              <Check aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-ok-500" />
+              <Check aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-success" />
             ) : (
-              <X aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-warn-500" />
+              <X aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-attention" />
             )}
             <div>
               <p className="font-medium">
@@ -37,12 +37,12 @@ export function TestResultList({ results }: { results: readonly TestResult[] }) 
                 {result.passed ? vi.exercise.testPassed : vi.exercise.testFailed}
               </p>
               {!result.passed && result.message !== null && (
-                <p className="mt-1 text-ink-muted">
+                <p className="mt-1 text-ink-soft">
                   <RichText text={result.message} />
                 </p>
               )}
               {!result.passed && result.detail !== null && (
-                <p className="mt-1 font-mono text-sm break-words text-ink-muted">{result.detail}</p>
+                <p className="mt-1 font-mono text-sm break-words text-ink-soft">{result.detail}</p>
               )}
             </div>
           </li>

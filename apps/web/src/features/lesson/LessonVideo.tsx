@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Play } from 'lucide-react';
 import type { Video } from '@lalakode/content-schema';
 import { vi } from '../../shared/i18n/vi';
+import { buttonClasses } from '../../shared/ui/button-classes';
 
 /**
  * Video chỉ được tải **sau khi trẻ bấm**. Trước đó không có request nào ra
@@ -32,13 +33,13 @@ export function LessonVideo({ video, title }: { video: Video; title: string }) {
           type="button"
           onClick={() => setPlaying(true)}
           data-testid="lesson-video-play"
-          className="inline-flex min-h-tap items-center gap-2 rounded-xl bg-brand-500 px-5 font-semibold text-white hover:bg-brand-600"
+          className={buttonClasses('primary', 'md')}
         >
           <Play aria-hidden="true" className="size-5" />
           {vi.lesson.videoPlay}
           {minutes > 0 && ` · ${minutes} ${vi.lesson.videoMinutes}`}
         </button>
-        <p className="mt-2 text-sm text-ink-muted">{vi.lesson.videoNote}</p>
+        <p className="mt-2 text-sm text-ink-soft">{vi.lesson.videoNote}</p>
       </div>
     );
   }
