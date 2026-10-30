@@ -11,18 +11,18 @@ import { buttonClasses } from '../../shared/ui/button-classes';
 export function PrivacyPage() {
   return (
     <div className="mx-auto max-w-prose">
-      <h1 className="text-2xl font-bold sm:text-3xl">{vi.privacy.title}</h1>
-      <p className="mt-1 text-sm text-ink-soft">{vi.privacy.updated}</p>
-      <p className="mt-4 text-lg">{vi.privacy.lead}</p>
+      <h1 className="text-page-title">{vi.privacy.title}</h1>
+      <p className="mt-1 text-small text-ink-soft">{vi.privacy.updated}</p>
+      <p className="mt-4 text-card-title font-normal">{vi.privacy.lead}</p>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold">{vi.privacy.whereTitle}</h2>
+        <h2 className="text-section-title">{vi.privacy.whereTitle}</h2>
         <p className="mt-2 text-ink-soft">{vi.privacy.whereIntro}</p>
         {/* Dạng thẻ chứ không phải bảng: trên điện thoại, cột "có rời khỏi máy
             không" là cột quan trọng nhất mà lại là cột bị đẩy ra ngoài màn hình. */}
         <ul data-testid="privacy-rows" className="mt-4 space-y-3">
           {vi.privacy.rows.map((row) => (
-            <li key={row.what} className="rounded-2xl border border-line bg-surface-muted p-4">
+            <li key={row.what} className="rounded-card border border-line bg-surface-muted p-4">
               <p className="font-semibold">{row.what}</p>
               <dl className="mt-2 space-y-1 text-ink-soft">
                 <div className="flex flex-wrap gap-x-2">
@@ -40,18 +40,18 @@ export function PrivacyPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold">{vi.privacy.noAccountTitle}</h2>
+        <h2 className="text-section-title">{vi.privacy.noAccountTitle}</h2>
         <p className="mt-2 text-ink-soft">{vi.privacy.noAccountBody}</p>
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold">{vi.privacy.aiTitle}</h2>
+        <h2 className="text-section-title">{vi.privacy.aiTitle}</h2>
         <p className="mt-2 text-ink-soft">{vi.privacy.aiBody}</p>
         <p className="mt-2 text-ink-soft">{vi.privacy.aiProvider}</p>
         <p className="mt-2 text-ink-soft">{vi.privacy.aiNoLog}</p>
         <p className="mt-2 text-ink-soft">{vi.privacy.aiNoSolution}</p>
 
-        <h3 className="mt-6 text-lg font-semibold">{vi.privacy.aiFilterTitle}</h3>
+        <h3 className="mt-6 text-card-title">{vi.privacy.aiFilterTitle}</h3>
         <p className="mt-2 text-ink-soft">{vi.privacy.aiFilterBody}</p>
         <p
           data-testid="privacy-filter-limit"
@@ -62,7 +62,7 @@ export function PrivacyPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold">{vi.privacy.notDoingTitle}</h2>
+        <h2 className="text-section-title">{vi.privacy.notDoingTitle}</h2>
         <ul className="mt-2 list-disc space-y-2 pl-5 text-ink-soft">
           {vi.privacy.notDoing.map((item) => (
             <li key={item}>{item}</li>
@@ -71,7 +71,7 @@ export function PrivacyPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold">{vi.privacy.reportTitle}</h2>
+        <h2 className="text-section-title">{vi.privacy.reportTitle}</h2>
         <p className="mt-2 text-ink-soft">{vi.privacy.reportBody}</p>
         <ul
           data-testid="privacy-report-limits"
@@ -84,7 +84,7 @@ export function PrivacyPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold">{vi.privacy.deleteTitle}</h2>
+        <h2 className="text-section-title">{vi.privacy.deleteTitle}</h2>
         <p className="mt-2 text-ink-soft">{vi.privacy.deleteBody}</p>
         <Link
           to="/tien-do"
@@ -95,7 +95,7 @@ export function PrivacyPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold">{vi.privacy.contactTitle}</h2>
+        <h2 className="text-section-title">{vi.privacy.contactTitle}</h2>
         <p className="mt-2 text-ink-soft">{vi.privacy.contactBody}</p>
         <a
           href={`mailto:${vi.app.contactEmail}`}
@@ -107,7 +107,7 @@ export function PrivacyPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold">{vi.privacy.lawTitle}</h2>
+        <h2 className="text-section-title">{vi.privacy.lawTitle}</h2>
         <p className="mt-2 text-ink-soft">{vi.privacy.lawBody}</p>
       </section>
 

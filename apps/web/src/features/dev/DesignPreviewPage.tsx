@@ -31,7 +31,7 @@ const COLORS = [
 ] as const;
 
 const TYPE_SCALE = [
-  ['text-page-title', 'Tiêu đề trang · 32/40 đậm'],
+  ['text-page-title', 'Tiêu đề trang · 28/36 đậm'],
   ['text-section-title', 'Tiêu đề mục · 22/30'],
   ['text-card-title', 'Tiêu đề thẻ · 18/26'],
   ['text-body', 'Chữ thân · 16/24'],

@@ -10,8 +10,8 @@ export function HomePage() {
   return (
     <>
       <section className="mx-auto max-w-prose text-center">
-        <h1 className="text-3xl font-bold text-balance sm:text-4xl">{vi.home.heroTitle}</h1>
-        <p className="mt-4 text-lg text-ink-soft">{vi.home.heroLead}</p>
+        <h1 className="text-page-title text-balance sm:text-[2.5rem] sm:leading-[3rem]">{vi.home.heroTitle}</h1>
+        <p className="mt-4 text-card-title font-normal text-ink-soft">{vi.home.heroLead}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Link
             to="/ban-do"
@@ -29,14 +29,14 @@ export function HomePage() {
       </section>
 
       <section className="mt-12">
-        <h2 className="text-center text-2xl font-bold">{vi.home.pointsTitle}</h2>
+        <h2 className="text-center text-section-title">{vi.home.pointsTitle}</h2>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2">
           {vi.home.points.map((point, index) => {
             const Icon = icons[index] ?? Laptop;
             return (
-              <li key={point.title} className="rounded-2xl border border-line bg-surface-muted p-5">
+              <li key={point.title} className="rounded-card border border-line bg-surface-muted p-5">
                 <Icon aria-hidden="true" className="size-7 text-accent-strong" />
-                <h3 className="mt-3 text-lg font-semibold">{point.title}</h3>
+                <h3 className="mt-3 text-card-title">{point.title}</h3>
                 <p className="mt-1 text-ink-soft">{point.body}</p>
               </li>
             );
@@ -44,8 +44,8 @@ export function HomePage() {
         </ul>
       </section>
 
-      <section className="mt-12 rounded-2xl border border-line p-6 text-center">
-        <h2 className="text-xl font-bold">{vi.home.forParentsTitle}</h2>
+      <section className="mt-12 rounded-card border border-line p-6 text-center">
+        <h2 className="text-section-title">{vi.home.forParentsTitle}</h2>
         <p className="mx-auto mt-2 max-w-prose text-ink-soft">{vi.home.forParentsBody}</p>
         <Link
           to="/gioi-thieu"

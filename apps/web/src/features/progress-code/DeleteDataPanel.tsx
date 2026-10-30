@@ -23,8 +23,8 @@ export function DeleteDataPanel({ onDeleted }: { onDeleted: () => void }) {
   }
 
   return (
-    <div className="rounded-2xl border border-attention/40 p-4">
-      <h2 className="flex items-center gap-2 text-lg font-bold">
+    <div className="rounded-card border border-attention/40 p-4">
+      <h2 className="flex items-center gap-2 text-card-title">
         <Trash2 aria-hidden="true" className="size-5 text-attention" />
         {vi.deleteData.title}
       </h2>
