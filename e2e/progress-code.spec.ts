@@ -17,6 +17,8 @@ test.describe('mã tiến độ', () => {
     await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
       timeout: 120_000,
     });
+    // Lời khen hiện trước khi lưu xong; rời trang sớm là mất lần nộp (S0-30).
+    await expect(page.locator('article[data-save-state="saved"]')).toBeAttached();
 
     await page.goto('/tien-do');
     const code = await page.getByTestId('progress-code').inputValue();
@@ -50,6 +52,8 @@ test.describe('mã tiến độ', () => {
     await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
       timeout: 120_000,
     });
+    // Lời khen hiện trước khi lưu xong; rời trang sớm là mất lần nộp (S0-30).
+    await expect(page.locator('article[data-save-state="saved"]')).toBeAttached();
 
     await page.goto('/tien-do');
     await page.getByLabel('Dán mã tiến độ').fill('LLC1.day-la-ma-bay-ba');
@@ -69,6 +73,8 @@ test.describe('mã tiến độ', () => {
     await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
       timeout: 120_000,
     });
+    // Lời khen hiện trước khi lưu xong; rời trang sớm là mất lần nộp (S0-30).
+    await expect(page.locator('article[data-save-state="saved"]')).toBeAttached();
 
     await page.goto('/ban-do');
     await expect(page.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('1/4');

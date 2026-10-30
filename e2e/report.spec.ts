@@ -16,6 +16,8 @@ test.describe('báo cáo cho bố mẹ', () => {
     await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
       timeout: 120_000,
     });
+    // Lời khen hiện trước khi lưu xong; rời trang sớm là mất lần nộp (S0-30).
+    await expect(page.locator('article[data-save-state="saved"]')).toBeAttached();
 
     await page.goto('/bao-cao');
     await page.getByRole('button', { name: 'Tạo link báo cáo' }).click();

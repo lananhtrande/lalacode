@@ -6,7 +6,6 @@ import {
   exportSnapshot,
   getExerciseProgress,
   getProfile,
-  markLessonCompleted,
   markLessonStarted,
   recordAttempt,
   resetProgressDbForTest,
@@ -17,6 +16,8 @@ import { PROGRESS_SCHEMA_VERSION } from './schema';
 
 const EXERCISE = 'py-khoi-dong.01-xin-chao.01-in-loi-chao';
 const LESSON = 'py-khoi-dong.01-xin-chao';
+const EXERCISE_2 = 'py-khoi-dong.01-xin-chao.02-in-hai-dong';
+const LESSON_EXERCISES = [EXERCISE, EXERCISE_2];
 
 beforeEach(() => {
   // Mỗi test một IndexedDB sạch.
@@ -65,9 +66,9 @@ describe('tiến độ trên máy', () => {
   });
 
   it('nộp bài thì streak tự cập nhật', async () => {
-    await recordAttempt(EXERCISE, LESSON, true, 'x', new Date(2026, 2, 5, 20, 0));
+    await recordAttempt(EXERCISE, LESSON, true, 'x', [], new Date(2026, 2, 5, 20, 0));
     expect((await getProfile()).streakDays).toBe(1);
-    await recordAttempt(EXERCISE, LESSON, true, 'x', new Date(2026, 2, 6, 7, 0));
+    await recordAttempt(EXERCISE, LESSON, true, 'x', [], new Date(2026, 2, 6, 7, 0));
     expect((await getProfile()).streakDays).toBe(2);
   });
 
@@ -78,11 +79,38 @@ describe('tiến độ trên máy', () => {
     const later = new Date(2026, 2, 9, 9, 0);
     await markLessonStarted(LESSON, 'py-khoi-dong', first);
     await markLessonStarted(LESSON, 'py-khoi-dong', later);
-    await markLessonCompleted(LESSON, 'py-khoi-dong', later);
+    await recordAttempt(EXERCISE, LESSON, true, 'a', LESSON_EXERCISES, later);
+    await recordAttempt(EXERCISE_2, LESSON, true, 'b', LESSON_EXERCISES, later);
     const snapshot = await exportSnapshot();
     expect(snapshot.lessons).toHaveLength(1);
     expect(snapshot.lessons[0]?.startedAt).toBe(first.toISOString());
     expect(snapshot.lessons[0]?.completedAt).toBe(later.toISOString());
+  });
+
+  it('bài học chưa đủ bài tập xong thì chưa có dấu trọn bài', async () => {
+    await recordAttempt(EXERCISE, LESSON, true, 'a', LESSON_EXERCISES);
+    await recordAttempt(EXERCISE_2, LESSON, false, 'sai', LESSON_EXERCISES);
+    const snapshot = await exportSnapshot();
+    expect(snapshot.lessons.every((lesson) => lesson.completedAt === undefined)).toBe(true);
+  });
+
+  it('bài tập cuối và dấu trọn bài được ghi cùng nhau, kể cả khi chưa mở màn bài học', async () => {
+    await recordAttempt(EXERCISE, LESSON, true, 'a', LESSON_EXERCISES);
+    await recordAttempt(EXERCISE_2, LESSON, true, 'b', LESSON_EXERCISES);
+    const snapshot = await exportSnapshot();
+    expect(snapshot.lessons).toEqual([
+      expect.objectContaining({ lessonId: LESSON, courseId: 'py-khoi-dong' }),
+    ]);
+    expect(snapshot.lessons[0]?.completedAt).toBeDefined();
+  });
+
+  it('nộp lại bài đã trọn thì giữ nguyên ngày trọn bài cũ', async () => {
+    const first = new Date(2026, 2, 5, 9, 0);
+    await recordAttempt(EXERCISE, LESSON, true, 'a', LESSON_EXERCISES, first);
+    await recordAttempt(EXERCISE_2, LESSON, true, 'b', LESSON_EXERCISES, first);
+    await recordAttempt(EXERCISE_2, LESSON, true, 'c', LESSON_EXERCISES, new Date(2026, 2, 9));
+    const snapshot = await exportSnapshot();
+    expect(snapshot.lessons[0]?.completedAt).toBe(first.toISOString());
   });
 
   it('xuất được toàn bộ tiến độ kèm số phiên bản schema', async () => {
