@@ -2,7 +2,7 @@
   "id": "py-khoi-dong.01-xin-chao",
   "title": "Xin chào, Python!",
   "concepts": ["print", "chuỗi"],
-  "estimatedMinutes": 10,
-  "exercises": ["01-in-loi-chao", "02-in-hai-dong"],
+  "estimatedMinutes": 12,
+  "exercises": ["01-in-loi-chao", "02-in-hai-dong", "03-sua-loi-cua-ban", "04-cay-thong-sao"],
   "status": "draft"
 }

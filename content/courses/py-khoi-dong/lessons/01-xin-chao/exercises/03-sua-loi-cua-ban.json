@@ -1,0 +1,22 @@
+{
+  "id": "py-khoi-dong.01-xin-chao.03-sua-loi-cua-ban",
+  "title": "Sửa lỗi giúp bạn",
+  "kind": "code",
+  "prompt": "Bạn Minh muốn in ra `Chào cả lớp`, nhưng bấm chạy thì máy báo lỗi. Em sửa giúp bạn nhé. Lỗi hiện bằng chữ tiếng Anh cũng không sao, em chỉ cần tìm chỗ sai.",
+  "starterCode": "print(Chào cả lớp)\n",
+  "solution": "print(\"Chào cả lớp\")\n",
+  "tests": [
+    {
+      "type": "stdout_equals",
+      "expected": "Chào cả lớp\n",
+      "message": "Chưa đúng rồi, thử lại nhé. Em nhìn kỹ xem chữ cần in đã được \"bọc\" lại chưa."
+    }
+  ],
+  "hints": [
+    "Máy chưa hiểu `Chào cả lớp` là chữ cần in. Em nhớ lại xem: chữ cần in phải được đánh dấu thế nào?",
+    "Chữ cần in phải nằm giữa hai dấu ngoặc kép `\"`.",
+    "Ví dụ tương tự: `print(Xin chào)` bị lỗi, còn `print(\"Xin chào\")` thì chạy được."
+  ],
+  "timeoutMs": 5000,
+  "turtle": false
+}

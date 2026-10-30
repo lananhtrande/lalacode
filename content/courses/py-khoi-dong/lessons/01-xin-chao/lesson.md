@@ -11,4 +11,6 @@ Khi chạy, máy sẽ hiện dòng chữ `Chào em!`.
 - Chữ cần in đặt trong **dấu ngoặc kép** `" "`. Python gọi đó là **chuỗi**.
 - Mỗi lệnh `print` in ra **một dòng**.
 
+Nếu quên dấu ngoặc kép, máy sẽ báo lỗi bằng chữ tiếng Anh. Không sao cả, lỗi chỉ có nghĩa là máy chưa hiểu lệnh. Em sửa lại rồi chạy lần nữa là được.
+
 Giờ đến lượt em thử nhé!
