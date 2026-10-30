@@ -9,7 +9,7 @@ export function BadgesPage() {
 
   return (
     <section>
-      <h1 className="text-2xl font-bold sm:text-3xl">{vi.badges.title}</h1>
+      <h1 className="text-page-title">{vi.badges.title}</h1>
       <p className="mt-2 text-ink-soft">{vi.badges.lead}</p>
       {!loading && (
         <p className="mt-1 font-medium" data-testid="badge-count">
@@ -32,7 +32,7 @@ export function BadgesPage() {
               key={badge.id}
               data-testid={`badge-${badge.id}`}
               className={[
-                'flex gap-3 rounded-2xl border p-4',
+                'flex gap-3 rounded-card border p-4',
                 badge.earned ? 'border-accent bg-accent-soft' : 'border-line',
               ].join(' ')}
             >
@@ -44,7 +44,7 @@ export function BadgesPage() {
               <div>
                 <h2 className="font-semibold">{text.name}</h2>
                 <p className="text-ink-soft">{text.how}</p>
-                <p className="mt-1 text-sm font-medium">
+                <p className="mt-1 text-small font-medium">
                   {badge.earned ? (
                     vi.badges.earned
                   ) : (
