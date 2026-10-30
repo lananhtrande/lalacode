@@ -70,6 +70,12 @@ export const routes: RouteObject[] = [
                 Component: (await import('../features/dev/RunnerSandboxPage')).RunnerSandboxPage,
               }),
             },
+            {
+              path: 'dev/design',
+              lazy: async () => ({
+                Component: (await import('../features/dev/DesignPreviewPage')).DesignPreviewPage,
+              }),
+            },
           ]
         : []),
       { path: '*', Component: NotFoundPage },
