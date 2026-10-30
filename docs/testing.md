@@ -8,7 +8,7 @@
 | Nội dung – hành vi | CPython 3.12+ (`scripts/grader.py`) | `npm run content:verify` | Mọi thay đổi bài tập: solution pass, starter fail |
 | Runner thật | Playwright + Pyodide | `npm run test:e2e -- runner` | Đổi runner, protocol, phiên bản Pyodide |
 | E2E luồng chính | Playwright | `npm run test:e2e` | Đổi UI của bài học/bài tập/báo cáo |
-| Lambda | Vitest, mock Bedrock Runtime & DynamoDB (`aws-sdk-client-mock`) | `npm run test -w @lalacode/ai-hint` | Mọi thay đổi `services/ai-hint` |
+| Lambda | Vitest, mock Bedrock Runtime & DynamoDB (`aws-sdk-client-mock`) | `npm run test -w @lalakode/ai-hint` | Mọi thay đổi `services/ai-hint` |
 | Prompt AI | 30 case cố định (`services/ai-hint/eval/cases.json`) chạy thủ công với Bedrock thật | `npm run eval:hints` | Đổi prompt hoặc model |
 
 ## Chấm bài: một bản cài đặt, hai nơi chạy

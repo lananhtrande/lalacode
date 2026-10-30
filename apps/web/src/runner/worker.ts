@@ -157,7 +157,7 @@ async function getGrader(): Promise<(jobJson: string) => string> {
     pyodide.globals.set('_grader_source', graderSource);
     pyodide.runPython(`
 import types as _types
-_grader_module = _types.ModuleType('lalacode_grader')
+_grader_module = _types.ModuleType('lalakode_grader')
 exec(_grader_source, _grader_module.__dict__)
 grade_json = _grader_module.grade_json
 del _grader_source

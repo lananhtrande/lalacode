@@ -1,5 +1,5 @@
 {
-  "name": "lalacode",
+  "name": "lalakode",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -14,9 +14,9 @@
     "services/*"
   ],
   "scripts": {
-    "dev": "npm run dev -w @lalacode/web",
-    "build": "npm run build -w @lalacode/web",
-    "preview": "npm run preview -w @lalacode/web",
+    "dev": "npm run dev -w @lalakode/web",
+    "build": "npm run build -w @lalakode/web",
+    "preview": "npm run preview -w @lalakode/web",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -25,7 +25,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:csp": "PLAYWRIGHT_CSP=1 playwright test",
-    "eval:hints": "npm run eval:hints -w @lalacode/ai-hint",
+    "eval:hints": "npm run eval:hints -w @lalakode/ai-hint",
     "content:check": "node scripts/content-check.mjs",
     "content:build": "node scripts/content-build.mjs",
     "pyodide:copy": "node scripts/copy-pyodide.mjs",
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@lalacode/content-schema": "*",
+    "@lalakode/content-schema": "*",
     "@playwright/test": "^1.64.1",
     "@types/node": "^22.19.0",
     "eslint": "^10.13.0",

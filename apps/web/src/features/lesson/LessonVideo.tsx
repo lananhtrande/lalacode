@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Play } from 'lucide-react';
-import type { Video } from '@lalacode/content-schema';
+import type { Video } from '@lalakode/content-schema';
 import { vi } from '../../shared/i18n/vi';
 
 /**

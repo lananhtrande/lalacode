@@ -1,9 +1,9 @@
 {
-  "name": "@lalacode/content-schema",
+  "name": "@lalakode/content-schema",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Schema zod cho n\u1ed9i dung b\u00e0i h\u1ecdc lalacode \u2014 m\u1ed9t ngu\u1ed3n s\u1ef1 th\u1eadt cho type v\u00e0 validate",
+  "description": "Schema zod cho n\u1ed9i dung b\u00e0i h\u1ecdc lalakode \u2014 m\u1ed9t ngu\u1ed3n s\u1ef1 th\u1eadt cho type v\u00e0 validate",
   "exports": {
     ".": "./src/index.ts"
   },

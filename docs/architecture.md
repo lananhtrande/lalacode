@@ -79,7 +79,7 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - `lessons/<lessonId>.<hash8>.json` — tên có hash nội dung nên cache `immutable` được: bài học + Markdown + bài tập.
 - **Không gửi `solution` xuống trình duyệt.** Trẻ mở devtools là thấy đáp án. Test thì vẫn gửi, vì việc chấm chạy ngay trong máy; "ẩn" ở đây nghĩa là không hiển thị, không phải bí mật tuyệt đối.
 - Build từ chối chạy nếu nội dung sai schema — bundle là thứ trẻ tải về.
-- Loader ở `apps/web/src/content/loader.ts`: tải một lần rồi nhớ trong bộ nhớ, chỉ dùng `import type` từ `@lalacode/content-schema` nên zod không đi vào bundle trình duyệt.
+- Loader ở `apps/web/src/content/loader.ts`: tải một lần rồi nhớ trong bộ nhớ, chỉ dùng `import type` từ `@lalakode/content-schema` nên zod không đi vào bundle trình duyệt.
 
 ### 2c. Màn bài tập (`apps/web/src/features/exercise`)
 
@@ -95,7 +95,7 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 - IndexedDB (thư viện `idb`), schema có `version` để migrate. Ba store: `exercises` (khoá `exerciseId`, có index theo bài học), `lessons`, `profile` (một bản ghi duy nhất, khoá `'me'`).
 - `migrate.ts` giữ **danh sách bước nâng cấp**: `steps[n]` đưa dữ liệu từ phiên bản n lên n+1. Không bao giờ xoá dữ liệu cũ cho nhanh — trẻ mất tiến độ là mất động lực.
 - **Lưu tiến độ không bao giờ được làm hỏng buổi học**: Safari chế độ riêng tư, hết dung lượng hay người dùng chặn lưu trữ đều khiến IndexedDB ném lỗi. Mọi lời gọi đi qua `quietly()`; hỏng thì bỏ qua lặng lẽ, trẻ vẫn chạy và chấm code bình thường.
-- Xoá dữ liệu: `deleteAllData()` dọn từng store trước rồi mới xoá database. Xoá database có thể bị chặn khi trẻ mở lalacode ở tab khác, nên bước dọn store mới là thứ bảo đảm lời hứa "xoá là mất thật".
+- Xoá dữ liệu: `deleteAllData()` dọn từng store trước rồi mới xoá database. Xoá database có thể bị chặn khi trẻ mở lalakode ở tab khác, nên bước dọn store mới là thứ bảo đảm lời hứa "xoá là mất thật".
 - Huy hiệu (`progress/badges.ts`): **hàm thuần** tính từ ảnh chụp tiến độ, nên không hỏng khi nội dung khoá học thay đổi. Sáu huy hiệu đầu đều tính được chỉ từ tiến độ, không cần biết nội dung bài.
 - **Huy hiệu chỉ được thêm, không bị lấy lại**: streak đứt thì mất chuỗi ngày, nhưng huy hiệu đã nhận vẫn còn.
 - Bài học coi là xong khi **mọi bài tập của nó đã đạt**; màn bài tập xét điều này sau mỗi lần nộp rồi mới trao huy hiệu.

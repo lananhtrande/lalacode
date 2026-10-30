@@ -104,7 +104,7 @@ resource "aws_cloudfront_response_headers_policy" "web" {
 # --- Phân phối --------------------------------------------------------------
 resource "aws_cloudfront_distribution" "web" {
   enabled             = true
-  comment             = "lalacode giai đoạn 0"
+  comment             = "lalakode giai đoạn 0"
   default_root_object = "index.html"
   price_class         = var.price_class
   http_version        = "http2and3"

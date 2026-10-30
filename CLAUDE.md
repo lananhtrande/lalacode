@@ -1,4 +1,4 @@
-# CLAUDE.md — lalacode (giai đoạn 0)
+# CLAUDE.md — lalakode (giai đoạn 0)
 
 Nền tảng học Python tiếng Việt cho học sinh 10–15 tuổi: bài giảng ngắn + bài tập chạy và chấm ngay trên trình duyệt (kiểu KodeKloud). Đây là **giai đoạn 0 – kiểm chứng**: web tĩnh, **không có server lưu dữ liệu người dùng**.
 

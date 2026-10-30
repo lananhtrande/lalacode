@@ -4,7 +4,7 @@
 import { mkdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
-import { validateCourseTree } from '@lalacode/content-schema';
+import { validateCourseTree } from '@lalakode/content-schema';
 import { readContentTree, projectDir } from './lib/read-content.mjs';
 import { buildBundle } from './lib/build-bundle.mjs';
 import { printIssues } from './lib/report.mjs';

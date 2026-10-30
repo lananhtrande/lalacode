@@ -17,7 +17,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project = "lalacode"
+      Project = "lalakode"
       Stage   = "0"
       Managed = "terraform"
     }
@@ -31,7 +31,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project = "lalacode"
+      Project = "lalakode"
       Stage   = "0"
       Managed = "terraform"
     }

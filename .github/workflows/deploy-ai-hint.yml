@@ -40,7 +40,7 @@ jobs:
       # phiên bản SDK do mình quyết, AWS cập nhật runtime cũng không đổi hành vi.
       - name: Đóng gói Lambda
         run: |
-          npm run bundle -w @lalacode/ai-hint
+          npm run bundle -w @lalakode/ai-hint
           cd services/ai-hint/dist && zip -q -r ../ai-hint.zip index.mjs
 
       - uses: aws-actions/configure-aws-credentials@v5

@@ -9,6 +9,10 @@
  * đồng bộ không phải đổi dữ liệu (docs/architecture.md §3).
  */
 
+/**
+ * Giữ tên cũ từ trước khi dự án đổi tên thành lalakode: đổi tên database là
+ * tiến độ đã có trên máy trẻ coi như mất. Trẻ không bao giờ thấy tên này.
+ */
 export const DB_NAME = 'lalacode';
 
 /** Tăng số này mỗi khi đổi hình dạng store; kèm một bước migrate có test. */

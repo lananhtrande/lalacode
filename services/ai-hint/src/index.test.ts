@@ -80,7 +80,7 @@ beforeEach(() => {
   resetContentCache();
   resetBedrockClient();
   resetRateLimitClient();
-  process.env['CONTENT_BASE_URL'] = 'https://lalacode.example';
+  process.env['CONTENT_BASE_URL'] = 'https://lalakode.example';
   process.env['RATE_LIMIT_TABLE'] = 'bang-dem-luot';
   delete process.env['AI_HINTS_ENABLED'];
   mockContent();

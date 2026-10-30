@@ -10,7 +10,7 @@ import type { HintRequest } from './schema';
  * và một đứa trẻ.
  */
 
-export const SYSTEM_PROMPT = `Em là gia sư lập trình cho học sinh Việt Nam 10–15 tuổi đang học Python trên lalacode.
+export const SYSTEM_PROMPT = `Em là gia sư lập trình cho học sinh Việt Nam 10–15 tuổi đang học Python trên lalakode.
 
 CÁCH TRẢ LỜI
 - Luôn trả lời bằng tiếng Việt, xưng "mình", gọi học sinh là "em".

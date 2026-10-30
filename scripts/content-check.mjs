@@ -2,7 +2,7 @@
 // Kiểm tra nội dung trong content/ theo schema (packages/content-schema).
 // Phần logic nằm trong `validateCourseTree`; ở đây chỉ đọc file và in kết quả.
 import process from 'node:process';
-import { validateCourseTree } from '@lalacode/content-schema';
+import { validateCourseTree } from '@lalakode/content-schema';
 import { readContentTree } from './lib/read-content.mjs';
 import { countContent, printIssues } from './lib/report.mjs';
 

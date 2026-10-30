@@ -1,5 +1,7 @@
 # Hạ tầng — giai đoạn 0
 
+> Dự án đã đổi tên thành **lalakode**, nhưng tên tài nguyên AWS vẫn là `lalacode-*` (Lambda, bảng DynamoDB, bucket, IAM role, policy CloudFront). Đổi tên là Terraform xoá rồi tạo lại tài nguyên, nên cố ý giữ. Chỉ tag `Project` và comment đã đổi.
+
 Web tĩnh: S3 (private) + CloudFront (OAC). Không có server nào chạy code của trẻ, không có dữ liệu người dùng trên server (xem `docs/privacy.md`).
 
 ## Luật

@@ -33,10 +33,10 @@ export default defineConfig({
   ],
   webServer: {
     command: csp
-      ? `npm run build -w @lalacode/web && node scripts/serve-dist.mjs ${PORT}`
+      ? `npm run build -w @lalakode/web && node scripts/serve-dist.mjs ${PORT}`
       : preview
-        ? `npm run build -w @lalacode/web && npm run preview -w @lalacode/web -- --port ${PORT} --strictPort`
-        : `npm run dev -w @lalacode/web -- --port ${PORT} --strictPort`,
+        ? `npm run build -w @lalakode/web && npm run preview -w @lalakode/web -- --port ${PORT} --strictPort`
+        : `npm run dev -w @lalakode/web -- --port ${PORT} --strictPort`,
     url: baseURL,
     reuseExistingServer: !process.env['CI'],
     timeout: 180_000,
