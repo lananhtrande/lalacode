@@ -9,6 +9,7 @@ import {
 } from '../../progress/share-code';
 import { vi } from '../../shared/i18n/vi';
 import { DeleteDataPanel } from './DeleteDataPanel';
+import { buttonClasses } from '../../shared/ui/button-classes';
 
 type ImportState = { kind: 'idle' } | { kind: 'done' } | { kind: 'error'; message: string };
 
@@ -65,8 +66,8 @@ export function ProgressCodePage() {
     <section className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold sm:text-3xl">{vi.progressCode.title}</h1>
-        <p className="mt-2 text-ink-muted">{vi.progressCode.lead}</p>
-        <p className="mt-1 text-sm text-ink-muted">{vi.progressCode.privacyNote}</p>
+        <p className="mt-2 text-ink-soft">{vi.progressCode.lead}</p>
+        <p className="mt-1 text-sm text-ink-soft">{vi.progressCode.privacyNote}</p>
       </div>
 
       <div>
@@ -75,7 +76,7 @@ export function ProgressCodePage() {
           {vi.progressCode.yourCode}
         </h2>
         {code === '' ? (
-          <p className="mt-2 text-ink-muted" data-testid="no-code">
+          <p className="mt-2 text-ink-soft" data-testid="no-code">
             {vi.progressCode.nothingYet}
           </p>
         ) : (
@@ -91,7 +92,7 @@ export function ProgressCodePage() {
             <button
               type="button"
               onClick={() => void copy()}
-              className="mt-2 inline-flex min-h-tap items-center gap-2 rounded-xl border border-line px-4 font-semibold"
+              className={buttonClasses('outline', 'md', 'mt-2')}
             >
               <Copy aria-hidden="true" className="size-4" />
               {copied ? vi.progressCode.copied : vi.progressCode.copy}
@@ -105,7 +106,7 @@ export function ProgressCodePage() {
           <Upload aria-hidden="true" className="size-5" />
           {vi.progressCode.importTitle}
         </h2>
-        <p className="mt-1 text-ink-muted">{vi.progressCode.importLead}</p>
+        <p className="mt-1 text-ink-soft">{vi.progressCode.importLead}</p>
         <textarea
           aria-label={vi.progressCode.importLabel}
           value={pasted}
@@ -117,18 +118,18 @@ export function ProgressCodePage() {
           type="button"
           onClick={() => void runImport()}
           disabled={pasted.trim() === ''}
-          className="mt-2 inline-flex min-h-tap items-center gap-2 rounded-xl bg-brand-500 px-5 font-semibold text-white disabled:opacity-60"
+          className={buttonClasses('primary', 'md', 'mt-2')}
         >
           {vi.progressCode.importButton}
         </button>
 
         {importState.kind === 'done' && (
-          <p role="status" data-testid="import-done" className="mt-3 font-medium text-ok-500">
+          <p role="status" data-testid="import-done" className="mt-3 font-medium text-success">
             {vi.progressCode.importDone}
           </p>
         )}
         {importState.kind === 'error' && (
-          <p role="alert" data-testid="import-error" className="mt-3 font-medium text-warn-500">
+          <p role="alert" data-testid="import-error" className="mt-3 font-medium text-attention">
             {importState.message}
           </p>
         )}

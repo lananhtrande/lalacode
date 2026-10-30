@@ -4,6 +4,7 @@ import { vi } from '../../shared/i18n/vi';
 import { RichText } from '../../shared/ui/RichText';
 import { askAiHint } from './hint-client';
 import type { HintErrorCode } from './hint-types';
+import { buttonClasses } from '../../shared/ui/button-classes';
 
 /**
  * Gợi ý mở dần từng mức (CLAUDE.md §4): trẻ tự thử trước, mở từng bước, mức
@@ -73,16 +74,16 @@ export function HintPanel({ hints, exerciseId, getCode, getError, aiToken }: Hin
   return (
     <section aria-labelledby="goi-y" className="rounded-2xl border border-line p-4">
       <h2 id="goi-y" className="flex items-center gap-2 text-lg font-bold">
-        <Lightbulb aria-hidden="true" className="size-5 text-accent-700" />
+        <Lightbulb aria-hidden="true" className="size-5 text-accent-strong" />
         {vi.exercise.hintsTitle}
       </h2>
 
       {shown === 0 && (
         <p
-          className="mt-2 flex items-start gap-2 text-sm text-ink-muted"
+          className="mt-2 flex items-start gap-2 text-sm text-ink-soft"
           data-testid="hint-privacy"
         >
-          <TriangleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-accent-700" />
+          <TriangleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-accent-strong" />
           <span>{vi.exercise.privacyWarning}</span>
         </p>
       )}
@@ -90,8 +91,8 @@ export function HintPanel({ hints, exerciseId, getCode, getError, aiToken }: Hin
       {aiHints.length > 0 && (
         <ol data-testid="ai-hints" className="mt-3 space-y-2">
           {aiHints.map((hint, index) => (
-            <li key={`${index}-${hint.slice(0, 12)}`} className="rounded-xl bg-brand-50 p-3">
-              <span className="flex items-center gap-1 text-sm font-semibold text-brand-700">
+            <li key={`${index}-${hint.slice(0, 12)}`} className="rounded-xl bg-ai-surface p-3">
+              <span className="flex items-center gap-1 text-sm font-semibold text-accent-strong">
                 <Sparkles aria-hidden="true" className="size-4" />
                 {vi.exercise.aiLabel}
               </span>
@@ -102,7 +103,7 @@ export function HintPanel({ hints, exerciseId, getCode, getError, aiToken }: Hin
       )}
 
       {fallbackNote !== '' && (
-        <p role="status" data-testid="hint-fallback" className="mt-3 text-ink-muted">
+        <p role="status" data-testid="hint-fallback" className="mt-3 text-ink-soft">
           {fallbackNote}
         </p>
       )}
@@ -126,7 +127,7 @@ export function HintPanel({ hints, exerciseId, getCode, getError, aiToken }: Hin
           onClick={() => void ask()}
           disabled={asking}
           data-testid="hint-ask"
-          className="mt-3 inline-flex min-h-tap items-center gap-2 rounded-xl border border-line px-4 font-semibold hover:bg-surface-muted disabled:opacity-60"
+          className={buttonClasses('outline', 'md', 'mt-3')}
         >
           <Sparkles aria-hidden="true" className="size-4" />
           {asking ? vi.exercise.asking : shown === 0 ? vi.exercise.askAi : vi.exercise.askAiAgain}

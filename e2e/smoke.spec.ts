@@ -12,12 +12,42 @@ test.describe('khung app', () => {
 
   test('bấm menu chuyển sang trang khác mà không tải lại trang', async ({ page }) => {
     await page.goto('/');
+    // Dưới 1024px menu nằm trong ngăn kéo, phải mở ra trước.
+    const openMenu = page.getByRole('button', { name: 'Mở menu' });
+    if (await openMenu.isVisible()) await openMenu.click();
     await page
       .getByRole('navigation', { name: 'Menu chính' })
       .getByRole('link', { name: 'Bản đồ' })
       .click();
     await expect(page).toHaveURL(/\/ban-do$/);
     await expect(page.getByRole('heading', { name: 'Bản đồ nhiệm vụ' })).toBeVisible();
+  });
+
+  test('khung trang: sidebar trên màn rộng, ngăn kéo menu trên màn hẹp', async ({ page }) => {
+    await page.goto('/ban-do');
+    const nav = page.getByRole('navigation', { name: 'Menu chính' });
+    const openMenu = page.getByRole('button', { name: 'Mở menu' });
+    const width = page.viewportSize()?.width ?? 0;
+    if (width >= 1024) {
+      await expect(nav).toBeVisible();
+      await expect(openMenu).toBeHidden();
+      // Mục đang chọn được tô đậm.
+      await expect(nav.getByRole('link', { name: 'Bản đồ' })).toHaveAttribute(
+        'aria-current',
+        'page',
+      );
+    } else {
+      await expect(nav).toBeHidden();
+      await openMenu.click();
+      await expect(nav).toBeVisible();
+      await page.keyboard.press('Escape');
+      await expect(nav).toBeHidden();
+      // Chọn một mục thì ngăn kéo tự đóng.
+      await openMenu.click();
+      await nav.getByRole('link', { name: 'Huy hiệu' }).click();
+      await expect(page).toHaveURL(/\/huy-hieu$/);
+      await expect(nav).toBeHidden();
+    }
   });
 
   test('bản đồ liệt kê bài học đọc từ bundle nội dung', async ({ page }) => {

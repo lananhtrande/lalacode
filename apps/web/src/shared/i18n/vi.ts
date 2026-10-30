@@ -9,6 +9,8 @@ export const vi = {
   nav: {
     skipToContent: 'Tới nội dung chính',
     menu: 'Menu chính',
+    openMenu: 'Mở menu',
+    closeMenu: 'Đóng menu',
     home: 'Trang chủ',
     map: 'Bản đồ',
     badges: 'Huy hiệu',

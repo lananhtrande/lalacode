@@ -72,7 +72,7 @@ export function CodeEditor({ value, onChange, label, readOnly = false }: CodeEdi
           EditorView.theme({
             '&': { fontSize: '15px' },
             '.cm-content': { fontFamily: 'var(--font-mono)', minHeight: '9rem' },
-            '&.cm-focused': { outline: '3px solid var(--color-brand-500)' },
+            '&.cm-focused': { outline: '3px solid var(--color-accent)' },
           }),
         ],
       }),

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Trash2, TriangleAlert } from 'lucide-react';
 import { deleteAllData, quietly } from '../../progress/db';
 import { vi } from '../../shared/i18n/vi';
+import { buttonClasses } from '../../shared/ui/button-classes';
 
 /**
  * Xoá sạch dữ liệu trên máy (docs/privacy.md §Minh bạch).
@@ -22,14 +23,14 @@ export function DeleteDataPanel({ onDeleted }: { onDeleted: () => void }) {
   }
 
   return (
-    <div className="rounded-2xl border border-warn-500/40 p-4">
+    <div className="rounded-2xl border border-attention/40 p-4">
       <h2 className="flex items-center gap-2 text-lg font-bold">
-        <Trash2 aria-hidden="true" className="size-5 text-warn-500" />
+        <Trash2 aria-hidden="true" className="size-5 text-attention" />
         {vi.deleteData.title}
       </h2>
-      <p className="mt-1 text-ink-muted">{vi.deleteData.lead}</p>
+      <p className="mt-1 text-ink-soft">{vi.deleteData.lead}</p>
       <p className="mt-1 flex items-start gap-2 font-medium">
-        <TriangleAlert aria-hidden="true" className="mt-1 size-4 shrink-0 text-warn-500" />
+        <TriangleAlert aria-hidden="true" className="mt-1 size-4 shrink-0 text-attention" />
         <span>
           {vi.deleteData.warning} {vi.deleteData.saveFirst}
         </span>
@@ -40,7 +41,7 @@ export function DeleteDataPanel({ onDeleted }: { onDeleted: () => void }) {
           type="button"
           onClick={() => setAsking(true)}
           data-testid="delete-start"
-          className="mt-3 inline-flex min-h-tap items-center rounded-xl border border-warn-500 px-5 font-semibold text-warn-500"
+          className={buttonClasses('outline', 'md', 'mt-3')}
         >
           {vi.deleteData.button}
         </button>
@@ -54,14 +55,14 @@ export function DeleteDataPanel({ onDeleted }: { onDeleted: () => void }) {
               type="button"
               onClick={() => void remove()}
               data-testid="delete-yes"
-              className="inline-flex min-h-tap items-center rounded-xl bg-warn-500 px-5 font-semibold text-white"
+              className={buttonClasses('dark', 'md')}
             >
               {vi.deleteData.confirmYes}
             </button>
             <button
               type="button"
               onClick={() => setAsking(false)}
-              className="inline-flex min-h-tap items-center rounded-xl border border-line px-5 font-semibold"
+              className={buttonClasses('outline', 'md')}
             >
               {vi.deleteData.confirmNo}
             </button>
@@ -70,7 +71,7 @@ export function DeleteDataPanel({ onDeleted }: { onDeleted: () => void }) {
       )}
 
       {done && (
-        <p role="status" data-testid="delete-done" className="mt-3 font-medium text-ok-500">
+        <p role="status" data-testid="delete-done" className="mt-3 font-medium text-success">
           {vi.deleteData.done}
         </p>
       )}

@@ -8,6 +8,7 @@ import { useProgress } from '../../progress/useProgress';
 import type { ExerciseStatus } from '../../progress/schema';
 import { LessonBody } from './LessonBody';
 import { LessonVideo } from './LessonVideo';
+import { buttonClasses } from '../../shared/ui/button-classes';
 
 /** Kết quả tải, kèm mã bài để biết nó thuộc về bài nào đang mở. */
 type Loaded =
@@ -42,7 +43,7 @@ export function LessonPage() {
 
   if (state === null) {
     return (
-      <p className="text-ink-muted" role="status">
+      <p className="text-ink-soft" role="status">
         {vi.lesson.loading}
       </p>
     );
@@ -54,7 +55,7 @@ export function LessonPage() {
         <h1 className="text-2xl font-bold">{vi.lesson.notFound}</h1>
         <Link
           to="/ban-do"
-          className="mt-4 inline-flex min-h-tap items-center font-semibold text-brand-600 underline"
+          className="mt-4 inline-flex min-h-tap items-center font-semibold text-accent-strong underline"
         >
           {vi.lesson.backToMap}
         </Link>
@@ -72,13 +73,13 @@ export function LessonPage() {
     <article className="mx-auto max-w-prose">
       <Link
         to="/ban-do"
-        className="inline-flex min-h-tap items-center font-medium text-brand-600 underline"
+        className="inline-flex min-h-tap items-center font-medium text-accent-strong underline"
       >
         {vi.lesson.backToMap}
       </Link>
 
       <h1 className="mt-2 text-2xl font-bold sm:text-3xl">{lesson.title}</h1>
-      <p className="mt-2 flex flex-wrap items-center gap-x-4 text-ink-muted">
+      <p className="mt-2 flex flex-wrap items-center gap-x-4 text-ink-soft">
         <span className="flex items-center gap-1">
           <Clock aria-hidden="true" className="size-4" />
           {lesson.estimatedMinutes} {vi.lesson.minutes}
@@ -99,7 +100,7 @@ export function LessonPage() {
 
       <section className="mt-10">
         <h2 className="text-xl font-bold">{vi.lesson.exercisesTitle}</h2>
-        <p className="mt-1 text-ink-muted">{vi.lesson.exercisesLead}</p>
+        <p className="mt-1 text-ink-soft">{vi.lesson.exercisesLead}</p>
 
         <ol className="mt-4 space-y-2" data-testid="lesson-exercises">
           {exercises.map((exercise, index) => {
@@ -110,15 +111,15 @@ export function LessonPage() {
                   to={`/bai-tap/${exercise.id}`}
                   className={[
                     'flex min-h-tap items-center gap-3 rounded-2xl border p-3 hover:bg-surface-muted',
-                    status === 'xong' ? 'border-ok-500/50 bg-ok-500/5' : 'border-line',
+                    status === 'xong' ? 'border-success/50 bg-success-surface' : 'border-line',
                   ].join(' ')}
                 >
                   <span
                     className={[
                       'flex size-8 shrink-0 items-center justify-center rounded-full font-bold',
                       status === 'xong'
-                        ? 'bg-ok-500/20 text-ok-500'
-                        : 'bg-brand-100 text-brand-700',
+                        ? 'bg-success-surface text-success'
+                        : 'bg-accent-soft text-accent-strong',
                     ].join(' ')}
                   >
                     {status === 'xong' ? (
@@ -129,7 +130,7 @@ export function LessonPage() {
                   </span>
                   <span className="font-medium">{exercise.title}</span>
                   {status && (
-                    <span className="ml-auto text-sm text-ink-muted">
+                    <span className="ml-auto text-sm text-ink-soft">
                       {status === 'xong' ? vi.lesson.exerciseDone : vi.lesson.exerciseDoing}
                     </span>
                   )}
@@ -143,7 +144,7 @@ export function LessonPage() {
           <Link
             to={`/bai-tap/${next.id}`}
             data-testid="lesson-cta"
-            className="mt-6 inline-flex min-h-tap items-center gap-2 rounded-xl bg-brand-500 px-6 font-semibold text-white hover:bg-brand-600"
+            className={buttonClasses('primary', 'lg', 'mt-6')}
           >
             {next.id === exercises[0]?.id ? vi.lesson.startFirst : vi.lesson.continueNext}
             <ArrowRight aria-hidden="true" className="size-5" />
@@ -151,9 +152,9 @@ export function LessonPage() {
         ) : (
           <p
             data-testid="lesson-all-done"
-            className="mt-6 flex items-center gap-2 rounded-2xl border border-ok-500/50 bg-ok-500/5 p-4 font-medium"
+            className="mt-6 flex items-center gap-2 rounded-2xl border border-success/50 bg-success-surface p-4 font-medium"
           >
-            <PartyPopper aria-hidden="true" className="size-5 shrink-0 text-ok-500" />
+            <PartyPopper aria-hidden="true" className="size-5 shrink-0 text-success" />
             {vi.lesson.allDone}
           </p>
         )}

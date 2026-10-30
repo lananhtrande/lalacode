@@ -24,3 +24,4 @@ Ngày: YYYY-MM-DD
 | 0005 | Analytics gộp không cookie | Đề xuất |
 | 0006 | Gọi Claude qua Amazon Bedrock thay vì Claude API trực tiếp | Chấp nhận |
 | 0007 | Nới ngân sách bundle cho riêng màn bài tập (CodeMirror) | Chấp nhận |
+| 0008 | Design system riêng: một màu nhấn, font Be Vietnam Pro, chỉ giao diện sáng | Chấp nhận |

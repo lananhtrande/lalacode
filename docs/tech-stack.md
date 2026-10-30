@@ -18,6 +18,7 @@ Mọi thay đổi bảng này cần một ADR trong `docs/decisions/`.
 | Schema nội dung | zod (`packages/content-schema`) | 3/4 | Một nguồn sự thật cho type + validate |
 | Markdown | `react-markdown` (CommonMark, **chưa cần** `remark-gfm`) | — | Nội dung bài viết bằng Markdown. 20 bài hiện chỉ dùng tiêu đề, danh sách, khối code, `code`, **đậm** — thêm `remark-gfm` khi nào có bài cần bảng. Route bài học: 37,8 kB gzip. |
 | Icon | lucide-react | — | Nhẹ, tree-shake |
+| Font | Be Vietnam Pro (OFL), tự host woff2 từ `@fontsource/be-vietnam-pro` 5.3.0 | — | Thiết kế cho tiếng Việt; không gọi CDN (ADR 0008). Không phải dependency npm: chỉ chép file woff2 + giấy phép vào `public/fonts/`. |
 | Unit test | Vitest + Testing Library | — | Cùng hệ Vite |
 | E2E test | Playwright (Chromium, WebKit iPhone/iPad) | — | Kiểm tra Pyodide thật trên trình duyệt |
 | Lint/format | ESLint (flat config) + Prettier | — | Hook chạy sau mỗi lần sửa file |

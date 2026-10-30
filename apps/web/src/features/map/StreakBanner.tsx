@@ -5,7 +5,7 @@ import { vi } from '../../shared/i18n/vi';
 export function StreakBanner({ days }: { days: number }) {
   if (days <= 0) {
     return (
-      <p data-testid="streak" className="rounded-2xl bg-surface-muted p-4 text-ink-muted">
+      <p data-testid="streak" className="rounded-2xl bg-surface-muted p-4 text-ink-soft">
         {vi.streak.none}
       </p>
     );
@@ -13,7 +13,7 @@ export function StreakBanner({ days }: { days: number }) {
   return (
     <p
       data-testid="streak"
-      className="flex items-center gap-2 rounded-2xl bg-accent-100 p-4 font-medium text-accent-700"
+      className="flex items-center gap-2 rounded-2xl bg-accent-soft p-4 font-medium text-accent-strong"
     >
       <Flame aria-hidden="true" className="size-5" />
       <span>

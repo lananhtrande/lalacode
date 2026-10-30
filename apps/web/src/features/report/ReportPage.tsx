@@ -12,6 +12,7 @@ import {
 import { formatDayVi, summarizeProgress, type ProgressReport } from '../../progress/report';
 import { dayKey } from '../../progress/streak';
 import { vi } from '../../shared/i18n/vi';
+import { buttonClasses } from '../../shared/ui/button-classes';
 
 type State = { kind: 'no-link' } | { kind: 'bad-link' } | { kind: 'ready'; report: ProgressReport };
 
@@ -79,11 +80,11 @@ export function ReportPage() {
     <section className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold sm:text-3xl">{vi.report.title}</h1>
-        <p className="mt-2 text-ink-muted">{vi.report.lead}</p>
+        <p className="mt-2 text-ink-soft">{vi.report.lead}</p>
       </div>
 
       {state.kind === 'bad-link' && (
-        <p role="alert" data-testid="report-bad-link" className="font-medium text-warn-500">
+        <p role="alert" data-testid="report-bad-link" className="font-medium text-attention">
           {vi.report.badLink}
         </p>
       )}
@@ -91,7 +92,7 @@ export function ReportPage() {
       {state.kind === 'no-link' && (
         <div data-testid="report-empty">
           <h2 className="text-lg font-bold">{vi.report.emptyTitle}</h2>
-          <p className="mt-1 text-ink-muted">{vi.report.emptyLead}</p>
+          <p className="mt-1 text-ink-soft">{vi.report.emptyLead}</p>
         </div>
       )}
 
@@ -104,13 +105,13 @@ export function ReportPage() {
             <Link2 aria-hidden="true" className="size-5" />
             {vi.report.createTitle}
           </h2>
-          <p className="mt-1 text-ink-muted">{vi.report.createLead}</p>
+          <p className="mt-1 text-ink-soft">{vi.report.createLead}</p>
           {hasProgress ? (
             <>
               <button
                 type="button"
                 onClick={() => void createLink()}
-                className="mt-3 inline-flex min-h-tap items-center gap-2 rounded-xl bg-brand-500 px-5 font-semibold text-white"
+                className={buttonClasses('primary', 'md', 'mt-3')}
               >
                 <RefreshCw aria-hidden="true" className="size-4" />
                 {vi.report.createButton}
@@ -131,7 +132,7 @@ export function ReportPage() {
                       void navigator.clipboard.writeText(link).catch(() => undefined);
                       setCopied(true);
                     }}
-                    className="mt-2 inline-flex min-h-tap items-center rounded-xl border border-line px-4 font-semibold"
+                    className={buttonClasses('outline', 'md', 'mt-2')}
                   >
                     {copied ? vi.report.copied : vi.report.copy}
                   </button>
@@ -139,7 +140,7 @@ export function ReportPage() {
               )}
             </>
           ) : (
-            <p className="mt-2 text-ink-muted" data-testid="report-no-progress">
+            <p className="mt-2 text-ink-soft" data-testid="report-no-progress">
               {vi.report.createNothing}
             </p>
           )}
@@ -148,8 +149,8 @@ export function ReportPage() {
 
       <div className="rounded-2xl bg-surface-muted p-4">
         <h2 className="font-bold">{vi.report.privacyTitle}</h2>
-        <p className="mt-1 text-ink-muted">{vi.report.privacyBody}</p>
-        <p className="mt-2 text-ink-muted">{vi.report.honestyNote}</p>
+        <p className="mt-1 text-ink-soft">{vi.report.privacyBody}</p>
+        <p className="mt-2 text-ink-soft">{vi.report.honestyNote}</p>
       </div>
     </section>
   );
@@ -168,14 +169,14 @@ function ReportBody({ report }: { report: ProgressReport }) {
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map((stat) => (
           <li key={stat.label} className="rounded-2xl border border-line p-4">
-            <stat.icon aria-hidden="true" className="size-5 text-brand-600" />
+            <stat.icon aria-hidden="true" className="size-5 text-accent-strong" />
             <p className="mt-2 text-2xl font-bold">{stat.value}</p>
-            <p className="text-sm text-ink-muted">{stat.label}</p>
+            <p className="text-sm text-ink-soft">{stat.label}</p>
           </li>
         ))}
       </ul>
 
-      <p className="text-ink-muted">
+      <p className="text-ink-soft">
         <span data-testid="report-attempts" className="font-medium text-ink">
           {report.attempts} {vi.report.stats.attempts}
         </span>{' '}
@@ -183,7 +184,7 @@ function ReportBody({ report }: { report: ProgressReport }) {
       </p>
 
       {report.lastActiveDay !== '' && (
-        <p className="text-ink-muted">
+        <p className="text-ink-soft">
           {vi.report.stats.lastActive}: {formatDayVi(report.lastActiveDay)}
         </p>
       )}
@@ -191,7 +192,7 @@ function ReportBody({ report }: { report: ProgressReport }) {
       <div>
         <h2 className="text-lg font-bold">{vi.report.lessonsTitle}</h2>
         {report.lessons.length === 0 ? (
-          <p className="mt-1 text-ink-muted">{vi.report.noLessons}</p>
+          <p className="mt-1 text-ink-soft">{vi.report.noLessons}</p>
         ) : (
           <ul className="mt-2 space-y-2">
             {report.lessons.map((lesson) => (
@@ -201,7 +202,7 @@ function ReportBody({ report }: { report: ProgressReport }) {
                 className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line p-3"
               >
                 <span className="font-medium">{lesson.title}</span>
-                <span className="text-ink-muted">
+                <span className="text-ink-soft">
                   {lesson.doneCount}/{lesson.totalCount} ·{' '}
                   {lesson.completed ? vi.report.lessonDone : vi.report.lessonDoing}
                 </span>
