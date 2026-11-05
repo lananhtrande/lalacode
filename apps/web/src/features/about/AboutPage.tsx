@@ -18,8 +18,8 @@ export function AboutPage() {
         <img
           src="/brand/lalakode-logo-tagline.svg"
           alt={`${vi.app.name} — ${vi.footer.madeFor}`}
-          width={212}
-          height={48}
+          width={283}
+          height={64}
           className="mb-6"
         />
         <h1 className="text-page-title">{vi.about.title}</h1>

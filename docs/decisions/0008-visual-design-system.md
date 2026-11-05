@@ -1,5 +1,5 @@
 # 0008 — Design system riêng: một màu nhấn, font Be Vietnam Pro, chỉ giao diện sáng
-Trạng thái: Chấp nhận
+Trạng thái: Chấp nhận — **phần màu và font được thay bởi ADR 0009** (San hô, Inter); nguyên lý, token và component vẫn giữ.
 Ngày: 2026-10-30
 
 ## Bối cảnh

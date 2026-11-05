@@ -29,7 +29,7 @@ shared/         # ui/, lib/, i18n/vi.ts
 - Nút tối thiểu 44×44 px; cỡ chữ thân ≥ 16 px; tương phản AA.
 - Không dùng màu là tín hiệu duy nhất (đúng/sai luôn kèm icon + chữ).
 - Hoạt ảnh tôn trọng `prefers-reduced-motion`.
-- **Không tải font, script hay ảnh từ CDN ngoài** (kể cả Google Fonts): mọi tài nguyên đi từ domain của mình — xem `privacy.md`. Font Be Vietnam Pro tự host trong `public/fonts/` (ADR 0008).
+- **Không tải font, script hay ảnh từ CDN ngoài** (kể cả Google Fonts): mọi tài nguyên đi từ domain của mình — xem `privacy.md`. Font Inter tự host trong `public/fonts/inter/` (ADR 0009).
 - Token màu/chữ/bo góc khai báo một chỗ trong `apps/web/src/index.css` (`@theme` của Tailwind 4), đặt tên theo vai trò — xem `docs/design-system.md`. Không viết mã màu trong component. Chỉ có giao diện sáng; editor và console luôn tối.
 - Nút dùng `Button`/`ButtonLink`/`IconButton` trong `shared/ui/` (hoặc `buttonClasses()`), không tự viết class nút. Nút tối thiểu 44 px (`min-h-tap`).
 
