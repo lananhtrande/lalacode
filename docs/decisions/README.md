@@ -25,4 +25,5 @@ Ngày: YYYY-MM-DD
 | 0006 | Gọi Claude qua Amazon Bedrock thay vì Claude API trực tiếp | Chấp nhận |
 | 0007 | Nới ngân sách bundle cho riêng màn bài tập (CodeMirror) | Chấp nhận |
 | 0008 | Design system riêng: một màu nhấn, font Be Vietnam Pro, chỉ giao diện sáng | Chấp nhận (màu, font → 0009) |
-| 0009 | Nhận diện thương hiệu: màu nhấn San hô, font Inter | Chấp nhận |
+| 0009 | Nhận diện thương hiệu: màu nhấn San hô, font Inter | Chấp nhận (màu nhấn → 0010) |
+| 0010 | Màu nhấn xanh dương; San hô chỉ còn ở logo | Chấp nhận |

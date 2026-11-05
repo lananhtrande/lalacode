@@ -1,8 +1,8 @@
 # Design system lalakode
 
-Lý do của từng lựa chọn: ADR 0008 (nguyên lý, token, component) và ADR 0009 (màu San hô, font Inter, logo — `docs/brand/README.md`). Xem trực tiếp mọi token và component: chạy `npm run dev` rồi mở `/dev/design` (chỉ có ở dev).
+Lý do của từng lựa chọn: ADR 0008 (nguyên lý, token, component), ADR 0009 (font Inter, logo — `docs/brand/README.md`) và ADR 0010 (màu nhấn xanh dương; **San hô chỉ ở logo**). Xem trực tiếp mọi token và component: chạy `npm run dev` rồi mở `/dev/design` (chỉ có ở dev).
 
-![Trang mẫu /dev/design](design/screenshots/s034-dev-design-1440.png)
+![Trang mẫu /dev/design](design/screenshots/s035-dev-design-1440.png)
 
 ## Nguyên tắc
 
@@ -23,19 +23,19 @@ Khai báo một chỗ duy nhất: `@theme` trong `apps/web/src/index.css`. Dùng
 | `surface` | `#FFFFFF` | Thẻ, sidebar | — |
 | `surface-muted` | `#F6F5F4` | Nền trang, khối phụ | — |
 | `line` | `#E5E4E2` | Đường chia, viền thẻ | (không dùng cho chữ) |
-| `accent` | `#E8553A` (San hô) | Nút `primary`, con trỏ, viền focus và vùng chọn trong editor | chữ trắng chỉ 3.6:1 — **không dùng** |
-| `on-accent` | `#18181B` | Chữ trên `accent` | 4.9:1 |
-| `accent-strong` | `#B8381F` | Link, icon nhấn, chữ màu nhấn trên nền sáng | 5.8:1 trên `surface`, 5.3:1 trên `surface-muted` |
-| `accent-soft` | `#FDECE7` | Nền nhạt cho thứ đang được làm nổi (số thứ tự bài, chuỗi ngày học, huy hiệu đã nhận) | `ink` 15.5:1, `accent-strong` 5.1:1 |
+| `accent` | `#2563EB` (xanh dương) | Nút `primary`, mục đang chọn | — |
+| `on-accent` | `#FFFFFF` | Chữ trên `accent` (và trên `accent-strong` khi hover) | 5.2:1 / 6.7:1 |
+| `accent-strong` | `#1D4ED8` | Link, icon nhấn, chữ màu nhấn trên nền sáng; nền nút chính khi hover | 6.7:1 trên `surface`, 6.2:1 trên `surface-muted` |
+| `accent-soft` | `#EAF1FE` | Nền nhạt cho thứ đang được làm nổi (số thứ tự bài, chuỗi ngày học, huy hiệu đã nhận) | `ink` 15.6:1, `accent-strong` 5.9:1 |
 | `ai-surface` | `#F1EEFF` | Nền khung gợi ý AI | `ink` 15.5:1 |
-| `success` | `#126B32` | Chữ/icon "đạt", "xong" | 6.6:1 trên `surface` |
-| `success-surface` | `#E7F6EC` | Nền thẻ đạt | `success` 5.9:1 |
+| `success` | `#0E5E2B` | Chữ/icon "đạt", "xong" | 7.9:1 trên `surface` |
+| `success-surface` | `#E7F6EC` | Nền thẻ đạt | `success` 7.1:1 |
 | `attention` | `#7A5C00` (mù tạt) | Chữ/icon "chưa đạt", lỗi thân thiện, cảnh báo | 6.3:1 trên `surface` |
 | `attention-surface` | `#FFF5CC` | Nền thẻ cần chú ý | `attention` 5.7:1, `ink` 16.2:1 |
 
-`accent` **không đạt AA khi làm chữ trên nền trắng** (3.6:1). Chữ hay link mang màu nhấn thì dùng `accent-strong`.
+Chữ hay link mang màu nhấn dùng `accent-strong`, không dùng `accent` (chỉ 5.2:1 trên trắng, sát ngưỡng trên nền xám nhạt).
 
-**San hô ≠ "cần chú ý".** San hô chỉ có nghĩa "bấm vào đây / đang chọn". Mọi cảnh báo, lỗi, "chưa đạt" dùng `attention` (mù tạt, khác San hô ~36° sắc độ và sáng/tối hẳn), luôn kèm icon tam giác và chữ. `tokens.test.ts` chặn hai màu này xích lại gần nhau (< 30°).
+**San hô chỉ ở logo.** `#E8553A` chỉ có trong file logo/favicon. Không nút, link, trạng thái, icon hay nền nào dùng San hô hoặc một sắc đỏ/cam. Màu ấm duy nhất của giao diện là `attention` (mù tạt) cho cảnh báo, lỗi, "chưa đạt" — luôn kèm icon tam giác và chữ. Xanh dương chỉ có nghĩa "bấm vào đây / đang chọn". `tokens.test.ts` chặn `accent` xích lại gần `success`/`attention` (< 30° sắc độ) và chặn màu cú pháp nào giống màu nút.
 
 ## Chữ
 
@@ -74,7 +74,7 @@ Logo, favicon và icon màn hình chính nằm trong `apps/web/public/` (sinh t�
 | `Card` | Thẻ trắng bo 16px, bóng nhẹ, `as` = `div`/`section`/`article`/`li`. |
 | `AiPanel` | Khung nền `ai-surface` cho nội dung do AI tạo. |
 
-Mọi nút cao tối thiểu 44px (`min-h-tap`) và bo tròn hẳn. Viền focus: 3px `ink`, cách 2px — 17.7:1 trên nền trắng, 4.9:1 trên nút San hô. Trong editor tối, viền focus là 3px `accent` (4.9:1 trên `code-bg`).
+Mọi nút cao tối thiểu 44px (`min-h-tap`) và bo tròn hẳn. Viền focus: 3px `ink`, cách 2px — 17.7:1 trên nền trắng, 3.4:1 trên nút xanh dương. Trong editor tối, viền focus là 3px `code-accent` (7.0:1 trên `code-bg`).
 
 ## Áp vào từng màn
 
@@ -122,15 +122,16 @@ Theme CodeMirror **tự viết** trong `apps/web/src/shared/ui/code-theme.ts` (k
 | `code-gutter` | `#1F1F23` | Cột số dòng, thanh tiêu đề "Code của em" / "Kết quả chạy" | — |
 | `code-active` | `#26262B` | Dòng đang đứng | — |
 | `code-text` | `#ECECEE` | Chữ thường, toán tử | 15.2:1 |
+| `code-accent` | `#60A5FA` | Con trỏ, viền focus, vùng chọn | 7.0:1 |
 | `code-muted` | `#9A9AA3` | Số dòng, chữ chờ trong console | 6.4:1 |
 | `code-keyword` | `#FF9AC1` | `import`, `for`, `if`, `def`, `in`… | 9.1:1 |
 | `code-string` | `#A5E3A0` | Chuỗi | 12.0:1 |
-| `code-number` | `#FFC57A` | Số, `True`/`False`/`None` | 11.5:1 |
+| `code-number` | `#F3DFA2` | Số, `True`/`False`/`None` | 13.5:1 |
 | `code-comment` | `#A6A6AE` | Comment (trẻ đọc gợi ý trong code khởi đầu) | 7.4:1 |
-| `code-function` | `#7CC6FF` | Gọi hàm, `turtle.forward` | 9.7:1 |
+| `code-function` | `#67E8F9` | Gọi hàm, `turtle.forward` | 12.3:1 |
 | `code-builtin` | `#C4B5FD` | `print`, `range`, `len`, `input`… (tô bằng `MatchDecorator` vì ngữ pháp Python không phân biệt) | 9.7:1 |
 
-Con trỏ, viền focus 3px và vùng chọn (`color-mix` 30% `accent`) dùng `accent`; nền editor là xám trung tính, không ánh màu. Cỡ chữ code 16px, 15px dưới 640px, dòng cao 1.6. Đang chạy (chỉ đọc): chữ mờ đi, con trỏ ẩn.
+Con trỏ, viền focus 3px và vùng chọn (`color-mix` 30%) dùng `code-accent` `#60A5FA` (7.0:1 trên `code-bg`, 5.9:1 trên dòng đang đứng) — `accent` quá tối trên nền code; nền editor là xám trung tính, không ánh màu. Cỡ chữ code 16px, 15px dưới 640px, dòng cao 1.6. Đang chạy (chỉ đọc): chữ mờ đi, con trỏ ẩn.
 
 ## Màn bài tập
 
