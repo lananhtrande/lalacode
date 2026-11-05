@@ -376,6 +376,6 @@ export const vi = {
   },
   footer: {
     privacy: 'Quyền riêng tư',
-    madeFor: 'Làm cho học sinh Việt Nam',
+    madeFor: 'Nền tảng học lập trình cho người Việt',
   },
 } as const;
