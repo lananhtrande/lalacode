@@ -58,7 +58,7 @@ export function RootLayout() {
           <div className="flex items-center justify-between gap-2 px-4 py-2 lg:px-5 lg:pt-6 lg:pb-4">
             {/* Logo chữ đã chuyển thành nét (docs/brand/README.md); khai báo kích thước để không nhảy layout. */}
             <Link to="/" className="flex min-h-tap items-center">
-              <img src="/brand/lalakode-logo.svg" alt={vi.app.name} width={121} height={30} />
+              <img src="/brand/lalakode-logo.svg" alt={vi.app.name} width={131} height={30} />
             </Link>
             <IconButton
               label={menuOpen ? vi.nav.closeMenu : vi.nav.openMenu}

@@ -1,4 +1,4 @@
-# lalakode
+# LaLaKode
 
 [![CI](https://github.com/lananhtrande/lalacode/actions/workflows/ci.yml/badge.svg)](https://github.com/lananhtrande/lalacode/actions/workflows/ci.yml)
 

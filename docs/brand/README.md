@@ -1,15 +1,15 @@
-# Nhận diện thương hiệu lalakode
+# Nhận diện thương hiệu LaLaKode
 
 **Khẩu hiệu:** Nền tảng học lập trình cho người Việt
 
-**Biểu tượng:** chữ “ơ” — nét móc chỉ tiếng Việt mới có — cạnh con trỏ nhấp nháy: người Việt + viết code.
+**Biểu tượng:** chữ “ơ” — nét móc chỉ tiếng Việt mới có — cạnh con trỏ nhấp nháy: người Việt + viết code. Logo chữ `LaLaKode` không có con trỏ ở cuối (bỏ ngày 2026-11-05).
 
 ![logo](lalakode-logo-tagline@2x.png)
 
 ## Màu
 | Vai trò | Hex | Ghi chú |
 | --- | --- | --- |
-| San hô (màu thương hiệu) | `#E8553A` | Nền biểu tượng, con trỏ của logo chữ. **Không dùng làm màu chữ nhỏ** trên nền trắng (tương phản 3,6:1) |
+| San hô (màu thương hiệu) | `#E8553A` | Nền biểu tượng. **Không dùng làm màu chữ nhỏ** trên nền trắng (tương phản 3,6:1) |
 | Mực | `#18181B` | Logo chữ, con trỏ trong biểu tượng |
 | Chữ phụ | `#4A4A52` | Khẩu hiệu |
 
@@ -31,7 +31,7 @@ Logo chữ: **Inter ExtraBold (800)**, giãn chữ −3,5 %; khẩu hiệu: Inte
 ## Quy tắc dùng
 - Khoảng trống quanh logo ≥ ¼ chiều cao biểu tượng. Logo ngang không nhỏ hơn 24 px chiều cao; dưới mức đó chỉ dùng biểu tượng.
 - Không đổi màu, kéo giãn, xoay, thêm bóng/viền, hay đặt logo lên ảnh rối.
-- Logo chữ luôn viết thường: **lalakode**.
+- Tên viết đúng: **LaLaKode** (L, L, K viết hoa) — trên logo, trong văn bản, tiêu đề trang, manifest.
 
 ## Dựng lại
 `build-logo.mjs` sinh toàn bộ file từ đầu (Inter từ `@fontsource/inter`, `opentype.js`, `@resvg/resvg-js`). Chạy trong một thư mục tạm, không thêm dependency vào repo:

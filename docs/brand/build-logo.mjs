@@ -12,7 +12,7 @@ const fonts = {
   500: [F('inter-latin-500-normal.woff'), F('inter-vietnamese-500-normal.woff')],
 };
 
-// coral: concept B as drawn; teal: concept B in the site's "Ngọc biển" tokens (index.css).
+// Wordmark has no trailing cursor (removed 2026-11-05). coral: concept B as drawn; teal: concept B in the site's "Ngọc biển" tokens (index.css).
 const PALETTES = {
   coral: { bg: '#E8553A', glyph: '#FFFFFF', markCursor: '#18181B', ink: '#18181B', muted: '#4A4A52', cursor: '#E8553A' },
   teal: { bg: '#2DD4BF', glyph: '#06302B', markCursor: '#FFFFFF', ink: '#0F1A1C', muted: '#4A5A5E', cursor: '#0F766E' },
@@ -54,20 +54,19 @@ const ASC = 0.727; // Inter cap/ascender height for l, k, d
 const files = {};
 
 // 1. Mark only
-files['lalakode-mark.svg'] = svg(120, 120, mark(0, 0, 120), 'lalakode');
-files['lalakode-mark-small.svg'] = svg(120, 120, mark(0, 0, 120, false, 26), 'lalakode');
+files['lalakode-mark.svg'] = svg(120, 120, mark(0, 0, 120), 'LaLaKode');
+files['lalakode-mark-small.svg'] = svg(120, 120, mark(0, 0, 120, false, 26), 'LaLaKode');
 
 // 2. Horizontal logo (light + dark)
 for (const [name, color] of [['lalakode-logo.svg', INK], ['lalakode-logo-dark.svg', '#FFFFFF']]) {
   const size = 64, markS = 96, gap = 22;
   const top = 48 - (ASC * size) / 2, base = top + ASC * size;
-  const wm = outline('lalakode', 800, size, markS + gap, base, -0.035);
-  const cursorX = markS + gap + wm.width + 6;
-  const w = cursorX + 10;
+  const wm = outline('LaLaKode', 800, size, markS + gap, base, -0.035);
+  const w = markS + gap + wm.width + 2;
   files[name] = svg(
     w, markS,
-    `${mark(0, 0, markS)}<path fill="${color}" d="${wm.d}"/><rect x="${cursorX.toFixed(1)}" y="${top.toFixed(1)}" width="10" height="${(ASC * size).toFixed(1)}" rx="2.5" fill="${P.cursor}"/>`,
-    'lalakode',
+    `${mark(0, 0, markS)}<path fill="${color}" d="${wm.d}"/>`,
+    'LaLaKode',
   );
 }
 
@@ -75,14 +74,13 @@ for (const [name, color] of [['lalakode-logo.svg', INK], ['lalakode-logo-dark.sv
 for (const [name, color, sub] of [['lalakode-logo-tagline.svg', INK, MUTED], ['lalakode-logo-tagline-dark.svg', '#FFFFFF', '#D4D4D8']]) {
   const size = 64, markS = 112, gap = 24, x = markS + gap;
   const top = 10, base = top + ASC * size;
-  const wm = outline('lalakode', 800, size, x, base, -0.035);
+  const wm = outline('LaLaKode', 800, size, x, base, -0.035);
   const tag = outline('Nền tảng học lập trình cho người Việt', 500, 20, x + 2, base + 36);
-  const cursorX = x + wm.width + 6;
-  const w = Math.max(cursorX + 10, x + 2 + tag.width) + 2;
+  const w = Math.max(x + wm.width, x + 2 + tag.width) + 2;
   files[name] = svg(
     w, markS,
-    `${mark(0, 0, markS)}<path fill="${color}" d="${wm.d}"/><rect x="${cursorX.toFixed(1)}" y="${top}" width="10" height="${(ASC * size).toFixed(1)}" rx="2.5" fill="${P.cursor}"/><path fill="${sub}" d="${tag.d}"/>`,
-    'lalakode — Nền tảng học lập trình cho người Việt',
+    `${mark(0, 0, markS)}<path fill="${color}" d="${wm.d}"/><path fill="${sub}" d="${tag.d}"/>`,
+    'LaLaKode — Nền tảng học lập trình cho người Việt',
   );
 }
 

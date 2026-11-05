@@ -101,7 +101,7 @@ test.describe('khung app', () => {
     });
     await page.goto('/');
 
-    const logo = page.getByRole('link', { name: 'lalakode' }).getByRole('img');
+    const logo = page.getByRole('link', { name: 'LaLaKode' }).getByRole('img');
     await expect(logo).toBeVisible();
     expect(await logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
 
