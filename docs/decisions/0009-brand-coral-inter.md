@@ -2,6 +2,7 @@
 Trạng thái: Chấp nhận
 Ngày: 2026-11-05
 Thay một phần: ADR 0008 (bảng màu "Ngọc biển" và font Be Vietnam Pro)
+**Phần màu nhấn San hô được thay bởi ADR 0010** (xanh dương; San hô chỉ ở logo). Font Inter, logo, màu "cần chú ý" vẫn giữ.
 
 ## Bối cảnh
 Người duy trì đã chốt logo lalakode (`docs/brand/README.md`): biểu tượng chữ "ơ" + con trỏ trên nền **San hô `#E8553A`**, logo chữ màu Mực `#18181B` dựng từ Inter ExtraBold, khẩu hiệu "Nền tảng học lập trình cho người Việt". Giao diện xanh ngọc + Be Vietnam Pro không còn khớp với logo.

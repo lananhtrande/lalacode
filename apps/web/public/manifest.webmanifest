@@ -4,7 +4,7 @@
   "lang": "vi",
   "start_url": "/",
   "display": "browser",
-  "theme_color": "#e8553a",
+  "theme_color": "#2563eb",
   "background_color": "#ffffff",
   "icons": [
     { "src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
