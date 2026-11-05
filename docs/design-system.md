@@ -144,6 +144,21 @@ Chạy/nộp xong: màn rộng cuộn cột phải lên đầu, màn hẹp cuộ
 
 Nút: "Nộp bài" `primary`, "Chạy thử" `dark`, "Dừng" `outline`, "Làm lại từ đầu" `ghost`.
 
+### Bài trước / bài tiếp (S0-36)
+
+Thứ tự lấy từ `content/navigation.ts` (hàm thuần: `order` của khoá, `exercises` của bài học). `NeighbourLinks` là `<nav aria-label="Chuyển bài">` gồm hai `<Link>` thật, cao ≥ 44px, nhãn đọc to đầy đủ ("Bài tập tiếp: Sửa lỗi giúp bạn").
+
+| Màn | Thanh trước/tiếp | Nút chính đi tiếp |
+| --- | --- | --- |
+| Bài tập | Dưới thanh nút, cột trái. Bài tập đầu: "← Về bài học"; bài tập cuối: "Bài học tiếp →"; hết khoá: "Về bản đồ". Luôn là `outline` — giai đoạn 0 không khoá bài | Nộp đúng hết → thẻ `NextStepCard` (nền `success-surface`) ở khu kết quả với nút `primary`, **nhận focus** để bấm Enter là đi tiếp. Câu khen đọc lại tiến độ vừa lưu: chỉ nói "Em đã xong bài học này!" / "…cả khoá học!" khi đúng là vậy |
+| Bài học | Cuối trang, dưới đường kẻ: "← Bài học trước" · "Bài học tiếp →" (bài cuối: "Về bản đồ") | "Bài học tiếp" thành `primary` khi đã xong mọi bài tập của bài này; chưa xong thì nút chính vẫn là "Làm tiếp bài chưa xong" |
+
+Đi thẳng từ bài tập này sang bài tập khác không dựng lại màn hình (cùng route): kết quả, lỗi, hình rùa của bài cũ được xoá ngay, lần chạy dở bị dừng và kết quả của nó bị bỏ.
+
+| Bài tập đúng, 1440 | Bài tập đúng, 390 | Bài học, 390 |
+| --- | --- | --- |
+| ![](design/screenshots/s036-sau-bai-tap-dung-1440.png) | ![](design/screenshots/s036-sau-bai-tap-dung-390.png) | ![](design/screenshots/s036-sau-bai-hoc-390.png) |
+
 | | 1440 | 1180 (tablet ngang) | 820 (tablet dọc) | 390 |
 | --- | --- | --- | --- | --- |
 | Trước | ![](design/screenshots/s032-truoc-bai-tap-rua-1440.png) | — | ![](design/screenshots/s032-truoc-bai-tap-rua-820.png) | ![](design/screenshots/s032-truoc-bai-tap-rua-390.png) |
