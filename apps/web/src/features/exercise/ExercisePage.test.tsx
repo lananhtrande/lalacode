@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi as vitest } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { ExercisePage } from './ExercisePage';
@@ -36,9 +36,14 @@ const exercise: PublicExercise = {
 };
 
 const loadExercise = vitest.fn();
+const loadContentIndex = vitest.fn();
 vitest.mock('../../content/loader', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../content/loader')>();
-  return { ...actual, loadExercise: (id: string) => loadExercise(id) as unknown };
+  return {
+    ...actual,
+    loadExercise: (id: string) => loadExercise(id) as unknown,
+    loadContentIndex: () => loadContentIndex() as unknown,
+  };
 });
 
 const getExerciseProgress = vitest.fn();
@@ -90,14 +95,16 @@ vitest.mock('../../runner/runner-client', () => ({
   }),
 }));
 
-function renderPage() {
+function renderPage(exerciseId = exercise.id) {
   const router = createMemoryRouter([{ path: '/bai-tap/:exerciseId', Component: ExercisePage }], {
-    initialEntries: [`/bai-tap/${exercise.id}`],
+    initialEntries: [`/bai-tap/${exerciseId}`],
   });
   return render(<RouterProvider router={router} />);
 }
 
 beforeEach(() => {
+  // Mặc định không có index: các test cũ không cần thanh bài trước/tiếp.
+  loadContentIndex.mockRejectedValue(new Error('không có index'));
   getExerciseProgress.mockResolvedValue(undefined);
   recordAttempt.mockResolvedValue(undefined);
   saveDraft.mockResolvedValue(undefined);
@@ -367,5 +374,120 @@ describe('ExercisePage', () => {
     renderPage();
     await screen.findByRole('heading', { name: exercise.title });
     expect(screen.queryByTestId('turtle-canvas')).not.toBeInTheDocument();
+  });
+});
+
+describe('ExercisePage — sang bài tiếp theo (S0-36)', () => {
+  const lessonId = 'py-khoi-dong.01-xin-chao';
+  const second = { ...exercise, id: `${lessonId}.02-in-ten`, title: 'In tên' };
+  const index = {
+    version: 1,
+    courses: [
+      {
+        id: 'py-khoi-dong',
+        lessons: [
+          { id: lessonId, title: 'Xin chào, Python!', exerciseCount: 2 },
+          { id: 'py-khoi-dong.02-bien', title: 'Cái hộp tên là biến', exerciseCount: 3 },
+        ],
+      },
+    ],
+  };
+  const lessonBundle = {
+    version: 1,
+    lesson: {
+      id: lessonId,
+      title: 'Xin chào, Python!',
+      exercises: ['01-in-loi-chao', '02-in-ten'],
+    },
+    markdown: '',
+    exercises: [exercise, second],
+  };
+
+  beforeEach(() => {
+    loadContentIndex.mockResolvedValue(index);
+    loadExercise.mockImplementation((id: string) =>
+      Promise.resolve({ lesson: lessonBundle, exercise: id === second.id ? second : exercise }),
+    );
+  });
+
+  it('luôn có thanh bài trước/tiếp; chưa nộp đúng thì "tiếp" chỉ là nút phụ', async () => {
+    renderPage();
+    const nav = await screen.findByRole('navigation', { name: strings.pager.label });
+    const next = within(nav).getByRole('link', { name: 'Bài tập tiếp: In tên' });
+    expect(next).toHaveAttribute('href', `/bai-tap/${second.id}`);
+    expect(next.className).not.toContain('bg-accent');
+    expect(
+      within(nav).getByRole('link', { name: 'Về bài học: Xin chào, Python!' }),
+    ).toHaveAttribute('href', `/bai-hoc/${lessonId}`);
+    expect(screen.queryByTestId('next-step')).not.toBeInTheDocument();
+  });
+
+  it('nộp đúng thì nút chính "Bài tập tiếp theo" dẫn tới bài 2 và nhận focus', async () => {
+    renderPage();
+    await screen.findByRole('navigation', { name: strings.pager.label });
+    await userEvent.click(screen.getByRole('button', { name: strings.exercise.submit }));
+    const cta = await screen.findByRole('link', {
+      name: new RegExp(strings.pager.nextExerciseCta),
+    });
+    expect(cta).toHaveAttribute('href', `/bai-tap/${second.id}`);
+    expect(cta.className).toContain('bg-accent');
+    await waitFor(() => expect(cta).toHaveFocus());
+  });
+
+  it('bấm đi tiếp thì sang bài 2 sạch sẽ: không còn kết quả của bài 1', async () => {
+    renderPage();
+    await screen.findByRole('navigation', { name: strings.pager.label });
+    await userEvent.click(screen.getByRole('button', { name: strings.exercise.submit }));
+    await userEvent.click(
+      await screen.findByRole('link', { name: new RegExp(strings.pager.nextExerciseCta) }),
+    );
+    expect(await screen.findByRole('heading', { name: 'In tên' })).toBeInTheDocument();
+    expect(screen.queryByText(strings.exercise.allPassed)).not.toBeInTheDocument();
+    expect(screen.queryByTestId('next-step')).not.toBeInTheDocument();
+  });
+
+  it('nộp sai thì không có nút chính đi tiếp', async () => {
+    grade.mockResolvedValue({
+      ok: true,
+      report: {
+        passed: false,
+        durationMs: 9,
+        results: [
+          {
+            index: 0,
+            type: 'stdout_equals',
+            passed: false,
+            message: 'Thử lại nhé em.',
+            detail: null,
+          },
+        ],
+      },
+    });
+    renderPage();
+    await screen.findByRole('navigation', { name: strings.pager.label });
+    await userEvent.click(screen.getByRole('button', { name: strings.exercise.submit }));
+    await screen.findByText(strings.exercise.somePassed);
+    expect(screen.queryByTestId('next-step')).not.toBeInTheDocument();
+  });
+
+  it('bài tập cuối, xong cả bài học: "Hoàn thành bài học · Sang bài học tiếp" tới bài học kế', async () => {
+    exportSnapshot.mockResolvedValue(snapshotWith([exercise.id, second.id]));
+    renderPage(second.id);
+    await screen.findByRole('navigation', { name: strings.pager.label });
+    await userEvent.click(screen.getByRole('button', { name: strings.exercise.submit }));
+    const card = await screen.findByTestId('next-step');
+    await waitFor(() => expect(card).toHaveTextContent(strings.pager.lessonDone));
+    expect(within(card).getByRole('link')).toHaveTextContent(strings.pager.finishLessonCta);
+    expect(within(card).getByRole('link')).toHaveAttribute('href', '/bai-hoc/py-khoi-dong.02-bien');
+  });
+
+  it('bài tập cuối nhưng bài học còn bài chưa xong: không khen "xong bài học"', async () => {
+    exportSnapshot.mockResolvedValue(snapshotWith([second.id]));
+    renderPage(second.id);
+    await screen.findByRole('navigation', { name: strings.pager.label });
+    await userEvent.click(screen.getByRole('button', { name: strings.exercise.submit }));
+    const card = await screen.findByTestId('next-step');
+    await waitFor(() => expect(card).toHaveTextContent(strings.pager.lastExerciseDone));
+    expect(within(card).getByRole('link')).toHaveTextContent(strings.pager.nextLessonCta);
   });
 });
