@@ -15,6 +15,8 @@ export default tseslint.config(
       'apps/web/public/**',
       'test-results/**',
       '.claude/**',
+      // script dựng logo, chạy trong thư mục tạm ngoài repo (docs/brand/README.md)
+      'docs/brand/**',
     ],
   },
   js.configs.recommended,
