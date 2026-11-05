@@ -80,6 +80,25 @@ export const vi = {
     allDone: 'Em làm xong hết bài học này rồi. Giỏi quá!',
     nextLesson: 'Sang bài tiếp theo',
   },
+  /** Đi sang bài trước/bài tiếp (S0-36). Nhãn đọc to dạng "Bài tập tiếp: Góc vuông". */
+  pager: {
+    label: 'Chuyển bài',
+    previousExercise: 'Bài tập trước',
+    nextExercise: 'Bài tập tiếp',
+    backToLesson: 'Về bài học',
+    previousLesson: 'Bài học trước',
+    nextLesson: 'Bài học tiếp',
+    toMap: 'Về bản đồ',
+    nextExerciseCta: 'Bài tập tiếp theo',
+    finishLessonCta: 'Hoàn thành bài học · Sang bài học tiếp',
+    nextLessonCta: 'Bài học tiếp theo',
+    exerciseDone: 'Làm tốt lắm! Sang bài tiếp nhé?',
+    lessonDone: 'Em đã xong bài học này!',
+    lastExerciseDone:
+      'Em làm đúng bài tập cuối rồi! Bài học này vẫn còn bài tập chưa xong, lúc nào thích em quay lại làm nhé.',
+    courseDone: 'Em đã hoàn thành cả khoá học!',
+    courseEnd: 'Em đã tới bài cuối của khoá học rồi! Xem trên bản đồ còn bài nào chưa xong nhé.',
+  },
   exercise: {
     loading: 'Đang mở bài tập…',
     notFound: 'Không tìm thấy bài tập này.',
