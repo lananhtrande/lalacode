@@ -14,7 +14,8 @@ const base =
   'inline-flex min-h-tap items-center justify-center gap-2 rounded-full text-label transition-colors disabled:cursor-not-allowed disabled:opacity-60';
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-accent text-on-accent hover:bg-accent/85',
+  // Hover đậm hơn chứ không nhạt đi: chữ trắng trên nền nhạt hơn sẽ tụt dưới AA.
+  primary: 'bg-accent text-on-accent hover:bg-accent-strong',
   dark: 'bg-ink text-surface hover:bg-ink/85',
   outline: 'border-2 border-ink bg-surface text-ink hover:bg-surface-muted',
   ghost: 'text-ink hover:bg-ink/5',
