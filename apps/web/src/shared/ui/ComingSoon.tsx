@@ -11,10 +11,7 @@ export function ComingSoon({ title }: { title: string }) {
       </p>
       <h1 className="mt-4 text-page-title">{title}</h1>
       <p className="mt-3 text-ink-soft">{vi.comingSoon.body}</p>
-      <Link
-        to="/"
-        className={buttonClasses('primary', 'md', 'mt-6')}
-      >
+      <Link to="/" className={buttonClasses('primary', 'md', 'mt-6')}>
         {vi.comingSoon.backHome}
       </Link>
     </section>

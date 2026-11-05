@@ -7,7 +7,13 @@ export interface IconButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonEle
 }
 
 /** Nút tròn chỉ có icon, 44×44px. */
-export function IconButton({ label, icon, className = '', type = 'button', ...rest }: IconButtonProps) {
+export function IconButton({
+  label,
+  icon,
+  className = '',
+  type = 'button',
+  ...rest
+}: IconButtonProps) {
   return (
     <button
       type={type}

@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router';
-import { loadExercise, lessonIdOfExercise } from '../../content/loader';
+import { loadContentIndex, loadExercise, lessonIdOfExercise } from '../../content/loader';
+import {
+  completionOf,
+  exerciseNeighbours,
+  type Completion,
+  type Neighbours,
+} from '../../content/navigation';
 import {
   awardBadges,
   getAiToken,
@@ -13,7 +19,8 @@ import {
 } from '../../progress/db';
 import { evaluateBadges } from '../../progress/badges';
 import { dayKey } from '../../progress/streak';
-import type { PublicExercise } from '../../content/types';
+import type { ContentIndex, LessonBundle, PublicExercise } from '../../content/types';
+import type { ProgressSnapshot } from '../../progress/schema';
 import type { DrawCommand, TestResult } from '../../runner/protocol';
 import { createRunner, type Runner } from '../../runner/runner-client';
 import { describeRunError, type RunErrorInfo } from '../../runner/messages';
@@ -27,6 +34,9 @@ import { ExercisePrompt } from './ExercisePrompt';
 import { ExerciseToolbar } from './ExerciseToolbar';
 import { OutputConsole } from './OutputConsole';
 import { buttonClasses } from '../../shared/ui/button-classes';
+import { NeighbourLinks } from '../../shared/ui/NeighbourLinks';
+import { toNeighbourLink } from '../../shared/ui/neighbour-link';
+import { NextStepCard } from './NextStepCard';
 
 type Phase = 'idle' | 'running' | 'grading';
 /** Lưu lần nộp vào máy: chạy ngầm, nhưng e2e cần biết khi nào xong. */
@@ -53,6 +63,36 @@ export function ExercisePage() {
   const resultsRef = useRef<HTMLDivElement | null>(null);
   /** Tăng mỗi khi chạy/nộp xong, để đưa khu kết quả vào tầm mắt. */
   const [revealTick, setRevealTick] = useState(0);
+  /** Bài trước/tiếp (S0-36) và dữ liệu để biết trẻ đã xong bài học/khoá chưa. */
+  const [neighbours, setNeighbours] = useState<Neighbours | null>(null);
+  const [context, setContext] = useState<{ index: ContentIndex; lesson: LessonBundle } | null>(
+    null,
+  );
+  const [completion, setCompletion] = useState<Completion | null>(null);
+  /** Mã bài đang mở, để kết quả của một lần chạy dở không đổ nhầm sang bài khác. */
+  const activeIdRef = useRef(exerciseId);
+
+  // Đi thẳng từ bài tập này sang bài tập khác thì màn hình không được dựng lại
+  // (cùng route): xoá kết quả của bài cũ ngay lúc đổi bài.
+  const [shownFor, setShownFor] = useState(exerciseId);
+  if (shownFor !== exerciseId) {
+    setShownFor(exerciseId);
+    setExercise(null);
+    setStdout('');
+    setError(null);
+    setResults(null);
+    setDrawing([]);
+    setPhase('idle');
+    setSaveState('idle');
+    setNeighbours(null);
+    setCompletion(null);
+  }
+
+  // Rời bài đang chạy dở thì dừng nó; Pyodide giữ nguyên nếu không có gì đang chạy.
+  useEffect(() => {
+    activeIdRef.current = exerciseId;
+    return () => runnerRef.current?.cancel();
+  }, [exerciseId]);
 
   // Token ẩn danh cho gợi ý AI; không lấy được thì panel chỉ dùng gợi ý viết sẵn.
   useEffect(() => {
@@ -96,6 +136,11 @@ export function ExercisePage() {
         void quietly(() =>
           markLessonStarted(lessonIdOfExercise(found.id), found.id.split('.')[0] ?? ''),
         );
+        // Không có index thì chỉ thiếu nút bài trước/tiếp, bài tập vẫn làm được.
+        const index = await loadContentIndex().catch(() => null);
+        if (!active || !index) return;
+        setContext({ index, lesson });
+        setNeighbours(exerciseNeighbours(index, lesson, found.id));
       })
       .catch(() => {
         if (active) setLoadFailed(true);
@@ -125,6 +170,7 @@ export function ExercisePage() {
     clearOutcome();
     setPhase('running');
     const outcome = await runnerRef.current.run(code, { timeoutMs: exercise.timeoutMs });
+    if (activeIdRef.current !== exercise.id) return;
     setPhase('idle');
     setDrawing(outcome.drawing);
     if (outcome.ok) setStdout(outcome.result.stdout + outcome.result.stderr);
@@ -139,14 +185,26 @@ export function ExercisePage() {
     const outcome = await runnerRef.current.grade(code, exercise.tests, {
       timeoutMs: exercise.timeoutMs,
     });
+    if (activeIdRef.current !== exercise.id) return;
     setPhase('idle');
     if (outcome.ok) {
       setResults(outcome.report.results);
       setSaveState('saving');
+      const passed = outcome.report.passed;
       // quietly() không bao giờ ném lỗi: lưu hỏng thì vẫn coi như đã xong lượt lưu.
-      void quietly(() => saveOutcome(exercise.id, outcome.report.passed, code)).then(() =>
-        setSaveState('saved'),
-      );
+      void quietly(() => saveOutcome(exercise.id, passed, code)).then((latest) => {
+        if (activeIdRef.current !== exercise.id) return;
+        setSaveState('saved');
+        // Đọc lại tiến độ vừa lưu để khen đúng: xong bài học? xong cả khoá?
+        if (passed && latest && context) {
+          const done = new Set(
+            latest.exercises
+              .filter((item) => item.status === 'xong')
+              .map((item) => item.exerciseId),
+          );
+          setCompletion(completionOf(context.index, context.lesson, done));
+        }
+      });
     } else {
       setError(describeRunError(outcome.error));
     }
@@ -164,7 +222,11 @@ export function ExercisePage() {
    * Ghi lần nộp (kèm dấu trọn bài học, cùng một transaction), rồi trao huy hiệu.
    * Làm sau khi đã hiện kết quả cho trẻ: lưu trữ không được giữ chân màn hình.
    */
-  async function saveOutcome(exerciseId: string, passed: boolean, submittedCode: string) {
+  async function saveOutcome(
+    exerciseId: string,
+    passed: boolean,
+    submittedCode: string,
+  ): Promise<ProgressSnapshot> {
     const lessonId = lessonIdOfExercise(exerciseId);
     await recordAttempt(exerciseId, lessonId, passed, submittedCode, lessonExerciseIds);
 
@@ -174,16 +236,14 @@ export function ExercisePage() {
       .filter((badge) => badge.earned)
       .map((badge) => badge.id);
     if (earned.length > 0) await awardBadges(earned);
+    return latest;
   }
 
   if (loadFailed) {
     return (
       <section className="mx-auto max-w-prose text-center">
         <h1 className="text-2xl font-bold">{vi.exercise.notFound}</h1>
-        <Link
-          to="/ban-do"
-          className={buttonClasses('primary', 'md', 'mt-4')}
-        >
+        <Link to="/ban-do" className={buttonClasses('primary', 'md', 'mt-4')}>
           {vi.exercise.backToMap}
         </Link>
       </section>
@@ -199,6 +259,7 @@ export function ExercisePage() {
   }
 
   const busy = phase !== 'idle';
+  const passedAll = results !== null && results.length > 0 && results.every((item) => item.passed);
 
   return (
     <article
@@ -215,9 +276,7 @@ export function ExercisePage() {
             >
               ← {lessonTitle}
             </Link>
-            <h1 className="mt-1 text-section-title sm:text-page-title">
-              {exercise.title}
-            </h1>
+            <h1 className="mt-1 text-section-title sm:text-page-title">{exercise.title}</h1>
           </div>
           <p
             className="flex items-center gap-2 rounded-full bg-surface-muted px-3 py-1 text-small text-ink-soft"
@@ -225,7 +284,9 @@ export function ExercisePage() {
           >
             <span
               aria-hidden="true"
-              className={['size-2 rounded-full', pythonReady ? 'bg-success' : 'bg-attention'].join(' ')}
+              className={['size-2 rounded-full', pythonReady ? 'bg-success' : 'bg-attention'].join(
+                ' ',
+              )}
             />
             {pythonReady ? vi.exercise.ready : vi.exercise.preparing}
           </p>
@@ -266,6 +327,16 @@ export function ExercisePage() {
               setDrawing([]);
             }}
           />
+          {neighbours && (
+            <NeighbourLinks
+              label={vi.pager.label}
+              previous={
+                neighbours.previous && toNeighbourLink(neighbours.previous, 'previous', 'exercise')
+              }
+              next={toNeighbourLink(neighbours.next, 'next', 'exercise')}
+              className="mt-3"
+            />
+          )}
         </section>
 
         <div
@@ -279,6 +350,9 @@ export function ExercisePage() {
             <OutputConsole output={stdout} />
             {exercise.turtle && <TurtleCanvas commands={drawing} />}
             {results && <TestResultList results={results} />}
+            {passedAll && neighbours && (
+              <NextStepCard next={neighbours.next} completion={completion} />
+            )}
           </div>
           <HintPanel
             hints={exercise.hints}
