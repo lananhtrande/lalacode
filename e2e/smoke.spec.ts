@@ -88,4 +88,40 @@ test.describe('khung app', () => {
     );
     expect(overflow).toBeLessThanOrEqual(0);
   });
+
+  test('logo, favicon, manifest và font Inter đều tải từ chính domain của mình', async ({
+    page,
+    baseURL,
+  }) => {
+    const origins = new Set<string>();
+    const fonts: string[] = [];
+    page.on('request', (request) => {
+      origins.add(new URL(request.url()).origin);
+      if (request.resourceType() === 'font') fonts.push(new URL(request.url()).pathname);
+    });
+    await page.goto('/');
+
+    const logo = page.getByRole('link', { name: 'LaLaKode' }).getByRole('img');
+    await expect(logo).toBeVisible();
+    expect(await logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+
+    for (const href of await page
+      .locator('link[rel="icon"], link[rel="apple-touch-icon"], link[rel="manifest"]')
+      .evaluateAll((links) => links.map((link) => link.getAttribute('href') ?? ''))) {
+      expect(href).toMatch(/^\//);
+      expect((await page.request.get(href)).ok(), href).toBe(true);
+    }
+    const manifest = (await (await page.request.get('/manifest.webmanifest')).json()) as {
+      icons: { src: string }[];
+    };
+    for (const icon of manifest.icons) {
+      expect((await page.request.get(icon.src)).ok(), icon.src).toBe(true);
+    }
+
+    // Trang có chữ tiếng Việt có dấu → trình duyệt tải bảng chữ latin và vietnamese của Inter.
+    await page.evaluate(() => document.fonts.ready);
+    expect(fonts).toContain('/fonts/inter/inter-vietnamese-wght-normal.woff2');
+    expect(fonts).toContain('/fonts/inter/inter-latin-wght-normal.woff2');
+    expect([...origins]).toEqual([new URL(baseURL ?? '').origin]);
+  });
 });

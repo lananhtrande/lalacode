@@ -196,7 +196,7 @@ export async function decodeProgressCode(code: string): Promise<SharedProgress> 
     throw new ProgressCodeError('Nội dung mã không hợp lệ', 'khong-doc-duoc');
   }
   if (data.schemaVersion > PROGRESS_SCHEMA_VERSION) {
-    throw new ProgressCodeError('Mã tạo bởi phiên bản mới hơn của lalakode', 'phien-ban-moi-hon');
+    throw new ProgressCodeError('Mã tạo bởi phiên bản mới hơn của LaLaKode', 'phien-ban-moi-hon');
   }
   return data;
 }

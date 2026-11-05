@@ -83,7 +83,7 @@ export function HintPanel({ hints, exerciseId, getCode, getError, aiToken }: Hin
           className="mt-2 flex items-start gap-2 text-sm text-ink-soft"
           data-testid="hint-privacy"
         >
-          <TriangleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-accent-strong" />
+          <TriangleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-attention" />
           <span>{vi.exercise.privacyWarning}</span>
         </p>
       )}

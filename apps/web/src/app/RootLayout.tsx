@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useMatches } from 'react-router';
-import { Award, House, Info, Map, Menu, Turtle, X } from 'lucide-react';
+import { Award, House, Info, Map, Menu, X } from 'lucide-react';
 import { IconButton } from '../shared/ui/IconButton';
 import { vi } from '../shared/i18n/vi';
 
@@ -56,9 +56,9 @@ export function RootLayout() {
       <div className="contents lg:block lg:border-r lg:border-line lg:bg-surface">
         <aside className="sticky top-0 z-20 border-b border-line bg-surface lg:flex lg:h-dvh lg:flex-col lg:border-b-0">
           <div className="flex items-center justify-between gap-2 px-4 py-2 lg:px-5 lg:pt-6 lg:pb-4">
-            <Link to="/" className="flex min-h-tap items-center gap-2 text-card-title font-bold">
-              <Turtle aria-hidden="true" className="size-6 text-accent-strong" />
-              {vi.app.name}
+            {/* Logo chữ đã chuyển thành nét (docs/brand/README.md); khai báo kích thước để không nhảy layout. */}
+            <Link to="/" className="flex min-h-tap items-center">
+              <img src="/brand/lalakode-logo.svg" alt={vi.app.name} width={131} height={30} />
             </Link>
             <IconButton
               label={menuOpen ? vi.nav.closeMenu : vi.nav.openMenu}

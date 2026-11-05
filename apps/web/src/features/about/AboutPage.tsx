@@ -15,6 +15,13 @@ export function AboutPage() {
   return (
     <div className="mx-auto max-w-prose">
       <section>
+        <img
+          src="/brand/lalakode-logo-tagline.svg"
+          alt={`${vi.app.name} — ${vi.footer.madeFor}`}
+          width={283}
+          height={64}
+          className="mb-6"
+        />
         <h1 className="text-page-title">{vi.about.title}</h1>
         <p className="mt-3 text-card-title font-normal text-ink-soft">{vi.about.lead}</p>
       </section>

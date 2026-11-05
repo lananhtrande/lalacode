@@ -30,6 +30,9 @@ const COLORS = [
   'attention-surface',
 ] as const;
 
+/** Chữ dài nhất của bảng chữ tiếng Việt: dấu chồng (Ổ, ầ, ừ), đ, ơ, ư (ADR 0009). */
+const SAMPLE = 'Hoàn thành! Ổ bánh mì, ước mơ, Đội bóng, Nền tảng học lập trình cho người Việt';
+
 const TYPE_SCALE = [
   ['text-page-title', 'Tiêu đề trang · 28/36 đậm'],
   ['text-section-title', 'Tiêu đề mục · 22/30'],
@@ -47,11 +50,11 @@ const TYPE_SCALE = [
 export function DesignPreviewPage() {
   return (
     <div className="space-y-6">
-      <h1 className="text-page-title">Design system lalakode (chỉ dev)</h1>
+      <h1 className="text-page-title">Design system LaLaKode (chỉ dev)</h1>
 
       <Card as="section" aria-labelledby="mau">
         <h2 id="mau" className="text-section-title">
-          Màu (token theo vai trò)
+          Màu · San hô (token theo vai trò)
         </h2>
         <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
           {COLORS.map((name) => (
@@ -68,14 +71,19 @@ export function DesignPreviewPage() {
 
       <Card as="section" aria-labelledby="chu">
         <h2 id="chu" className="text-section-title">
-          Chữ · Be Vietnam Pro
+          Chữ · Inter
         </h2>
         <div className="mt-4 space-y-3">
           {TYPE_SCALE.map(([className, label]) => (
             <p key={className} className={className}>
-              {label} — Hoàn thành! Ổ bánh mì, ước mơ, Đội bóng
+              {label} — {SAMPLE}
             </p>
           ))}
+        </div>
+        <div className="mt-6 space-y-2 border-t border-line pt-4" data-testid="font-sample">
+          <p className="text-[16px] leading-6">16 px · {SAMPLE}</p>
+          <p className="text-[32px] leading-10 font-extrabold">32 px · {SAMPLE}</p>
+          <p className="text-small text-ink-soft">Il1 LaLaKode — chữ l có đuôi (cv05)</p>
         </div>
       </Card>
 

@@ -48,6 +48,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-31 **Design system riêng** (theo `docs/prompts/2026-10-30-ui-redesign.md`): token đặt tên theo vai trò, font tự host, `Button`/`IconButton`/`Card`/`AiPanel`, khung trang dạng sidebar. Dừng ở `/dev/design` để người duy trì chọn bảng màu và font. ADR 0008.
 - [x] S0-32 **Màn bài tập 2 cột**: editor nền tối (theme tự viết, không thêm thư viện) bên trái, kết quả bên phải, mỗi cột tự cuộn; xếp dọc dưới 1024px. Dừng, chụp màn hình cho người duy trì xem.
 - [x] S0-33 **Áp design system cho các màn còn lại**: trang chủ, bản đồ, bài học, huy hiệu, báo cáo, tiến độ, giới thiệu, quyền riêng tư.
+- [ ] S0-34 **Nhận diện thương hiệu** (theo `docs/prompts/2026-11-05-brand-coral-inter.md`): gắn logo, favicon, manifest; màu nhấn San hô và tách màu "cần chú ý"; font Inter tự host. ADR 0009. Dừng cho người duy trì xem ảnh chụp trước khi merge.
 
 ## Tiêu chí chuyển sang giai đoạn 1
 - ≥ 70% trẻ hoàn thành bài 1; ≥ 40% quay lại sau 7 ngày; ≥ 30 phụ huynh xác nhận sẵn sàng trả phí.
