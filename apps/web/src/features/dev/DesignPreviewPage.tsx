@@ -50,7 +50,7 @@ const TYPE_SCALE = [
 export function DesignPreviewPage() {
   return (
     <div className="space-y-6">
-      <h1 className="text-page-title">Design system lalakode (chỉ dev)</h1>
+      <h1 className="text-page-title">Design system LaLaKode (chỉ dev)</h1>
 
       <Card as="section" aria-labelledby="mau">
         <h2 id="mau" className="text-section-title">
@@ -83,7 +83,7 @@ export function DesignPreviewPage() {
         <div className="mt-6 space-y-2 border-t border-line pt-4" data-testid="font-sample">
           <p className="text-[16px] leading-6">16 px · {SAMPLE}</p>
           <p className="text-[32px] leading-10 font-extrabold">32 px · {SAMPLE}</p>
-          <p className="text-small text-ink-soft">Il1 lalakode — chữ l có đuôi (cv05)</p>
+          <p className="text-small text-ink-soft">Il1 LaLaKode — chữ l có đuôi (cv05)</p>
         </div>
       </Card>
 
