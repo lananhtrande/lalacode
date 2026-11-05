@@ -2,17 +2,20 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { ArrowRight, Check, Clock, PartyPopper } from 'lucide-react';
 import { vi } from '../../shared/i18n/vi';
-import { loadLesson } from '../../content/loader';
+import { loadContentIndex, loadLesson } from '../../content/loader';
+import { lessonNeighbours, type Neighbours } from '../../content/navigation';
 import type { LessonBundle } from '../../content/types';
 import { useProgress } from '../../progress/useProgress';
 import type { ExerciseStatus } from '../../progress/schema';
 import { LessonBody } from './LessonBody';
 import { LessonVideo } from './LessonVideo';
 import { buttonClasses } from '../../shared/ui/button-classes';
+import { NeighbourLinks } from '../../shared/ui/NeighbourLinks';
+import { toNeighbourLink } from '../../shared/ui/neighbour-link';
 
 /** Kết quả tải, kèm mã bài để biết nó thuộc về bài nào đang mở. */
 type Loaded =
-  | { lessonId: string; status: 'ready'; bundle: LessonBundle }
+  | { lessonId: string; status: 'ready'; bundle: LessonBundle; neighbours: Neighbours | null }
   | { lessonId: string; status: 'not-found' };
 
 /**
@@ -26,9 +29,18 @@ export function LessonPage() {
 
   useEffect(() => {
     let active = true;
-    loadLesson(lessonId)
-      .then((bundle) => {
-        if (active) setLoaded({ lessonId, status: 'ready', bundle });
+    // Index đã nằm trong bộ nhớ (loadLesson cần nó), nên không tốn thêm request.
+    // Không có index thì chỉ thiếu nút bài trước/tiếp, bài học vẫn đọc được.
+    Promise.all([loadLesson(lessonId), loadContentIndex().catch(() => null)])
+      .then(([bundle, index]) => {
+        if (active) {
+          setLoaded({
+            lessonId,
+            status: 'ready',
+            bundle,
+            neighbours: index && lessonNeighbours(index, lessonId),
+          });
+        }
       })
       .catch(() => {
         if (active) setLoaded({ lessonId, status: 'not-found' });
@@ -64,6 +76,7 @@ export function LessonPage() {
   }
 
   const { lesson, markdown, exercises } = state.bundle;
+  const { neighbours } = state;
   const statusOf = new Map<string, ExerciseStatus>(
     (snapshot?.exercises ?? []).map((item) => [item.exerciseId, item.status]),
   );
@@ -159,6 +172,19 @@ export function LessonPage() {
           </p>
         )}
       </section>
+
+      {neighbours && (
+        <NeighbourLinks
+          label={vi.pager.label}
+          previous={
+            neighbours.previous && toNeighbourLink(neighbours.previous, 'previous', 'lesson')
+          }
+          next={toNeighbourLink(neighbours.next, 'next', 'lesson')}
+          // Xong hết bài tập thì đi tiếp là việc chính; chưa xong thì nút chính vẫn là "làm tiếp".
+          nextIsPrimary={next === undefined}
+          className="mt-10 border-t border-line pt-6"
+        />
+      )}
     </article>
   );
 }
