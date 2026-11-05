@@ -59,24 +59,26 @@
   --color-surface-muted: #f6f5f4;
   --color-line: #e5e4e2;
 
-  /* Màu nhấn duy nhất (San hô của logo, ADR 0009): hành động chính và "đang chọn" */
-  --color-accent: #e8553a;
-  /* Chữ trắng trên San hô chỉ 3.6:1 — chữ trên nút chính dùng màu Mực */
-  --color-on-accent: #18181b;
-  /* San hô không đạt AA làm chữ trên nền trắng — chữ/link dùng bản đậm này */
-  --color-accent-strong: #b8381f;
+  /*
+   * Màu nhấn duy nhất (xanh dương, ADR 0010): hành động chính và "đang chọn".
+   * San hô chỉ còn ở logo — không dùng cho nút, link, trạng thái hay icon.
+   */
+  --color-accent: #2563eb;
+  --color-on-accent: #ffffff;
+  /* Link và chữ nhấn trên nền sáng: đậm hơn một bậc cho chắc AA trên mọi nền nhạt */
+  --color-accent-strong: #1d4ed8;
   /* Nền nhạt cho thứ đang được làm nổi (thẻ đang học, chuỗi ngày học) */
-  --color-accent-soft: #fdece7;
+  --color-accent-soft: #eaf1fe;
 
   /* Mọi thứ do AI tạo ra */
   --color-ai-surface: #f1eeff;
 
   /*
    * Trạng thái — luôn đi kèm icon và chữ, không bao giờ chỉ dùng màu.
-   * "Cần chú ý" là mù tạt đậm trên nền vàng nhạt: khác San hô cả về sắc độ lẫn
-   * độ sáng, để trẻ không nhầm nút bấm chính với "có lỗi" (ADR 0009).
+   * "Cần chú ý" là mù tạt đậm trên nền vàng nhạt (ADR 0009). "Đạt" là xanh lá
+   * đậm hơn hẳn màu nhấn để không lẫn với nút (ADR 0010).
    */
-  --color-success: #126b32;
+  --color-success: #0e5e2b;
   --color-success-surface: #e7f6ec;
   --color-attention: #7a5c00;
   --color-attention-surface: #fff5cc;
@@ -89,13 +91,16 @@
   --color-code-gutter: #1f1f23;
   --color-code-active: #26262b;
   --color-code-text: #ececee;
+  /* Màu nhấn trong editor: con trỏ, viền focus, vùng chọn. Xanh dương sáng vì
+     `accent` quá tối trên nền code (ADR 0010). */
+  --color-code-accent: #60a5fa;
   /* Số dòng, chữ chờ trong console */
   --color-code-muted: #9a9aa3;
   --color-code-keyword: #ff9ac1;
   --color-code-string: #a5e3a0;
-  --color-code-number: #ffc57a;
+  --color-code-number: #f3dfa2;
   --color-code-comment: #a6a6ae;
-  --color-code-function: #7cc6ff;
+  --color-code-function: #67e8f9;
   --color-code-builtin: #c4b5fd;
 
   /* Thang chữ: 6 kiểu theo vai trò. Chữ thân tối thiểu 16/24, chữ phụ 14/20. */
@@ -144,8 +149,8 @@
   }
 
   /*
-   * Viền focus 3px màu chữ chính: 17.7:1 trên nền trắng, 4.9:1 trên nút San hô.
-   * Editor tối tự vẽ viền San hô riêng (4.9:1 trên nền code, code-theme.ts).
+   * Viền focus 3px màu chữ chính: 17.7:1 trên nền trắng, 3.4:1 trên nút xanh dương.
+   * Editor tối tự vẽ viền `code-accent` riêng (7:1 trên nền code, code-theme.ts).
    */
   :focus-visible {
     outline: 3px solid var(--color-ink);

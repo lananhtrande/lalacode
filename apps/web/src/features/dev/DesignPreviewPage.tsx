@@ -54,7 +54,7 @@ export function DesignPreviewPage() {
 
       <Card as="section" aria-labelledby="mau">
         <h2 id="mau" className="text-section-title">
-          Màu · San hô (token theo vai trò)
+          Màu · xanh dương (token theo vai trò)
         </h2>
         <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
           {COLORS.map((name) => (

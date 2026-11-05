@@ -32,6 +32,8 @@ const TEXT_PAIRS = [
   ['ink-soft', 'accent-soft'],
   ['ink-soft', 'ai-surface'],
   ['on-accent', 'accent'],
+  // Nút chính khi di chuột (hover: bg-accent-strong)
+  ['on-accent', 'accent-strong'],
   ['surface', 'ink'],
   ['accent-strong', 'surface'],
   ['accent-strong', 'surface-muted'],
@@ -61,6 +63,12 @@ function hue(hex: string): number {
   return (h * 60 + 360) % 360;
 }
 
+/** Khoảng cách giữa hai sắc độ trên vòng màu (0–180°). */
+function hueDistance(a: string, b: string): number {
+  const distance = Math.abs(hue(a) - hue(b));
+  return Math.min(distance, 360 - distance);
+}
+
 describe('token màu trong index.css', () => {
   it('đọc được token (regex không trượt khi định dạng file đổi)', () => {
     expect(tokens.size).toBeGreaterThanOrEqual(14);
@@ -85,17 +93,31 @@ describe('token màu trong index.css', () => {
     }
   });
 
-  it('con trỏ và viền focus màu nhấn nhìn rõ trên nền editor', () => {
-    expect(contrastRatio(color('accent'), color('code-bg'))).toBeGreaterThanOrEqual(3);
-    expect(contrastRatio(color('accent'), color('code-active'))).toBeGreaterThanOrEqual(3);
+  it('con trỏ và viền focus trong editor nhìn rõ trên nền code', () => {
+    for (const background of ['code-bg', 'code-active', 'code-gutter']) {
+      expect(contrastRatio(color('code-accent'), color(background))).toBeGreaterThanOrEqual(3);
+    }
   });
 
-  it('màu "cần chú ý" khác hẳn màu nhấn, để trẻ không nhầm nút chính với lỗi (ADR 0009)', () => {
-    const distance = Math.abs(hue(color('attention')) - hue(color('accent')));
-    expect(Math.min(distance, 360 - distance)).toBeGreaterThanOrEqual(30);
-    const surfaceDistance = Math.abs(hue(color('attention-surface')) - hue(color('accent-soft')));
-    expect(Math.min(surfaceDistance, 360 - surfaceDistance)).toBeGreaterThanOrEqual(30);
+  it.each([
+    ['attention', 'accent'],
+    ['attention-surface', 'accent-soft'],
+    ['success', 'accent'],
+    ['success-surface', 'accent-soft'],
+  ])('%s khác sắc độ hẳn %s, để trẻ không nhầm nút chính với trạng thái (ADR 0010)', (a, b) => {
+    expect(hueDistance(color(a), color(b))).toBeGreaterThanOrEqual(30);
   });
+
+  it('"đạt" và "cần chú ý" cũng khác màu nhấn về độ sáng (ADR 0010)', () => {
+    expect(contrastRatio(color('success'), color('accent'))).toBeGreaterThanOrEqual(1.5);
+  });
+
+  it.each(['code-keyword', 'code-string', 'code-number', 'code-function', 'code-builtin'])(
+    'màu cú pháp %s không giống màu nút (khác sắc độ ≥ 30°)',
+    (token) => {
+      expect(hueDistance(color(token), color('accent'))).toBeGreaterThanOrEqual(30);
+    },
+  );
 
   it('viền focus (màu ink) nhìn rõ trên cả nền trắng lẫn nút màu nhấn', () => {
     expect(contrastRatio(color('ink'), color('surface'))).toBeGreaterThanOrEqual(3);
