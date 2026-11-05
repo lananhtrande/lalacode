@@ -32,7 +32,7 @@ export const darkEditorTheme = EditorView.theme(
     '.cm-cursor, .cm-dropCursor': { borderLeft: `2px solid ${color('accent')}` },
     '&.cm-focused': { outline: `3px solid ${color('accent')}`, outlineOffset: '-3px' },
     '&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection':
-      { backgroundColor: 'rgb(45 212 191 / 0.25)' },
+      { backgroundColor: 'color-mix(in srgb, var(--color-accent) 30%, transparent)' },
     '.cm-activeLine': { backgroundColor: color('code-active') },
     '.cm-gutters': {
       backgroundColor: color('code-gutter'),
@@ -42,7 +42,7 @@ export const darkEditorTheme = EditorView.theme(
     '.cm-lineNumbers .cm-gutterElement': { padding: '0 10px 0 12px' },
     '.cm-activeLineGutter': { backgroundColor: color('code-active'), color: color('code-text') },
     '&.cm-focused .cm-matchingBracket': {
-      backgroundColor: 'rgb(45 212 191 / 0.3)',
+      backgroundColor: 'color-mix(in srgb, var(--color-accent) 35%, transparent)',
       outline: 'none',
     },
     // Đang chạy: chỉ đọc → tối đi một chút, ẩn con trỏ để trẻ biết chưa gõ được.

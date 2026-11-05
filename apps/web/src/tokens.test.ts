@@ -41,7 +41,25 @@ const TEXT_PAIRS = [
   ['success', 'success-surface'],
   ['attention', 'surface'],
   ['attention', 'attention-surface'],
+  ['attention', 'ai-surface'],
+  ['ink', 'attention-surface'],
+  ['ink-soft', 'attention-surface'],
 ] as const;
+
+/** Sắc độ (hue, 0–360°) của màu `#rrggbb`. */
+function hue(hex: string): number {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255) as [
+    number,
+    number,
+    number,
+  ];
+  const max = Math.max(r, g, b);
+  const delta = max - Math.min(r, g, b);
+  if (delta === 0) return 0;
+  const h =
+    max === r ? ((g - b) / delta) % 6 : max === g ? (b - r) / delta + 2 : (r - g) / delta + 4;
+  return (h * 60 + 360) % 360;
+}
 
 describe('token màu trong index.css', () => {
   it('đọc được token (regex không trượt khi định dạng file đổi)', () => {
@@ -69,6 +87,14 @@ describe('token màu trong index.css', () => {
 
   it('con trỏ và viền focus màu nhấn nhìn rõ trên nền editor', () => {
     expect(contrastRatio(color('accent'), color('code-bg'))).toBeGreaterThanOrEqual(3);
+    expect(contrastRatio(color('accent'), color('code-active'))).toBeGreaterThanOrEqual(3);
+  });
+
+  it('màu "cần chú ý" khác hẳn màu nhấn, để trẻ không nhầm nút chính với lỗi (ADR 0009)', () => {
+    const distance = Math.abs(hue(color('attention')) - hue(color('accent')));
+    expect(Math.min(distance, 360 - distance)).toBeGreaterThanOrEqual(30);
+    const surfaceDistance = Math.abs(hue(color('attention-surface')) - hue(color('accent-soft')));
+    expect(Math.min(surfaceDistance, 360 - surfaceDistance)).toBeGreaterThanOrEqual(30);
   });
 
   it('viền focus (màu ink) nhìn rõ trên cả nền trắng lẫn nút màu nhấn', () => {

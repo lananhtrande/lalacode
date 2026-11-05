@@ -113,46 +113,51 @@
   --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
 
-  /* Chữ và nền */
-  --color-ink: #0f1a1c;
-  --color-ink-soft: #4a5a5e;
+  /* Chữ và nền: xám trung tính theo màu Mực của logo (docs/brand/README.md) */
+  --color-ink: #18181b;
+  --color-ink-soft: #4a4a52;
   --color-surface: #ffffff;
-  --color-surface-muted: #f3f6f6;
-  --color-line: #dce3e4;
+  --color-surface-muted: #f6f5f4;
+  --color-line: #e5e4e2;
 
-  /* Màu nhấn duy nhất: hành động chính và trạng thái "đang chọn" */
-  --color-accent: #2dd4bf;
-  --color-on-accent: #06302b;
-  /* Màu nhấn sáng không đạt AA làm chữ trên nền trắng — chữ/link dùng bản đậm này */
-  --color-accent-strong: #0f766e;
+  /* Màu nhấn duy nhất (San hô của logo, ADR 0009): hành động chính và "đang chọn" */
+  --color-accent: #e8553a;
+  /* Chữ trắng trên San hô chỉ 3.6:1 — chữ trên nút chính dùng màu Mực */
+  --color-on-accent: #18181b;
+  /* San hô không đạt AA làm chữ trên nền trắng — chữ/link dùng bản đậm này */
+  --color-accent-strong: #b8381f;
   /* Nền nhạt cho thứ đang được làm nổi (thẻ đang học, chuỗi ngày học) */
-  --color-accent-soft: #ddf5f1;
+  --color-accent-soft: #fdece7;
 
   /* Mọi thứ do AI tạo ra */
   --color-ai-surface: #f1eeff;
 
-  /* Trạng thái — luôn đi kèm icon và chữ, không bao giờ chỉ dùng màu */
+  /*
+   * Trạng thái — luôn đi kèm icon và chữ, không bao giờ chỉ dùng màu.
+   * "Cần chú ý" là mù tạt đậm trên nền vàng nhạt: khác San hô cả về sắc độ lẫn
+   * độ sáng, để trẻ không nhầm nút bấm chính với "có lỗi" (ADR 0009).
+   */
   --color-success: #126b32;
   --color-success-surface: #e7f6ec;
-  --color-attention: #a64b00;
-  --color-attention-surface: #fff3e0;
+  --color-attention: #7a5c00;
+  --color-attention-surface: #fff5cc;
 
   /*
    * Editor và console: luôn nền tối, kể cả khi trang sáng (ADR 0008).
    * Mọi màu chữ ở đây đạt AA trên cả `code-bg` lẫn `code-active`.
    */
-  --color-code-bg: #0d1b1e;
-  --color-code-gutter: #122428;
-  --color-code-active: #16292d;
-  --color-code-text: #e4f0f0;
+  --color-code-bg: #17171a;
+  --color-code-gutter: #1f1f23;
+  --color-code-active: #26262b;
+  --color-code-text: #ececee;
   /* Số dòng, chữ chờ trong console */
-  --color-code-muted: #8da2a6;
+  --color-code-muted: #9a9aa3;
   --color-code-keyword: #ff9ac1;
   --color-code-string: #a5e3a0;
   --color-code-number: #ffc57a;
-  --color-code-comment: #9aaeb2;
+  --color-code-comment: #a6a6ae;
   --color-code-function: #7cc6ff;
-  --color-code-builtin: #5fe3d2;
+  --color-code-builtin: #c4b5fd;
 
   /* Thang chữ: 6 kiểu theo vai trò. Chữ thân tối thiểu 16/24, chữ phụ 14/20. */
   --text-page-title: 1.75rem;
@@ -174,7 +179,7 @@
 
   /* Hình khối mềm: thẻ bo 16px, bóng rất nhẹ */
   --radius-card: 1rem;
-  --shadow-card: 0 1px 2px rgb(15 26 28 / 0.05), 0 4px 12px rgb(15 26 28 / 0.04);
+  --shadow-card: 0 1px 2px rgb(24 24 27 / 0.05), 0 4px 12px rgb(24 24 27 / 0.04);
 
   /* Nút bấm tối thiểu 44x44 px cho ngón tay trẻ */
   --spacing-tap: 2.75rem;
@@ -197,7 +202,10 @@
     line-height: var(--text-body--line-height);
   }
 
-  /* Viền focus 3px màu chữ chính: tương phản 17:1 trên nền trắng, 9.5:1 trên màu nhấn */
+  /*
+   * Viền focus 3px màu chữ chính: 17.7:1 trên nền trắng, 4.9:1 trên nút San hô.
+   * Editor tối tự vẽ viền San hô riêng (4.9:1 trên nền code, code-theme.ts).
+   */
   :focus-visible {
     outline: 3px solid var(--color-ink);
     outline-offset: 2px;
