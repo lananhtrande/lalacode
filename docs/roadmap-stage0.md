@@ -49,6 +49,8 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-32 **Màn bài tập 2 cột**: editor nền tối (theme tự viết, không thêm thư viện) bên trái, kết quả bên phải, mỗi cột tự cuộn; xếp dọc dưới 1024px. Dừng, chụp màn hình cho người duy trì xem.
 - [x] S0-33 **Áp design system cho các màn còn lại**: trang chủ, bản đồ, bài học, huy hiệu, báo cáo, tiến độ, giới thiệu, quyền riêng tư.
 - [ ] S0-34 **Nhận diện thương hiệu** (theo `docs/prompts/2026-11-05-brand-coral-inter.md`): gắn logo, favicon, manifest; màu nhấn San hô và tách màu "cần chú ý"; font Inter tự host. ADR 0009. Dừng cho người duy trì xem ảnh chụp trước khi merge.
+- [ ] S0-35 **Màu nhấn xanh dương** (theo `docs/prompts/2026-11-05-blue-accent-next-links.md`): trẻ nhầm San hô trên nút với báo lỗi. San hô chỉ còn ở logo; tách xanh dương khỏi màu đạt/cần chú ý; màu cú pháp editor. ADR 0010.
+- [ ] S0-36 **Nút sang bài trước/tiếp** trên màn bài tập và bài học; nút chính "Bài tập tiếp theo" khi làm đúng, nhận focus.
 
 ## Tiêu chí chuyển sang giai đoạn 1
 - ≥ 70% trẻ hoàn thành bài 1; ≥ 40% quay lại sau 7 ngày; ≥ 30 phụ huynh xác nhận sẵn sàng trả phí.
