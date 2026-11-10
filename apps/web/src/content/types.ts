@@ -1,4 +1,4 @@
-import type { CourseLevel, Exercise, Lesson } from '@lalakode/content-schema';
+import type { CourseLevel, Difficulty, Exercise, Lesson } from '@lalakode/content-schema';
 
 /**
  * Kiểu của bundle do `scripts/content-build.mjs` sinh ra.
@@ -11,6 +11,7 @@ export type PublicExercise = Omit<Exercise, 'solution'>;
 export interface ExerciseSummary {
   id: string;
   title: string;
+  difficulty?: Difficulty;
 }
 
 export interface LessonSummary {
@@ -19,6 +20,8 @@ export interface LessonSummary {
   title: string;
   concepts: readonly string[];
   estimatedMinutes: number;
+  /** Chủ đề để lọc ở kho luyện tập. */
+  tags: readonly string[];
   status: Lesson['status'];
   exerciseCount: number;
   /** Đúng thứ tự `lesson.exercises`; chỉ tên, không có đề hay test. */

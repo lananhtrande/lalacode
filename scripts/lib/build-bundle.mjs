@@ -52,10 +52,16 @@ export function buildBundle(courses) {
         title: lesson.title,
         concepts: lesson.concepts,
         estimatedMinutes: lesson.estimatedMinutes,
+        tags: lesson.tags ?? [],
         status: lesson.status,
         exerciseCount: exercises.length,
         // Tên bài tập cho mục lục của trình học bài (S0-38): không cần tải từng bài học.
-        exercises: exercises.map((exercise) => ({ id: exercise.id, title: exercise.title })),
+        // Kho luyện tập (S0-40) lọc theo độ khó mà không tải từng bài học.
+        exercises: exercises.map((exercise) => ({
+          id: exercise.id,
+          title: exercise.title,
+          ...(exercise.difficulty ? { difficulty: exercise.difficulty } : {}),
+        })),
         hasVideo: Boolean(lesson.video),
         file,
       });

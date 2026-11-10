@@ -134,6 +134,10 @@ function isLessonProgress(value: unknown): value is LessonProgress {
   );
 }
 
+/** Giới hạn cho `profile.saved` trong mã dán vào (S0-40): đủ rộng cho mọi khoá, chặn rác. */
+const MAX_SAVED = 500;
+const MAX_ID_LENGTH = 120;
+
 function isProfile(value: unknown): value is ProfileState {
   if (typeof value !== 'object' || value === null) return false;
   const item = value as Record<string, unknown>;
@@ -143,6 +147,11 @@ function isProfile(value: unknown): value is ProfileState {
     Array.isArray(item['badges']) &&
     item['badges'].every((badge) => typeof badge === 'string') &&
     (item['lastActiveDay'] === undefined || isString(item['lastActiveDay'])) &&
+    // Mã do người dùng dán vào: chặn danh sách để dành dài bất thường hay chuỗi lạ.
+    (item['saved'] === undefined ||
+      (Array.isArray(item['saved']) &&
+        item['saved'].length <= MAX_SAVED &&
+        item['saved'].every((id) => typeof id === 'string' && id.length <= MAX_ID_LENGTH))) &&
     (item['nickname'] === undefined || typeof item['nickname'] === 'string')
   );
 }
@@ -260,6 +269,14 @@ export function mergeProgress(local: ProgressSnapshot, incoming: SharedProgress)
       streakDays: Math.max(local.profile.streakDays, incoming.profile.streakDays),
       ...(lastActiveDay === undefined ? {} : { lastActiveDay }),
       badges: [...new Set([...local.profile.badges, ...incoming.profile.badges])],
+      // "Để dành" gộp như huy hiệu: bài đã để dành ở máy nào cũng còn.
+      ...(local.profile.saved || incoming.profile.saved
+        ? {
+            saved: [
+              ...new Set([...(local.profile.saved ?? []), ...(incoming.profile.saved ?? [])]),
+            ],
+          }
+        : {}),
       ...((local.profile.nickname ?? incoming.profile.nickname)
         ? { nickname: local.profile.nickname ?? incoming.profile.nickname }
         : {}),

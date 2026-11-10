@@ -3,6 +3,7 @@
   "title": "Xin chào, Python!",
   "concepts": ["print", "chuỗi"],
   "estimatedMinutes": 12,
+  "tags": ["print", "chuỗi"],
   "exercises": ["01-in-loi-chao", "02-in-hai-dong", "03-sua-loi-cua-ban", "04-cay-thong-sao"],
   "status": "draft"
 }

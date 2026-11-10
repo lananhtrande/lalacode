@@ -1,12 +1,9 @@
 {
   "id": "py-khoi-dong.10-tu-lam-lenh-rieng",
   "title": "Tự làm lệnh riêng",
-  "concepts": [
-    "def",
-    "tham số",
-    "return"
-  ],
+  "concepts": ["def", "tham số", "return"],
   "estimatedMinutes": 15,
+  "tags": ["hàm"],
   "exercises": [
     "01-loi-chao-rieng",
     "02-chao-co-ten",

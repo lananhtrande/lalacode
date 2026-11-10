@@ -31,6 +31,7 @@ function lesson(n: number): LessonSummary {
     title: `Bài số ${n}`,
     concepts: ['print'],
     estimatedMinutes: 15,
+    tags: [],
     status: 'draft',
     exerciseCount: 2,
     exercises: [],

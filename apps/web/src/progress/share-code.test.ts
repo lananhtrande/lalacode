@@ -165,6 +165,28 @@ describe('gộp tiến độ khi nhập mã', () => {
     expect(mergeProgress(local, incoming).exercises[0]?.draftCode).toBe('');
   });
 
+  it('gộp danh sách "Để dành" của cả hai máy, không trùng lặp', () => {
+    const local = snapshot({ profile: { ...snapshot().profile, saved: ['a', 'b'] } });
+    const incoming = toSharedProgress(
+      snapshot({ profile: { ...snapshot().profile, saved: ['b', 'c'] } }),
+    );
+    expect(mergeProgress(local, incoming).profile.saved).toEqual(['a', 'b', 'c']);
+    // Máy cũ chưa có trường này: không tự thêm danh sách rỗng.
+    expect(mergeProgress(snapshot(), toSharedProgress(snapshot())).profile).not.toHaveProperty(
+      'saved',
+    );
+  });
+
+  it('mã có danh sách "Để dành" dài bất thường hay mã bài quá dài thì không nhận', async () => {
+    const tooMany = snapshot({
+      profile: { ...snapshot().profile, saved: Array.from({ length: 501 }, (_, i) => `a${i}`) },
+    });
+    const tooLong = snapshot({ profile: { ...snapshot().profile, saved: ['x'.repeat(121)] } });
+    for (const local of [tooMany, tooLong]) {
+      await expect(decodeProgressCode(await encodeProgressCode(local))).rejects.toThrow();
+    }
+  });
+
   it('gộp huy hiệu của cả hai máy, không trùng lặp', () => {
     const local = snapshot();
     const incoming = toSharedProgress(

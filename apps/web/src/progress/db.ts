@@ -224,6 +224,19 @@ export async function awardBadges(earned: readonly string[]): Promise<ProfileSta
   return next;
 }
 
+/** Bật/tắt "Để dành" cho một bài tập ở kho luyện tập (S0-40). Trả về danh sách mới. */
+export async function toggleSaved(exerciseId: string): Promise<string[]> {
+  const db = await openProgressDb();
+  const profile = await getProfile();
+  const saved = profile.saved ?? [];
+  const next = saved.includes(exerciseId)
+    ? saved.filter((id) => id !== exerciseId)
+    : [...saved, exerciseId];
+  await db.put('profile', { ...profile, saved: next });
+  notifyProgressChanged();
+  return next;
+}
+
 /**
  * Token ẩn danh cho gợi ý AI, tạo khi cần và giữ trên máy.
  * Không lưu được (chế độ riêng tư…) thì vẫn trả về một token dùng tạm cho

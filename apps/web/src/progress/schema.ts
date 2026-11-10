@@ -53,6 +53,11 @@ export interface ProfileState {
   /** Mã huy hiệu đã nhận (S0-13 định nghĩa danh sách). */
   badges: string[];
   /**
+   * Mã bài tập trẻ đánh dấu "Để dành" ở kho luyện tập (S0-40). Tuỳ chọn: hồ sơ
+   * cũ không có trường này, nên không cần nâng phiên bản database.
+   */
+  saved?: string[];
+  /**
    * UUID ngẫu nhiên để giới hạn lượt gợi ý AI. **Không liên kết danh tính**:
    * server chỉ thấy `sha256` của nó (docs/privacy.md). Xoá dữ liệu là mất luôn.
    */

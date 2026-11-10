@@ -11,6 +11,7 @@ import {
   recordAttempt,
   resetProgressDbForTest,
   saveDraft,
+  toggleSaved,
   touchActivity,
 } from './db';
 import { PROGRESS_SCHEMA_VERSION } from './schema';
@@ -56,6 +57,13 @@ describe('tiến độ trên máy', () => {
     stop();
     await recordAttempt(EXERCISE, LESSON, true, 'print(1)');
     expect(changes).toBe(2);
+  });
+
+  it('"Để dành": bấm lần đầu thì thêm, bấm lần nữa thì bỏ; nằm trong hồ sơ trên máy', async () => {
+    expect(await toggleSaved(EXERCISE)).toEqual([EXERCISE]);
+    expect(await toggleSaved(EXERCISE_2)).toEqual([EXERCISE, EXERCISE_2]);
+    expect(await toggleSaved(EXERCISE)).toEqual([EXERCISE_2]);
+    expect((await getProfile()).saved).toEqual([EXERCISE_2]);
   });
 
   it('lưu nháp không tính là một lần nộp bài', async () => {

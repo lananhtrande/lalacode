@@ -1,12 +1,9 @@
 {
   "id": "py-khoi-dong.08-danh-sach-cua-em",
   "title": "Danh sách của em",
-  "concepts": [
-    "list",
-    "append",
-    "len"
-  ],
+  "concepts": ["list", "append", "len"],
   "estimatedMinutes": 14,
+  "tags": ["list"],
   "exercises": [
     "01-danh-sach-diem",
     "02-phan-tu-dau-tien",
