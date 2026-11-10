@@ -1,30 +1,42 @@
 import { Link } from 'react-router';
-import { CircleCheckBig, Laptop, Palette, ShieldCheck } from 'lucide-react';
+import { ArrowRight, CircleCheckBig, Laptop, Palette, ShieldCheck } from 'lucide-react';
+import { fill } from '../../shared/i18n/fill';
 import { vi } from '../../shared/i18n/vi';
 import { buttonClasses } from '../../shared/ui/button-classes';
+import { useCourses } from '../courses/useCourses';
 
 // Icon đi kèm từng điểm mạnh; thứ tự khớp với vi.home.points.
 const icons = [Laptop, CircleCheckBig, Palette, ShieldCheck];
 
 export function HomePage() {
+  const state = useCourses();
+  // Đã học trên máy này thì nút chính đưa thẳng tới bài đang dở.
+  const current =
+    state.status === 'ready'
+      ? state.courses.find((item) => item.progress.status === 'dang-hoc')?.progress.nextLesson
+      : undefined;
+
   return (
     <>
       <section className="mx-auto max-w-prose text-center">
         <h1 className="text-page-title text-balance sm:text-[2.5rem] sm:leading-[3rem]">{vi.home.heroTitle}</h1>
         <p className="mt-4 text-card-title font-normal text-ink-soft">{vi.home.heroLead}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Link
-            to="/ban-do"
-            className={buttonClasses('primary', 'lg')}
-          >
-            {vi.home.startLearning}
-          </Link>
-          <Link
-            to="/ban-do"
-            className={buttonClasses('outline', 'lg')}
-          >
-            {vi.home.seeMap}
-          </Link>
+          {current ? (
+            <>
+              <Link to={`/bai-hoc/${current.lesson.id}`} className={buttonClasses('primary', 'lg')}>
+                {fill(vi.home.continueLesson, { n: current.number })}
+                <ArrowRight aria-hidden="true" className="size-5" />
+              </Link>
+              <Link to="/khoa-hoc" className={buttonClasses('outline', 'lg')}>
+                {vi.home.seeCourses}
+              </Link>
+            </>
+          ) : (
+            <Link to="/khoa-hoc" className={buttonClasses('primary', 'lg')}>
+              {vi.home.startLearning}
+            </Link>
+          )}
         </div>
       </section>
 

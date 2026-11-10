@@ -29,7 +29,7 @@ test.describe('mã tiến độ', () => {
     // Máy 2: context mới, chưa học gì.
     const other = await browser.newContext();
     const otherPage = await other.newPage();
-    await otherPage.goto('/ban-do');
+    await otherPage.goto('/khoa-hoc/py-khoi-dong');
     await expect(otherPage.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('0/4');
 
     await otherPage.goto('/tien-do');
@@ -38,7 +38,7 @@ test.describe('mã tiến độ', () => {
     await otherPage.getByRole('button', { name: 'Nhập mã' }).click();
     await expect(otherPage.getByTestId('import-done')).toBeVisible();
 
-    await otherPage.goto('/ban-do');
+    await otherPage.goto('/khoa-hoc/py-khoi-dong');
     await expect(otherPage.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('1/4');
     await otherPage.goto('/huy-hieu');
     await expect(otherPage.getByTestId('badge-bai-dau-tien')).toContainText('Đã nhận');
@@ -60,7 +60,7 @@ test.describe('mã tiến độ', () => {
     await page.getByRole('button', { name: 'Nhập mã' }).click();
     await expect(page.getByTestId('import-error')).toContainText('đọc không được');
 
-    await page.goto('/ban-do');
+    await page.goto('/khoa-hoc/py-khoi-dong');
     await expect(page.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('1/4');
   });
 
@@ -76,7 +76,7 @@ test.describe('mã tiến độ', () => {
     // Lời khen hiện trước khi lưu xong; rời trang sớm là mất lần nộp (S0-30).
     await expect(page.locator('article[data-save-state="saved"]')).toBeAttached();
 
-    await page.goto('/ban-do');
+    await page.goto('/khoa-hoc/py-khoi-dong');
     await expect(page.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('1/4');
 
     // Bấm xoá thì phải hỏi lại trước đã.
@@ -88,7 +88,7 @@ test.describe('mã tiến độ', () => {
     // Đổi ý thì không mất gì.
     await page.getByRole('button', { name: 'Thôi, giữ lại' }).click();
     await expect(page.getByTestId('delete-confirm')).toBeHidden();
-    await page.goto('/ban-do');
+    await page.goto('/khoa-hoc/py-khoi-dong');
     await expect(page.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('1/4');
 
     // Xoá thật.
@@ -99,7 +99,7 @@ test.describe('mã tiến độ', () => {
     // Màn hình phải dọn theo ngay, không để lại mã cũ.
     await expect(page.getByTestId('progress-code')).toBeHidden();
 
-    await page.goto('/ban-do');
+    await page.goto('/khoa-hoc/py-khoi-dong');
     await expect(page.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('0/4');
     await page.goto('/huy-hieu');
     await expect(page.getByTestId('badge-count')).toContainText('0/6');

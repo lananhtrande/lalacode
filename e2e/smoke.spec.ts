@@ -17,14 +17,14 @@ test.describe('khung app', () => {
     if (await openMenu.isVisible()) await openMenu.click();
     await page
       .getByRole('navigation', { name: 'Menu chính' })
-      .getByRole('link', { name: 'Bản đồ' })
+      .getByRole('link', { name: 'Khoá học' })
       .click();
-    await expect(page).toHaveURL(/\/ban-do$/);
-    await expect(page.getByRole('heading', { name: 'Bản đồ nhiệm vụ' })).toBeVisible();
+    await expect(page).toHaveURL(/\/khoa-hoc$/);
+    await expect(page.getByRole('heading', { name: 'Khoá học', level: 1 })).toBeVisible();
   });
 
   test('khung trang: sidebar trên màn rộng, ngăn kéo menu trên màn hẹp', async ({ page }) => {
-    await page.goto('/ban-do');
+    await page.goto('/khoa-hoc/py-khoi-dong');
     const nav = page.getByRole('navigation', { name: 'Menu chính' });
     const openMenu = page.getByRole('button', { name: 'Mở menu' });
     const width = page.viewportSize()?.width ?? 0;
@@ -32,7 +32,7 @@ test.describe('khung app', () => {
       await expect(nav).toBeVisible();
       await expect(openMenu).toBeHidden();
       // Mục đang chọn được tô đậm.
-      await expect(nav.getByRole('link', { name: 'Bản đồ' })).toHaveAttribute(
+      await expect(nav.getByRole('link', { name: 'Khoá học' })).toHaveAttribute(
         'aria-current',
         'page',
       );
@@ -50,8 +50,8 @@ test.describe('khung app', () => {
     }
   });
 
-  test('bản đồ liệt kê bài học đọc từ bundle nội dung', async ({ page }) => {
-    await page.goto('/ban-do');
+  test('trang khoá liệt kê bài học đọc từ bundle nội dung', async ({ page }) => {
+    await page.goto('/khoa-hoc/py-khoi-dong');
     const lesson = page.getByRole('link', { name: /Xin chào, Python!/ });
     await expect(lesson).toBeVisible();
     await expect(lesson).toHaveAttribute('href', '/bai-hoc/py-khoi-dong.01-xin-chao');

@@ -137,8 +137,8 @@ test.describe('màn bài tập', () => {
     expect(sent.token).toMatch(/^[0-9a-f-]{36}$/);
   });
 
-  test('vào bản đồ rồi mở bài học, bài tập đều đi được bằng chuột', async ({ page }) => {
-    await page.goto('/ban-do');
+  test('vào trang khoá rồi mở bài học, bài tập đều đi được bằng chuột', async ({ page }) => {
+    await page.goto('/khoa-hoc/py-khoi-dong');
     await page.getByRole('link', { name: /Xin chào, Python!/ }).click();
     await expect(page).toHaveURL(/\/bai-hoc\/py-khoi-dong\.01-xin-chao$/);
   });

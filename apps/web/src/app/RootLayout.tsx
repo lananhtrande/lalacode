@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useMatches } from 'react-router';
-import { Award, House, Info, Map, Menu, X } from 'lucide-react';
+import { Award, BookOpen, Dumbbell, House, Info, Menu, X } from 'lucide-react';
 import { IconButton } from '../shared/ui/IconButton';
 import { vi } from '../shared/i18n/vi';
 
 const navItems = [
   { to: '/', label: vi.nav.home, end: true, icon: House },
-  { to: '/ban-do', label: vi.nav.map, end: false, icon: Map },
+  { to: '/khoa-hoc', label: vi.nav.courses, end: false, icon: BookOpen },
+  { to: '/luyen-tap', label: vi.nav.practice, end: false, icon: Dumbbell },
   { to: '/huy-hieu', label: vi.nav.badges, end: false, icon: Award },
   { to: '/gioi-thieu', label: vi.nav.about, end: false, icon: Info },
 ];

@@ -18,7 +18,7 @@ export function toNeighbourLink(
   return {
     href: hrefOf(target),
     label,
-    ariaLabel: target.kind === 'map' ? label : `${label}: ${target.title}`,
+    ariaLabel: target.kind === 'course' ? label : `${label}: ${target.title}`,
   };
 }
 
@@ -30,7 +30,7 @@ function labelOf(target: NavTarget, side: Side, from: 'exercise' | 'lesson'): st
     case 'lesson':
       if (side === 'next') return pager.nextLesson;
       return from === 'exercise' ? pager.backToLesson : pager.previousLesson;
-    case 'map':
-      return pager.toMap;
+    case 'course':
+      return pager.toCourse;
   }
 }

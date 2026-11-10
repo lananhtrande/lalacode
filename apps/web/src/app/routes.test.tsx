@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from './routes';
 import { vi as strings } from '../shared/i18n/vi';
@@ -16,7 +16,7 @@ describe('router', () => {
     ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: strings.home.startLearning })).toHaveAttribute(
       'href',
-      '/ban-do',
+      '/khoa-hoc',
     );
   });
 
@@ -30,7 +30,8 @@ describe('router', () => {
   });
 
   it.each([
-    ['/ban-do', strings.pages.map],
+    ['/khoa-hoc', strings.catalog.title],
+    ['/luyen-tap', strings.pages.practice],
     ['/huy-hieu', strings.pages.badges],
     ['/bao-cao', strings.pages.report],
     ['/gioi-thieu', strings.about.title],
@@ -41,6 +42,30 @@ describe('router', () => {
   ])('đường dẫn %s mở đúng trang "%s"', async (path, title) => {
     renderAt(path);
     expect(await screen.findByRole('heading', { name: title })).toBeInTheDocument();
+  });
+
+  it('/ban-do cũ chuyển sang trang khoá, thay chỗ trong lịch sử (không kẹt nút Back)', async () => {
+    const router = createMemoryRouter(routes, {
+      initialEntries: ['/', '/ban-do'],
+      initialIndex: 1,
+    });
+    render(<RouterProvider router={router} />);
+    await waitFor(() => expect(router.state.location.pathname).toBe('/khoa-hoc/py-khoi-dong'));
+    expect(router.state.historyAction).toBe('REPLACE');
+  });
+
+  it('menu có Khoá học và Luyện tập, không còn Bản đồ', async () => {
+    renderAt('/');
+    const menu = await screen.findByRole('navigation', { name: strings.nav.menu });
+    expect(within(menu).getByRole('link', { name: strings.nav.courses })).toHaveAttribute(
+      'href',
+      '/khoa-hoc',
+    );
+    expect(within(menu).getByRole('link', { name: strings.nav.practice })).toHaveAttribute(
+      'href',
+      '/luyen-tap',
+    );
+    expect(within(menu).queryByRole('link', { name: 'Bản đồ' })).toBeNull();
   });
 
   it('đường dẫn bài tập mở màn bài tập (màn này có test riêng)', async () => {

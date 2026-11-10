@@ -33,13 +33,16 @@ Trả lời 3 câu hỏi với chi phí ≈ 5–10 USD/tháng, **không lưu d�
 
 ### 1. Frontend tĩnh (`apps/web`)
 - SPA build bằng Vite, deploy lên S3 + CloudFront. Route phía client.
-- Trang: Trang chủ · Bản đồ nhiệm vụ · Bài học · Bài tập · Huy hiệu · Báo cáo cho bố mẹ · Giới thiệu & quyền riêng tư.
+- Trang: Trang chủ · Khoá học · Trang khoá · Bài học · Bài tập · Luyện tập · Huy hiệu · Báo cáo cho bố mẹ · Giới thiệu & quyền riêng tư.
 - Đường dẫn bằng tiếng Việt, để trẻ và bố mẹ đọc hiểu được:
 
   | Đường dẫn | Trang |
   | --- | --- |
   | `/` | Trang chủ |
-  | `/ban-do` | Bản đồ nhiệm vụ |
+  | `/khoa-hoc` | Khoá học (catalog, lọc trên URL) |
+  | `/khoa-hoc/:courseId` | Trang một khoá: tiến độ, mục lục theo chương |
+  | `/ban-do` | Chuyển hướng sang `/khoa-hoc/py-khoi-dong` (đường dẫn cũ trước S0-37) |
+  | `/luyen-tap` | Kho luyện tập (S0-40) |
   | `/bai-hoc/:lessonId` | Bài học |
   | `/bai-tap/:exerciseId` | Bài tập |
   | `/huy-hieu` | Huy hiệu |

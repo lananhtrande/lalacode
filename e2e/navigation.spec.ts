@@ -25,7 +25,7 @@ async function submitAndPass(page: Page, code: string): Promise<void> {
 
 /**
  * S0-36: đi tiếp từ bài tập sang bài tập, từ bài tập cuối sang bài học sau,
- * và hết khoá thì về bản đồ. Chạy trên Chromium (1280) và WebKit (iPhone 390, iPad).
+ * và hết khoá thì về trang khoá. Chạy trên Chromium (1280) và WebKit (iPhone 390, iPad).
  */
 test.describe('sang bài tiếp theo', () => {
   test.slow();
@@ -77,10 +77,13 @@ test.describe('sang bài tiếp theo', () => {
     ).toBeVisible();
   });
 
-  test('trang bài học cuối khoá → "Về bản đồ"', async ({ page }) => {
+  test('trang bài học cuối khoá → "Về trang khoá học"', async ({ page }) => {
     await page.goto(`/bai-hoc/${LAST_LESSON}`);
     const nav = page.getByRole('navigation', { name: 'Chuyển bài' });
-    await expect(nav.getByRole('link', { name: 'Về bản đồ' })).toHaveAttribute('href', '/ban-do');
+    await expect(nav.getByRole('link', { name: 'Về trang khoá học' })).toHaveAttribute(
+      'href',
+      '/khoa-hoc/py-khoi-dong',
+    );
     await expect(nav.getByRole('link', { name: /^Bài học trước:/ })).toBeVisible();
   });
 });

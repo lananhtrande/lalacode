@@ -49,7 +49,7 @@ test.describe('báo cáo cho bố mẹ', () => {
     await expect(parentPage.getByTestId('report-create')).toBeHidden();
 
     // Máy bố mẹ không hề có tiến độ của riêng nó.
-    await parentPage.goto('/ban-do');
+    await parentPage.goto('/khoa-hoc/py-khoi-dong');
     await expect(parentPage.getByTestId('progress-py-khoi-dong.01-xin-chao')).toContainText('0/4');
     await parent.close();
   });

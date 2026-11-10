@@ -35,7 +35,7 @@ export function NextStepCard({ next, completion }: NextStepCardProps) {
       </p>
       <Link ref={ctaRef} to={hrefOf(next)} className={buttonClasses('primary', 'md', 'mt-3')}>
         {cta}
-        {next.kind !== 'map' && <ArrowRight aria-hidden="true" className="size-4" />}
+        {next.kind !== 'course' && <ArrowRight aria-hidden="true" className="size-4" />}
       </Link>
     </section>
   );
@@ -52,10 +52,10 @@ function wording(next: NavTarget, completion: Completion | null): { message: str
         message: completion ? pager.lastExerciseDone : pager.exerciseDone,
         cta: pager.nextLessonCta,
       };
-    case 'map':
+    case 'course':
       return {
         message: completion?.courseDone ? pager.courseDone : pager.courseEnd,
-        cta: pager.toMap,
+        cta: pager.toCourse,
       };
   }
 }

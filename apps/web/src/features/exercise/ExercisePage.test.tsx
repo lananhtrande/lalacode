@@ -360,13 +360,13 @@ describe('ExercisePage', () => {
     );
   });
 
-  it('bài tập không có thì mời trẻ về bản đồ', async () => {
+  it('bài tập không có thì mời trẻ xem các khoá học', async () => {
     loadExercise.mockRejectedValue(new Error('không có'));
     renderPage();
     expect(await screen.findByText(strings.exercise.notFound)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: strings.exercise.backToMap })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: strings.exercise.backToCatalog })).toHaveAttribute(
       'href',
-      '/ban-do',
+      '/khoa-hoc',
     );
   });
 
