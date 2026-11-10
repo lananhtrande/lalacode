@@ -38,7 +38,7 @@ export function LessonBody({
     </h2>
   );
   return (
-    <div className="mt-6 space-y-4 text-card-title font-normal leading-relaxed" data-testid="lesson-body">
+    <div className="mt-6 space-y-4 text-body leading-[1.625rem]" data-testid="lesson-body">
       <Markdown
         components={{
           // Markdown trong bài không được phá cấu trúc tiêu đề của trang.

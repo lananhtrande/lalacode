@@ -47,7 +47,7 @@ export function CourseOutline({
             className="group"
           >
             <summary className="flex min-h-tap cursor-pointer list-none items-center justify-between gap-2 rounded-lg px-3 py-2 hover:bg-learn-hover [&::-webkit-details-marker]:hidden">
-              <span className="text-label text-learn-text">
+              <span className="text-meta tracking-wide text-learn-text uppercase">
                 {vi.course.chapter} {chapter.number} · {chapter.chapter.title}
               </span>
               <span className="shrink-0 text-small text-learn-muted">
@@ -120,7 +120,7 @@ function OutlineRow({
         aria-current={current ? 'page' : undefined}
         onClick={onNavigate}
         className={[
-          'flex min-h-tap items-center gap-3 rounded-lg border-l-4 py-2 pr-3 pl-2 text-learn-text',
+          'flex min-h-tap items-center gap-3 rounded-lg border-l-4 py-2 pr-3 pl-2 text-[0.9375rem] text-learn-text',
           current
             ? 'border-learn-accent bg-learn-current font-semibold'
             : 'border-transparent hover:bg-learn-hover',

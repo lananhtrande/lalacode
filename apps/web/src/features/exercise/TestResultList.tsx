@@ -10,7 +10,7 @@ import { RichText } from '../../shared/ui/RichText';
 export function TestResultList({ results }: { results: readonly TestResult[] }) {
   const passedAll = results.every((result) => result.passed);
   return (
-    <section aria-labelledby="ket-qua-cham" className="rounded-card bg-surface p-4 shadow-card">
+    <section aria-labelledby="ket-qua-cham" className="rounded-xl bg-surface-sunken p-4">
       <h2 id="ket-qua-cham" className="text-card-title">
         {vi.exercise.testsTitle}
       </h2>

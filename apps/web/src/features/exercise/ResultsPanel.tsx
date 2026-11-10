@@ -53,7 +53,7 @@ export function ResultsPanel({
     <section
       aria-label={vi.exercise.resultsLabel}
       data-testid="results-panel"
-      className="flex min-h-0 flex-col overflow-hidden rounded-card bg-surface shadow-card"
+      className="flex min-h-0 flex-col overflow-hidden rounded-card border border-line bg-surface"
     >
       <div className="flex items-center gap-1 border-b border-line px-2">
         <div role="tablist" aria-label={vi.exercise.resultsLabel} className="flex">
@@ -77,7 +77,7 @@ export function ResultsPanel({
                   if (collapsed) onCollapsedChange(false);
                 }}
                 className={[
-                  'relative min-h-tap px-4 text-label',
+                  'relative min-h-tap px-4 text-[0.9375rem] font-semibold',
                   'after:absolute after:inset-x-3 after:bottom-0 after:h-[3px] after:rounded-full',
                   selected
                     ? 'text-ink after:bg-accent'

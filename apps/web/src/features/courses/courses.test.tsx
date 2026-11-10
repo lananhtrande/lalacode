@@ -100,7 +100,7 @@ describe('catalog /khoa-hoc', () => {
     const card = await screen.findByTestId('course-py-khoi-dong');
     const cta = within(card).getByRole('link', { name: /Tiếp tục bài 2/ });
     expect(cta).toHaveAttribute('href', `/bai-hoc/${lessons[1]!.id}`);
-    expect(cta.className).toContain('bg-accent');
+    expect(cta.classList).toContain('bg-accent');
     expect(within(card).getByRole('progressbar')).toHaveAttribute('aria-valuenow', '25');
   });
 

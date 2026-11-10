@@ -46,35 +46,40 @@ export function CourseCard(item: CourseWithProgress) {
     <article
       aria-labelledby={titleId}
       data-testid={`course-${course.id}`}
-      className="flex h-full flex-col overflow-hidden rounded-card bg-surface shadow-card"
+      // Bo 20px, viền mảnh, không bóng (S0-41).
+      className="flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface"
     >
-      {/* Hình tự vẽ cho từng khoá; khai báo kích thước để không nhảy layout khi tải. */}
-      <img
-        src={`/illustrations/${course.illustration}`}
-        alt=""
-        width={320}
-        height={180}
-        className="aspect-video w-full object-cover"
-      />
-      <div className="flex flex-1 flex-col p-5">
-        <div>
+      {/* Hình tự vẽ cho từng khoá, lồng trong thẻ; khai báo kích thước để không nhảy layout. */}
+      <div className="px-3 pt-3">
+        <img
+          src={`/illustrations/${course.illustration}`}
+          alt=""
+          width={320}
+          height={180}
+          className="h-34 w-full rounded-[0.8125rem] border border-fresh-line object-cover"
+        />
+      </div>
+      <div className="flex flex-1 flex-col px-4 pt-3.5 pb-4">
+        <div className="flex flex-wrap gap-1.5">
           <LevelBadge level={course.level} />
+          <AgeBadge ageRange={course.ageRange} />
         </div>
-        <h2 id={titleId} className="mt-3 text-card-title">
+        <h2 id={titleId} className="mt-2 text-card-title">
           {course.title}
         </h2>
-        {/* Dòng cao 24px: dấu chồng (Ổ, ầ) của dòng thứ hai không bị cắt mất nửa. */}
-        <p className="mt-1 line-clamp-3 text-small text-ink-soft">{course.summary}</p>
-        <p className="mt-3 text-small text-ink-soft">{courseMeta(item)}</p>
+        {/* Dòng cao 21px: dấu chồng (Ổ, ầ) của dòng thứ hai không bị cắt mất nửa. */}
+        <p className="mt-2 line-clamp-2 text-small text-ink-soft">{course.summary}</p>
+        <p className="mt-3 text-meta text-ink-soft">{courseMeta(item)}</p>
         {progress.status !== 'chua-hoc' && (
           <div className="mt-3">
             <ProgressBar percent={progress.percent} label={vi.catalog.progressLabel} />
           </div>
         )}
-        <div className="mt-auto pt-4">
+        <div className="mt-auto pt-3">
           <ButtonLink
             to={action.to}
             variant={action.variant}
+            size="sm"
             aria-label={`${action.label}: ${course.title}`}
           >
             {action.label}
@@ -86,12 +91,22 @@ export function CourseCard(item: CourseWithProgress) {
   );
 }
 
+/** Độ tuổi của khoá: nhãn xanh lá nhạt có chấm, luôn kèm chữ (S0-41). */
+export function AgeBadge({ ageRange }: { ageRange: readonly [number, number] }) {
+  return (
+    <span className="inline-flex h-5.5 items-center gap-1.5 rounded-md border border-fresh-line bg-fresh-surface px-2 text-meta text-fresh-text">
+      <span aria-hidden="true" className="size-1.5 rounded-full bg-fresh-dot" />
+      {fill(vi.catalog.ageRange, { from: ageRange[0], to: ageRange[1] })}
+    </span>
+  );
+}
+
 /** Ô giữ chỗ cho khoá sắp có: không bấm được, không ghi tên khoá cụ thể. */
 export function ComingSoonCard() {
   return (
     <div
       data-testid="course-coming-soon"
-      className="flex h-full min-h-48 flex-col items-center justify-center gap-2 rounded-card border-2 border-dashed border-line p-6 text-center"
+      className="flex h-full min-h-48 flex-col items-center justify-center gap-2 rounded-card border border-dashed border-line p-6 text-center"
     >
       <Clock aria-hidden="true" className="size-8 text-ink-soft" />
       <p className="text-card-title">{vi.catalog.comingSoonTitle}</p>

@@ -5,7 +5,7 @@ export function OutputConsole({ output }: { output: string }) {
   return (
     <section
       aria-labelledby="ket-qua-chay"
-      className="overflow-hidden rounded-card bg-code-bg text-code-text shadow-card"
+      className="overflow-hidden rounded-card bg-code-bg text-code-text"
     >
       <h2 id="ket-qua-chay" className="bg-code-gutter px-4 py-2 text-label">
         {vi.exercise.outputTitle}

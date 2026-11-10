@@ -429,7 +429,7 @@ describe('ExercisePage — sang bài tiếp theo (S0-36)', () => {
     const nav = await screen.findByRole('navigation', { name: strings.pager.label });
     const next = within(nav).getByRole('link', { name: 'Bài tập tiếp: In tên' });
     expect(next).toHaveAttribute('href', `/bai-tap/${second.id}`);
-    expect(next.className).not.toContain('bg-accent');
+    expect(next.classList).not.toContain('bg-accent');
     expect(
       within(nav).getByRole('link', { name: 'Về bài học: Xin chào, Python!' }),
     ).toHaveAttribute('href', `/bai-hoc/${lessonId}`);
@@ -444,7 +444,7 @@ describe('ExercisePage — sang bài tiếp theo (S0-36)', () => {
       name: new RegExp(strings.pager.nextExerciseCta),
     });
     expect(cta).toHaveAttribute('href', `/bai-tap/${second.id}`);
-    expect(cta.className).toContain('bg-accent');
+    expect(cta.classList).toContain('bg-accent');
     await waitFor(() => expect(cta).toHaveFocus());
   });
 

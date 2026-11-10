@@ -123,7 +123,7 @@ export function LearnLayout() {
             type="button"
             aria-expanded={drawerOpen}
             onClick={() => setDrawerAt(pathname)}
-            className="flex min-h-tap shrink-0 items-center gap-2 rounded-full px-3 text-label hover:bg-surface-muted lg:hidden"
+            className="flex min-h-tap shrink-0 items-center gap-2 rounded-lg px-3 text-label hover:bg-surface-muted lg:hidden"
           >
             <ListTree aria-hidden="true" className="size-5" />
             {vi.learn.openOutline}
@@ -242,7 +242,7 @@ function SidebarContent({
         <Link
           to={`/khoa-hoc/${course.id}`}
           aria-label={`${vi.learn.toCourse}: ${course.title}`}
-          className="flex size-11 items-center justify-center rounded-lg hover:bg-learn-hover"
+          className="flex size-10 items-center justify-center rounded-lg hover:bg-learn-hover"
         >
           <img src="/brand/lalakode-mark-small.svg" alt="" width={28} height={28} />
         </Link>
@@ -303,7 +303,7 @@ function DarkIconButton({
       type="button"
       aria-label={label}
       title={label}
-      className="flex size-11 shrink-0 items-center justify-center rounded-full text-learn-text hover:bg-learn-hover"
+      className="flex size-10 shrink-0 items-center justify-center rounded-full text-learn-text hover:bg-learn-hover"
       {...rest}
     >
       {children}

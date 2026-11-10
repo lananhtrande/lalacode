@@ -38,7 +38,7 @@ export function TurtleCanvas({ commands }: { commands: readonly DrawCommand[] })
   }, [commands, size]);
 
   return (
-    <section aria-labelledby="hinh-rua" className="rounded-card bg-surface p-4 shadow-card">
+    <section aria-labelledby="hinh-rua" className="rounded-card bg-surface p-4">
       <h2 id="hinh-rua" className="text-card-title">
         {vi.exercise.drawingTitle}
       </h2>

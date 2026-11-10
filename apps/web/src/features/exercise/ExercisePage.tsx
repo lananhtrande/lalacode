@@ -336,7 +336,7 @@ export function ExercisePage() {
         {...(wide ? {} : { role: 'tabpanel', 'aria-labelledby': `${briefId}-tab` })}
         className={[
           showPart('de') ? '' : 'hidden',
-          'rounded-card bg-surface p-5 shadow-card sm:p-6 lg:min-h-0 lg:overflow-y-auto',
+          'rounded-card border border-line bg-surface p-5 sm:p-6 lg:min-h-0 lg:overflow-y-auto',
         ].join(' ')}
       >
         <ExerciseBrief exercise={exercise}>
