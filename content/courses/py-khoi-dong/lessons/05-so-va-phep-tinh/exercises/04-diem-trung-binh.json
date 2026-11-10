@@ -3,6 +3,22 @@
   "title": "Điểm trung bình",
   "kind": "code",
   "prompt": "Nhận hai điểm kiểm tra (mỗi điểm một dòng) rồi in điểm trung bình của hai bài.",
+  "difficulty": "vua",
+  "requirements": [
+    "Nhận hai điểm, mỗi điểm một dòng, đổi sang số bằng `int(...)`.",
+    "Cộng lại rồi chia cho 2: `(diem1 + diem2) / 2`."
+  ],
+  "examples": [
+    {
+      "input": "7\n9\n",
+      "output": "8.0"
+    },
+    {
+      "input": "6\n7\n",
+      "output": "6.5",
+      "note": "Điểm trung bình có thể là số lẻ."
+    }
+  ],
   "starterCode": "diem1 = int(input())\ndiem2 = int(input())\n",
   "solution": "diem1 = int(input())\ndiem2 = int(input())\nprint((diem1 + diem2) / 2)\n",
   "tests": [

@@ -117,11 +117,31 @@ export const testSchema = z.discriminatedUnion('type', [
   }),
 ]);
 
+/** Độ khó hiện trên đề bài và để lọc ở kho luyện tập (S0-39, S0-40). */
+export const difficulties = ['de', 'vua', 'kho', 'thu-thach'] as const;
+
+/**
+ * Một ví dụ chạy thử trên đề bài. `output` phải đúng y như lời giải in ra khi
+ * nhận `input` làm dữ liệu nhập — `content:verify` chạy thật để kiểm.
+ */
+const exampleSchema = z.strictObject({
+  input: z.string().optional(),
+  output: z.string().min(1, 'không được để trống'),
+  note: friendlyMessage.optional(),
+});
+
 export const exerciseSchema = z.strictObject({
   id: dottedId,
   title,
   kind: z.literal('code'),
   prompt: z.string().min(1, 'không được để trống').max(400, 'tối đa 400 ký tự'),
+  difficulty: z.enum(difficulties).optional(),
+  /** Gạch đầu dòng "Yêu cầu" dưới đề bài; Markdown inline (`code`, **đậm**). */
+  requirements: z
+    .array(z.string().min(1).max(200, 'tối đa 200 ký tự'))
+    .max(6, 'tối đa 6 yêu cầu — dài hơn thì chia bài')
+    .optional(),
+  examples: z.array(exampleSchema).max(3, 'tối đa 3 ví dụ').optional(),
   starterCode: z.string().refine((code) => code.split('\n').length <= 20, 'tối đa 20 dòng'),
   solution: z.string().min(1, 'không được để trống'),
   tests: z.array(testSchema).min(1, 'cần ít nhất một test'),
@@ -137,4 +157,6 @@ export type Lesson = z.infer<typeof lessonSchema>;
 export type Video = z.infer<typeof videoSchema>;
 export type Exercise = z.infer<typeof exerciseSchema>;
 export type ExerciseTest = z.infer<typeof testSchema>;
+export type Difficulty = (typeof difficulties)[number];
+export type ExerciseExample = z.infer<typeof exampleSchema>;
 export type ContentStatus = z.infer<typeof status>;

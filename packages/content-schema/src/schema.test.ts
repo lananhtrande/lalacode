@@ -181,3 +181,35 @@ describe('courseSchema', () => {
     expect(result.success).toBe(false);
   });
 });
+
+describe('exerciseSchema — độ khó, yêu cầu, ví dụ (S0-39)', () => {
+  const base = {
+    id: 'py-khoi-dong.01-xin-chao.01-in-loi-chao',
+    title: 'In lời chào',
+    kind: 'code',
+    prompt: 'In ra `Xin chào`',
+    starterCode: '',
+    solution: 'print("Xin chào")',
+    tests: [{ type: 'stdout_equals', expected: 'Xin chào\n', message: 'Thử lại nhé.' }],
+    hints: ['a', 'b', 'c'],
+  };
+
+  it('ba trường đều tuỳ chọn', () => {
+    expect(exerciseSchema.safeParse(base).success).toBe(true);
+  });
+
+  it('nhận độ khó, yêu cầu và ví dụ hợp lệ', () => {
+    const result = exerciseSchema.safeParse({
+      ...base,
+      difficulty: 'thu-thach',
+      requirements: ['Dùng `print`'],
+      examples: [{ input: 'An\n', output: 'Chào An', note: 'Tên do em gõ.' }],
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it('từ chối độ khó lạ và ví dụ thiếu output', () => {
+    expect(exerciseSchema.safeParse({ ...base, difficulty: 'sieu-kho' }).success).toBe(false);
+    expect(exerciseSchema.safeParse({ ...base, examples: [{ input: 'x' }] }).success).toBe(false);
+  });
+});

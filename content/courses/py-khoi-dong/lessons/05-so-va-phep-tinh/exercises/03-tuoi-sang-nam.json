@@ -3,6 +3,18 @@
   "title": "Tuổi sang năm",
   "kind": "code",
   "prompt": "Nhận tuổi người dùng gõ vào, rồi in ra tuổi của họ vào năm sau.",
+  "difficulty": "vua",
+  "requirements": ["Đổi chữ gõ vào thành số bằng `int(...)`.", "In ra tuổi cộng thêm 1."],
+  "examples": [
+    {
+      "input": "12\n",
+      "output": "13"
+    },
+    {
+      "input": "9\n",
+      "output": "10"
+    }
+  ],
   "starterCode": "tuoi = input()\nprint(tuoi + 1)\n",
   "solution": "tuoi = int(input())\nprint(tuoi + 1)\n",
   "tests": [

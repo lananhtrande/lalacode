@@ -3,6 +3,16 @@
   "title": "Cất điểm vào hộp",
   "kind": "code",
   "prompt": "Tạo biến `diem` bằng 9 rồi in biến đó ra.",
+  "difficulty": "de",
+  "requirements": [
+    "Tạo biến tên `diem`.",
+    "In ra **biến** `diem`, không viết thẳng số 9 trong `print`."
+  ],
+  "examples": [
+    {
+      "output": "9"
+    }
+  ],
   "starterCode": "diem = \nprint(diem)\n",
   "solution": "diem = 9\nprint(diem)\n",
   "tests": [

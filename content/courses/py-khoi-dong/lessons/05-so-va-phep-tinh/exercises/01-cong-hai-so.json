@@ -3,6 +3,13 @@
   "title": "Cộng hai số",
   "kind": "code",
   "prompt": "In ra kết quả của 125 cộng 47.",
+  "difficulty": "de",
+  "requirements": ["Để Python tự tính, đừng tính trước bằng tay.", "Số không nằm trong dấu nháy."],
+  "examples": [
+    {
+      "output": "172"
+    }
+  ],
   "starterCode": "print(125)\n",
   "solution": "print(125 + 47)\n",
   "tests": [

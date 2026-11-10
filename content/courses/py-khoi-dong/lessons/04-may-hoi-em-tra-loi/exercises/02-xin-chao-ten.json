@@ -3,6 +3,22 @@
   "title": "Xin chào kèm tên",
   "kind": "code",
   "prompt": "Nhận tên rồi in ra câu `Xin chào Lan!` (thay Lan bằng tên nhận được). Dùng f-string.",
+  "difficulty": "de",
+  "requirements": [
+    "Nhận tên bằng `input()`.",
+    "Dùng f-string: `f\"Xin chào {ten}!\"`.",
+    "Có dấu chấm than ở cuối."
+  ],
+  "examples": [
+    {
+      "input": "Minh\n",
+      "output": "Xin chào Minh!"
+    },
+    {
+      "input": "Lan\n",
+      "output": "Xin chào Lan!"
+    }
+  ],
   "starterCode": "ten = input()\nprint(\"Xin chào ten!\")\n",
   "solution": "ten = input()\nprint(f\"Xin chào {ten}!\")\n",
   "tests": [

@@ -3,6 +3,13 @@
   "title": "Đổi giá trị trong hộp",
   "kind": "code",
   "prompt": "Biến `tien` đang là 10000. Em đổi nó thành 20000 rồi in ra.",
+  "difficulty": "de",
+  "requirements": ["Giữ dòng tạo biến `tien` bằng 10000.", "Gán lại `tien` bằng 20000 rồi mới in."],
+  "examples": [
+    {
+      "output": "20000"
+    }
+  ],
   "starterCode": "tien = 10000\n# thêm một dòng ở đây\nprint(tien)\n",
   "solution": "tien = 10000\ntien = 20000\nprint(tien)\n",
   "tests": [

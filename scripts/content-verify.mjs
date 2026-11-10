@@ -7,6 +7,7 @@ import { readContentTree } from './lib/read-content.mjs';
 import { printIssues } from './lib/report.mjs';
 import { findPython } from './lib/python.mjs';
 import { runGrader } from './lib/run-grader.mjs';
+import { exampleTests } from './lib/examples.mjs';
 
 const failedTestLines = (report) =>
   report.results
@@ -67,6 +68,24 @@ for (const course of courses) {
         });
       }
 
+      // Ví dụ trên đề bài phải khớp output thật của lời giải (S0-39).
+      for (const { index, test } of exampleTests(exercise)) {
+        const exampleRun = await runGrader(
+          python.command,
+          { code: exercise.solution, tests: [test] },
+          exercise.timeoutMs,
+        );
+        if (!exampleRun.report?.passed) {
+          const detail =
+            exampleRun.report?.results[0]?.detail ?? exampleRun.crashed ?? 'chạy quá giờ';
+          issues.push({
+            level: 'error',
+            where: `${where} → examples[${index}]`,
+            message: `Ví dụ ${index + 1} không khớp với output của lời giải mẫu: ${detail}`,
+          });
+        }
+      }
+
       const starterRun = await runGrader(
         python.command,
         { code: exercise.starterCode, tests: exercise.tests },
@@ -92,7 +111,7 @@ for (const course of courses) {
 }
 
 const { errors, warnings } = printIssues(issues);
-const summary = `Đã chạy thử ${checked} bài tập (lời giải + starter).`;
+const summary = `Đã chạy thử ${checked} bài tập (lời giải + starter + ví dụ trên đề).`;
 if (errors) {
   console.log(`\n${summary} ${errors} lỗi, ${warnings} cảnh báo.`);
   process.exit(1);
