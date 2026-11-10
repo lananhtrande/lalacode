@@ -8,6 +8,11 @@ import type { CourseLevel, Exercise, Lesson } from '@lalakode/content-schema';
 /** Bài tập gửi xuống máy trẻ: giống `Exercise` nhưng không có lời giải. */
 export type PublicExercise = Omit<Exercise, 'solution'>;
 
+export interface ExerciseSummary {
+  id: string;
+  title: string;
+}
+
 export interface LessonSummary {
   id: string;
   slug: string;
@@ -16,6 +21,8 @@ export interface LessonSummary {
   estimatedMinutes: number;
   status: Lesson['status'];
   exerciseCount: number;
+  /** Đúng thứ tự `lesson.exercises`; chỉ tên, không có đề hay test. */
+  exercises: readonly ExerciseSummary[];
   hasVideo: boolean;
   /** Đường dẫn tương đối tới file bài học, có hash nên cache được vĩnh viễn. */
   file: string;

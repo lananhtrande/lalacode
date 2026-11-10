@@ -1,4 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 import { render, screen, waitFor, within } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from './routes';
@@ -69,6 +73,16 @@ describe('router', () => {
   });
 
   it('đường dẫn bài tập mở màn bài tập (màn này có test riêng)', async () => {
+    // jsdom không có Web Worker; ở đây chỉ cần màn bài tập dựng lên được.
+    vi.stubGlobal(
+      'Worker',
+      class {
+        addEventListener() {}
+        removeEventListener() {}
+        postMessage() {}
+        terminate() {}
+      },
+    );
     renderAt('/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao');
     expect(await screen.findByRole('status')).toHaveTextContent(strings.exercise.loading);
   });

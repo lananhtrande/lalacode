@@ -60,6 +60,22 @@ export function resetProgressDbForTest(): void {
   dbPromise = null;
 }
 
+/**
+ * Báo cho các màn đang mở trong **tab này** rằng tiến độ vừa đổi (S0-38: mục
+ * lục của trình học bài tô "đã xong" ngay khi trẻ nộp đúng). Chỉ là sự kiện
+ * trong bộ nhớ, không có gì rời khỏi máy.
+ */
+const progressEvents = new EventTarget();
+
+export function onProgressChanged(listener: () => void): () => void {
+  progressEvents.addEventListener('change', listener);
+  return () => progressEvents.removeEventListener('change', listener);
+}
+
+function notifyProgressChanged(): void {
+  progressEvents.dispatchEvent(new Event('change'));
+}
+
 export async function getProfile(): Promise<ProfileState> {
   const db = await openProgressDb();
   const profile = await db.get('profile', PROFILE_KEY);
@@ -178,6 +194,7 @@ export async function recordAttempt(
   await transaction.done;
 
   await touchActivity(now);
+  notifyProgressChanged();
   return next;
 }
 
@@ -203,6 +220,7 @@ export async function awardBadges(earned: readonly string[]): Promise<ProfileSta
   if (merged.length === profile.badges.length) return profile;
   const next: ProfileState = { ...profile, badges: merged };
   await db.put('profile', next);
+  notifyProgressChanged();
   return next;
 }
 
@@ -246,6 +264,7 @@ export async function importSnapshot(snapshot: ProgressSnapshot): Promise<void> 
     transaction.objectStore('profile').put({ ...snapshot.profile, id: PROFILE_KEY }),
   ]);
   await transaction.done;
+  notifyProgressChanged();
 }
 
 /**
@@ -282,4 +301,5 @@ export async function clearAllProgress(): Promise<void> {
     transaction.objectStore('profile').clear(),
   ]);
   await transaction.done;
+  notifyProgressChanged();
 }

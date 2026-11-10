@@ -7,6 +7,7 @@ import {
   getExerciseProgress,
   getProfile,
   markLessonStarted,
+  onProgressChanged,
   recordAttempt,
   resetProgressDbForTest,
   saveDraft,
@@ -39,6 +40,22 @@ describe('tiến độ trên máy', () => {
   it('lưu code nháp rồi đọc lại được đúng như cũ', async () => {
     await saveDraft(EXERCISE, LESSON, 'print("đang làm dở")');
     expect((await getExerciseProgress(EXERCISE))?.draftCode).toBe('print("đang làm dở")');
+  });
+
+  it('nộp bài và xoá dữ liệu thì báo cho màn đang mở; lưu nháp thì không (quá thường xuyên)', async () => {
+    let changes = 0;
+    const stop = onProgressChanged(() => {
+      changes += 1;
+    });
+    await saveDraft(EXERCISE, LESSON, 'print(1)');
+    expect(changes).toBe(0);
+    await recordAttempt(EXERCISE, LESSON, true, 'print(1)');
+    expect(changes).toBe(1);
+    await clearAllProgress();
+    expect(changes).toBe(2);
+    stop();
+    await recordAttempt(EXERCISE, LESSON, true, 'print(1)');
+    expect(changes).toBe(2);
   });
 
   it('lưu nháp không tính là một lần nộp bài', async () => {

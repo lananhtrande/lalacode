@@ -44,14 +44,15 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'bai-hoc/:lessonId',
+        handle: { layout: 'learn' },
         lazy: async () => ({
           Component: (await import('../features/lesson/LessonPage')).LessonPage,
         }),
       },
       {
         path: 'bai-tap/:exerciseId',
-        // Màn bài tập dùng gần hết chiều rộng cho 2 cột editor/kết quả (S0-32).
-        handle: { wide: true },
+        // Khung học bài (S0-38): mục lục khoá bên trái, editor dùng phần còn lại.
+        handle: { layout: 'learn' },
         lazy: async () => ({
           Component: (await import('../features/exercise/ExercisePage')).ExercisePage,
         }),

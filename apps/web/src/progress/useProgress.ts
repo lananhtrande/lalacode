@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { exportSnapshot, quietly } from './db';
+import { exportSnapshot, onProgressChanged, quietly } from './db';
 import type { ProgressSnapshot } from './schema';
 import { dayKey } from './streak';
 import { evaluateBadges, type BadgeState } from './badges';
@@ -22,12 +22,16 @@ const empty: ProgressView = {
 };
 
 /**
- * Đọc tiến độ trên máy cho các màn chỉ hiển thị (bản đồ, huy hiệu).
+ * Đọc tiến độ trên máy cho các màn chỉ hiển thị (khoá học, mục lục, huy hiệu).
  * Không lưu được (Safari riêng tư…) thì coi như chưa có tiến độ — màn hình vẫn
  * dùng được, chỉ là không có số liệu.
  */
 export function useProgress(today: string = dayKey(new Date())): ProgressView {
   const [view, setView] = useState<ProgressView>(empty);
+  // Tăng mỗi khi tiến độ đổi trong tab này (nộp đúng, nhập mã, xoá dữ liệu): đọc lại.
+  const [version, setVersion] = useState(0);
+
+  useEffect(() => onProgressChanged(() => setVersion((value) => value + 1)), []);
 
   useEffect(() => {
     let active = true;
@@ -53,7 +57,7 @@ export function useProgress(today: string = dayKey(new Date())): ProgressView {
     return () => {
       active = false;
     };
-  }, [today]);
+  }, [today, version]);
 
   return view;
 }

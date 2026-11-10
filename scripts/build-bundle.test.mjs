@@ -83,6 +83,9 @@ describe('buildBundle', () => {
     const lesson = index.courses[0].lessons[0];
     expect(lesson.file).toBe(files[0].path);
     expect(lesson.exerciseCount).toBe(1);
+    expect(lesson.exercises).toEqual([
+      { id: 'py-khoi-dong.01-xin-chao.01-in-loi-chao', title: 'In lời chào' },
+    ]);
     expect(lesson.hasVideo).toBe(false);
   });
 

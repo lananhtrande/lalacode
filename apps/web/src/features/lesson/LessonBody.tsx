@@ -1,4 +1,6 @@
+import type { ReactNode } from 'react';
 import Markdown from 'react-markdown';
+import type { OutlineItem } from '../../content/outline';
 
 /**
  * Nội dung bài học viết bằng Markdown. Chỉ CommonMark, **không** `remark-gfm`:
@@ -14,14 +16,34 @@ export function stripLeadingTitle(markdown: string): string {
   return markdown.replace(/^\s*#\s+.*\r?\n+/, '');
 }
 
-export function LessonBody({ markdown }: { markdown: string }) {
+/**
+ * `markdown` đã bỏ tiêu đề mở đầu (`stripLeadingTitle`); `outline` sinh từ chính
+ * chuỗi đó, nên số dòng của từng tiêu đề khớp với `node.position` của
+ * react-markdown — mỗi `h2` nhận đúng `id` mà mục "Nội dung bài" trỏ tới.
+ */
+export function LessonBody({
+  markdown,
+  outline = [],
+}: {
+  markdown: string;
+  outline?: readonly OutlineItem[];
+}) {
+  const idAtLine = new Map(outline.map((item) => [item.line, item.id]));
+  const heading = (children: ReactNode, line: number | undefined) => (
+    <h2
+      id={line === undefined ? undefined : idAtLine.get(line)}
+      className="mt-8 scroll-mt-20 text-section-title"
+    >
+      {children}
+    </h2>
+  );
   return (
     <div className="mt-6 space-y-4 text-card-title font-normal leading-relaxed" data-testid="lesson-body">
       <Markdown
         components={{
           // Markdown trong bài không được phá cấu trúc tiêu đề của trang.
-          h1: ({ children }) => <h2 className="mt-8 text-section-title">{children}</h2>,
-          h2: ({ children }) => <h2 className="mt-8 text-section-title">{children}</h2>,
+          h1: ({ children, node }) => heading(children, node?.position?.start.line),
+          h2: ({ children, node }) => heading(children, node?.position?.start.line),
           h3: ({ children }) => <h3 className="mt-6 text-card-title">{children}</h3>,
           p: ({ children }) => <p>{children}</p>,
           ul: ({ children }) => <ul className="list-disc space-y-1 pl-6">{children}</ul>,
@@ -46,7 +68,7 @@ export function LessonBody({ markdown }: { markdown: string }) {
           ),
         }}
       >
-        {stripLeadingTitle(markdown)}
+        {markdown}
       </Markdown>
     </div>
   );

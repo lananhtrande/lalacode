@@ -54,6 +54,8 @@ export function buildBundle(courses) {
         estimatedMinutes: lesson.estimatedMinutes,
         status: lesson.status,
         exerciseCount: exercises.length,
+        // Tên bài tập cho mục lục của trình học bài (S0-38): không cần tải từng bài học.
+        exercises: exercises.map((exercise) => ({ id: exercise.id, title: exercise.title })),
         hasVideo: Boolean(lesson.video),
         file,
       });

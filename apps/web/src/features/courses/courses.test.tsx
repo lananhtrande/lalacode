@@ -33,6 +33,7 @@ function lesson(n: number): LessonSummary {
     estimatedMinutes: 15,
     status: 'draft',
     exerciseCount: 2,
+    exercises: [],
     hasVideo: false,
     file: `lessons/${slug}.json`,
   };
