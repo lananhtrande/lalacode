@@ -1,8 +1,8 @@
 # Design system lalakode
 
-Lý do của từng lựa chọn: ADR 0008 (nguyên lý, token, component), ADR 0009 (font Inter, logo — `docs/brand/README.md`) và ADR 0010 (màu nhấn xanh dương; **San hô chỉ ở logo**). Xem trực tiếp mọi token và component: chạy `npm run dev` rồi mở `/dev/design` (chỉ có ở dev).
+Lý do của từng lựa chọn: ADR 0008 (nguyên lý, token, component), ADR 0009 (logo — `docs/brand/README.md`), ADR 0010 (màu nhấn xanh dương; **San hô chỉ ở logo**) và ADR 0012 (làm mới S0-41: font, bảng màu, cỡ chữ, hình khối, vùng bấm). Xem trực tiếp mọi token và component: chạy `npm run dev` rồi mở `/dev/design` (chỉ có ở dev).
 
-![Trang mẫu /dev/design](design/screenshots/s035-dev-design-1440.png)
+![Trang mẫu /dev/design](design/screenshots/s041-dev-design-1440.png)
 
 ## Nguyên tắc
 
@@ -11,6 +11,7 @@ Lý do của từng lựa chọn: ADR 0008 (nguyên lý, token, component), ADR 
 3. **Mọi chữ đạt WCAG AA (≥ 4.5:1)** trên nền của nó. `src/tokens.test.ts` đọc thẳng `index.css` và chốt điều này; thêm cách phối chữ/nền mới thì thêm cặp vào test.
 4. **Mọi thứ AI tạo ra nằm trên nền `ai-surface`** (`AiPanel`), để trẻ luôn biết đâu là gợi ý của trợ lý.
 5. Chỉ có giao diện sáng. Editor, console và sidebar mục lục của trình học bài (ADR 0011) là ngoại lệ, luôn tối.
+6. **Phẳng, viền mảnh** (S0-41): thẻ bo 20px, viền `line`, không bóng; chỉ khối nổi (khung lọc, ngăn kéo) có bóng rất nhẹ.
 
 ## Màu
 
@@ -18,37 +19,44 @@ Khai báo một chỗ duy nhất: `@theme` trong `apps/web/src/index.css`. Dùng
 
 | Token | Giá trị | Dùng cho | Tương phản |
 | --- | --- | --- | --- |
-| `ink` | `#18181B` (Mực) | Chữ chính, nút `dark`, mục nav đang chọn, viền focus | 17.7:1 trên `surface` |
-| `ink-soft` | `#4A4A52` | Chữ phụ, mô tả, mục nav chưa chọn | 8.8:1 trên `surface` |
-| `surface` | `#FFFFFF` | Thẻ, sidebar | — |
-| `surface-muted` | `#F6F5F4` | Nền trang, khối phụ | — |
-| `line` | `#E5E4E2` | Đường chia, viền thẻ | (không dùng cho chữ) |
-| `accent` | `#2563EB` (xanh dương) | Nút `primary`, mục đang chọn | — |
-| `on-accent` | `#FFFFFF` | Chữ trên `accent` (và trên `accent-strong` khi hover) | 5.2:1 / 6.7:1 |
-| `accent-strong` | `#1D4ED8` | Link, icon nhấn, chữ màu nhấn trên nền sáng; nền nút chính khi hover | 6.7:1 trên `surface`, 6.2:1 trên `surface-muted` |
-| `accent-soft` | `#EAF1FE` | Nền nhạt cho thứ đang được làm nổi (số thứ tự bài, chuỗi ngày học, huy hiệu đã nhận) | `ink` 15.6:1, `accent-strong` 5.9:1 |
-| `ai-surface` | `#F1EEFF` | Nền khung gợi ý AI | `ink` 15.5:1 |
+| `ink` | `#1B1B1B` | Chữ chính, viền focus | 17.2:1 trên `surface`, 15.4:1 trên `surface-muted` |
+| `ink-soft` | `#696969` | Chữ phụ, mô tả, mục menu chưa chọn | 5.5:1 trên `surface`, 4.9:1 trên `surface-muted`, 5.1:1 trên `surface-sunken` |
+| `surface` | `#FFFFFF` | Thẻ, thanh menu | — |
+| `surface-muted` | `#F3F2EF` (xám ấm) | Nền trang | — |
+| `surface-sunken` | `#F7F7F6` | Nền lõm: nhóm chip, ô tìm, select, ô đếm | — |
+| `line` | `#E8E8E8` | Viền thẻ, khung lọc | (không dùng cho chữ) |
+| `line-soft` | `#EFEFEF` | Đường chia mảnh trong một khối, viền dưới thanh menu | (không dùng cho chữ) |
+| `ink-surface` | `#24242A` | Nền tối ngoài editor: mục lục học bài, nút `dark` ("Chạy thử") | chữ trắng 15.4:1 |
+| `accent` | `#2D65BC` (xanh dương) | Nút `primary`, mục đang chọn, vạch dưới menu | — |
+| `on-accent` | `#FFFFFF` | Chữ trên `accent` (và trên `accent-strong` khi hover) | 5.7:1 / 7.5:1 |
+| `accent-strong` | `#24539C` | Link, icon nhấn, chữ màu nhấn trên nền sáng; nền nút chính khi hover | 7.5:1 trên `surface`, 6.7:1 trên `surface-muted` |
+| `accent-soft` | `#EEF3FB` | Nền nhãn cấp độ, rãnh thanh tiến độ, mục đang chọn ở ngăn kéo | `ink` 15.5:1, `accent-strong` 6.8:1 |
+| `ai-surface` | `#F1EEFF` | Nền khung gợi ý AI | `ink` 15.1:1 |
 | `success` | `#0E5E2B` | Chữ/icon "đạt", "xong" | 7.9:1 trên `surface` |
 | `success-surface` | `#E7F6EC` | Nền thẻ đạt | `success` 7.1:1 |
 | `attention` | `#7A5C00` (mù tạt) | Chữ/icon "chưa đạt", lỗi thân thiện, cảnh báo | 6.3:1 trên `surface` |
-| `attention-surface` | `#FFF5CC` | Nền thẻ cần chú ý | `attention` 5.7:1, `ink` 16.2:1 |
+| `attention-surface` | `#FFF5CC` | Nền thẻ cần chú ý | `attention` 5.7:1 |
+| `fresh-surface` / `fresh-line` / `fresh-text` / `fresh-dot` | `#F1FAF4` / `#BFE6CF` / `#1F6B3A` / `#22A35A` | Nhãn độ tuổi ("10–15 tuổi"), nhãn "Mới": nền xanh lá nhạt, viền, chữ, chấm | chữ 6.1:1 trên nền |
 
-Chữ hay link mang màu nhấn dùng `accent-strong`, không dùng `accent` (chỉ 5.2:1 trên trắng, sát ngưỡng trên nền xám nhạt).
+Chữ hay link mang màu nhấn dùng `accent-strong`; `accent` chỉ dùng cho chữ trên nền trắng (5.7:1, ví dụ chip đang chọn), vì trên nền xám ấm nó chỉ còn 5.1:1.
 
-**San hô chỉ ở logo.** `#E8553A` chỉ có trong file logo/favicon. Không nút, link, trạng thái, icon hay nền nào dùng San hô hoặc một sắc đỏ/cam. Màu ấm duy nhất của giao diện là `attention` (mù tạt) cho cảnh báo, lỗi, "chưa đạt" — luôn kèm icon tam giác và chữ. Xanh dương chỉ có nghĩa "bấm vào đây / đang chọn". `tokens.test.ts` chặn `accent` xích lại gần `success`/`attention` (< 30° sắc độ) và chặn màu cú pháp nào giống màu nút.
+**San hô chỉ ở logo.** `#E8553A` chỉ có trong file logo/favicon. Không nút, link, trạng thái, icon hay nền nào dùng San hô hoặc một sắc đỏ/cam. Màu ấm duy nhất của giao diện là `attention` (mù tạt) cho cảnh báo, lỗi, "chưa đạt" — luôn kèm icon tam giác và chữ. Xanh dương chỉ có nghĩa "bấm vào đây / đang chọn". `tokens.test.ts` chặn `accent` xích lại gần `success`/`attention` (< 30° sắc độ) và chặn màu cú pháp nào giống màu nút. Từ S0-41, "đạt" và màu nhấn chỉ còn cách nhau 1.39 về độ sáng (ngưỡng test 1.35, ADR 0012) — vẫn cách 75° sắc độ.
 
 ## Chữ
 
-Font **Inter** 4.1 (OFL), tự host ở `apps/web/public/fonts/inter/` kèm `OFL.txt`. Bản **variable** (độ đậm 400–800 trong một file), chia 3 file theo `unicode-range` (latin, latin-ext, vietnamese) nên trình duyệt chỉ tải phần cần — trang tiếng Việt thường ~40 kB. Cắt lại bằng `docs/brand/build-inter.sh`. Bật `font-feature-settings: 'cv05'` (chữ `l` có đuôi, phân biệt `l`/`I`/`1`). Độ đậm: 400 chữ thân, 600 nhãn và tiêu đề thẻ, 700 tiêu đề trang, 800 chỉ trong logo. Code dùng font mono của hệ thống.
+Font **Be Vietnam Pro** (OFL) cho mọi chữ giao diện, 400/500/600/700; **JetBrains Mono** (OFL) cho editor, console, khối code và `code` inline, 400/500/700, `font-variant-ligatures: none` (`!=`, `->` hiện đúng như trẻ gõ). Tự host ở `apps/web/public/fonts/be-vietnam-pro/` và `jetbrains-mono/` kèm `OFL.txt` (file từ gói `@fontsource` 5.3.0, không phải dependency). Mỗi độ đậm chia 3 file theo `unicode-range`; bảng vietnamese khai báo sau latin-ext nên trang tiếng Việt chỉ tải latin + vietnamese — trang chủ ~136 kB. Preload bản 400 latin + vietnamese. Logo là Inter đã chuyển thành nét (ADR 0009).
 
 | Class | Cỡ / dòng | Đậm | Dùng cho |
 | --- | --- | --- | --- |
-| `text-page-title` | 28 / 36 | 700 | Tiêu đề trang (`h1`); trang chủ phóng to hơn ở màn rộng |
-| `text-section-title` | 22 / 30 | 600 | Tiêu đề mục (`h2`) |
-| `text-card-title` | 18 / 26 | 600 | Tiêu đề thẻ |
-| `text-body` | 16 / 24 | 400 | Chữ thân (mặc định của `body`) |
-| `text-small` | 14 / 20 | 400 | Chữ phụ. **Không nhỏ hơn 14px** |
-| `text-label` | 16 / 24 | 600 | Nhãn nút, mục nav |
+| `text-page-title` | 24 / 32 | 700 | Tiêu đề trang (`h1`); catalog để `h1` ở `sr-only`, khung lọc đứng đầu |
+| `text-section-title` | 18 / 26 | 600 | Tiêu đề mục (`h2`) |
+| `text-card-title` | 16 / 1.35, `-0.01em` | 600 | Tiêu đề thẻ |
+| `text-body` | 16 / 24 | 400 | Chữ thân (mặc định của `body`); thân bài học 16 / 26 |
+| `text-small` | 14 / 21 | 400 | Chữ phụ, mô tả thẻ (`line-clamp-2`), mục menu (500, đang chọn 600) |
+| `text-label` | 14 / 21 | 600 | Nhãn nút, chip, tab |
+| `text-meta` | 12 / 16 | 600 | **Chỉ** nhãn và số phụ: "20 bài · khoảng 5 giờ", cấp độ, độ tuổi, % tiến độ |
+
+**Câu văn tối thiểu 14px.** 12px (`text-meta`) chỉ cho nhãn và số phụ, không cho câu cần đọc (ADR 0012).
 
 ## Nhận diện thương hiệu (S0-34)
 
@@ -67,14 +75,14 @@ Logo, favicon và icon màn hình chính nằm trong `apps/web/public/` (sinh t�
 
 | Component | Ghi chú |
 | --- | --- |
-| `Button` | `variant`: `primary` (hành động chính, ví dụ "Nộp bài"), `dark` ("Chạy thử"), `outline` ("Dừng"), `ghost` ("Làm lại từ đầu"). `size`: `md` (44px), `lg` (48px). `icon` đứng trước chữ. Mặc định `type="button"`. |
+| `Button` | `variant`: `primary` (hành động chính, ví dụ "Nộp bài"), `dark` ("Chạy thử", nền `ink-surface`), `outline` (nút phụ: nền màu nhấn 5%, chữ màu nhấn), `ghost`. `size`: `sm` (36px, nút trong thẻ), `md` (40px), `lg` (44px). `icon` đứng trước chữ. Mặc định `type="button"`. |
 | `ButtonLink` | Link của router trông như nút. Dùng khi bấm là sang trang khác. |
 | `buttonClasses()` | Class của nút, cho chỗ cần giữ thẻ riêng (ví dụ `<button>` có `ref`). |
-| `IconButton` | Nút tròn 44×44 chỉ có icon; `label` bắt buộc (thành `aria-label`). |
-| `Card` | Thẻ trắng bo 16px, bóng nhẹ, `as` = `div`/`section`/`article`/`li`. |
+| `IconButton` | Nút tròn 40×40 chỉ có icon; `label` bắt buộc (thành `aria-label`). |
+| `Card` | Thẻ trắng bo 20px, viền `line`, không bóng, `as` = `div`/`section`/`article`/`li`. |
 | `AiPanel` | Khung nền `ai-surface` cho nội dung do AI tạo. |
 
-Mọi nút cao tối thiểu 44px (`min-h-tap`) và bo tròn hẳn. Viền focus: 3px `ink`, cách 2px — 17.7:1 trên nền trắng, 3.4:1 trên nút xanh dương. Trong editor tối, viền focus là 3px `code-accent` (7.0:1 trên `code-bg`).
+Mọi nút cao tối thiểu 40px (`min-h-tap`, hạ từ 44px ở S0-41 — vẫn trên ngưỡng 24px của WCAG 2.2 AA, ADR 0012) và **bo 8px** (`rounded-lg`), không còn viên thuốc. Chip trạng thái 32px nằm trong nhóm cao 40px. Viền focus: 3px `ink`, cách 2px — 17.2:1 trên nền trắng, 3.0:1 trên nút xanh dương. Trong sidebar tối, viền là `learn-accent`. Trong editor tối, viền focus là 3px `code-accent` (7.0:1 trên `code-bg`).
 
 ## Áp vào từng màn
 
@@ -85,12 +93,13 @@ Quy tắc chung (S0-33), để màn mới viết ra trông giống màn cũ:
 | `h1` của trang | `text-page-title` (trang chủ: phóng to ở màn rộng) |
 | `h2` mục lớn | `text-section-title` |
 | `h2` trong một khối, `h3` | `text-card-title` |
-| Lời dẫn dưới tiêu đề, thân bài học | `text-card-title font-normal` (18px, dễ đọc đoạn dài) |
-| Chữ phụ, chip trạng thái | `text-small` — **không dùng `text-xs`** |
-| Khối có viền bên trong trang | `rounded-card border border-line p-4` (không bóng: đã nằm trong thẻ trắng của khung) |
+| Lời dẫn dưới tiêu đề | `text-small text-ink-soft` |
+| Thân bài học | `text-body leading-[1.625rem]` (16 / 26) |
+| Chữ phụ, chip | `text-small` / `text-label`; nhãn và số phụ `text-meta` — **không dùng `text-xs`** |
+| Khối có viền bên trong trang | `rounded-card border border-line p-4`; khối lồng trong thẻ bo 12–14px (`rounded-xl`), nền `surface-sunken` |
 | Khối code trong bài học | `bg-code-bg text-code-text`, cùng nền với editor |
 
-Không viết `text-xl`, `text-2xl font-bold`… trực tiếp: chọn một trong sáu kiểu chữ ở trên.
+Không viết `text-xl`, `text-2xl font-bold`… trực tiếp: chọn một trong bảy kiểu chữ ở trên.
 
 | | 1440 | 820 | 390 |
 | --- | --- | --- | --- |
@@ -155,10 +164,10 @@ Trang chủ trước/sau: `design/screenshots/s037-{truoc,sau}-trang-chu-*`.
 
 | Token | Màu | Dùng cho | Tương phản |
 | --- | --- | --- | --- |
-| `learn-bg` | `#18181B` | Nền sidebar | — |
-| `learn-current` | `#1E2B45` | Mục đang mở | `learn-text` 12.0:1, `learn-muted` 5.5:1 |
-| `learn-hover` | `#26262B` | Di chuột | — |
-| `learn-line` | `#2E2E34` | Đường chia | (không dùng cho chữ) |
+| `learn-bg` | `#24242A` (= `ink-surface`) | Nền sidebar | — |
+| `learn-current` | `#2A3247` | Mục đang mở | `learn-text` 10.8:1, `learn-muted` 5.0:1 |
+| `learn-hover` | `#2E2E35` | Di chuột | — |
+| `learn-line` | `#34343B` | Đường chia | (không dùng cho chữ) |
 | `learn-text` | `#ECECEE` | Chữ chính | 15.0:1 trên `learn-bg` |
 | `learn-muted` | `#A1A1AA` | Chữ phụ, icon, số đếm | 6.9:1 trên `learn-bg` |
 | `learn-accent` | `#60A5FA` | Vạch mục đang mở, thanh tiến độ, viền focus | 7.0:1 trên `learn-bg`, 5.6:1 trên `learn-current`, 4.1:1 trên rãnh `learn-track` |
@@ -192,26 +201,47 @@ Trước S0-40 trang này là khung "Đang xây". Ảnh dưới chụp cùng lú
 | --- | --- | --- | --- |
 | ![](design/screenshots/s040-sau-luyen-tap-1440.png) | ![](design/screenshots/s040-sau-luyen-tap-820.png) | ![](design/screenshots/s040-sau-luyen-tap-390.png) | ![](design/screenshots/s040-sau-bo-loc-390.png) |
 
+## Làm mới giao diện (S0-41)
+
+Khung lọc catalog: bo 22px, viền `line`, nền trắng 80%, đệm 12px, bóng nhẹ. Hàng 1: nhóm chip chủ đề (nền `surface-sunken`, bo 19px; chip 40px bo 11px; chip đang chọn nền trắng, chữ `accent`, viền + bóng) và ô tìm 52px bo 16px. Đường chia `line-soft`. Hàng 2: select cấp độ 40px · nhóm trạng thái (chip 32px) · ô "N khoá học" dồn phải. Thẻ khoá: ảnh lồng trong (cao 136px, bo 13px), nhãn cấp độ (`accent-soft`) và độ tuổi (`fresh-*`) 22px bo 6px, nút `sm`; lưới `repeat(auto-fill, minmax(300px, 1fr))`, khe 20px. Thanh menu 64px, nội dung tối đa 1280px; vùng nội dung tối đa 1600px, đệm 32px (16px dưới 640px).
+
+| | 1440 | 1024 | 390 |
+| --- | --- | --- | --- |
+| Catalog, trước | ![](design/screenshots/s041-truoc-khoa-hoc-1440.png) | ![](design/screenshots/s041-truoc-khoa-hoc-1024.png) | ![](design/screenshots/s041-truoc-khoa-hoc-390.png) |
+| Catalog, sau | ![](design/screenshots/s041-sau-khoa-hoc-1440.png) | ![](design/screenshots/s041-sau-khoa-hoc-1024.png) | ![](design/screenshots/s041-sau-khoa-hoc-390.png) |
+| Trang khoá, trước | ![](design/screenshots/s041-truoc-trang-khoa-1440.png) | ![](design/screenshots/s041-truoc-trang-khoa-1024.png) | ![](design/screenshots/s041-truoc-trang-khoa-390.png) |
+| Trang khoá, sau | ![](design/screenshots/s041-sau-trang-khoa-1440.png) | ![](design/screenshots/s041-sau-trang-khoa-1024.png) | ![](design/screenshots/s041-sau-trang-khoa-390.png) |
+| Bài học, trước | ![](design/screenshots/s041-truoc-bai-hoc-1440.png) | ![](design/screenshots/s041-truoc-bai-hoc-1024.png) | ![](design/screenshots/s041-truoc-bai-hoc-390.png) |
+| Bài học, sau | ![](design/screenshots/s041-sau-bai-hoc-1440.png) | ![](design/screenshots/s041-sau-bai-hoc-1024.png) | ![](design/screenshots/s041-sau-bai-hoc-390.png) |
+| Bài tập, đang chạy, trước | ![](design/screenshots/s041-truoc-bai-tap-dang-chay-1440.png) | ![](design/screenshots/s041-truoc-bai-tap-dang-chay-1024.png) | ![](design/screenshots/s041-truoc-bai-tap-dang-chay-390.png) |
+| Bài tập, đang chạy, sau | ![](design/screenshots/s041-sau-bai-tap-dang-chay-1440.png) | ![](design/screenshots/s041-sau-bai-tap-dang-chay-1024.png) | ![](design/screenshots/s041-sau-bai-tap-dang-chay-390.png) |
+| Bài tập, có lỗi, trước | ![](design/screenshots/s041-truoc-bai-tap-loi-1440.png) | ![](design/screenshots/s041-truoc-bai-tap-loi-1024.png) | ![](design/screenshots/s041-truoc-bai-tap-loi-390.png) |
+| Bài tập, có lỗi, sau | ![](design/screenshots/s041-sau-bai-tap-loi-1440.png) | ![](design/screenshots/s041-sau-bai-tap-loi-1024.png) | ![](design/screenshots/s041-sau-bai-tap-loi-390.png) |
+| Bài tập, đã đúng, trước | ![](design/screenshots/s041-truoc-bai-tap-dung-1440.png) | ![](design/screenshots/s041-truoc-bai-tap-dung-1024.png) | ![](design/screenshots/s041-truoc-bai-tap-dung-390.png) |
+| Bài tập, đã đúng, sau | ![](design/screenshots/s041-sau-bai-tap-dung-1440.png) | ![](design/screenshots/s041-sau-bai-tap-dung-1024.png) | ![](design/screenshots/s041-sau-bai-tap-dung-390.png) |
+| Luyện tập, trước | ![](design/screenshots/s041-truoc-luyen-tap-1440.png) | ![](design/screenshots/s041-truoc-luyen-tap-1024.png) | ![](design/screenshots/s041-truoc-luyen-tap-390.png) |
+| Luyện tập, sau | ![](design/screenshots/s041-sau-luyen-tap-1440.png) | ![](design/screenshots/s041-sau-luyen-tap-1024.png) | ![](design/screenshots/s041-sau-luyen-tap-390.png) |
+
 ## Editor và console tối
 
 Theme CodeMirror **tự viết** trong `apps/web/src/shared/ui/code-theme.ts` (không dùng `@codemirror/theme-one-dark` hay `basicSetup`, ADR 0007). Màu là token `--color-code-*` trong `index.css`; `tokens.test.ts` đòi mọi màu chữ đạt AA trên nền, dòng đang đứng và gutter. Khối `@theme` là `static` để các biến này luôn có mặt dù không class nào dùng.
 
 | Token | Màu | Dùng cho | Tương phản trên `code-bg` |
 | --- | --- | --- | --- |
-| `code-bg` | `#17171A` | Nền editor và console | — |
-| `code-gutter` | `#1F1F23` | Cột số dòng, thanh tiêu đề "Code của em" / "Kết quả chạy" | — |
-| `code-active` | `#26262B` | Dòng đang đứng | — |
-| `code-text` | `#ECECEE` | Chữ thường, toán tử | 15.2:1 |
-| `code-accent` | `#60A5FA` | Con trỏ, viền focus, vùng chọn | 7.0:1 |
-| `code-muted` | `#9A9AA3` | Số dòng, chữ chờ trong console | 6.4:1 |
-| `code-keyword` | `#FF9AC1` | `import`, `for`, `if`, `def`, `in`… | 9.1:1 |
-| `code-string` | `#A5E3A0` | Chuỗi | 12.0:1 |
-| `code-number` | `#F3DFA2` | Số, `True`/`False`/`None` | 13.5:1 |
-| `code-comment` | `#A6A6AE` | Comment (trẻ đọc gợi ý trong code khởi đầu) | 7.4:1 |
-| `code-function` | `#67E8F9` | Gọi hàm, `turtle.forward` | 12.3:1 |
-| `code-builtin` | `#C4B5FD` | `print`, `range`, `len`, `input`… (tô bằng `MatchDecorator` vì ngữ pháp Python không phân biệt) | 9.7:1 |
+| `code-bg` | `#2A2A30` | Nền editor và console | — |
+| `code-gutter` | `#2E2E35` | Cột số dòng, thanh tiêu đề "Code của em" / "Kết quả chạy" | — |
+| `code-active` | `#33333A` | Dòng đang đứng | — |
+| `code-text` | `#ECECEE` | Chữ thường, toán tử | 12.1:1 |
+| `code-accent` | `#60A5FA` | Con trỏ, viền focus, vùng chọn | 5.6:1 |
+| `code-muted` | `#A3A3AC` | Số dòng, chữ chờ trong console | 5.7:1 |
+| `code-keyword` | `#FF9AC1` | `import`, `for`, `if`, `def`, `in`… | 7.2:1 |
+| `code-string` | `#A5E3A0` | Chuỗi | 9.6:1 |
+| `code-number` | `#F3DFA2` | Số, `True`/`False`/`None` | 10.8:1 |
+| `code-comment` | `#A6A6AE` | Comment (trẻ đọc gợi ý trong code khởi đầu) | 5.9:1 |
+| `code-function` | `#6EE7E0` | Gọi hàm, `turtle.forward` | 9.6:1 |
+| `code-builtin` | `#C4B5FD` | `print`, `range`, `len`, `input`… (tô bằng `MatchDecorator` vì ngữ pháp Python không phân biệt) | 7.7:1 |
 
-Con trỏ, viền focus 3px và vùng chọn (`color-mix` 30%) dùng `code-accent` `#60A5FA` (7.0:1 trên `code-bg`, 5.9:1 trên dòng đang đứng) — `accent` quá tối trên nền code; nền editor là xám trung tính, không ánh màu. Cỡ chữ code 16px, 15px dưới 640px, dòng cao 1.6. Đang chạy (chỉ đọc): chữ mờ đi, con trỏ ẩn.
+Con trỏ, viền focus 3px và vùng chọn (`color-mix` 30%) dùng `code-accent` `#60A5FA` (5.6:1 trên `code-bg`, 4.9:1 trên dòng đang đứng) — `accent` quá tối trên nền code; nền editor là xám trung tính, không ánh màu. Font JetBrains Mono, cỡ 16px (15px dưới 640px) — chỉnh được bằng A−/A+ (S0-39), dòng cao 1.6. Đang chạy (chỉ đọc): chữ mờ đi, con trỏ ẩn.
 
 ## Màn bài tập (bài thực hành chia đôi, S0-39)
 

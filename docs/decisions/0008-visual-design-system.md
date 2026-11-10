@@ -2,6 +2,8 @@
 Trạng thái: Chấp nhận — **phần màu và font được thay bởi ADR 0009** (San hô, Inter); nguyên lý, token và component vẫn giữ.
 Ngày: 2026-10-30
 
+> Cập nhật 2026-11-10: cỡ chữ tối thiểu (12px cho `text-meta`) và vùng bấm (40px) thay bằng ADR 0012.
+
 ## Bối cảnh
 Giao diện giai đoạn 0 được dựng nhanh: xanh biển làm màu chính, vàng cam cho huy hiệu, font hệ thống, có chế độ tối, mỗi nút tự viết class riêng. Trẻ 10–15 tuổi cần biết ngay **phải bấm đâu**, đọc được chữ tiếng Việt có dấu rõ ràng, và phân biệt được đâu là gợi ý của AI.
 
