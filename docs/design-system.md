@@ -101,7 +101,7 @@ Không viết `text-xl`, `text-2xl font-bold`… trực tiếp: chọn một tro
 
 | Màn | Bố cục |
 | --- | --- |
-| ≥ 1024px | Sidebar trắng 240px: logo `lalakode-logo.svg` (cao 30px), 4 mục nav dạng viên thuốc (đang chọn: nền `ink`, chữ trắng), dưới cùng là "Mã tiến độ" và "Quyền riêng tư". Nội dung trong thẻ trắng trên nền `surface-muted`. |
+| ≥ 1024px | Sidebar trắng 240px: logo `lalakode-logo.svg` (cao 30px), 5 mục nav dạng viên thuốc (Trang chủ · Khoá học · Luyện tập · Huy hiệu · Giới thiệu) (đang chọn: nền `ink`, chữ trắng), dưới cùng là "Mã tiến độ" và "Quyền riêng tư". Nội dung trong thẻ trắng trên nền `surface-muted`. |
 | < 1024px | Thanh trên cùng (logo + nút menu). Nút menu mở ngăn kéo chứa chính phần nav; chọn mục, bấm lại nút hoặc Esc thì đóng. |
 
 Chọn **ngăn kéo thay vì thanh nav ở đáy** vì đáy màn hình điện thoại để dành cho thanh nút Chạy/Nộp của màn bài tập (S0-32); hai thanh dính đáy sẽ chồng nhau.
@@ -111,6 +111,34 @@ Footer (`contentinfo`) nằm cuối cột nội dung ở mọi khổ màn hình,
 | Bản đồ, 1440px | Bản đồ, 820px | Menu mở, 390px |
 | --- | --- | --- |
 | ![](design/screenshots/s031-ban-do-1440.png) | ![](design/screenshots/s031-ban-do-820.png) | ![](design/screenshots/s031-menu-390.png) |
+
+## Catalog và trang khoá (S0-37)
+
+Lý do và những thứ cố ý không làm: ADR 0011. Logic (tiến độ khoá, bộ lọc, "tiếp tục bài N") là hàm thuần trong `apps/web/src/content/catalog.ts`.
+
+| Màn | Bố cục |
+| --- | --- |
+| `/khoa-hoc` | Khung lọc trắng bo góc: chip **Trạng thái** (Tất cả · Đang học · Đã xong · Chưa học) và **Cấp độ** (`<button aria-pressed>`, đang chọn: nền `ink`), ô tìm theo tên (bỏ dấu: gõ "khoi dong" vẫn ra), dòng "N khoá học" (`aria-live`). Bộ lọc nằm trên URL. Lưới thẻ 1 / 2 (≥ 640) / 3 (≥ 1024) / 4 (≥ 1440) cột trên nền `surface-muted`. Chưa đủ khoá thì có ô "Khoá học mới · Sắp có" nét đứt, không bấm được, không ghi tên khoá. |
+| Thẻ khoá | Hình minh hoạ 16:9 (`public/illustrations/`, tự vẽ, `alt=""` vì tên khoá ngay dưới) → `LevelBadge` → tiêu đề → mô tả cắt 2 dòng (`line-clamp-2`, dòng cao 24px để dấu chồng không bị cắt) → "20 bài · khoảng 5 giờ" → `ProgressBar` khi đã bắt đầu → nút. |
+| `/khoa-hoc/:courseId` | Đầu trang: cấp độ, `h1`, mô tả, "x/20 bài đã xong", thanh tiến độ, nút chính; hình minh hoạ bên phải (≥ 768). Chuỗi ngày học. Mục lục theo chương dạng `<details>`, mở sẵn chương chứa bài đang học; mỗi dòng bài: số thứ tự, tên, trạng thái (icon + chữ "Đã xong" / "Đang học" / "Chưa học"), số phút, "2/4 bài tập". Chip "Bản nháp" chỉ hiện khi chạy dev. |
+
+| Trạng thái khoá | Nút trên thẻ | Nút chính trên trang khoá |
+| --- | --- | --- |
+| Chưa học | "Khám phá →" `outline`, tới trang khoá | "Bắt đầu →" `primary`, tới bài 1 |
+| Đang học | "Tiếp tục bài N →" `primary`, tới bài đầu tiên chưa xong | như thẻ |
+| Đã xong | "Ôn lại →" `outline`, tới trang khoá | "Ôn lại →" `outline`, tới bài 1 |
+
+`LevelBadge`: ba cột cao dần, tô đặc 1/2/3 cột cho Mới bắt đầu/Cơ bản/Nâng cao, kèm chữ — không phân biệt bằng màu. `ProgressBar`: `role="progressbar"` kèm số % bằng chữ.
+
+`/ban-do` (bản đồ nhiệm vụ cũ) chuyển hướng `replace` sang `/khoa-hoc/py-khoi-dong`. Trang chủ: đã học thì nút chính là "Tiếp tục bài N →", chưa thì "Bắt đầu học" tới `/khoa-hoc`. Hết khoá, nút đi tiếp (S0-36) là "Về trang khoá học".
+
+| | 1440 | 820 | 390 |
+| --- | --- | --- | --- |
+| Bản đồ, trước | ![](design/screenshots/s037-truoc-ban-do-1440.png) | ![](design/screenshots/s037-truoc-ban-do-820.png) | ![](design/screenshots/s037-truoc-ban-do-390.png) |
+| Catalog, sau | ![](design/screenshots/s037-sau-khoa-hoc-1440.png) | ![](design/screenshots/s037-sau-khoa-hoc-820.png) | ![](design/screenshots/s037-sau-khoa-hoc-390.png) |
+| Trang khoá, sau | ![](design/screenshots/s037-sau-trang-khoa-1440.png) | ![](design/screenshots/s037-sau-trang-khoa-820.png) | ![](design/screenshots/s037-sau-trang-khoa-390.png) |
+
+Trang chủ trước/sau: `design/screenshots/s037-{truoc,sau}-trang-chu-*`.
 
 ## Editor và console tối
 
@@ -150,8 +178,8 @@ Thứ tự lấy từ `content/navigation.ts` (hàm thuần: `order` của khoá
 
 | Màn | Thanh trước/tiếp | Nút chính đi tiếp |
 | --- | --- | --- |
-| Bài tập | Dưới thanh nút, cột trái. Bài tập đầu: "← Về bài học"; bài tập cuối: "Bài học tiếp →"; hết khoá: "Về bản đồ". Luôn là `outline` — giai đoạn 0 không khoá bài | Nộp đúng hết → thẻ `NextStepCard` (nền `success-surface`) ở khu kết quả với nút `primary`, **nhận focus** để bấm Enter là đi tiếp. Câu khen đọc lại tiến độ vừa lưu: chỉ nói "Em đã xong bài học này!" / "…cả khoá học!" khi đúng là vậy |
-| Bài học | Cuối trang, dưới đường kẻ: "← Bài học trước" · "Bài học tiếp →" (bài cuối: "Về bản đồ") | "Bài học tiếp" thành `primary` khi đã xong mọi bài tập của bài này; chưa xong thì nút chính vẫn là "Làm tiếp bài chưa xong" |
+| Bài tập | Dưới thanh nút, cột trái. Bài tập đầu: "← Về bài học"; bài tập cuối: "Bài học tiếp →"; hết khoá: "Về trang khoá học" (S0-37). Luôn là `outline` — giai đoạn 0 không khoá bài | Nộp đúng hết → thẻ `NextStepCard` (nền `success-surface`) ở khu kết quả với nút `primary`, **nhận focus** để bấm Enter là đi tiếp. Câu khen đọc lại tiến độ vừa lưu: chỉ nói "Em đã xong bài học này!" / "…cả khoá học!" khi đúng là vậy |
+| Bài học | Cuối trang, dưới đường kẻ: "← Bài học trước" · "Bài học tiếp →" (bài cuối: "Về trang khoá học") | "Bài học tiếp" thành `primary` khi đã xong mọi bài tập của bài này; chưa xong thì nút chính vẫn là "Làm tiếp bài chưa xong" |
 
 Đi thẳng từ bài tập này sang bài tập khác không dựng lại màn hình (cùng route): kết quả, lỗi, hình rùa của bài cũ được xoá ngay, lần chạy dở bị dừng và kết quả của nó bị bỏ.
 

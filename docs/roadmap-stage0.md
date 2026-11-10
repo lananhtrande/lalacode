@@ -48,9 +48,14 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-31 **Design system riêng** (theo `docs/prompts/2026-10-30-ui-redesign.md`): token đặt tên theo vai trò, font tự host, `Button`/`IconButton`/`Card`/`AiPanel`, khung trang dạng sidebar. Dừng ở `/dev/design` để người duy trì chọn bảng màu và font. ADR 0008.
 - [x] S0-32 **Màn bài tập 2 cột**: editor nền tối (theme tự viết, không thêm thư viện) bên trái, kết quả bên phải, mỗi cột tự cuộn; xếp dọc dưới 1024px. Dừng, chụp màn hình cho người duy trì xem.
 - [x] S0-33 **Áp design system cho các màn còn lại**: trang chủ, bản đồ, bài học, huy hiệu, báo cáo, tiến độ, giới thiệu, quyền riêng tư.
-- [ ] S0-34 **Nhận diện thương hiệu** (theo `docs/prompts/2026-11-05-brand-coral-inter.md`): gắn logo, favicon, manifest; màu nhấn San hô và tách màu "cần chú ý"; font Inter tự host. ADR 0009. Dừng cho người duy trì xem ảnh chụp trước khi merge.
-- [ ] S0-35 **Màu nhấn xanh dương** (theo `docs/prompts/2026-11-05-blue-accent-next-links.md`): trẻ nhầm San hô trên nút với báo lỗi. San hô chỉ còn ở logo; tách xanh dương khỏi màu đạt/cần chú ý; màu cú pháp editor. ADR 0010.
-- [ ] S0-36 **Nút sang bài trước/tiếp** trên màn bài tập và bài học; nút chính "Bài tập tiếp theo" khi làm đúng, nhận focus.
+- [x] S0-34 **Nhận diện thương hiệu** (theo `docs/prompts/2026-11-05-brand-coral-inter.md`): gắn logo, favicon, manifest; màu nhấn San hô và tách màu "cần chú ý"; font Inter tự host. ADR 0009.
+- [x] S0-35 **Màu nhấn xanh dương** (theo `docs/prompts/2026-11-05-blue-accent-next-links.md`): trẻ nhầm San hô trên nút với báo lỗi. San hô chỉ còn ở logo; tách xanh dương khỏi màu đạt/cần chú ý; màu cú pháp editor. ADR 0010.
+- [x] S0-36 **Nút sang bài trước/tiếp** trên màn bài tập và bài học; nút chính "Bài tập tiếp theo" khi làm đúng, nhận focus.
+- [x] S0-37 **Catalog khoá học và trang khoá** (theo `docs/prompts/2026-11-10-ui-rebuild.md`, ADR 0011): `/khoa-hoc` có lọc trạng thái/cấp độ/tên trên URL, `/khoa-hoc/:courseId` có chương dạng accordion; `course.json` thêm `chapters`, `level`, `tags`, `illustration`; `/ban-do` chuyển hướng; menu thêm "Luyện tập" (tạm "Đang xây").
+- [ ] S0-38 **Trình học bài**: khung riêng cho bài học và bài tập, sidebar mục lục nền tối thu gọn được, topbar có breadcrumb, mục "Nội dung bài" tự sinh từ `h2`.
+- [ ] S0-39 **Bài thực hành chia đôi**: đề bài trái; editor và panel Kết quả/Kiểm tra kéo đổi chiều cao bên phải; ba tab Đề/Code/Kết quả dưới 1024px. Schema thêm `difficulty`, `requirements`, `examples` (điền cho bài 01–05).
+- [ ] S0-39b Điền `difficulty`, `requirements`, `examples` cho bài tập của bài 06–20 (PR nội dung riêng, `examples` lấy từ `solution` chạy thật).
+- [ ] S0-40 **Kho luyện tập** `/luyen-tap`: bộ bài theo chương, lọc độ khó/chủ đề/trạng thái, "Bài ngẫu nhiên", "Thử thách hôm nay", "Để dành", lịch chuỗi ngày học.
 
 ## Tiêu chí chuyển sang giai đoạn 1
 - ≥ 70% trẻ hoàn thành bài 1; ≥ 40% quay lại sau 7 ngày; ≥ 30 phụ huynh xác nhận sẵn sàng trả phí.
