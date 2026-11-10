@@ -64,7 +64,16 @@ export function buildBundle(courses) {
       title: course.course.title,
       summary: course.course.summary,
       ageRange: course.course.ageRange,
+      level: course.course.level,
+      tags: course.course.tags ?? [],
+      illustration: course.course.illustration,
       status: course.course.status,
+      // Chương ghi mã bài học đầy đủ để trình duyệt khỏi phải ghép chuỗi.
+      chapters: course.course.chapters.map((chapter) => ({
+        id: chapter.id,
+        title: chapter.title,
+        lessonIds: chapter.lessons.map((slug) => `${course.course.id}.${slug}`),
+      })),
       // Giữ đúng thứ tự trong course.order, bỏ qua bài không tìm thấy
       // (content:check đã báo lỗi trường hợp đó rồi).
       lessons: course.course.order

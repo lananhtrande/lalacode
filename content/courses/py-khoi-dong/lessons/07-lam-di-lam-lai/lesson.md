@@ -24,4 +24,4 @@ Giống `if`, dòng `for` kết thúc bằng dấu hai chấm và phần việc 
 
 Giờ hình vuông chỉ còn ba dòng thôi!
 
-Một điều hay nữa: vòng lặp đặt được **bên trong** vòng lặp khác, để lặp lại cả một hình nhiều lần. Bài cuối em sẽ thử.
+Một điều hay nữa: vòng lặp đặt được **bên trong** vòng lặp khác, để lặp lại cả một hình nhiều lần. Bài tập cuối của bài này em sẽ thử.

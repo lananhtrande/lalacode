@@ -1,12 +1,12 @@
 {
   "id": "py-khoi-dong",
   "title": "Python khởi động",
-  "summary": "Mười bài ngắn đưa em từ dòng print đầu tiên tới tự viết hàm và vẽ hình bằng code.",
-  "ageRange": [
-    10,
-    15
-  ],
+  "summary": "Hai mươi bài ngắn đưa em từ dòng print đầu tiên tới tự viết hàm, vẽ tranh bằng rùa và làm trò chơi nhỏ của riêng mình.",
+  "ageRange": [10, 15],
   "authorId": "core",
+  "level": "moi-bat-dau",
+  "tags": ["python", "rùa vẽ hình", "trò chơi"],
+  "illustration": "py-khoi-dong.svg",
   "order": [
     "01-xin-chao",
     "02-cai-hop-ten-la-bien",
@@ -28,6 +28,52 @@
     "18-tro-doan-chu",
     "19-rua-ve-tranh",
     "20-du-an-cuoi"
+  ],
+  "chapters": [
+    {
+      "id": "lam-quen-voi-python",
+      "title": "Làm quen với Python",
+      "lessons": [
+        "01-xin-chao",
+        "02-cai-hop-ten-la-bien",
+        "03-rua-ve-hinh",
+        "04-may-hoi-em-tra-loi",
+        "05-so-va-phep-tinh"
+      ]
+    },
+    {
+      "id": "ra-quyet-dinh-va-lap-lai",
+      "title": "Ra quyết định và lặp lại",
+      "lessons": [
+        "06-neu-thi",
+        "07-lam-di-lam-lai",
+        "08-danh-sach-cua-em",
+        "09-lap-den-khi-nao",
+        "10-tu-lam-lenh-rieng"
+      ]
+    },
+    {
+      "id": "chu-so-va-du-lieu",
+      "title": "Chữ, số và dữ liệu",
+      "lessons": [
+        "11-choi-voi-chu",
+        "12-chia-lay-nguyen-va-du",
+        "13-danh-sach-thong-minh-hon",
+        "14-tu-dien-tra-la-ra",
+        "15-ham-co-nhieu-viec"
+      ]
+    },
+    {
+      "id": "ve-choi-va-du-an",
+      "title": "Vẽ, chơi và dự án",
+      "lessons": [
+        "16-rua-va-ham",
+        "17-may-rui",
+        "18-tro-doan-chu",
+        "19-rua-ve-tranh",
+        "20-du-an-cuoi"
+      ]
+    }
   ],
   "status": "draft"
 }

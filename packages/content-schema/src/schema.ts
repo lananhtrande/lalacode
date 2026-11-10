@@ -23,6 +23,16 @@ const dottedId = z
   .string()
   .regex(/^[a-z0-9-]+(?:\.\d{2}-[a-z0-9-]+){0,2}$/, 'phải có dạng `khoa.01-bai.01-bai-tap`');
 
+/** Cấp độ của khoá, hiện trên catalog (S0-37). */
+export const courseLevels = ['moi-bat-dau', 'co-ban', 'nang-cao'] as const;
+
+/** Một chương gom vài bài liền nhau; mỗi bài trong `order` thuộc đúng một chương. */
+const chapterSchema = z.strictObject({
+  id: slug,
+  title,
+  lessons: z.array(numberedSlug).min(1, 'chương cần ít nhất một bài'),
+});
+
 export const courseSchema = z.strictObject({
   id: slug,
   title,
@@ -31,7 +41,12 @@ export const courseSchema = z.strictObject({
     .tuple([z.number().int().min(5).max(18), z.number().int().min(5).max(18)])
     .refine(([from, to]) => from <= to, 'tuổi nhỏ phải đứng trước tuổi lớn'),
   authorId: slug,
+  level: z.enum(courseLevels),
+  tags: z.array(z.string().min(1)).max(10, 'tối đa 10 thẻ').default([]),
+  /** Tên file SVG trong `apps/web/public/illustrations/`. */
+  illustration: z.string().regex(/^[a-z0-9-]+\.svg$/, 'tên file `.svg`, chữ thường, không dấu'),
   order: z.array(numberedSlug).min(1, 'khoá học cần ít nhất một bài'),
+  chapters: z.array(chapterSchema).min(1, 'khoá học cần ít nhất một chương'),
   status,
 });
 
@@ -116,6 +131,8 @@ export const exerciseSchema = z.strictObject({
 });
 
 export type Course = z.infer<typeof courseSchema>;
+export type Chapter = z.infer<typeof chapterSchema>;
+export type CourseLevel = (typeof courseLevels)[number];
 export type Lesson = z.infer<typeof lessonSchema>;
 export type Video = z.infer<typeof videoSchema>;
 export type Exercise = z.infer<typeof exerciseSchema>;

@@ -1,4 +1,4 @@
-import type { Exercise, Lesson } from '@lalakode/content-schema';
+import type { CourseLevel, Exercise, Lesson } from '@lalakode/content-schema';
 
 /**
  * Kiểu của bundle do `scripts/content-build.mjs` sinh ra.
@@ -21,12 +21,24 @@ export interface LessonSummary {
   file: string;
 }
 
+export interface ChapterSummary {
+  id: string;
+  title: string;
+  /** Mã đầy đủ của các bài trong chương, đúng thứ tự `order` của khoá. */
+  lessonIds: readonly string[];
+}
+
 export interface CourseSummary {
   id: string;
   title: string;
   summary: string;
   ageRange: readonly [number, number];
+  level: CourseLevel;
+  tags: readonly string[];
+  /** Tên file trong `public/illustrations/`. */
+  illustration: string;
   status: Lesson['status'];
+  chapters: readonly ChapterSummary[];
   lessons: readonly LessonSummary[];
 }
 

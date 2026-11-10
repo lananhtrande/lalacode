@@ -102,6 +102,68 @@ function markdownSubsetIssues(markdown: string, where: string): Issue[] {
   return issues;
 }
 
+/**
+ * Mỗi bài trong `order` thuộc **đúng một** chương, và chương đi theo đúng thứ
+ * tự của `order` (chương 1 là các bài đầu tiên…): mục lục và bài trước/tiếp
+ * mới khớp nhau.
+ */
+function chapterIssues(
+  order: readonly string[],
+  chapters: readonly { id: string; lessons: readonly string[] }[],
+  courseWhere: string,
+): Issue[] {
+  const issues: Issue[] = [];
+  const owner = new Map<string, string>();
+  for (const chapter of chapters) {
+    for (const slug of chapter.lessons) {
+      const previous = owner.get(slug);
+      if (previous !== undefined) {
+        issues.push({
+          level: 'error',
+          where: `${courseWhere} → chapters`,
+          message: `Bài \`${slug}\` nằm trong cả chương \`${previous}\` và \`${chapter.id}\`.`,
+        });
+      }
+      owner.set(slug, chapter.id);
+      if (!order.includes(slug)) {
+        issues.push({
+          level: 'error',
+          where: `${courseWhere} → chapters`,
+          message: `Chương \`${chapter.id}\` nhắc tới bài \`${slug}\` nhưng bài này không có trong \`order\`.`,
+        });
+      }
+    }
+  }
+  for (const slug of order) {
+    if (!owner.has(slug)) {
+      issues.push({
+        level: 'error',
+        where: `${courseWhere} → chapters`,
+        message: `Bài \`${slug}\` chưa thuộc chương nào.`,
+      });
+    }
+  }
+  const chapterIds = chapters.map((chapter) => chapter.id);
+  if (new Set(chapterIds).size !== chapterIds.length) {
+    issues.push({
+      level: 'error',
+      where: `${courseWhere} → chapters`,
+      message: 'Hai chương trùng `id`.',
+    });
+  }
+  if (issues.length === 0) {
+    const flattened = chapters.flatMap((chapter) => chapter.lessons);
+    if (flattened.join() !== order.join()) {
+      issues.push({
+        level: 'error',
+        where: `${courseWhere} → chapters`,
+        message: 'Các chương phải xếp bài đúng thứ tự trong `order`.',
+      });
+    }
+  }
+  return issues;
+}
+
 export function validateCourseTree(courses: readonly CourseDirInput[]): Issue[] {
   const issues: Issue[] = [];
   if (courses.length === 0) {
@@ -146,6 +208,8 @@ export function validateCourseTree(courses: readonly CourseDirInput[]): Issue[] 
         message: `Bài \`${dir}\` bị liệt kê hai lần trong \`order\`.`,
       });
     }
+
+    issues.push(...chapterIssues(course.order, course.chapters, courseWhere));
 
     for (const lessonDir of courseDir.lessons) {
       const base = `content/courses/${courseDir.dir}/lessons/${lessonDir.dir}`;
