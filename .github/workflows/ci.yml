@@ -66,8 +66,16 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
+      # Bình thường mất ~30 giây, nhưng thỉnh thoảng treo (có lần tới khi job bị
+      # huỷ sau 30 phút). Mỗi lần thử tối đa 5 phút, thử lại một lần rồi mới đỏ.
       - name: Cài trình duyệt
-        run: npx playwright install --with-deps chromium webkit
+        timeout-minutes: 12
+        run: |
+          for attempt in 1 2; do
+            timeout 5m npx playwright install --with-deps chromium webkit && exit 0
+            echo "::warning::Cài trình duyệt lần $attempt quá 5 phút hoặc lỗi, thử lại"
+          done
+          exit 1
 
       - name: Playwright trên bản build
         run: npm run test:e2e
