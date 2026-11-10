@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { ArrowRight, Check, Clock, PartyPopper } from 'lucide-react';
 import { vi } from '../../shared/i18n/vi';
@@ -7,7 +7,10 @@ import { lessonNeighbours, type Neighbours } from '../../content/navigation';
 import type { LessonBundle } from '../../content/types';
 import { useProgress } from '../../progress/useProgress';
 import type { ExerciseStatus } from '../../progress/schema';
-import { LessonBody } from './LessonBody';
+import { LessonBody, stripLeadingTitle } from './LessonBody';
+import { LessonContents, useActiveHeading } from './LessonContents';
+import { lessonOutline } from '../../content/outline';
+import type { ContentIndex } from '../../content/types';
 import { LessonVideo } from './LessonVideo';
 import { buttonClasses } from '../../shared/ui/button-classes';
 import { NeighbourLinks } from '../../shared/ui/NeighbourLinks';
@@ -15,7 +18,14 @@ import { toNeighbourLink } from '../../shared/ui/neighbour-link';
 
 /** Kết quả tải, kèm mã bài để biết nó thuộc về bài nào đang mở. */
 type Loaded =
-  | { lessonId: string; status: 'ready'; bundle: LessonBundle; neighbours: Neighbours | null }
+  | {
+      lessonId: string;
+      status: 'ready';
+      bundle: LessonBundle;
+      neighbours: Neighbours | null;
+      /** "Chương 2 · Ra quyết định và lặp lại"; `null` khi không tải được index. */
+      chapterLabel: string | null;
+    }
   | { lessonId: string; status: 'not-found' };
 
 /**
@@ -39,6 +49,7 @@ export function LessonPage() {
             status: 'ready',
             bundle,
             neighbours: index && lessonNeighbours(index, lessonId),
+            chapterLabel: index && chapterLabelOf(index, lessonId),
           });
         }
       })
@@ -52,6 +63,9 @@ export function LessonPage() {
 
   // Đổi sang bài khác thì kết quả cũ không còn đúng nữa: đang tải bài mới.
   const state = loaded?.lessonId === lessonId ? loaded : null;
+  const body = state?.status === 'ready' ? stripLeadingTitle(state.bundle.markdown) : '';
+  const outline = useMemo(() => lessonOutline(body), [body]);
+  const activeHeading = useActiveHeading(outline.map((item) => item.id));
 
   if (state === null) {
     return (
@@ -75,116 +89,142 @@ export function LessonPage() {
     );
   }
 
-  const { lesson, markdown, exercises } = state.bundle;
-  const { neighbours } = state;
+  const { lesson, exercises } = state.bundle;
+  const { neighbours, chapterLabel } = state;
+  // Một mục thì không cần mục lục.
+  const showContents = outline.length >= 2;
   const statusOf = new Map<string, ExerciseStatus>(
     (snapshot?.exercises ?? []).map((item) => [item.exerciseId, item.status]),
   );
   const next = exercises.find((exercise) => statusOf.get(exercise.id) !== 'xong');
 
   return (
-    <article className="mx-auto max-w-prose">
-      <Link
-        to={`/khoa-hoc/${lesson.id.split('.')[0] ?? ''}`}
-        className="inline-flex min-h-tap items-center font-medium text-accent-strong underline"
-      >
-        {vi.lesson.backToCourse}
-      </Link>
-
-      <h1 className="mt-2 text-page-title">{lesson.title}</h1>
-      <p className="mt-2 flex flex-wrap items-center gap-x-4 text-ink-soft">
-        <span className="flex items-center gap-1">
-          <Clock aria-hidden="true" className="size-4" />
-          {lesson.estimatedMinutes} {vi.lesson.minutes}
-        </span>
-        <span>
-          {vi.lesson.conceptsTitle}: {lesson.concepts.join(', ')}
-        </span>
-      </p>
-
-      {lesson.video && (
-        <div className="mt-6">
-          <h2 className="sr-only">{vi.lesson.videoTitle}</h2>
-          <LessonVideo video={lesson.video} title={lesson.title} />
-        </div>
-      )}
-
-      <LessonBody markdown={markdown} />
-
-      <section className="mt-10">
-        <h2 className="text-section-title">{vi.lesson.exercisesTitle}</h2>
-        <p className="mt-1 text-ink-soft">{vi.lesson.exercisesLead}</p>
-
-        <ol className="mt-4 space-y-2" data-testid="lesson-exercises">
-          {exercises.map((exercise, index) => {
-            const status = statusOf.get(exercise.id);
-            return (
-              <li key={exercise.id}>
-                <Link
-                  to={`/bai-tap/${exercise.id}`}
-                  className={[
-                    'flex min-h-tap items-center gap-3 rounded-card border p-3 hover:bg-surface-muted',
-                    status === 'xong' ? 'border-success/50 bg-success-surface' : 'border-line',
-                  ].join(' ')}
-                >
-                  <span
-                    className={[
-                      'flex size-8 shrink-0 items-center justify-center rounded-full font-bold',
-                      status === 'xong'
-                        ? 'bg-success-surface text-success'
-                        : 'bg-accent-soft text-accent-strong',
-                    ].join(' ')}
-                  >
-                    {status === 'xong' ? (
-                      <Check aria-hidden="true" className="size-5" />
-                    ) : (
-                      index + 1
-                    )}
-                  </span>
-                  <span className="font-medium">{exercise.title}</span>
-                  {status && (
-                    <span className="ml-auto text-small text-ink-soft">
-                      {status === 'xong' ? vi.lesson.exerciseDone : vi.lesson.exerciseDoing}
-                    </span>
-                  )}
-                </Link>
-              </li>
-            );
-          })}
-        </ol>
-
-        {next ? (
-          <Link
-            to={`/bai-tap/${next.id}`}
-            data-testid="lesson-cta"
-            className={buttonClasses('primary', 'lg', 'mt-6')}
-          >
-            {next.id === exercises[0]?.id ? vi.lesson.startFirst : vi.lesson.continueNext}
-            <ArrowRight aria-hidden="true" className="size-5" />
-          </Link>
-        ) : (
+    <div className="mx-auto flex w-full max-w-[66rem] justify-center gap-10">
+      <article className="w-full max-w-[45rem] min-w-0 rounded-card bg-surface p-5 shadow-card sm:p-8">
+        {chapterLabel && (
           <p
-            data-testid="lesson-all-done"
-            className="mt-6 flex items-center gap-2 rounded-card border border-success/50 bg-success-surface p-4 font-medium"
+            className="text-small font-semibold tracking-wide text-ink-soft uppercase"
+            data-testid="chapter-label"
           >
-            <PartyPopper aria-hidden="true" className="size-5 shrink-0 text-success" />
-            {vi.lesson.allDone}
+            {chapterLabel}
           </p>
         )}
-      </section>
+        <h1 className="mt-1 text-page-title">{lesson.title}</h1>
+        <p className="mt-2 flex flex-wrap items-center gap-x-4 text-ink-soft">
+          <span className="flex items-center gap-1">
+            <Clock aria-hidden="true" className="size-4" />
+            {lesson.estimatedMinutes} {vi.lesson.minutes}
+          </span>
+          <span>
+            {vi.lesson.conceptsTitle}: {lesson.concepts.join(', ')}
+          </span>
+        </p>
 
-      {neighbours && (
-        <NeighbourLinks
-          label={vi.pager.label}
-          previous={
-            neighbours.previous && toNeighbourLink(neighbours.previous, 'previous', 'lesson')
-          }
-          next={toNeighbourLink(neighbours.next, 'next', 'lesson')}
-          // Xong hết bài tập thì đi tiếp là việc chính; chưa xong thì nút chính vẫn là "làm tiếp".
-          nextIsPrimary={next === undefined}
-          className="mt-10 border-t border-line pt-6"
-        />
+        {lesson.video && (
+          <div className="mt-6">
+            <h2 className="sr-only">{vi.lesson.videoTitle}</h2>
+            <LessonVideo video={lesson.video} title={lesson.title} />
+          </div>
+        )}
+
+        {showContents && (
+          <LessonContents
+            outline={outline}
+            className="mt-6 rounded-card border border-line p-4 xl:hidden"
+          />
+        )}
+
+        <LessonBody markdown={body} outline={outline} />
+
+        <section className="mt-10">
+          <h2 className="text-section-title">{vi.lesson.exercisesTitle}</h2>
+          <p className="mt-1 text-ink-soft">{vi.lesson.exercisesLead}</p>
+
+          <ol className="mt-4 space-y-2" data-testid="lesson-exercises">
+            {exercises.map((exercise, index) => {
+              const status = statusOf.get(exercise.id);
+              return (
+                <li key={exercise.id}>
+                  <Link
+                    to={`/bai-tap/${exercise.id}`}
+                    className={[
+                      'flex min-h-tap items-center gap-3 rounded-card border p-3 hover:bg-surface-muted',
+                      status === 'xong' ? 'border-success/50 bg-success-surface' : 'border-line',
+                    ].join(' ')}
+                  >
+                    <span
+                      className={[
+                        'flex size-8 shrink-0 items-center justify-center rounded-full font-bold',
+                        status === 'xong'
+                          ? 'bg-success-surface text-success'
+                          : 'bg-accent-soft text-accent-strong',
+                      ].join(' ')}
+                    >
+                      {status === 'xong' ? (
+                        <Check aria-hidden="true" className="size-5" />
+                      ) : (
+                        index + 1
+                      )}
+                    </span>
+                    <span className="font-medium">{exercise.title}</span>
+                    {status && (
+                      <span className="ml-auto text-small text-ink-soft">
+                        {status === 'xong' ? vi.lesson.exerciseDone : vi.lesson.exerciseDoing}
+                      </span>
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
+          </ol>
+
+          {next ? (
+            <Link
+              to={`/bai-tap/${next.id}`}
+              data-testid="lesson-cta"
+              className={buttonClasses('primary', 'lg', 'mt-6')}
+            >
+              {next.id === exercises[0]?.id ? vi.lesson.startFirst : vi.lesson.continueNext}
+              <ArrowRight aria-hidden="true" className="size-5" />
+            </Link>
+          ) : (
+            <p
+              data-testid="lesson-all-done"
+              className="mt-6 flex items-center gap-2 rounded-card border border-success/50 bg-success-surface p-4 font-medium"
+            >
+              <PartyPopper aria-hidden="true" className="size-5 shrink-0 text-success" />
+              {vi.lesson.allDone}
+            </p>
+          )}
+        </section>
+
+        {neighbours && (
+          <NeighbourLinks
+            label={vi.pager.label}
+            previous={
+              neighbours.previous && toNeighbourLink(neighbours.previous, 'previous', 'lesson')
+            }
+            next={toNeighbourLink(neighbours.next, 'next', 'lesson')}
+            // Xong hết bài tập thì đi tiếp là việc chính; chưa xong thì nút chính vẫn là "làm tiếp".
+            nextIsPrimary={next === undefined}
+            className="mt-10 border-t border-line pt-6"
+          />
+        )}
+      </article>
+      {showContents && (
+        <aside className="hidden w-56 shrink-0 xl:block">
+          <LessonContents outline={outline} activeId={activeHeading} className="sticky top-20" />
+        </aside>
       )}
-    </article>
+    </div>
   );
+}
+
+function chapterLabelOf(index: ContentIndex, lessonId: string): string | null {
+  for (const course of index.courses) {
+    const position = course.chapters.findIndex((chapter) => chapter.lessonIds.includes(lessonId));
+    const chapter = course.chapters[position];
+    if (chapter) return `${vi.course.chapter} ${position + 1} · ${chapter.title}`;
+  }
+  return null;
 }

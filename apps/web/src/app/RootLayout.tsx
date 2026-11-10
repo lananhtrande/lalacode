@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useMatches } from 'react-router';
 import { Award, BookOpen, Dumbbell, House, Info, Menu, X } from 'lucide-react';
 import { IconButton } from '../shared/ui/IconButton';
+import { LearnLayout } from '../features/learn/LearnLayout';
 import { vi } from '../shared/i18n/vi';
 
 const navItems = [
@@ -28,8 +29,11 @@ export function RootLayout() {
   const [openedAt, setOpenedAt] = useState<string | null>(null);
   const { pathname } = useLocation();
   const menuOpen = openedAt === pathname;
+  const matches = useMatches();
   // Route khai báo `handle: { wide: true }` thì không bọc trong thẻ trắng hẹp.
-  const wide = useMatches().some((match) => isWide(match.handle));
+  const wide = matches.some((match) => isWide(match.handle));
+  // Bài học và bài tập dùng khung học bài riêng (S0-38): mục lục khoá thay cho menu.
+  const learn = matches.some((match) => isLearn(match.handle));
   const setMenuOpen = (open: boolean) => setOpenedAt(open ? pathname : null);
 
   useEffect(() => {
@@ -40,6 +44,8 @@ export function RootLayout() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [menuOpen]);
+
+  if (learn) return <LearnLayout />;
 
   return (
     <div className="min-h-dvh text-ink lg:grid lg:grid-cols-[15rem_minmax(0,1fr)]">
@@ -151,6 +157,12 @@ export function RootLayout() {
         </footer>
       </div>
     </div>
+  );
+}
+
+function isLearn(handle: unknown): boolean {
+  return (
+    typeof handle === 'object' && handle !== null && 'layout' in handle && handle.layout === 'learn'
   );
 }
 

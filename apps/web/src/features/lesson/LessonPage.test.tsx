@@ -119,6 +119,34 @@ describe('màn bài học', () => {
     expect(links[0]).toHaveAttribute('href', '/bai-tap/py-khoi-dong.03-rua-ve-hinh.01-di-thang');
   });
 
+  it('có nhãn chương phía trên tiêu đề', async () => {
+    renderPage();
+    expect(await screen.findByTestId('chapter-label')).toHaveTextContent('Chương 1 · Làm quen');
+  });
+
+  it('"Nội dung bài": mỗi tiêu đề mục là một link neo tới đúng id trên trang', async () => {
+    loadLesson.mockResolvedValue({
+      ...bundle,
+      markdown: '# Rùa vẽ hình\n\n## Rùa cầm bút\n\nChữ.\n\n## Quay góc vuông\n\nChữ.\n',
+    });
+    renderPage();
+    // Có hai bản (trong bài dưới 1280px, dính bên phải từ 1280px); CSS luôn ẩn một
+    // bản, nhưng jsdom không chạy CSS nên thấy cả hai.
+    const [contents] = await screen.findAllByRole('navigation', { name: strings.learn.contents });
+    const link = within(contents!).getByRole('link', { name: 'Quay góc vuông' });
+    expect(link).toHaveAttribute('href', '#quay-goc-vuong');
+    expect(screen.getByRole('heading', { level: 2, name: 'Quay góc vuông' })).toHaveAttribute(
+      'id',
+      'quay-goc-vuong',
+    );
+  });
+
+  it('bài chỉ có một mục thì không cần "Nội dung bài"', async () => {
+    renderPage();
+    await screen.findByRole('heading', { name: 'Rùa vẽ hình', level: 1 });
+    expect(screen.queryByRole('navigation', { name: strings.learn.contents })).toBeNull();
+  });
+
   it('chưa làm bài nào thì nút mời bắt đầu từ bài đầu tiên', async () => {
     renderPage();
     const cta = await screen.findByTestId('lesson-cta');

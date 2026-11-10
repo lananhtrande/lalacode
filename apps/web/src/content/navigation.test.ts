@@ -11,6 +11,7 @@ function summary(id: string, title: string): LessonSummary {
     estimatedMinutes: 10,
     status: 'draft',
     exerciseCount: 2,
+    exercises: [],
     hasVideo: false,
     file: `lessons/${id}.abcd1234.json`,
   };

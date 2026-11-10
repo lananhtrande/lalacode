@@ -19,6 +19,7 @@ function lesson(id: string, exerciseCount = 2, minutes = 15): LessonSummary {
     estimatedMinutes: minutes,
     status: 'draft',
     exerciseCount,
+    exercises: [],
     hasVideo: false,
     file: `lessons/${id}.json`,
   };

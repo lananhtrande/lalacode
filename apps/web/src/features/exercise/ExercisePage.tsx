@@ -37,6 +37,7 @@ import { buttonClasses } from '../../shared/ui/button-classes';
 import { NeighbourLinks } from '../../shared/ui/NeighbourLinks';
 import { toNeighbourLink } from '../../shared/ui/neighbour-link';
 import { NextStepCard } from './NextStepCard';
+import { TopbarSlot } from '../learn/topbar-slot';
 
 type Phase = 'idle' | 'running' | 'grading';
 /** Lưu lần nộp vào máy: chạy ngầm, nhưng e2e cần biết khi nào xong. */
@@ -264,8 +265,9 @@ export function ExercisePage() {
   return (
     <article
       data-save-state={saveState}
-      // Màn hẹp chừa chỗ cho thanh nút dính đáy; màn rộng cao đúng một màn hình.
-      className="flex flex-col gap-4 pb-28 lg:h-[calc(100dvh-3rem)] lg:pb-0"
+      // Màn hẹp chừa chỗ cho thanh nút dính đáy; màn rộng cao đúng phần dưới topbar
+      // của khung học bài (3.5rem) trừ lề trên/dưới (2 × 1.5rem).
+      className="flex flex-col gap-4 pb-28 lg:h-[calc(100dvh-6.5rem)] lg:pb-0"
     >
       <header className="rounded-card bg-surface p-4 shadow-card sm:p-5">
         <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
@@ -278,18 +280,22 @@ export function ExercisePage() {
             </Link>
             <h1 className="mt-1 text-section-title sm:text-page-title">{exercise.title}</h1>
           </div>
-          <p
-            className="flex items-center gap-2 rounded-full bg-surface-muted px-3 py-1 text-small text-ink-soft"
-            data-testid="python-status"
-          >
-            <span
-              aria-hidden="true"
-              className={['size-2 rounded-full', pythonReady ? 'bg-success' : 'bg-attention'].join(
-                ' ',
-              )}
-            />
-            {pythonReady ? vi.exercise.ready : vi.exercise.preparing}
-          </p>
+          {/* Nằm ở topbar của khung học bài (S0-38). */}
+          <TopbarSlot>
+            <p
+              className="flex items-center gap-2 rounded-full bg-surface-muted px-3 py-1 text-small text-ink-soft"
+              data-testid="python-status"
+            >
+              <span
+                aria-hidden="true"
+                className={[
+                  'size-2 rounded-full',
+                  pythonReady ? 'bg-success' : 'bg-attention',
+                ].join(' ')}
+              />
+              {pythonReady ? vi.exercise.ready : vi.exercise.preparing}
+            </p>
+          </TopbarSlot>
         </div>
         <ExercisePrompt text={exercise.prompt} />
       </header>

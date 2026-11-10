@@ -103,6 +103,23 @@
   --color-code-function: #67e8f9;
   --color-code-builtin: #c4b5fd;
 
+  /*
+   * Sidebar mục lục của trình học bài: ngoại lệ tối thứ hai sau editor
+   * (ADR 0011). Mọi cặp chữ/nền ở đây có trong tokens.test.ts.
+   */
+  --color-learn-bg: #18181b;
+  /* Mục đang mở (aria-current) và khi di chuột */
+  --color-learn-current: #1e2b45;
+  --color-learn-hover: #26262b;
+  --color-learn-line: #2e2e34;
+  --color-learn-text: #ececee;
+  --color-learn-muted: #a1a1aa;
+  /* Vạch đánh dấu mục đang mở, thanh tiến độ, viền focus */
+  --color-learn-accent: #60a5fa;
+  --color-learn-track: #3f3f46;
+  /* Icon "đã xong" trên nền tối: `success` quá tối ở đây */
+  --color-learn-success: #4ade80;
+
   /* Thang chữ: 6 kiểu theo vai trò. Chữ thân tối thiểu 16/24, chữ phụ 14/20. */
   --text-page-title: 1.75rem;
   --text-page-title--line-height: 2.25rem;
@@ -151,10 +168,15 @@
   /*
    * Viền focus 3px màu chữ chính: 17.7:1 trên nền trắng, 3.4:1 trên nút xanh dương.
    * Editor tối tự vẽ viền `code-accent` riêng (7:1 trên nền code, code-theme.ts).
+   * Trong sidebar tối của trình học bài (`.learn-dark`), viền là `learn-accent`:
+   * màu `ink` gần như trùng nền ở đó (S0-38).
    */
   :focus-visible {
     outline: 3px solid var(--color-ink);
     outline-offset: 2px;
+  }
+  .learn-dark :focus-visible {
+    outline-color: var(--color-learn-accent);
   }
 }
 

@@ -46,6 +46,15 @@ const TEXT_PAIRS = [
   ['attention', 'ai-surface'],
   ['ink', 'attention-surface'],
   ['ink-soft', 'attention-surface'],
+  // Sidebar mục lục nền tối của trình học bài (S0-38, ADR 0011)
+  ['learn-text', 'learn-bg'],
+  ['learn-text', 'learn-current'],
+  ['learn-text', 'learn-hover'],
+  ['learn-muted', 'learn-bg'],
+  ['learn-muted', 'learn-current'],
+  ['learn-muted', 'learn-hover'],
+  ['learn-success', 'learn-bg'],
+  ['learn-success', 'learn-current'],
 ] as const;
 
 /** Sắc độ (hue, 0–360°) của màu `#rrggbb`. */
@@ -122,5 +131,16 @@ describe('token màu trong index.css', () => {
   it('viền focus (màu ink) nhìn rõ trên cả nền trắng lẫn nút màu nhấn', () => {
     expect(contrastRatio(color('ink'), color('surface'))).toBeGreaterThanOrEqual(3);
     expect(contrastRatio(color('ink'), color('accent'))).toBeGreaterThanOrEqual(3);
+  });
+
+  it('sidebar tối: viền focus, vạch mục đang mở và thanh tiến độ nhìn rõ (≥ 3:1)', () => {
+    for (const background of ['learn-bg', 'learn-current', 'learn-hover']) {
+      expect(contrastRatio(color('learn-accent'), color(background))).toBeGreaterThanOrEqual(3);
+    }
+    expect(contrastRatio(color('learn-accent'), color('learn-track'))).toBeGreaterThanOrEqual(3);
+  });
+
+  it('sidebar tối: màu "đã xong" khác hẳn màu đánh dấu mục đang mở', () => {
+    expect(hueDistance(color('learn-success'), color('learn-accent'))).toBeGreaterThanOrEqual(30);
   });
 });
