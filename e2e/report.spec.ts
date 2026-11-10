@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { setCode } from './support/editor';
 
 /**
  * Luồng chính số 4 trong docs/testing.md: tạo link báo cáo → mở link →
@@ -11,7 +12,7 @@ test.describe('báo cáo cho bố mẹ', () => {
     test.setTimeout(240_000);
 
     await page.goto('/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao');
-    await page.locator('.cm-content').fill('print("Xin chào, Python!")');
+    await setCode(page, 'print("Xin chào, Python!")');
     await page.getByRole('button', { name: 'Nộp bài' }).click();
     await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
       timeout: 120_000,

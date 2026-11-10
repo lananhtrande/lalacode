@@ -6,17 +6,17 @@
   "difficulty": "de",
   "requirements": [
     "Nhận tên bằng `input()`.",
-    "Dùng f-string: `f\"Xin chào {ten}!\"`.",
-    "Có dấu chấm than ở cuối."
+    "Dùng f-string để ghép tên vào câu chào.",
+    "Câu chào kết thúc bằng dấu chấm than."
   ],
   "examples": [
     {
-      "input": "Minh\n",
-      "output": "Xin chào Minh!"
+      "input": "Hà\n",
+      "output": "Xin chào Hà!"
     },
     {
-      "input": "Lan\n",
-      "output": "Xin chào Lan!"
+      "input": "Tuấn\n",
+      "output": "Xin chào Tuấn!"
     }
   ],
   "starterCode": "ten = input()\nprint(\"Xin chào ten!\")\n",

@@ -1,22 +1,7 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { openCodeTab, openPart, setCode } from './support/editor';
 
 const EXERCISE = '/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao';
-
-/**
- * Đặt nội dung ô code một cách chắc chắn.
- *
- * Trước đây test gõ bằng bàn phím (`Ctrl/Cmd+A` rồi `type`). Trên máy CI (Linux)
- * cách đó không ổn định: nội dung cũ không bị chọn hết nên chữ mới trộn vào chữ
- * cũ, và lỗi hiện ra là một `SyntaxError` khó hiểu ở tận bước sau. `fill()` ghi
- * thẳng vào contenteditable, rồi mình kiểm tra lại nội dung ngay — sai là biết
- * liền, không phải lần ngược từ triệu chứng.
- */
-async function setCode(page: Page, code: string): Promise<void> {
-  const editor = page.locator('.cm-content');
-  await editor.waitFor();
-  await editor.fill(code);
-  await expect(editor).toHaveText(code.replace(/\n$/, ''), { useInnerText: true });
-}
 
 /**
  * Luồng chính số 1 trong docs/testing.md: mở bài tập → làm sai → thấy báo lỗi
@@ -128,6 +113,8 @@ test.describe('màn bài tập', () => {
     // Chạy và nộp bài: tuyệt đối không gọi tới trợ lý.
     expect(hintCalls).toEqual([]);
 
+    // Gợi ý nằm cuối cột đề bài (màn hẹp: tab "Đề").
+    await openPart(page, 'Đề');
     await page.getByTestId('hint-ask').click();
     await expect(page.getByTestId('ai-hints')).toBeVisible();
     expect(hintCalls).toHaveLength(1);
@@ -153,13 +140,15 @@ test.describe('màn bài tập', () => {
     await page.waitForTimeout(1500);
 
     await page.reload();
+    await openCodeTab(page);
     await expect(page.locator('.cm-content')).toHaveText('print("em quay lại sau")', {
       useInnerText: true,
     });
     await expect(page.getByTestId('restored-draft')).toBeVisible();
 
-    // "Làm lại từ đầu" đưa về code khởi đầu của bài.
+    // "Làm lại từ đầu" hỏi lại ngay trong trang, rồi đưa về code khởi đầu của bài.
     await page.getByRole('button', { name: 'Làm lại từ đầu' }).click();
+    await page.getByTestId('reset-confirm').getByRole('button', { name: 'Làm lại' }).click();
     await expect(page.locator('.cm-content')).toContainText('Viết code của em');
   });
 
@@ -189,26 +178,66 @@ test.describe('màn bài tập', () => {
   });
 });
 
-/** Bố cục 2 cột (S0-32): editor bên trái, kết quả bên phải; xếp dọc dưới 1024px. */
+/**
+ * Bố cục chia đôi (S0-39): đề bài bên trái; editor trên, panel kết quả dưới ở
+ * bên phải. Dưới 1024px là ba tab Đề · Code · Kết quả.
+ */
 test.describe('bố cục màn bài tập', () => {
   test.slow();
 
-  test('màn rộng: editor và kết quả cùng nằm trong khung nhìn, kết quả bên phải', async ({
+  test('màn rộng: đề bài trái, editor và kết quả bên phải, tất cả trong khung nhìn', async ({
     page,
   }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(EXERCISE);
+    const brief = page.getByRole('heading', { name: 'In lời chào', level: 1 });
     const editor = page.locator('.cm-editor');
     const output = page.getByTestId('exercise-output');
-    await expect(editor).toBeInViewport();
-    await expect(output).toBeInViewport();
+    for (const part of [brief, editor, output]) await expect(part).toBeInViewport();
     await expect(page.getByRole('button', { name: 'Nộp bài' })).toBeInViewport();
 
-    const editorBox = await editor.boundingBox();
-    const outputBox = await output.boundingBox();
-    expect(editorBox).not.toBeNull();
-    expect(outputBox).not.toBeNull();
-    expect(outputBox!.x).toBeGreaterThanOrEqual(editorBox!.x + editorBox!.width);
+    const [briefBox, editorBox, outputBox] = await Promise.all(
+      [brief, editor, output].map((part) => part.boundingBox()),
+    );
+    expect(editorBox!.x).toBeGreaterThanOrEqual(briefBox!.x + briefBox!.width);
+    expect(outputBox!.y).toBeGreaterThanOrEqual(editorBox!.y + editorBox!.height);
+  });
+
+  test('màn rộng: thanh kéo đổi chiều cao panel kết quả bằng bàn phím', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto(EXERCISE);
+    const resizer = page.getByRole('separator', { name: /đổi chiều cao/ });
+    const before = Number(await resizer.getAttribute('aria-valuenow'));
+    await resizer.focus();
+    await page.keyboard.press('ArrowUp');
+    await expect(resizer).toHaveAttribute('aria-valuenow', String(before + 32));
+  });
+
+  test('điện thoại: tab Đề · Code · Kết quả; nộp bài xong tự sang Kết quả › Kiểm tra', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(EXERCISE);
+    const parts = page.getByRole('tablist', { name: 'Phần của bài tập' });
+    await expect(parts.getByRole('tab', { name: 'Đề' })).toHaveAttribute('aria-selected', 'true');
+    await expect(page.getByText(/Viết chương trình in ra dòng chữ/)).toBeVisible();
+    await expect(page.locator('.cm-editor')).toBeHidden();
+
+    await setCode(page, 'print("Xin chào, Python!")');
+    await expect(page.getByTestId('python-status')).toHaveText('Python sẵn sàng', {
+      timeout: 120_000,
+    });
+    await page.getByRole('button', { name: 'Nộp bài' }).click();
+    await expect(parts.getByRole('tab', { name: 'Kết quả' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+      { timeout: 120_000 },
+    );
+    await expect(page.getByRole('tab', { name: 'Kiểm tra (1)' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+    await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeInViewport();
   });
 
   test('điện thoại: bấm Chạy thử thì khu kết quả tự vào tầm mắt', async ({ page }) => {

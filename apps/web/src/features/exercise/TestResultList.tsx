@@ -23,7 +23,9 @@ export function TestResultList({ results }: { results: readonly TestResult[] }) 
             key={result.index}
             className={[
               'flex gap-3 rounded-xl border p-3',
-              result.passed ? 'border-success/40 bg-success-surface' : 'border-attention/40 bg-attention-surface',
+              result.passed
+                ? 'border-success/40 bg-success-surface'
+                : 'border-attention/40 bg-attention-surface',
             ].join(' ')}
           >
             {result.passed ? (

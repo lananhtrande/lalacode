@@ -26,7 +26,9 @@ export function ErrorPanel({ info }: { info: RunErrorInfo }) {
       {info.hint !== undefined && <p className="mt-1 text-ink-soft">{info.hint}</p>}
       {info.raw !== undefined && (
         <details className="mt-2">
-          <summary className="cursor-pointer text-small text-ink-soft">{vi.exercise.showRaw}</summary>
+          <summary className="cursor-pointer text-small text-ink-soft">
+            {vi.exercise.showRaw}
+          </summary>
           <pre className="mt-1 overflow-x-auto font-mono text-small">{info.raw}</pre>
         </details>
       )}

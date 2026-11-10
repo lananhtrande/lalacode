@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, type RefObject } from 'react';
 import { Link, useParams } from 'react-router';
 import { loadContentIndex, loadExercise, lessonIdOfExercise } from '../../content/loader';
 import {
@@ -24,13 +24,16 @@ import type { ProgressSnapshot } from '../../progress/schema';
 import type { DrawCommand, TestResult } from '../../runner/protocol';
 import { createRunner, type Runner } from '../../runner/runner-client';
 import { describeRunError, type RunErrorInfo } from '../../runner/messages';
-import { CodeEditor } from '../../shared/ui/CodeEditor';
 import { vi } from '../../shared/i18n/vi';
 import { HintPanel } from './HintPanel';
 import { TestResultList } from './TestResultList';
 import { TurtleCanvas } from './TurtleCanvas';
 import { ErrorPanel } from './ErrorPanel';
-import { ExercisePrompt } from './ExercisePrompt';
+import { ExerciseBrief } from './ExerciseBrief';
+import { EditorPane } from './EditorPane';
+import { PANEL_MIN, PanelResizer, ResultsPanel, type ResultTab } from './ResultsPanel';
+import { useMediaQuery } from '../../shared/lib/media';
+import { useStoredState } from '../../shared/lib/stored-state';
 import { ExerciseToolbar } from './ExerciseToolbar';
 import { OutputConsole } from './OutputConsole';
 import { buttonClasses } from '../../shared/ui/button-classes';
@@ -46,7 +49,6 @@ type SaveState = 'idle' | 'saving' | 'saved';
 export function ExercisePage() {
   const { exerciseId = '' } = useParams();
   const [exercise, setExercise] = useState<PublicExercise | null>(null);
-  const [lessonTitle, setLessonTitle] = useState('');
   const [restoredDraft, setRestoredDraft] = useState(false);
   const [aiToken, setAiToken] = useState<string | undefined>(undefined);
   /** Mã các bài tập của bài học này, để biết khi nào bài học coi như xong. */
@@ -73,6 +75,22 @@ export function ExercisePage() {
   /** Mã bài đang mở, để kết quả của một lần chạy dở không đổ nhầm sang bài khác. */
   const activeIdRef = useRef(exerciseId);
 
+  // Bố cục chia đôi (S0-39): ≥ 1024px đề bài trái, editor + panel kết quả phải;
+  // hẹp hơn thì ba tab Đề · Code · Kết quả.
+  const wide = useMediaQuery('(min-width: 1024px)');
+  const [mobilePart, setMobilePart] = useState<Part>('de');
+  const [resultTab, setResultTab] = useState<ResultTab>('ket-qua');
+  const [panel, setPanel] = useStoredState<PanelState>(
+    'lalakode.results-panel',
+    { height: 280, collapsed: false },
+    isPanelState,
+  );
+  const briefId = useId();
+  const codeId = useId();
+  const resultsId = useId();
+  const toolbarRef = useRef<HTMLDivElement | null>(null);
+  const toolbarInView = useInView(toolbarRef, wide);
+
   // Đi thẳng từ bài tập này sang bài tập khác thì màn hình không được dựng lại
   // (cùng route): xoá kết quả của bài cũ ngay lúc đổi bài.
   const [shownFor, setShownFor] = useState(exerciseId);
@@ -87,6 +105,8 @@ export function ExercisePage() {
     setSaveState('idle');
     setNeighbours(null);
     setCompletion(null);
+    setMobilePart('de');
+    setResultTab('ket-qua');
   }
 
   // Rời bài đang chạy dở thì dừng nó; Pyodide giữ nguyên nếu không có gì đang chạy.
@@ -129,7 +149,6 @@ export function ExercisePage() {
         const saved = await quietly(() => getExerciseProgress(found.id));
         if (!active) return;
         setExercise(found);
-        setLessonTitle(lesson.lesson.title);
         setLessonExerciseIds(lesson.exercises.map((item) => item.id));
         setCode(saved?.draftCode ?? found.starterCode);
         setRestoredDraft(saved !== undefined);
@@ -176,6 +195,9 @@ export function ExercisePage() {
     setDrawing(outcome.drawing);
     if (outcome.ok) setStdout(outcome.result.stdout + outcome.result.stderr);
     else setError(describeRunError(outcome.error));
+    // Chạy thử chỉ cần xem output: sang tab "Kết quả".
+    setResultTab('ket-qua');
+    setMobilePart('ket-qua');
     setRevealTick((tick) => tick + 1);
   }
 
@@ -188,6 +210,9 @@ export function ExercisePage() {
     });
     if (activeIdRef.current !== exercise.id) return;
     setPhase('idle');
+    // Nộp xong thì xem tab "Kiểm tra"; Python lỗi thì lỗi hiện ở tab "Kết quả".
+    setResultTab(outcome.ok ? 'kiem-tra' : 'ket-qua');
+    setMobilePart('ket-qua');
     if (outcome.ok) {
       setResults(outcome.report.results);
       setSaveState('saving');
@@ -261,105 +286,60 @@ export function ExercisePage() {
 
   const busy = phase !== 'idle';
   const passedAll = results !== null && results.length > 0 && results.every((item) => item.passed);
+  const panelMax = Math.max(PANEL_MIN * 2, Math.round(window.innerHeight * 0.6));
+  const showPart = (part: Part) => wide || mobilePart === part;
+
+  const toolbar = (inTopbar: boolean) => (
+    <ExerciseToolbar
+      phase={phase}
+      placement={inTopbar ? 'topbar' : 'page'}
+      onRun={() => void run()}
+      onSubmit={() => void submit()}
+      onStop={() => runnerRef.current?.cancel()}
+    />
+  );
 
   return (
     <article
       data-save-state={saveState}
       // Màn hẹp chừa chỗ cho thanh nút dính đáy; màn rộng cao đúng phần dưới topbar
       // của khung học bài (3.5rem) trừ lề trên/dưới (2 × 1.5rem).
-      className="flex flex-col gap-4 pb-28 lg:h-[calc(100dvh-6.5rem)] lg:pb-0"
+      className="flex flex-col gap-4 pb-28 lg:grid lg:h-[calc(100dvh-6.5rem)] lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-6 lg:pb-0"
     >
-      <header className="rounded-card bg-surface p-4 shadow-card sm:p-5">
-        <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
-          <div className="min-w-0">
-            <Link
-              to={`/bai-hoc/${lessonIdOfExercise(exercise.id)}`}
-              className="text-small font-medium text-accent-strong underline"
-            >
-              ← {lessonTitle}
-            </Link>
-            <h1 className="mt-1 text-section-title sm:text-page-title">{exercise.title}</h1>
-          </div>
-          {/* Nằm ở topbar của khung học bài (S0-38). */}
-          <TopbarSlot>
-            <p
-              className="flex items-center gap-2 rounded-full bg-surface-muted px-3 py-1 text-small text-ink-soft"
-              data-testid="python-status"
-            >
-              <span
-                aria-hidden="true"
-                className={[
-                  'size-2 rounded-full',
-                  pythonReady ? 'bg-success' : 'bg-attention',
-                ].join(' ')}
-              />
-              {pythonReady ? vi.exercise.ready : vi.exercise.preparing}
-            </p>
-          </TopbarSlot>
-        </div>
-        <ExercisePrompt text={exercise.prompt} />
-      </header>
-
-      <div className="grid gap-4 lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:gap-6">
-        <section aria-labelledby="code-cua-em" className="flex flex-col lg:min-h-0">
-          <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-card bg-code-bg shadow-card">
-            <div className="flex flex-wrap items-center justify-between gap-2 bg-code-gutter px-4 py-2 text-code-text">
-              <h2 id="code-cua-em" className="text-label">
-                {vi.exercise.yourCode}
-              </h2>
-              {restoredDraft && (
-                <p className="text-small text-code-muted" data-testid="restored-draft">
-                  {vi.exercise.restored}
-                </p>
-              )}
-            </div>
-            <CodeEditor
-              value={code}
-              onChange={setCode}
-              label={vi.exercise.yourCode}
-              readOnly={busy}
-              // Tối thiểu ~16 dòng ở màn rộng, ~10 dòng ở điện thoại.
-              className="min-h-64 lg:min-h-[26rem] lg:flex-1"
-            />
-          </div>
-          <ExerciseToolbar
-            phase={phase}
-            onRun={() => void run()}
-            onSubmit={() => void submit()}
-            onStop={() => runnerRef.current?.cancel()}
-            onReset={() => {
-              setCode(exercise.starterCode);
-              clearOutcome();
-              setDrawing([]);
-            }}
-          />
-          {neighbours && (
-            <NeighbourLinks
-              label={vi.pager.label}
-              previous={
-                neighbours.previous && toNeighbourLink(neighbours.previous, 'previous', 'exercise')
-              }
-              next={toNeighbourLink(neighbours.next, 'next', 'exercise')}
-              className="mt-3"
-            />
-          )}
-        </section>
-
-        <div
-          ref={resultsRef}
-          data-testid="exercise-results"
-          className="scroll-mt-20 space-y-4 lg:min-h-0 lg:overflow-y-auto lg:pr-1"
+      {/* Thanh nút ở topbar chỉ hiện khi thanh dưới editor bị cuộn khuất (màn rộng). */}
+      {wide && !toolbarInView && <TopbarSlot>{toolbar(true)}</TopbarSlot>}
+      <TopbarSlot>
+        <p
+          className="flex items-center gap-2 rounded-full bg-surface-muted px-3 py-1 text-small text-ink-soft"
+          data-testid="python-status"
         >
-          {/* Thứ tự ưu tiên: lỗi → output → hình rùa → kết quả chấm. */}
-          <div aria-live="polite" className="space-y-4">
-            {error && <ErrorPanel info={error} />}
-            <OutputConsole output={stdout} />
-            {exercise.turtle && <TurtleCanvas commands={drawing} />}
-            {results && <TestResultList results={results} />}
-            {passedAll && neighbours && (
-              <NextStepCard next={neighbours.next} completion={completion} />
+          <span
+            aria-hidden="true"
+            className={['size-2 rounded-full', pythonReady ? 'bg-success' : 'bg-attention'].join(
+              ' ',
             )}
-          </div>
+          />
+          {pythonReady ? vi.exercise.ready : vi.exercise.preparing}
+        </p>
+      </TopbarSlot>
+
+      {!wide && (
+        <PartTabs
+          value={mobilePart}
+          onChange={setMobilePart}
+          ids={{ de: briefId, code: codeId, 'ket-qua': resultsId }}
+        />
+      )}
+
+      <section
+        id={briefId}
+        {...(wide ? {} : { role: 'tabpanel', 'aria-labelledby': `${briefId}-tab` })}
+        className={[
+          showPart('de') ? '' : 'hidden',
+          'rounded-card bg-surface p-5 shadow-card sm:p-6 lg:min-h-0 lg:overflow-y-auto',
+        ].join(' ')}
+      >
+        <ExerciseBrief exercise={exercise}>
           <HintPanel
             hints={exercise.hints}
             exerciseId={exercise.id}
@@ -367,10 +347,184 @@ export function ExercisePage() {
             getError={() => error?.raw}
             {...(aiToken === undefined ? {} : { aiToken })}
           />
+        </ExerciseBrief>
+      </section>
+
+      <div className="flex flex-col lg:min-h-0">
+        <div
+          id={codeId}
+          {...(wide ? {} : { role: 'tabpanel', 'aria-labelledby': `${codeId}-tab` })}
+          className={[showPart('code') ? 'flex' : 'hidden', 'min-h-0 flex-1 flex-col'].join(' ')}
+        >
+          <EditorPane
+            code={code}
+            onChange={setCode}
+            readOnly={busy}
+            pythonReady={pythonReady}
+            restoredDraft={restoredDraft}
+            onReset={() => {
+              setCode(exercise.starterCode);
+              clearOutcome();
+              setDrawing([]);
+            }}
+          />
         </div>
+
+        {/* Ngoài các tab: màn hẹp thì dính đáy màn hình, tab nào cũng bấm được. */}
+        <div ref={toolbarRef}>{toolbar(false)}</div>
+
+        {wide && !panel.collapsed && (
+          <PanelResizer
+            height={Math.min(panel.height, panelMax)}
+            max={panelMax}
+            onChange={(height) => setPanel({ ...panel, height })}
+          />
+        )}
+
+        <div
+          id={resultsId}
+          ref={resultsRef}
+          data-testid="exercise-results"
+          {...(wide ? {} : { role: 'tabpanel', 'aria-labelledby': `${resultsId}-tab` })}
+          className={[
+            showPart('ket-qua') ? 'flex' : 'hidden',
+            'scroll-mt-28 flex-col lg:mt-0 lg:shrink-0',
+            wide && !panel.collapsed ? 'h-(--results-h)' : '',
+          ].join(' ')}
+          style={{ ['--results-h' as string]: `${Math.min(panel.height, panelMax)}px` }}
+        >
+          <ResultsPanel
+            tab={resultTab}
+            onTabChange={setResultTab}
+            testCount={exercise.tests.length}
+            collapsed={wide && panel.collapsed}
+            onCollapsedChange={(collapsed) => setPanel({ ...panel, collapsed })}
+            output={
+              <div aria-live="polite" className="space-y-4">
+                {error && <ErrorPanel info={error} />}
+                <OutputConsole output={stdout} />
+                {exercise.turtle && <TurtleCanvas commands={drawing} />}
+              </div>
+            }
+            tests={
+              <div aria-live="polite" className="space-y-4">
+                {passedAll && neighbours && (
+                  <NextStepCard next={neighbours.next} completion={completion} />
+                )}
+                {results ? (
+                  <TestResultList results={results} />
+                ) : (
+                  <p className="text-ink-soft" data-testid="tests-empty">
+                    {vi.exercise.testsEmpty}
+                  </p>
+                )}
+              </div>
+            }
+          />
+        </div>
+
+        {/* Bài trước/tiếp: luôn thấy, dưới tab đang mở (màn hẹp) hoặc dưới panel kết quả. */}
+        {neighbours && (
+          <NeighbourLinks
+            label={vi.pager.label}
+            previous={
+              neighbours.previous && toNeighbourLink(neighbours.previous, 'previous', 'exercise')
+            }
+            next={toNeighbourLink(neighbours.next, 'next', 'exercise')}
+            className="mt-3 lg:shrink-0"
+          />
+        )}
       </div>
     </article>
   );
+}
+
+type Part = 'de' | 'code' | 'ket-qua';
+const parts: Part[] = ['de', 'code', 'ket-qua'];
+
+/** Ba tab dính đầu màn hẹp (< 1024px): Đề · Code · Kết quả. */
+function PartTabs({
+  value,
+  onChange,
+  ids,
+}: {
+  value: Part;
+  onChange: (part: Part) => void;
+  ids: Record<Part, string>;
+}) {
+  const label = {
+    de: vi.exercise.partBrief,
+    code: vi.exercise.partCode,
+    'ket-qua': vi.exercise.partResults,
+  };
+  const move = (event: React.KeyboardEvent, current: Part) => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    const step = event.key === 'ArrowRight' ? 1 : parts.length - 1;
+    const next = parts[(parts.indexOf(current) + step) % parts.length] ?? current;
+    onChange(next);
+    document.getElementById(`${ids[next]}-tab`)?.focus();
+  };
+  return (
+    <div
+      role="tablist"
+      aria-label={vi.exercise.partsLabel}
+      className="sticky top-14 z-10 -mx-4 -mt-4 flex gap-1 border-b border-line bg-surface px-2 sm:-mx-6"
+    >
+      {parts.map((part) => {
+        const selected = part === value;
+        return (
+          <button
+            key={part}
+            id={`${ids[part]}-tab`}
+            type="button"
+            role="tab"
+            aria-selected={selected}
+            aria-controls={ids[part]}
+            tabIndex={selected ? 0 : -1}
+            onKeyDown={(event) => move(event, part)}
+            onClick={() => onChange(part)}
+            className={[
+              'relative min-h-tap flex-1 px-3 text-label',
+              'after:absolute after:inset-x-3 after:bottom-0 after:h-[3px] after:rounded-full',
+              selected ? 'text-ink after:bg-accent' : 'font-medium text-ink-soft',
+            ].join(' ')}
+          >
+            {label[part]}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+interface PanelState {
+  height: number;
+  collapsed: boolean;
+}
+
+function isPanelState(value: unknown): value is PanelState {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    typeof (value as PanelState).height === 'number' &&
+    typeof (value as PanelState).collapsed === 'boolean'
+  );
+}
+
+/** Phần tử có đang nằm trong màn hình không (chỉ theo dõi khi `enabled`). */
+function useInView(ref: RefObject<HTMLElement | null>, enabled: boolean): boolean {
+  const [inView, setInView] = useState(true);
+  useEffect(() => {
+    const element = ref.current;
+    if (!enabled || !element || typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver(([entry]) =>
+      setInView(entry?.isIntersecting ?? true),
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [ref, enabled]);
+  return inView;
 }
 
 function revealResults(target: HTMLElement | null) {

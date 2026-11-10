@@ -5,9 +5,8 @@
   "prompt": "Vẽ hai bậc thang: đi lên 40, sang phải 40, lại lên 40, lại sang phải 40. Rùa bắt đầu quay sang phải.",
   "difficulty": "vua",
   "requirements": [
-    "Quay lên trước khi đi lên: `turtle.left(90)`.",
-    "Mỗi đoạn dài 40 bước.",
-    "Sau mỗi bậc rùa quay lại hướng sang phải."
+    "Có 2 bậc, mỗi đoạn dài 40 bước.",
+    "Vẽ xong, rùa ở cao hơn chỗ bắt đầu 80 bước và lệch sang phải 80 bước."
   ],
   "starterCode": "import turtle\n\nturtle.left(90)\nturtle.forward(40)\n",
   "solution": "import turtle\n\nturtle.left(90)\nturtle.forward(40)\nturtle.right(90)\nturtle.forward(40)\nturtle.left(90)\nturtle.forward(40)\nturtle.right(90)\nturtle.forward(40)\n",

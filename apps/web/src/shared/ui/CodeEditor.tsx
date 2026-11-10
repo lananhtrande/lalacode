@@ -24,6 +24,8 @@ export interface CodeEditorProps {
   readOnly?: boolean;
   /** Class cho khung bọc ngoài (ví dụ để editor cao hết cột ở màn rộng). */
   className?: string;
+  /** Cỡ chữ code (px); bỏ trống thì theo mặc định của theme. */
+  fontSize?: number | undefined;
 }
 
 /** Chỉ đọc = không sửa được + class `cm-readonly` để theme làm mờ và ẩn con trỏ. */
@@ -38,6 +40,7 @@ export function CodeEditor({
   label,
   readOnly = false,
   className = '',
+  fontSize,
 }: CodeEditorProps) {
   // Compartment cho phép đổi một phần cấu hình sau khi editor đã dựng.
   const [editableCompartment] = useState(() => new Compartment());
@@ -106,5 +109,11 @@ export function CodeEditor({
     view.dispatch({ effects: editableCompartment.reconfigure(readOnlyExtensions(readOnly)) });
   }, [readOnly, editableCompartment]);
 
-  return <div ref={hostRef} className={['overflow-hidden bg-code-bg', className].join(' ')} />;
+  return (
+    <div
+      ref={hostRef}
+      className={['overflow-hidden bg-code-bg', className].join(' ')}
+      style={fontSize === undefined ? undefined : { ['--code-font-size' as string]: `${fontSize}px` }}
+    />
+  );
 }

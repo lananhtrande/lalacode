@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { setCode } from './support/editor';
 
 const EXERCISE_1 = '/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao';
 const EXERCISE_2 = '/bai-tap/py-khoi-dong.01-xin-chao.02-in-hai-dong';
@@ -7,9 +8,7 @@ const EXERCISE_4 = '/bai-tap/py-khoi-dong.01-xin-chao.04-cay-thong-sao';
 
 async function solve(page: Page, url: string, code: string): Promise<void> {
   await page.goto(url);
-  const editor = page.locator('.cm-content');
-  await editor.waitFor();
-  await editor.fill(code);
+  await setCode(page, code);
   await page.getByRole('button', { name: 'Nộp bài' }).click();
   await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
     timeout: 120_000,

@@ -194,16 +194,29 @@ Theme CodeMirror **tự viết** trong `apps/web/src/shared/ui/code-theme.ts` (k
 
 Con trỏ, viền focus 3px và vùng chọn (`color-mix` 30%) dùng `code-accent` `#60A5FA` (7.0:1 trên `code-bg`, 5.9:1 trên dòng đang đứng) — `accent` quá tối trên nền code; nền editor là xám trung tính, không ánh màu. Cỡ chữ code 16px, 15px dưới 640px, dòng cao 1.6. Đang chạy (chỉ đọc): chữ mờ đi, con trỏ ẩn.
 
-## Màn bài tập
+## Màn bài tập (bài thực hành chia đôi, S0-39)
 
 | Màn | Bố cục |
 | --- | --- |
-| ≥ 1024px | Đề bài trong thẻ trên cùng (dài quá 180 ký tự thì có nút thu gọn). Dưới là 2 cột ~55/45, cao đúng phần còn lại của màn hình, **mỗi cột tự cuộn**: trái là editor tối (tối thiểu ~16 dòng) và thanh nút ngay dưới; phải là lỗi → kết quả chạy → hình rùa → kết quả chấm → gợi ý. |
-| < 1024px | Xếp dọc: đề bài → editor → kết quả → gợi ý. Thanh nút **dính đáy màn hình**; dưới 640px nút "Làm lại từ đầu" chỉ còn icon để thanh nằm một hàng. |
+| ≥ 1024px | Hai cột ~40/60, cao đúng phần dưới topbar, **mỗi phần tự cuộn**. **Trái:** thẻ trắng — độ khó (`DifficultyBadge`: số cột tô + chữ Dễ · Vừa · Khó · Thử thách, không phân biệt bằng màu) → `h1` → đề → "Yêu cầu" (gạch đầu dòng, code inline nền nhạt, không tô đỏ) → "Ví dụ" (khối nền code tối: Đầu vào / Kết quả mong đợi / ghi chú) → gợi ý AI. **Phải trên:** editor tối, header "Python" + trạng thái tải + A−/A+ + nút icon "Làm lại từ đầu"; ngay dưới là thanh Chạy thử / Nộp bài. **Phải dưới:** thanh kéo (`role="separator"`, mũi tên lên/xuống ±32px, Home/End) rồi panel hai tab "Kết quả" (console, hình rùa, lỗi) và "Kiểm tra (N)" (kết quả từng test). Panel thu gọn được ("Thu gọn"). Dưới cùng là bài trước/tiếp. |
+| < 1024px | Ba tab dính đầu (dưới topbar): **Đề · Code · Kết quả**, mở ở tab "Đề". Thanh Chạy thử / Nộp bài dính đáy, tab nào cũng bấm được. Bài trước/tiếp nằm dưới tab đang mở. |
 
-Chạy/nộp xong: màn rộng cuộn cột phải lên đầu, màn hẹp cuộn trang tới khu kết quả (`prefers-reduced-motion` thì nhảy thẳng, không trượt). Khu kết quả có `aria-live="polite"`. Hình rùa vuông, rộng theo cột (tối đa 560px), vẽ theo `devicePixelRatio`; toạ độ vẫn tính trên khung 320×320 mà bài học viết theo.
+- Chạy thử → sang tab "Kết quả"; Nộp bài → sang "Kiểm tra" (Python lỗi thì về "Kết quả" để thấy `ErrorPanel`). Màn hẹp: cả hai cũng chuyển sang phần "Kết quả" và cuộn tới đầu.
+- Thẻ "Bài tập tiếp theo →" (S0-36) nằm đầu tab "Kiểm tra" khi đạt hết, vẫn nhận focus.
+- "Làm lại từ đầu" hỏi lại ngay trong trang ("Làm lại" / "Thôi", Esc = thôi), không dùng `confirm()`; focus vào nút "Làm lại", xong thì trả về nút icon.
+- Nhớ trong `localStorage` (lựa chọn giao diện, không phải dữ liệu học): cỡ chữ editor `lalakode.editor-font` (14–22px), chiều cao và trạng thái thu gọn của panel `lalakode.results-panel`.
+- Thanh Chạy thử / Nộp bài lặp lại trên topbar (`TopbarSlot`) chỉ khi thanh dưới editor bị cuộn khuất — không bao giờ có hai bộ nút cùng lúc.
+- Giữ: timeout của worker chặn vòng lặp vô hạn, `aria-live` trong từng tab kết quả.
 
-Nút: "Nộp bài" `primary`, "Chạy thử" `dark`, "Dừng" `outline`, "Làm lại từ đầu" `ghost`.
+| | 1440 | 820 | 390 |
+| --- | --- | --- | --- |
+| Trước (S0-38) | ![](design/screenshots/s038-sau-bai-tap-1440.png) | ![](design/screenshots/s038-sau-bai-tap-820.png) | ![](design/screenshots/s038-sau-bai-tap-390.png) |
+| Sau, mới mở | ![](design/screenshots/s039-sau-bai-tap-1440.png) | ![](design/screenshots/s039-sau-bai-tap-820.png) | ![](design/screenshots/s039-sau-bai-tap-390.png) |
+| Sau, nộp đúng | ![](design/screenshots/s039-sau-bai-tap-dung-1440.png) | ![](design/screenshots/s039-sau-bai-tap-dung-820.png) | ![](design/screenshots/s039-sau-bai-tap-dung-390.png) |
+
+Tab "Đề" ở 390px (cả trang): ![](design/screenshots/s039-sau-tab-de-390.png)
+
+Nút: "Nộp bài" `primary`, "Chạy thử" `dark`, "Dừng" `outline`.
 
 ### Bài trước / bài tiếp (S0-36)
 

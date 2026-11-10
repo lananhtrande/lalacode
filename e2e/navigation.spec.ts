@@ -1,17 +1,11 @@
 import { expect, test, type Page } from '@playwright/test';
+import { setCode } from './support/editor';
 
 const LESSON_01 = 'py-khoi-dong.01-xin-chao';
 const LESSON_02 = 'py-khoi-dong.02-cai-hop-ten-la-bien';
 const LAST_LESSON = 'py-khoi-dong.20-du-an-cuoi';
 
 /** Ghi thẳng vào editor rồi kiểm lại (xem exercise.spec.ts về lý do không gõ phím). */
-async function setCode(page: Page, code: string): Promise<void> {
-  const editor = page.locator('.cm-content');
-  await editor.waitFor();
-  await editor.fill(code);
-  await expect(editor).toHaveText(code.replace(/\n$/, ''), { useInnerText: true });
-}
-
 async function submitAndPass(page: Page, code: string): Promise<void> {
   await expect(page.getByTestId('python-status')).toHaveText('Python sẵn sàng', {
     timeout: 120_000,

@@ -7,9 +7,9 @@
   "requirements": ["Dùng `input()` để nhận tên.", "In ra đúng tên vừa nhận, không thêm chữ nào."],
   "examples": [
     {
-      "input": "Lan\n",
-      "output": "Lan",
-      "note": "Máy gõ thử tên Lan cho em."
+      "input": "Mai\n",
+      "output": "Mai",
+      "note": "Máy gõ thử tên Mai cho em."
     }
   ],
   "starterCode": "ten = input()\n# in biến ten ra\n",

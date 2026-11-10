@@ -4,7 +4,7 @@
   "kind": "code",
   "prompt": "Mỗi ngày em để dành 5000 đồng. Tạo biến `moi_ngay` bằng 5000, rồi in số tiền để dành được sau 7 ngày.",
   "difficulty": "de",
-  "requirements": ["Tạo biến `moi_ngay` bằng 5000.", "Dùng dấu `*` để nhân với 7."],
+  "requirements": ["Tạo biến `moi_ngay` bằng 5000.", "In ra đúng một số: số tiền sau 7 ngày."],
   "examples": [
     {
       "output": "35000"

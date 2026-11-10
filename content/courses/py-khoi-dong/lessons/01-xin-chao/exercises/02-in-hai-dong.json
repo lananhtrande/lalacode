@@ -4,7 +4,7 @@
   "kind": "code",
   "prompt": "Viết chương trình in ra 2 dòng: dòng 1 là `Em thích Python`, dòng 2 là `Python cũng thích em`.",
   "difficulty": "de",
-  "requirements": ["Mỗi dòng dùng một lệnh `print`.", "Dòng `Em thích Python` in trước."],
+  "requirements": ["In đúng 2 dòng, dòng `Em thích Python` in trước."],
   "examples": [
     {
       "output": "Em thích Python\nPython cũng thích em"
