@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 import { approximateDuration } from '../../content/catalog';
 import { fill } from '../../shared/i18n/fill';
 import { vi } from '../../shared/i18n/vi';
@@ -64,7 +64,7 @@ export function CourseCard(item: CourseWithProgress) {
           {course.title}
         </h2>
         {/* Dòng cao 24px: dấu chồng (Ổ, ầ) của dòng thứ hai không bị cắt mất nửa. */}
-        <p className="mt-1 line-clamp-2 text-ink-soft">{course.summary}</p>
+        <p className="mt-1 line-clamp-3 text-small text-ink-soft">{course.summary}</p>
         <p className="mt-3 text-small text-ink-soft">{courseMeta(item)}</p>
         {progress.status !== 'chua-hoc' && (
           <div className="mt-3">
@@ -91,10 +91,11 @@ export function ComingSoonCard() {
   return (
     <div
       data-testid="course-coming-soon"
-      className="flex h-full min-h-64 flex-col items-center justify-center rounded-card border-2 border-dashed border-line p-6 text-center"
+      className="flex h-full min-h-48 flex-col items-center justify-center gap-2 rounded-card border-2 border-dashed border-line p-6 text-center"
     >
-      <p className="text-card-title text-ink-soft">{vi.catalog.comingSoonTitle}</p>
-      <p className="mt-1 text-small text-ink-soft">{vi.catalog.comingSoonBody}</p>
+      <Clock aria-hidden="true" className="size-8 text-ink-soft" />
+      <p className="text-card-title">{vi.catalog.comingSoonTitle}</p>
+      <p className="max-w-60 text-small text-ink-soft">{vi.catalog.comingSoonBody}</p>
     </div>
   );
 }
