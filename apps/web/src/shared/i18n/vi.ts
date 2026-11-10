@@ -100,6 +100,47 @@ export const vi = {
     exercises: 'bài tập',
     draftBadge: 'Bản nháp',
   },
+  /** Kho luyện tập `/luyen-tap` (S0-40). Không có tỉ lệ đúng, lượt nộp hay sao đánh giá. */
+  practice: {
+    title: 'Luyện tập',
+    lead: 'Mọi bài tập ở một chỗ. Chọn bài em thích, hoặc để mình chọn giúp.',
+    setsTitle: 'Bộ bài',
+    setsPrevious: 'Xem bộ bài trước',
+    setsNext: 'Xem bộ bài sau',
+    filters: 'Bộ lọc',
+    showFilters: 'Bộ lọc',
+    difficulty: 'Độ khó',
+    topic: 'Chủ đề',
+    status: 'Trạng thái',
+    statusOptions: { 'tat-ca': 'Tất cả', 'chua-lam': 'Chưa làm', 'da-xong': 'Đã xong' },
+    savedOnly: 'Chỉ bài để dành',
+    clearFilters: 'Xoá bộ lọc',
+    count: 'bài tập',
+    random: 'Bài ngẫu nhiên',
+    randomNone: 'Em đã làm xong hết các bài đang lọc rồi!',
+    columnStatus: 'Trạng thái',
+    columnExercise: 'Bài tập',
+    columnLesson: 'Thuộc bài',
+    columnDifficulty: 'Độ khó',
+    columnSaved: 'Để dành',
+    done: 'Đã xong',
+    notDone: 'Chưa làm',
+    noDifficulty: 'Chưa xếp',
+    save: 'Để dành',
+    unsave: 'Bỏ để dành',
+    lessonLabel: 'Bài {n} · {title}',
+    empty: 'Không có bài tập nào khớp. Thử bỏ bớt bộ lọc nhé.',
+    startHere: 'Chọn một bài để bắt đầu nhé!',
+    continueTitle: 'Tiếp tục',
+    continueAllDone: 'Em đã làm xong mọi bài tập rồi. Giỏi quá!',
+    challengeTitle: 'Thử thách hôm nay',
+    challengeNote: 'Ngày nào cũng có một bài mới.',
+    calendarTitle: 'Ngày học tháng này',
+    calendarActive: 'có học',
+    weekdays: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
+    loading: 'Đang tải bài tập…',
+    error: 'Chưa tải được danh sách bài tập. Em thử tải lại trang nhé.',
+  },
   /** Khung học bài: sidebar mục lục tối + topbar (S0-38). */
   learn: {
     outline: 'Mục lục khoá học',
@@ -156,7 +197,8 @@ export const vi = {
     lastExerciseDone:
       'Em làm đúng bài tập cuối rồi! Bài học này vẫn còn bài tập chưa xong, lúc nào thích em quay lại làm nhé.',
     courseDone: 'Em đã hoàn thành cả khoá học!',
-    courseEnd: 'Em đã tới bài cuối của khoá học rồi! Xem trên trang khoá học còn bài nào chưa xong nhé.',
+    courseEnd:
+      'Em đã tới bài cuối của khoá học rồi! Xem trên trang khoá học còn bài nào chưa xong nhé.',
   },
   exercise: {
     loading: 'Đang mở bài tập…',
@@ -291,7 +333,7 @@ export const vi = {
     importBadCode: 'Mã này mình đọc không được. Em kiểm tra xem đã sao chép đủ chưa nhé.',
     importTooNew: 'Mã này tạo bởi phiên bản LaLaKode mới hơn. Em cập nhật trang rồi thử lại nhé.',
     privacyNote:
-      'Mã không chứa những dòng code em viết. Nó chỉ ghi bài nào xong, bài nào đang làm, số lần em thử và huy hiệu đã nhận.',
+      'Mã không chứa những dòng code em viết. Nó chỉ ghi bài nào xong, bài nào đang làm, số lần em thử, huy hiệu đã nhận và bài em để dành.',
   },
   report: {
     title: 'Báo cáo cho bố mẹ',
@@ -329,7 +371,7 @@ export const vi = {
   },
   deleteData: {
     title: 'Xoá toàn bộ dữ liệu trên máy này',
-    lead: 'Xoá sạch bài đã xong, huy hiệu, chuỗi ngày học và code em đang viết dở trên máy này.',
+    lead: 'Xoá sạch bài đã xong, huy hiệu, bài để dành, chuỗi ngày học và code em đang viết dở trên máy này.',
     warning: 'Xoá rồi là không lấy lại được.',
     saveFirst: 'Muốn giữ lại thì sao chép mã tiến độ ở trên trước khi xoá nhé.',
     button: 'Xoá dữ liệu',
@@ -391,7 +433,7 @@ export const vi = {
     },
     rows: [
       {
-        what: 'Bài đã xong, số lần thử, chuỗi ngày học, huy hiệu',
+        what: 'Bài đã xong, số lần thử, chuỗi ngày học, huy hiệu, bài để dành',
         where: 'Trong trình duyệt trên máy của con (IndexedDB)',
         sent: 'Không',
       },
@@ -449,7 +491,7 @@ export const vi = {
     ],
     deleteTitle: 'Xoá hết dữ liệu',
     deleteBody:
-      'Vào trang Mã tiến độ, bấm "Xoá dữ liệu". Máy sẽ hỏi lại một lần rồi xoá sạch bài đã xong, huy hiệu, chuỗi ngày học và code đang viết dở trên máy này. Xoá xong là không lấy lại được, nên nếu muốn giữ thì sao chép mã tiến độ trước.',
+      'Vào trang Mã tiến độ, bấm "Xoá dữ liệu". Máy sẽ hỏi lại một lần rồi xoá sạch bài đã xong, huy hiệu, bài để dành, chuỗi ngày học và code đang viết dở trên máy này. Xoá xong là không lấy lại được, nên nếu muốn giữ thì sao chép mã tiến độ trước.',
     deleteLink: 'Tới trang Mã tiến độ',
     contactTitle: 'Hỏi mình',
     contactBody: 'Có gì chưa rõ về dữ liệu của con, bạn viết thư cho mình ở địa chỉ này:',

@@ -38,6 +38,8 @@ export const routes: RouteObject[] = [
       { path: 'ban-do', element: <Navigate to={`/khoa-hoc/${DEFAULT_COURSE_ID}`} replace /> },
       {
         path: 'luyen-tap',
+        // Bảng bài tập và cột phải cần gần hết chiều rộng, như catalog.
+        handle: { wide: true },
         lazy: async () => ({
           Component: (await import('../features/practice/PracticePage')).PracticePage,
         }),

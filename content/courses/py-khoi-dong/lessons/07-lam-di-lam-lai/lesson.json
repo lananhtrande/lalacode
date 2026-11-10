@@ -1,11 +1,9 @@
 {
   "id": "py-khoi-dong.07-lam-di-lam-lai",
   "title": "Làm đi làm lại",
-  "concepts": [
-    "for",
-    "range"
-  ],
+  "concepts": ["for", "range"],
   "estimatedMinutes": 14,
+  "tags": ["vòng lặp", "rùa"],
   "exercises": [
     "01-ba-lan-xin-chao",
     "02-dem-tu-1-den-5",

@@ -36,6 +36,7 @@ function lesson(n: number, exercises: string[]): LessonSummary {
     title: `Bài số ${n}`,
     concepts: ['print'],
     estimatedMinutes: 10,
+    tags: [],
     status: 'draft',
     exerciseCount: exercises.length,
     exercises: exercises.map((title, index) => ({ id: `${id}.0${index + 1}-bt`, title })),

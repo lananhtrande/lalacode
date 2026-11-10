@@ -17,6 +17,7 @@ function lesson(id: string, exerciseCount = 2, minutes = 15): LessonSummary {
     title: id,
     concepts: ['print'],
     estimatedMinutes: minutes,
+    tags: [],
     status: 'draft',
     exerciseCount,
     exercises: [],

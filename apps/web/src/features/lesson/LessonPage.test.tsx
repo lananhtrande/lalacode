@@ -26,6 +26,7 @@ const bundle: LessonBundle = {
     title: 'Rùa vẽ hình',
     concepts: ['turtle'],
     estimatedMinutes: 12,
+    tags: [],
     exercises: ['01-di-thang', '02-ve-vuong'],
     status: 'draft',
   },

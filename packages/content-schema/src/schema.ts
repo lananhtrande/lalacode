@@ -71,6 +71,8 @@ export const lessonSchema = z.strictObject({
     .min(1, 'ghi ít nhất một khái niệm')
     .max(5, 'tối đa 5 khái niệm — mỗi bài chỉ nên có một khái niệm mới'),
   estimatedMinutes: z.number().int().min(1).max(30, 'một bài nên gọn trong 30 phút'),
+  /** Chủ đề để lọc ở kho luyện tập (S0-40): `print`, `biến`, `rùa`, `vòng lặp`… */
+  tags: z.array(z.string().min(1).max(20)).max(4, 'tối đa 4 chủ đề').default([]),
   video: videoSchema.optional(),
   exercises: z.array(numberedSlug).min(1, 'bài học cần ít nhất một bài tập'),
   status,

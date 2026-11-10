@@ -23,6 +23,7 @@ const index: ContentIndex = {
           title: 'Xin chào, Python!',
           concepts: ['print'],
           estimatedMinutes: 10,
+          tags: [],
           status: 'draft',
           exerciseCount: 2,
           exercises: [],
