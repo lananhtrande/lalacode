@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useMatches } from 'react-router';
-import { Award, BookOpen, Dumbbell, House, Info, Menu, X } from 'lucide-react';
+import { KeyRound, Menu, X } from 'lucide-react';
 import { IconButton } from '../shared/ui/IconButton';
 import { LearnLayout } from '../features/learn/LearnLayout';
 import { vi } from '../shared/i18n/vi';
 
 const navItems = [
-  { to: '/', label: vi.nav.home, end: true, icon: House },
-  { to: '/khoa-hoc', label: vi.nav.courses, end: false, icon: BookOpen },
-  { to: '/luyen-tap', label: vi.nav.practice, end: false, icon: Dumbbell },
-  { to: '/huy-hieu', label: vi.nav.badges, end: false, icon: Award },
-  { to: '/gioi-thieu', label: vi.nav.about, end: false, icon: Info },
+  { to: '/', label: vi.nav.home, end: true },
+  { to: '/khoa-hoc', label: vi.nav.courses, end: false },
+  { to: '/luyen-tap', label: vi.nav.practice, end: false },
+  { to: '/huy-hieu', label: vi.nav.badges, end: false },
+  { to: '/gioi-thieu', label: vi.nav.about, end: false },
 ];
 
 const secondaryLinks = [
@@ -19,10 +19,12 @@ const secondaryLinks = [
 ];
 
 /**
- * Khung trang (S0-31, docs/design-system.md):
- * - ≥ 1024px: sidebar trắng bên trái, nội dung trong thẻ trắng trên nền xám nhạt.
- * - < 1024px: thanh trên cùng + nút menu mở ngăn kéo. Không dùng thanh nav ở
- *   đáy vì đáy màn hình điện thoại để dành cho thanh nút Chạy/Nộp của màn bài tập.
+ * Khung trang (docs/design-system.md):
+ * - ≥ 1024px: thanh trắng dính trên cùng — logo trái, menu chữ ở giữa (mục đang
+ *   chọn: chữ màu nhấn + vạch dưới), "Mã tiến độ" bên phải.
+ * - < 1024px: cùng thanh đó, menu thu vào nút mở ngăn kéo thả xuống. Không dùng
+ *   thanh nav ở đáy vì đáy màn hình điện thoại để dành cho thanh Chạy/Nộp.
+ * Bài học và bài tập vẫn dùng khung học bài riêng (LearnLayout, mục lục bên trái).
  */
 export function RootLayout() {
   // Nhớ menu được mở ở trang nào: chuyển sang trang khác là menu tự đóng.
@@ -48,7 +50,7 @@ export function RootLayout() {
   if (learn) return <LearnLayout />;
 
   return (
-    <div className="min-h-dvh text-ink lg:grid lg:grid-cols-[15rem_minmax(0,1fr)]">
+    <div className="flex min-h-dvh flex-col text-ink">
       <a
         href="#noi-dung"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-30 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-surface"
@@ -56,36 +58,25 @@ export function RootLayout() {
         {vi.nav.skipToContent}
       </a>
 
-      {/*
-        Khung trắng cao hết cột để sidebar không "hụt" trên trang dài. Màn hẹp
-        dùng `contents` để thanh trên cùng vẫn dính theo cả trang.
-      */}
-      <div className="contents lg:block lg:border-r lg:border-line lg:bg-surface">
-        <aside className="sticky top-0 z-20 border-b border-line bg-surface lg:flex lg:h-dvh lg:flex-col lg:border-b-0">
-          <div className="flex items-center justify-between gap-2 px-4 py-2 lg:px-5 lg:pt-6 lg:pb-4">
-            {/* Logo chữ đã chuyển thành nét (docs/brand/README.md); khai báo kích thước để không nhảy layout. */}
-            <Link to="/" className="flex min-h-tap items-center">
-              <img src="/brand/lalakode-logo.svg" alt={vi.app.name} width={131} height={30} />
-            </Link>
-            <IconButton
-              label={menuOpen ? vi.nav.closeMenu : vi.nav.openMenu}
-              icon={menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-              aria-expanded={menuOpen}
-              aria-controls="menu-chinh"
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden"
-            />
-          </div>
+      <header className="sticky top-0 z-20 border-b border-line bg-surface">
+        <div className="mx-auto flex min-h-16 w-full max-w-[90rem] items-center gap-4 px-4 sm:px-6 lg:gap-8 lg:px-10">
+          {/* Logo chữ đã chuyển thành nét (docs/brand/README.md); khai báo kích thước để không nhảy layout. */}
+          <Link to="/" className="flex min-h-tap shrink-0 items-center">
+            <img src="/brand/lalakode-logo.svg" alt={vi.app.name} width={131} height={30} />
+          </Link>
 
           <nav
             id="menu-chinh"
             aria-label={vi.nav.menu}
             className={[
-              'flex-1 flex-col justify-between px-3 pb-4 lg:flex',
-              menuOpen ? 'flex' : 'hidden',
+              // Màn hẹp: ngăn kéo thả xuống ngay dưới thanh trên cùng.
+              'absolute inset-x-0 top-full border-b border-line bg-surface px-3 pb-3 shadow-card',
+              // Màn rộng: một hàng chữ ở giữa thanh.
+              'lg:static lg:flex lg:flex-1 lg:justify-center lg:border-0 lg:p-0 lg:shadow-none',
+              menuOpen ? 'block' : 'hidden',
             ].join(' ')}
           >
-            <ul className="space-y-1">
+            <ul className="flex flex-col gap-1 pt-2 lg:flex-row lg:gap-2 lg:pt-0">
               {navItems.map((item) => (
                 <li key={item.to}>
                   <NavLink
@@ -93,20 +84,21 @@ export function RootLayout() {
                     end={item.end}
                     className={({ isActive }) =>
                       [
-                        'flex min-h-tap items-center gap-3 rounded-full px-4 text-label',
+                        'relative flex min-h-tap items-center rounded-full px-4 text-label lg:min-h-16 lg:rounded-none',
+                        // Vạch dưới 3px cho mục đang chọn ở màn rộng; màn hẹp tô nền nhạt.
+                        'lg:after:absolute lg:after:inset-x-3 lg:after:bottom-0 lg:after:h-[3px] lg:after:rounded-full',
                         isActive
-                          ? 'bg-ink text-surface'
-                          : 'font-medium text-ink-soft hover:bg-surface-muted hover:text-ink',
+                          ? 'bg-accent-soft text-accent-strong lg:bg-transparent lg:after:bg-accent'
+                          : 'font-medium text-ink-soft hover:bg-surface-muted hover:text-ink lg:hover:bg-transparent',
                       ].join(' ')
                     }
                   >
-                    <item.icon aria-hidden="true" className="size-5" />
                     {item.label}
                   </NavLink>
                 </li>
               ))}
             </ul>
-            <ul className="mt-4 border-t border-line pt-3 text-small">
+            <ul className="mt-2 border-t border-line pt-2 text-small lg:hidden">
               {secondaryLinks.map((item) => (
                 <li key={item.to}>
                   <Link
@@ -119,10 +111,28 @@ export function RootLayout() {
               ))}
             </ul>
           </nav>
-        </aside>
-      </div>
 
-      <div className="flex min-w-0 flex-col">
+          <div className="ml-auto flex items-center gap-2 lg:ml-0">
+            <Link
+              to="/tien-do"
+              className="hidden min-h-tap items-center gap-2 rounded-full px-3 text-small font-semibold text-ink-soft hover:bg-surface-muted hover:text-ink sm:flex"
+            >
+              <KeyRound aria-hidden="true" className="size-4" />
+              {vi.pages.progressCode}
+            </Link>
+            <IconButton
+              label={menuOpen ? vi.nav.closeMenu : vi.nav.openMenu}
+              icon={menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+              aria-expanded={menuOpen}
+              aria-controls="menu-chinh"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="lg:hidden"
+            />
+          </div>
+        </div>
+      </header>
+
+      <div className="flex min-w-0 flex-1 flex-col">
         <main
           id="noi-dung"
           className={[
@@ -140,7 +150,7 @@ export function RootLayout() {
         </main>
 
         <footer className="text-small text-ink-soft">
-          <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-2 px-4 pb-6 sm:px-6 lg:px-10">
+          <div className="mx-auto flex w-full max-w-[90rem] flex-wrap items-center justify-between gap-2 px-4 pb-6 sm:px-6 lg:px-10">
             <span>{vi.footer.madeFor}</span>
             <span className="flex flex-wrap gap-x-4">
               <Link to="/tien-do" className="flex min-h-tap items-center underline">

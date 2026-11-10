@@ -23,7 +23,9 @@ test.describe('khung app', () => {
     await expect(page.getByRole('heading', { name: 'Khoá học', level: 1 })).toBeVisible();
   });
 
-  test('khung trang: sidebar trên màn rộng, ngăn kéo menu trên màn hẹp', async ({ page }) => {
+  test('khung trang: menu trên thanh đầu trang ở màn rộng, ngăn kéo thả xuống ở màn hẹp', async ({
+    page,
+  }) => {
     await page.goto('/khoa-hoc/py-khoi-dong');
     const nav = page.getByRole('navigation', { name: 'Menu chính' });
     const openMenu = page.getByRole('button', { name: 'Mở menu' });

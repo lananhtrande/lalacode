@@ -101,8 +101,8 @@ Không viết `text-xl`, `text-2xl font-bold`… trực tiếp: chọn một tro
 
 | Màn | Bố cục |
 | --- | --- |
-| ≥ 1024px | Sidebar trắng 240px: logo `lalakode-logo.svg` (cao 30px), 5 mục nav dạng viên thuốc (Trang chủ · Khoá học · Luyện tập · Huy hiệu · Giới thiệu) (đang chọn: nền `ink`, chữ trắng), dưới cùng là "Mã tiến độ" và "Quyền riêng tư". Nội dung trong thẻ trắng trên nền `surface-muted`. |
-| < 1024px | Thanh trên cùng (logo + nút menu). Nút menu mở ngăn kéo chứa chính phần nav; chọn mục, bấm lại nút hoặc Esc thì đóng. |
+| ≥ 1024px | Thanh trắng dính trên cùng, cao 64px, nội dung tối đa 1440px: logo `lalakode-logo.svg` (cao 30px) bên trái, menu chữ ở giữa (Trang chủ · Khoá học · Luyện tập · Huy hiệu · Giới thiệu; mục đang chọn: chữ `accent-strong` + vạch dưới 3px `accent`, không icon), "Mã tiến độ" bên phải. Nội dung trong thẻ trắng trên nền `surface-muted`. Bài học và bài tập **không** dùng thanh này mà dùng khung học bài có mục lục tối bên trái (S0-38). |
+| < 1024px | Cùng thanh trên cùng (logo + nút menu). Nút menu mở ngăn kéo thả xuống ngay dưới thanh, chứa menu và "Mã tiến độ", "Quyền riêng tư"; mục đang chọn nền `accent-soft`. Chọn mục, bấm lại nút hoặc Esc thì đóng. |
 
 Chọn **ngăn kéo thay vì thanh nav ở đáy** vì đáy màn hình điện thoại để dành cho thanh nút Chạy/Nộp của màn bài tập (S0-32); hai thanh dính đáy sẽ chồng nhau.
 
