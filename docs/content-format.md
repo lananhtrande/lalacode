@@ -141,6 +141,19 @@ Toạ độ như turtle thật: gốc ở giữa, trục y hướng lên, 0 đ�
 
 Test cho bài vẽ hình: dùng `python_assert` hoặc `variable_equals` để kiểm tra **vị trí/hướng của rùa** (`turtle.xcor()`, `turtle.heading()`), vì hiện chưa có cách so sánh hình vẽ.
 
+
+### Độ khó, yêu cầu, ví dụ (tuỳ chọn, S0-39)
+
+```json
+"difficulty": "vua",
+"requirements": ["Nhận hai điểm, mỗi điểm một dòng.", "In ra đúng một số: điểm trung bình."],
+"examples": [{ "input": "8\n10\n", "output": "9.0", "note": "Phép chia `/` luôn cho số có dấu chấm." }]
+```
+
+- `difficulty`: `de` · `vua` · `kho` · `thu-thach` — hiện trên đề và để lọc ở kho luyện tập.
+- `requirements` (tối đa 6): điều kiện **đề đã nói hoặc test kiểm**, viết lại cho dễ dò. **Không** nhắc tên lệnh, công thức hay bất cứ điều gì gợi ý đã nói — đó là việc của 3 mức gợi ý.
+- `examples` (tối đa 3): `output` là đúng y những gì lời giải in ra khi nhận `input`; `content:verify` chạy thật để kiểm. Dùng giá trị **khác** dữ liệu của test ẩn, kẻo trẻ in cứng ví dụ là đạt. Bài chỉ vẽ rùa thì không có ví dụ.
+
 ## Nguyên tắc sư phạm (trẻ 10–15 tuổi)
 
 - **Một khái niệm mới mỗi bài.** 2 phút đọc/xem + 3–5 bài tập, tổng ≤ 15 phút. Ngoại lệ duy nhất: **bài dự án cuối khoá** được dài hơn (khoảng 20 phút), vì nó ghép lại mọi thứ đã học chứ không dạy khái niệm mới.
