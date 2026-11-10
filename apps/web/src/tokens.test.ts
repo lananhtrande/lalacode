@@ -46,6 +46,13 @@ const TEXT_PAIRS = [
   ['attention', 'ai-surface'],
   ['ink', 'attention-surface'],
   ['ink-soft', 'attention-surface'],
+  // S0-41: nền lõm, nền trang xám ấm, nền tối ngoài editor, nhãn "Mới"
+  ['ink', 'surface-sunken'],
+  ['ink-soft', 'surface-sunken'],
+  ['accent-strong', 'surface-sunken'],
+  ['accent', 'surface'],
+  ['surface', 'ink-surface'],
+  ['fresh-text', 'fresh-surface'],
   // Sidebar mục lục nền tối của trình học bài (S0-38, ADR 0011)
   ['learn-text', 'learn-bg'],
   ['learn-text', 'learn-current'],
@@ -117,8 +124,10 @@ describe('token màu trong index.css', () => {
     expect(hueDistance(color(a), color(b))).toBeGreaterThanOrEqual(30);
   });
 
-  it('"đạt" và "cần chú ý" cũng khác màu nhấn về độ sáng (ADR 0010)', () => {
-    expect(contrastRatio(color('success'), color('accent'))).toBeGreaterThanOrEqual(1.5);
+  it('"đạt" và "cần chú ý" cũng khác màu nhấn về độ sáng (ADR 0010, 0012)', () => {
+    // 1.5 ở ADR 0010; S0-41 đổi màu nhấn đậm hơn mà giữ nguyên `success` nên còn
+    // 1.39 — vẫn cách nhau 75° sắc độ (test ở trên). Ngưỡng hạ có ghi trong ADR 0012.
+    expect(contrastRatio(color('success'), color('accent'))).toBeGreaterThanOrEqual(1.35);
   });
 
   it.each(['code-keyword', 'code-string', 'code-number', 'code-function', 'code-builtin'])(
