@@ -246,14 +246,28 @@ describe('ExercisePage', () => {
     await user.type(editor, 'print(1)');
     expect(editor).toHaveValue('print(1)');
 
+    // Hỏi lại ngay trong trang trước khi xoá code của trẻ; "Thôi" thì giữ nguyên.
     await user.click(screen.getByRole('button', { name: strings.exercise.reset }));
+    await user.click(screen.getByRole('button', { name: strings.exercise.resetNo }));
+    expect(editor).toHaveValue('print(1)');
+    expect(screen.getByRole('button', { name: strings.exercise.reset })).toHaveFocus();
+
+    await user.click(screen.getByRole('button', { name: strings.exercise.reset }));
+    expect(screen.getByRole('button', { name: strings.exercise.resetYes })).toHaveFocus();
+    await user.click(screen.getByRole('button', { name: strings.exercise.resetYes }));
     expect(editor).toHaveValue(exercise.starterCode);
   });
 
-  it('có đường quay lại bài học, ghi tên bài học chứ không phải mã file', async () => {
+  it('Esc trong hộp hỏi lại thì thôi, không xoá code', async () => {
+    const user = userEvent.setup();
     renderPage();
-    const back = await screen.findByRole('link', { name: /Xin chào, Python!/ });
-    expect(back).toHaveAttribute('href', '/bai-hoc/py-khoi-dong.01-xin-chao');
+    const editor = await screen.findByRole('textbox', { name: strings.exercise.yourCode });
+    await user.click(editor);
+    await user.keyboard('x');
+    await user.click(screen.getByRole('button', { name: strings.exercise.reset }));
+    await user.keyboard('{Escape}');
+    expect(screen.queryByTestId('reset-confirm')).toBeNull();
+    expect(editor).not.toHaveValue(exercise.starterCode);
   });
 
   it('hiện `code` trong đề bài và gợi ý thành chữ code, không phải dấu nháy ngược', async () => {
@@ -489,5 +503,132 @@ describe('ExercisePage — sang bài tiếp theo (S0-36)', () => {
     const card = await screen.findByTestId('next-step');
     await waitFor(() => expect(card).toHaveTextContent(strings.pager.lastExerciseDone));
     expect(within(card).getByRole('link')).toHaveTextContent(strings.pager.nextLessonCta);
+  });
+});
+
+describe('màn bài thực hành chia đôi (S0-39)', () => {
+  afterEach(() => {
+    vitest.unstubAllGlobals();
+    window.localStorage.clear();
+  });
+
+  /** Giả lập màn ≥ 1024px: jsdom không có `matchMedia`. */
+  function stubWide() {
+    vitest.stubGlobal('matchMedia', (query: string) => ({
+      matches: query.includes('min-width: 1024px'),
+      media: query,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    }));
+  }
+
+  it('cột đề bài: độ khó bằng chữ, "Yêu cầu" và "Ví dụ" có đầu vào/kết quả mong đợi', async () => {
+    loadExercise.mockResolvedValue({
+      lesson: { lesson: { title: 'Xin chào, Python!' }, exercises: [exercise] },
+      exercise: {
+        ...exercise,
+        difficulty: 'vua',
+        requirements: ['Dùng `print`.'],
+        examples: [{ input: 'Lan\n', output: 'Chào Lan', note: 'Tên do máy gõ thử.' }],
+      },
+    });
+    renderPage();
+    expect(await screen.findByTestId('difficulty')).toHaveTextContent('Độ khó: Vừa');
+    expect(screen.getByTestId('requirements').querySelector('code')).toHaveTextContent('print');
+    const example = within(screen.getByTestId('examples'));
+    expect(example.getByText(strings.exercise.exampleInput).nextSibling).toHaveTextContent('Lan');
+    expect(example.getByText(strings.exercise.exampleOutput).nextSibling).toHaveTextContent(
+      'Chào Lan',
+    );
+    expect(example.getByText('Tên do máy gõ thử.')).toBeInTheDocument();
+  });
+
+  it('Nộp bài xong tự sang tab "Kiểm tra"; Chạy thử thì về tab "Kết quả"', async () => {
+    const user = userEvent.setup();
+    renderPage();
+    const testsTab = await screen.findByRole('tab', { name: 'Kiểm tra (1)' });
+    const panelTabs = within(screen.getByRole('tablist', { name: strings.exercise.resultsLabel }));
+    const outputTab = panelTabs.getByRole('tab', { name: strings.exercise.tabOutput });
+    expect(outputTab).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByTestId('tests-empty')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: strings.exercise.submit }));
+    await waitFor(() => expect(testsTab).toHaveAttribute('aria-selected', 'true'));
+    // Màn hẹp: cũng tự chuyển sang phần "Kết quả".
+    const parts = within(screen.getByRole('tablist', { name: strings.exercise.partsLabel }));
+    expect(parts.getByRole('tab', { name: strings.exercise.partResults })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+
+    await user.click(screen.getByRole('button', { name: strings.exercise.run }));
+    await waitFor(() => expect(outputTab).toHaveAttribute('aria-selected', 'true'));
+  });
+
+  it('nộp bài mà Python lỗi thì hiện lỗi ở tab "Kết quả"', async () => {
+    grade.mockResolvedValue({
+      ok: false,
+      error: { kind: 'python', type: 'NameError', message: "name 'x' is not defined", line: 1 },
+    } as unknown as GradeOutcome);
+    const user = userEvent.setup();
+    renderPage();
+    await user.click(await screen.findByRole('button', { name: strings.exercise.submit }));
+    expect(await screen.findByTestId('exercise-error')).toBeInTheDocument();
+    const panelTabs = within(screen.getByRole('tablist', { name: strings.exercise.resultsLabel }));
+    expect(panelTabs.getByRole('tab', { name: strings.exercise.tabOutput })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+  });
+
+  it('màn hẹp: ba tab Đề · Code · Kết quả, mũi tên trái/phải để chuyển', async () => {
+    const user = userEvent.setup();
+    renderPage();
+    const brief = await screen.findByRole('tab', { name: strings.exercise.partBrief });
+    expect(brief).toHaveAttribute('aria-selected', 'true');
+    brief.focus();
+    await user.keyboard('{ArrowRight}');
+    const code = screen.getByRole('tab', { name: strings.exercise.partCode });
+    expect(code).toHaveAttribute('aria-selected', 'true');
+    expect(code).toHaveFocus();
+  });
+
+  it('màn rộng: không có tab Đề/Code; kéo panel kết quả bằng bàn phím và nhớ chiều cao', async () => {
+    stubWide();
+    const user = userEvent.setup();
+    renderPage();
+    const resizer = await screen.findByRole('separator', { name: strings.exercise.resizePanel });
+    expect(screen.queryByRole('tab', { name: strings.exercise.partBrief })).toBeNull();
+    expect(resizer).toHaveAttribute('aria-valuenow', '280');
+    resizer.focus();
+    await user.keyboard('{ArrowUp}');
+    expect(resizer).toHaveAttribute('aria-valuenow', '312');
+    await user.keyboard('{ArrowDown}{ArrowDown}');
+    expect(resizer).toHaveAttribute('aria-valuenow', '248');
+    expect(JSON.parse(window.localStorage.getItem('lalakode.results-panel') ?? '{}')).toEqual({
+      height: 248,
+      collapsed: false,
+    });
+  });
+
+  it('màn rộng: "Thu gọn" panel thì ẩn nội dung, bấm tab thì mở lại', async () => {
+    stubWide();
+    const user = userEvent.setup();
+    renderPage();
+    await user.click(await screen.findByRole('button', { name: strings.exercise.collapsePanel }));
+    expect(screen.getByTestId('results-ket-qua')).not.toBeVisible();
+    expect(screen.queryByRole('separator')).toBeNull();
+    await user.click(screen.getByRole('tab', { name: 'Kiểm tra (1)' }));
+    expect(screen.getByTestId('results-kiem-tra')).toBeVisible();
+  });
+
+  it('cỡ chữ code A+ / A− nhớ trên máy', async () => {
+    const user = userEvent.setup();
+    renderPage();
+    await user.click(await screen.findByRole('button', { name: strings.exercise.fontBigger }));
+    expect(window.localStorage.getItem('lalakode.editor-font')).toBe('18');
+    await user.click(screen.getByRole('button', { name: strings.exercise.fontSmaller }));
+    await user.click(screen.getByRole('button', { name: strings.exercise.fontSmaller }));
+    expect(window.localStorage.getItem('lalakode.editor-font')).toBe('15');
   });
 });

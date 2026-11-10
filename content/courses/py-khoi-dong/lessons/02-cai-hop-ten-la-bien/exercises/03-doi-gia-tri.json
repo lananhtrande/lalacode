@@ -4,7 +4,7 @@
   "kind": "code",
   "prompt": "Biến `tien` đang là 10000. Em đổi nó thành 20000 rồi in ra.",
   "difficulty": "de",
-  "requirements": ["Giữ dòng tạo biến `tien` bằng 10000.", "Gán lại `tien` bằng 20000 rồi mới in."],
+  "requirements": ["Giữ dòng `tien = 10000`.", "In ra số tiền mới."],
   "examples": [
     {
       "output": "20000"

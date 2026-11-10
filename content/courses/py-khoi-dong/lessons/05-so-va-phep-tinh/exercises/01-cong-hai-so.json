@@ -4,7 +4,7 @@
   "kind": "code",
   "prompt": "In ra kết quả của 125 cộng 47.",
   "difficulty": "de",
-  "requirements": ["Để Python tự tính, đừng tính trước bằng tay.", "Số không nằm trong dấu nháy."],
+  "requirements": ["Để Python tự tính phép cộng."],
   "examples": [
     {
       "output": "172"

@@ -5,18 +5,18 @@
   "prompt": "Nhận hai điểm kiểm tra (mỗi điểm một dòng) rồi in điểm trung bình của hai bài.",
   "difficulty": "vua",
   "requirements": [
-    "Nhận hai điểm, mỗi điểm một dòng, đổi sang số bằng `int(...)`.",
-    "Cộng lại rồi chia cho 2: `(diem1 + diem2) / 2`."
+    "Nhận hai điểm, mỗi điểm một dòng.",
+    "In ra đúng một số: điểm trung bình của hai bài."
   ],
   "examples": [
     {
-      "input": "7\n9\n",
-      "output": "8.0"
+      "input": "8\n10\n",
+      "output": "9.0",
+      "note": "Phép chia `/` luôn cho số có dấu chấm, nên 9 được in là 9.0."
     },
     {
-      "input": "6\n7\n",
-      "output": "6.5",
-      "note": "Điểm trung bình có thể là số lẻ."
+      "input": "5\n8\n",
+      "output": "6.5"
     }
   ],
   "starterCode": "diem1 = int(input())\ndiem2 = int(input())\n",

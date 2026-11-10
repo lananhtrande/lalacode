@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { openCodeTab, setCode } from './support/editor';
 
 /**
  * Luồng chính số 3 trong docs/testing.md: xuất mã ở máy này, mở "máy khác"
@@ -12,7 +13,7 @@ test.describe('mã tiến độ', () => {
     test.setTimeout(240_000);
     // Máy 1: làm xong một bài rồi lấy mã.
     await page.goto('/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao');
-    await page.locator('.cm-content').fill('print("Xin chào, Python!")');
+    await setCode(page, 'print("Xin chào, Python!")');
     await page.getByRole('button', { name: 'Nộp bài' }).click();
     await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
       timeout: 120_000,
@@ -47,7 +48,7 @@ test.describe('mã tiến độ', () => {
 
   test('mã hỏng thì báo tiếng Việt, không làm mất tiến độ đang có', async ({ page }) => {
     await page.goto('/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao');
-    await page.locator('.cm-content').fill('print("Xin chào, Python!")');
+    await setCode(page, 'print("Xin chào, Python!")');
     await page.getByRole('button', { name: 'Nộp bài' }).click();
     await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
       timeout: 120_000,
@@ -68,7 +69,7 @@ test.describe('mã tiến độ', () => {
     test.setTimeout(240_000);
 
     await page.goto('/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao');
-    await page.locator('.cm-content').fill('print("Xin chào, Python!")');
+    await setCode(page, 'print("Xin chào, Python!")');
     await page.getByRole('button', { name: 'Nộp bài' }).click();
     await expect(page.getByText('Tuyệt vời, em làm đúng hết rồi!')).toBeVisible({
       timeout: 120_000,
@@ -108,6 +109,7 @@ test.describe('mã tiến độ', () => {
     await page.reload();
     await expect(page.getByTestId('badge-count')).toContainText('0/6');
     await page.goto('/bai-tap/py-khoi-dong.01-xin-chao.01-in-loi-chao');
+    await openCodeTab(page);
     await expect(page.locator('.cm-content')).toContainText('Viết code của em');
   });
 

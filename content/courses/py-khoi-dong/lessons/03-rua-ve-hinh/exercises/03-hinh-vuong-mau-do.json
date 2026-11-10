@@ -5,9 +5,9 @@
   "prompt": "Đổi bút sang màu đỏ rồi vẽ một hình vuông cạnh 60. Hình vuông có 4 cạnh và 4 góc vuông.",
   "difficulty": "vua",
   "requirements": [
-    "Đổi màu bút bằng `turtle.pencolor(\"red\")` trước khi vẽ.",
-    "Vẽ đủ 4 cạnh, mỗi cạnh dài 60.",
-    "Sau mỗi cạnh quay 90 độ."
+    "Bút màu đỏ (red).",
+    "Hình vuông có 4 cạnh, mỗi cạnh dài 60.",
+    "Vẽ xong, rùa về đúng chỗ xuất phát."
   ],
   "starterCode": "import turtle\n\nturtle.pencolor(\"red\")\nturtle.forward(60)\nturtle.left(90)\n",
   "solution": "import turtle\n\nturtle.pencolor(\"red\")\nfor canh in range(4):\n    turtle.forward(60)\n    turtle.left(90)\n",

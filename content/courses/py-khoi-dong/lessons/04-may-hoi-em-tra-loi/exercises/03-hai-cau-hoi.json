@@ -5,13 +5,13 @@
   "prompt": "Nhận tên ở dòng 1 và môn học yêu thích ở dòng 2, rồi in: `Lan thích môn Toán` (thay bằng dữ liệu nhận được).",
   "difficulty": "vua",
   "requirements": [
-    "Gọi `input()` hai lần: lần đầu lấy tên, lần sau lấy môn học.",
-    "In một dòng duy nhất theo mẫu `Lan thích môn Toán`."
+    "Tên ở dòng 1, môn học ở dòng 2.",
+    "In đúng một dòng theo mẫu `Lan thích môn Toán`."
   ],
   "examples": [
     {
-      "input": "Lan\nToán\n",
-      "output": "Lan thích môn Toán",
+      "input": "Mai\nVăn\n",
+      "output": "Mai thích môn Văn",
       "note": "Dòng 1 là tên, dòng 2 là môn học."
     }
   ],

@@ -4,7 +4,7 @@
   "kind": "code",
   "prompt": "Viết chương trình in ra dòng chữ `Xin chào, Python!`",
   "difficulty": "de",
-  "requirements": ["Dùng lệnh `print`.", "In đúng từng chữ, kể cả dấu phẩy và dấu chấm than."],
+  "requirements": ["In đúng từng chữ, kể cả dấu phẩy và dấu chấm than."],
   "examples": [
     {
       "output": "Xin chào, Python!"

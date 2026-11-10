@@ -21,11 +21,12 @@ export const darkEditorTheme = EditorView.theme(
     '&': {
       color: color('code-text'),
       backgroundColor: color('code-bg'),
-      fontSize: '16px',
+      // Cỡ chữ do nút A−/A+ chọn (S0-39); chưa chọn thì 16px, điện thoại 15px.
+      fontSize: 'var(--code-font-size, 16px)',
       height: '100%',
     },
     '@media (max-width: 639px)': {
-      '&': { fontSize: '15px' },
+      '&': { fontSize: 'var(--code-font-size, 15px)' },
     },
     '.cm-scroller': { fontFamily: 'var(--font-mono)', lineHeight: '1.6', overflow: 'auto' },
     '.cm-content': { caretColor: color('code-accent'), padding: '8px 0' },
