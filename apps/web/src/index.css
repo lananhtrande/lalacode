@@ -244,22 +244,28 @@
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   /* Chữ và nền: xám trung tính theo màu Mực của logo (docs/brand/README.md) */
-  --color-ink: #18181b;
-  --color-ink-soft: #4a4a52;
+  --color-ink: #1b1b1b;
+  --color-ink-soft: #696969;
   --color-surface: #ffffff;
-  --color-surface-muted: #f6f5f4;
-  --color-line: #e5e4e2;
+  --color-surface-muted: #f3f2ef;
+  --color-line: #e8e8e8;
+  /* Đường chia mảnh bên trong một khối (S0-41) */
+  --color-line-soft: #efefef;
+  /* Nền lõm: nhóm chip, ô tìm, select, ô đếm (S0-41) */
+  --color-surface-sunken: #f7f7f6;
+  /* Nền tối ngoài editor: mục lục học bài, nút "Chạy thử" (S0-41) */
+  --color-ink-surface: #24242a;
 
   /*
    * Màu nhấn duy nhất (xanh dương, ADR 0010): hành động chính và "đang chọn".
    * San hô chỉ còn ở logo — không dùng cho nút, link, trạng thái hay icon.
    */
-  --color-accent: #2563eb;
+  --color-accent: #2d65bc;
   --color-on-accent: #ffffff;
   /* Link và chữ nhấn trên nền sáng: đậm hơn một bậc cho chắc AA trên mọi nền nhạt */
-  --color-accent-strong: #1d4ed8;
+  --color-accent-strong: #24539c;
   /* Nền nhạt cho thứ đang được làm nổi (thẻ đang học, chuỗi ngày học) */
-  --color-accent-soft: #eaf1fe;
+  --color-accent-soft: #eef3fb;
 
   /* Mọi thứ do AI tạo ra */
   --color-ai-surface: #f1eeff;
@@ -273,41 +279,46 @@
   --color-success-surface: #e7f6ec;
   --color-attention: #7a5c00;
   --color-attention-surface: #fff5cc;
+  /* Nhãn "Mới" / độ tuổi: xanh lá nhạt, luôn kèm chữ (S0-41) */
+  --color-fresh-surface: #f1faf4;
+  --color-fresh-line: #bfe6cf;
+  --color-fresh-text: #1f6b3a;
+  --color-fresh-dot: #22a35a;
 
   /*
    * Editor và console: luôn nền tối, kể cả khi trang sáng (ADR 0008).
    * Mọi màu chữ ở đây đạt AA trên cả `code-bg` lẫn `code-active`.
    */
-  --color-code-bg: #17171a;
-  --color-code-gutter: #1f1f23;
-  --color-code-active: #26262b;
+  --color-code-bg: #2a2a30;
+  --color-code-gutter: #2e2e35;
+  --color-code-active: #33333a;
   --color-code-text: #ececee;
   /* Màu nhấn trong editor: con trỏ, viền focus, vùng chọn. Xanh dương sáng vì
      `accent` quá tối trên nền code (ADR 0010). */
   --color-code-accent: #60a5fa;
   /* Số dòng, chữ chờ trong console */
-  --color-code-muted: #9a9aa3;
+  --color-code-muted: #a3a3ac;
   --color-code-keyword: #ff9ac1;
   --color-code-string: #a5e3a0;
   --color-code-number: #f3dfa2;
   --color-code-comment: #a6a6ae;
-  --color-code-function: #67e8f9;
+  --color-code-function: #6ee7e0;
   --color-code-builtin: #c4b5fd;
 
   /*
    * Sidebar mục lục của trình học bài: ngoại lệ tối thứ hai sau editor
    * (ADR 0011). Mọi cặp chữ/nền ở đây có trong tokens.test.ts.
    */
-  --color-learn-bg: #18181b;
+  --color-learn-bg: #24242a;
   /* Mục đang mở (aria-current) và khi di chuột */
-  --color-learn-current: #1e2b45;
-  --color-learn-hover: #26262b;
-  --color-learn-line: #2e2e34;
+  --color-learn-current: #2a3247;
+  --color-learn-hover: #2e2e35;
+  --color-learn-line: #34343b;
   --color-learn-text: #ececee;
   --color-learn-muted: #a1a1aa;
   /* Vạch đánh dấu mục đang mở, thanh tiến độ, viền focus */
   --color-learn-accent: #60a5fa;
-  --color-learn-track: #3f3f46;
+  --color-learn-track: #45454e;
   /* Icon "đã xong" trên nền tối: `success` quá tối ở đây */
   --color-learn-success: #4ade80;
 
