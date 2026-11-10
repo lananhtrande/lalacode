@@ -173,6 +173,25 @@ Trang chủ trước/sau: `design/screenshots/s037-{truoc,sau}-trang-chu-*`.
 
 Ngăn kéo mục lục, 390px: ![](design/screenshots/s038-sau-muc-luc-390.png)
 
+## Kho luyện tập (S0-40)
+
+`/luyen-tap`: mọi bài tập của mọi khoá, đọc từ `index.json` (đã có tên, độ khó, chủ đề — không tải từng bài học). Logic là hàm thuần trong `apps/web/src/content/practice.ts`.
+
+| Phần | Bố cục |
+| --- | --- |
+| Bộ bài | Băng cuộn ngang trên cùng, mỗi chương một thẻ ("Làm quen với Python" + thanh tiến độ "3/19"), `scroll-snap`, hai nút ‹ › để cuộn bằng chuột/bàn phím. Bấm một thẻ (`aria-pressed`) để lọc theo chương, bấm lại để bỏ. |
+| Bộ lọc | Cột trái 240px ở ≥ 1024px; dưới đó là nút "Bộ lọc" mở khung ngay trên danh sách. Độ khó (Dễ · Vừa · Khó · Thử thách) và chủ đề (lấy từ `tags` của bài học) là ô đánh dấu **kèm số bài** nếu chọn thêm; trạng thái (Tất cả · Chưa làm · Đã xong) và "Chỉ bài để dành". Trong một nhóm là "hoặc", giữa các nhóm là "và". Mọi bộ lọc nằm trên URL (`?do=de&chu-de=rùa&trang-thai=chua-lam&bo=…&de-danh=1`). |
+| Danh sách | Bảng ở ≥ 768px (Trạng thái · Bài tập · Thuộc bài · Độ khó · Để dành), thẻ ở màn hẹp. Trạng thái là icon ✓/vòng tròn kèm chữ ẩn. **Không** có tỉ lệ đúng, lượt nộp hay sao đánh giá (ADR 0011). Nút "Bài ngẫu nhiên" (`dark`) mở một bài **chưa xong** trong danh sách đang lọc; xong hết thì khen thay vì mở bài. |
+| Cột phải (≥ 1280px) | "Tiếp tục" (bài chưa xong đầu tiên theo thứ tự khoá, nút `primary`); "Thử thách hôm nay" (băm ngày địa phương `YYYY-MM-DD`, chọn trong nhóm khó nhất đang có — mọi máy cùng ngày thấy cùng bài, không gọi mạng); lịch ngày học của tháng (bắt đầu từ thứ Hai; ngày có học: nền `accent-soft`, icon lửa và chữ ẩn "có học"; hôm nay có viền). |
+
+"Để dành" (icon dấu trang, `aria-pressed`) lưu trong hồ sơ trên máy (`profile.saved`, IndexedDB), đi theo mã tiến độ như huy hiệu. Trạng thái rỗng: lọc không ra → "Không có bài tập nào khớp. Thử bỏ bớt bộ lọc nhé." + "Xoá bộ lọc"; chưa làm bài nào → "Chọn một bài để bắt đầu nhé!".
+
+Trước S0-40 trang này là khung "Đang xây". Ảnh dưới chụp cùng lúc với thanh menu trên cùng đang làm dở cho S0-41.
+
+| 1440 | 820 | 390 | 390, mở bộ lọc |
+| --- | --- | --- | --- |
+| ![](design/screenshots/s040-sau-luyen-tap-1440.png) | ![](design/screenshots/s040-sau-luyen-tap-820.png) | ![](design/screenshots/s040-sau-luyen-tap-390.png) | ![](design/screenshots/s040-sau-bo-loc-390.png) |
+
 ## Editor và console tối
 
 Theme CodeMirror **tự viết** trong `apps/web/src/shared/ui/code-theme.ts` (không dùng `@codemirror/theme-one-dark` hay `basicSetup`, ADR 0007). Màu là token `--color-code-*` trong `index.css`; `tokens.test.ts` đòi mọi màu chữ đạt AA trên nền, dòng đang đứng và gutter. Khối `@theme` là `static` để các biến này luôn có mặt dù không class nào dùng.
