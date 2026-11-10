@@ -56,7 +56,7 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [ ] S0-38b Chia `lesson.md` của 20 bài thành vài mục `##` để khối "Nội dung bài" (S0-38) có tác dụng — hiện mỗi bài chỉ có một tiêu đề nên khối này chưa hiện. Việc nội dung, cần người duy trì đồng ý cách chia.
 - [x] S0-39 **Bài thực hành chia đôi**: đề bài trái; editor và panel Kết quả/Kiểm tra kéo đổi chiều cao bên phải; ba tab Đề/Code/Kết quả dưới 1024px. Schema thêm `difficulty`, `requirements`, `examples` (điền cho bài 01–05).
 - [ ] S0-39b Điền `difficulty`, `requirements`, `examples` cho bài tập của bài 06–20 (PR nội dung riêng, `examples` lấy từ `solution` chạy thật). "Yêu cầu" không được lộ gợi ý hay lời giải; giá trị trong ví dụ phải khác dữ liệu của test ẩn. Cùng lúc: bài có `input()` mới chỉ có **một** bộ dữ liệu test, nên in cứng kết quả vẫn đạt — thêm bộ thứ hai (phát hiện khi review S0-39).
-- [ ] S0-40 **Kho luyện tập** `/luyen-tap`: bộ bài theo chương, lọc độ khó/chủ đề/trạng thái, "Bài ngẫu nhiên", "Thử thách hôm nay", "Để dành", lịch chuỗi ngày học.
+- [x] S0-40 **Kho luyện tập** `/luyen-tap`: bộ bài theo chương, lọc độ khó/chủ đề/trạng thái, "Bài ngẫu nhiên", "Thử thách hôm nay", "Để dành", lịch chuỗi ngày học.
 
 ## Tiêu chí chuyển sang giai đoạn 1
 - ≥ 70% trẻ hoàn thành bài 1; ≥ 40% quay lại sau 7 ngày; ≥ 30 phụ huynh xác nhận sẵn sàng trả phí.

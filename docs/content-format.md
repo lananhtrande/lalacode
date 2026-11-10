@@ -48,13 +48,14 @@ content/courses/<course-id>/
   "title": "Xin chào, Python!",
   "concepts": ["print", "chuỗi"],
   "estimatedMinutes": 10,
+  "tags": ["print", "chuỗi"],
   "video": { "provider": "youtube-nocookie", "videoId": "XXXXXXXXXXX", "durationSec": 360 },
   "exercises": ["01-in-loi-chao", "02-in-hai-dong"],
   "status": "draft"
 }
 ```
 
-`video` là tuỳ chọn. Giai đoạn 0 chỉ dùng `youtube-nocookie` hoặc `hls` (đường dẫn trên CloudFront).
+`tags` (tuỳ chọn, tối đa 4) là chủ đề để lọc ở kho luyện tập (S0-40) — dùng lại từ đã có: `print`, `chuỗi`, `biến`, `rùa`, `input`, `số`, `if`, `vòng lặp`, `list`, `hàm`, `dict`, `random`. `video` là tuỳ chọn. Giai đoạn 0 chỉ dùng `youtube-nocookie` hoặc `hls` (đường dẫn trên CloudFront).
 
 ## Bài tập (`exercises/*.json`)
 

@@ -6,7 +6,7 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 
 | Dữ liệu | Ở đâu | Gửi lên server? |
 | --- | --- | --- |
-| Tiến độ, code nháp, streak, huy hiệu, biệt danh (tuỳ chọn) | IndexedDB trên máy (DB `lalacode` — giữ tên từ trước khi đổi tên dự án để không mất tiến độ; store `exercises`/`lessons`/`profile`) | **Không** |
+| Tiến độ, code nháp, streak, huy hiệu, bài để dành (S0-40), biệt danh (tuỳ chọn) | IndexedDB trên máy (DB `lalacode` — giữ tên từ trước khi đổi tên dự án để không mất tiến độ; store `exercises`/`lessons`/`profile`) | **Không** |
 | Mã tiến độ / link báo cáo | Do người dùng tự sao chép; dữ liệu nằm sau `#` | **Không** |
 | Token ẩn danh (UUID ngẫu nhiên) | Máy; server lưu `sha256(token)` + bộ đếm, TTL 48 h | Có — chỉ để giới hạn lượt AI |
 | Yêu cầu gợi ý AI | `exerciseId`, `code`, `error`, `hintLevel` | Có — không log body; chuyển tới Claude trên Amazon Bedrock (profile global, có thể xử lý ngoài châu Á) |
@@ -39,7 +39,8 @@ Người dùng là trẻ em Việt Nam. Áp dụng Luật Bảo vệ dữ liệu
 - **S0-15 link báo cáo**: dùng lại mã tiến độ, đặt sau dấu `#` nên **trình duyệt không gửi lên máy chủ** (có test e2e khẳng định). Trang chỉ hiện số liệu; không có họ tên, không có code của trẻ. Hai giới hạn phải nói thật:
   - Phần sau `#` không đi theo request nào, **nhưng extension trình duyệt hoặc tính năng đồng bộ lịch sử vẫn đọc được địa chỉ đang mở**. Đây là giới hạn chung của mọi thiết kế giấu dữ liệu sau `#`, không riêng lalakode. Vì vậy link chỉ nên chứa thứ không nhạy cảm — và nó đúng là vậy.
   - **Mã không có chữ ký**, nên ai biết cấu trúc đều tự ghép được một báo cáo đẹp. Link này để bố mẹ theo dõi cho vui, **không dùng làm bằng chứng chấm điểm**.
-- **S0-14 mã tiến độ**: chuỗi do trẻ tự sao chép, **không có request nào gửi nó đi** (có test e2e chặn). Mã chứa: mã bài tập/bài học, trạng thái (xong **hoặc đang làm**), số lần thử, mốc thời gian, streak, huy hiệu, và `nickname` nếu sau này có. **Không chứa code trẻ viết** — vì mã hay bị dán vào chỗ công khai.
+- **S0-14 mã tiến độ**: chuỗi do trẻ tự sao chép, **không có request nào gửi nó đi** (có test e2e chặn). Mã chứa: mã bài tập/bài học, trạng thái (xong **hoặc đang làm**), số lần thử, mốc thời gian, streak, huy hiệu, danh sách mã bài để dành (`saved`, S0-40 — cũng nằm trong link báo cáo S0-15), và `nickname` nếu sau này có. **Không chứa code trẻ viết** — vì mã hay bị dán vào chỗ công khai.
+- **S0-40 kho luyện tập**: bộ lọc nằm trên URL query (`do`, `chu-de`, `trang-thai`, `bo`, `de-danh`) — chỉ là lựa chọn lọc, không chứa gì nhận dạng; "Để dành" là danh sách mã bài tập trong `profile.saved` trên máy; "Thử thách hôm nay" và lịch ngày học tính hoàn toàn trên máy (băm ngày địa phương, mốc thời gian đã lưu). Không có request mới.
   - ⚠️ **Khi nào thêm ô nhập biệt danh thì phải review lại chỗ này**: biệt danh sẽ đi theo mã tiến độ tới bất kỳ ai nhận được mã. Nếu giữ ô đó, hoặc loại biệt danh khỏi mã, hoặc nói rõ cho trẻ biết.
   - Mã nhập vào được kiểm **từng trường** trước khi ghi, và chặn mã quá dài hoặc nén phình bất thường — một mã "đùa" không được phép làm hỏng tiến độ hay treo máy trẻ.
 
