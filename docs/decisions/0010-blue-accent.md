@@ -3,6 +3,8 @@ Trạng thái: Chấp nhận
 Ngày: 2026-11-05
 Thay một phần: ADR 0009 (màu nhấn San hô). Font Inter, logo và màu "cần chú ý" của 0009 giữ nguyên.
 
+> Cập nhật 2026-11-10: giá trị màu nhấn đổi sang `#2D65BC` / `#24539C` (ADR 0012); quy tắc "San hô chỉ ở logo" giữ nguyên.
+
 ## Bối cảnh
 Sau S0-34, người duy trì dùng thử và thấy **San hô trên nút và icon dễ bị trẻ nhầm với báo lỗi**: nút "Nộp bài", link, icon nhấn và khung lỗi đều thuộc nhóm đỏ-cam-vàng ấm. Tách màu "cần chú ý" sang mù tạt (ADR 0009) là chưa đủ: với trẻ, cả bảng màu ấm đều đọc là "cẩn thận".
 
