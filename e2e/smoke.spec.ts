@@ -91,7 +91,7 @@ test.describe('khung app', () => {
     expect(overflow).toBeLessThanOrEqual(0);
   });
 
-  test('logo, favicon, manifest và font Inter đều tải từ chính domain của mình', async ({
+  test('logo, favicon, manifest và font đều tải từ chính domain của mình', async ({
     page,
     baseURL,
   }) => {
@@ -120,10 +120,12 @@ test.describe('khung app', () => {
       expect((await page.request.get(icon.src)).ok(), icon.src).toBe(true);
     }
 
-    // Trang có chữ tiếng Việt có dấu → trình duyệt tải bảng chữ latin và vietnamese của Inter.
+    // Trang có chữ tiếng Việt có dấu → trình duyệt tải bảng chữ latin và vietnamese
+    // của Be Vietnam Pro (ADR 0012), và chỉ từ chính domain này.
     await page.evaluate(() => document.fonts.ready);
-    expect(fonts).toContain('/fonts/inter/inter-vietnamese-wght-normal.woff2');
-    expect(fonts).toContain('/fonts/inter/inter-latin-wght-normal.woff2');
+    expect(fonts).toContain('/fonts/be-vietnam-pro/be-vietnam-pro-vietnamese-400-normal.woff2');
+    expect(fonts).toContain('/fonts/be-vietnam-pro/be-vietnam-pro-latin-400-normal.woff2');
+    expect(fonts.every((path) => path.startsWith('/fonts/'))).toBe(true);
     expect([...origins]).toEqual([new URL(baseURL ?? '').origin]);
   });
 });
