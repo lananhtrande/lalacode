@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img">
+  <!-- Khoá "Python khởi động": rùa Lala (mai có dấu >_) đi theo đường nét đứt nó vừa vẽ. Tự vẽ cho LaLaKode, hình phẳng. -->
+  <rect width="320" height="180" fill="#E6F4EE"/>
+  <circle cx="276" cy="34" r="16" fill="#FFF1B8"/>
+  <path d="M0 150 Q80 132 160 146 T320 140 V180 H0 Z" fill="#CDEBDD"/>
+  <path d="M34 124 L34 64 L94 64" fill="none" stroke="#2563EB" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 10"/>
+  <rect x="200" y="58" width="86" height="40" rx="8" fill="#17171A"/>
+  <rect x="210" y="70" width="18" height="6" rx="3" fill="#FF9AC1"/>
+  <rect x="232" y="70" width="40" height="6" rx="3" fill="#A5E3A0"/>
+  <rect x="218" y="82" width="30" height="6" rx="3" fill="#67E8F9"/>
+  <g transform="translate(104 86)">
+    <ellipse cx="44" cy="58" rx="46" ry="6" fill="#B5DDCA"/>
+    <rect x="6" y="40" width="16" height="18" rx="7" fill="#4FA36E"/>
+    <rect x="64" y="40" width="16" height="18" rx="7" fill="#4FA36E"/>
+    <circle cx="96" cy="30" r="14" fill="#4FA36E"/>
+    <circle cx="101" cy="26" r="3" fill="#17171A"/>
+    <path d="M0 44 Q0 0 44 0 Q88 0 88 44 Z" fill="#2F7D4F"/>
+    <path d="M12 44 Q12 10 44 10 Q76 10 76 44 Z" fill="#3E9361"/>
+    <path d="M30 22 L40 30 L30 38" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M46 38 H60" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>

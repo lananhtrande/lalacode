@@ -34,4 +34,4 @@ print(cong(3, 4))
 
 Khác nhau chỗ này: `print` chỉ hiện ra màn hình. `return` **đưa giá trị về** cho chỗ gọi, để em cất vào biến hay tính tiếp.
 
-Bài cuối của khoá rồi đấy. Cố lên nhé!
+Em đã đi được nửa khoá rồi đấy. Từ bài sau, mình sẽ dùng hàm cho nhiều trò vui hơn. Cố lên nhé!

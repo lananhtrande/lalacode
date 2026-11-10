@@ -22,7 +22,11 @@ const tree = ({ order = ['01-xin-chao'], lessons } = {}) => [
       summary: 'Làm quen với Python.',
       ageRange: [10, 15],
       authorId: 'core',
+      level: 'moi-bat-dau',
+      tags: ['python'],
+      illustration: 'py-khoi-dong.svg',
       order,
+      chapters: [{ id: 'lam-quen', title: 'Làm quen', lessons: order }],
       status: 'draft',
     },
     lessons: lessons ?? [
@@ -105,6 +109,16 @@ describe('buildBundle', () => {
       '02-bien',
       '01-xin-chao',
     ]);
+  });
+
+  it('index kèm cấp độ, thẻ, hình minh hoạ và chương với mã bài đầy đủ', () => {
+    const course = buildBundle(tree()).index.courses[0];
+    expect(course).toMatchObject({
+      level: 'moi-bat-dau',
+      tags: ['python'],
+      illustration: 'py-khoi-dong.svg',
+      chapters: [{ id: 'lam-quen', title: 'Làm quen', lessonIds: ['py-khoi-dong.01-xin-chao'] }],
+    });
   });
 
   it('kèm nội dung markdown của bài học', () => {

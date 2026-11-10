@@ -24,10 +24,21 @@ content/courses/<course-id>/
   "summary": "Làm quen với Python qua 20 bài ngắn.",
   "ageRange": [10, 15],
   "authorId": "core",
+  "level": "moi-bat-dau",
+  "tags": ["python", "rùa vẽ hình"],
+  "illustration": "py-khoi-dong.svg",
   "order": ["01-xin-chao", "02-bien"],
+  "chapters": [
+    { "id": "lam-quen-voi-python", "title": "Làm quen với Python", "lessons": ["01-xin-chao", "02-bien"] }
+  ],
   "status": "draft"
 }
 ```
+
+- `level`: `moi-bat-dau`, `co-ban` hoặc `nang-cao` — hiện trên catalog `/khoa-hoc`.
+- `tags`: tuỳ chọn, tối đa 10.
+- `illustration`: tên file SVG trong `apps/web/public/illustrations/` (hình phẳng, tự vẽ, không chữ; nền pastel nhạt, không dùng San hô hay đỏ/cam). `content:check` báo lỗi nếu thiếu file.
+- `chapters` (S0-37, ADR 0011): mỗi bài trong `order` thuộc **đúng một** chương, và các chương xếp bài đúng thứ tự `order`. Thêm bài mới thì nhớ xếp nó vào một chương — `content:check` sẽ nhắc.
 
 ## `lesson.json`
 

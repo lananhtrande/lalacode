@@ -150,12 +150,30 @@ describe('courseSchema', () => {
     summary: 'Làm quen với Python.',
     ageRange: [10, 15],
     authorId: 'core',
+    level: 'moi-bat-dau',
+    illustration: 'py-khoi-dong.svg',
     order: ['01-xin-chao'],
+    chapters: [{ id: 'lam-quen', title: 'Làm quen', lessons: ['01-xin-chao'] }],
     status: 'draft',
   };
 
   it('nhận khoá học hợp lệ', () => {
     expect(courseSchema.safeParse(validCourse).success).toBe(true);
+  });
+
+  it('không ghi `tags` thì là danh sách rỗng', () => {
+    expect(courseSchema.parse(validCourse).tags).toEqual([]);
+  });
+
+  it('từ chối cấp độ lạ và tên hình minh hoạ không phải .svg', () => {
+    expect(courseSchema.safeParse({ ...validCourse, level: 'de' }).success).toBe(false);
+    expect(courseSchema.safeParse({ ...validCourse, illustration: 'hinh.png' }).success).toBe(
+      false,
+    );
+  });
+
+  it('cần ít nhất một chương', () => {
+    expect(courseSchema.safeParse({ ...validCourse, chapters: [] }).success).toBe(false);
   });
 
   it('từ chối khoảng tuổi ngược', () => {

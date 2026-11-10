@@ -64,13 +64,13 @@ jobs:
             "s3://${{ vars.AWS_WEB_BUCKET }}/current/" --delete --only-show-errors \
             --cache-control 'public, max-age=31536000, immutable' \
             --exclude 'index.html' --exclude 'content/index.json' \
-            --exclude 'brand/*' --exclude 'favicon*' --exclude 'apple-touch-icon.png' \
+            --exclude 'brand/*' --exclude 'illustrations/*' --exclude 'favicon*' --exclude 'apple-touch-icon.png' \
             --exclude 'manifest.webmanifest'
-          # Logo, favicon, manifest: tên không có hash nên chỉ cache 1 ngày (S0-34).
+          # Logo, hình minh hoạ khoá học, favicon, manifest: tên không có hash nên chỉ cache 1 ngày (S0-34, S0-37).
           aws s3 sync "s3://${{ vars.AWS_WEB_BUCKET }}/releases/${{ github.sha }}/" \
             "s3://${{ vars.AWS_WEB_BUCKET }}/current/" --delete --only-show-errors \
             --cache-control 'public, max-age=86400' \
-            --exclude '*' --include 'brand/*' --include 'favicon*' --include 'apple-touch-icon.png'
+            --exclude '*' --include 'brand/*' --include 'illustrations/*' --include 'favicon*' --include 'apple-touch-icon.png'
           aws s3 cp "s3://${{ vars.AWS_WEB_BUCKET }}/releases/${{ github.sha }}/manifest.webmanifest" \
             "s3://${{ vars.AWS_WEB_BUCKET }}/current/manifest.webmanifest" \
             --cache-control 'public, max-age=86400' --content-type 'application/manifest+json' \

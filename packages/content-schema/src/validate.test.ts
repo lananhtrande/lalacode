@@ -10,7 +10,10 @@ function tree(overrides: Partial<CourseDirInput> = {}): CourseDirInput[] {
       summary: 'Làm quen với Python.',
       ageRange: [10, 15],
       authorId: 'core',
+      level: 'moi-bat-dau',
+      illustration: 'py-khoi-dong.svg',
       order: ['01-xin-chao'],
+      chapters: [{ id: 'lam-quen', title: 'Làm quen', lessons: ['01-xin-chao'] }],
       status: 'draft',
     },
     lessons: [
@@ -151,5 +154,72 @@ describe('validateCourseTree', () => {
     expect(errors[0]?.where).toBe(
       'content/courses/py-khoi-dong/lessons/01-xin-chao/exercises/01-in-loi-chao.json → hints',
     );
+  });
+
+  describe('chương', () => {
+    // Chỉ đổi `course.json`; thư mục bài học thứ hai không cần có thật vì lỗi
+    // về chương được báo độc lập với lỗi `order`.
+    function withChapters(order: string[], chapters: { id: string; lessons: string[] }[]) {
+      const input = tree();
+      Object.assign(input[0]!.course as object, {
+        order,
+        chapters: chapters.map((chapter) => ({ ...chapter, title: chapter.id })),
+      });
+      return errorsOf(input).filter((issue) => issue.where.endsWith('→ chapters'));
+    }
+
+    it('mỗi bài thuộc đúng một chương thì không lỗi', () => {
+      expect(
+        withChapters(
+          ['01-xin-chao', '02-bien'],
+          [
+            { id: 'a', lessons: ['01-xin-chao'] },
+            { id: 'b', lessons: ['02-bien'] },
+          ],
+        ),
+      ).toEqual([]);
+    });
+
+    it('báo lỗi khi một bài chưa thuộc chương nào', () => {
+      const errors = withChapters(
+        ['01-xin-chao', '02-bien'],
+        [{ id: 'a', lessons: ['01-xin-chao'] }],
+      );
+      expect(errors.map((issue) => issue.message)).toEqual([
+        'Bài `02-bien` chưa thuộc chương nào.',
+      ]);
+    });
+
+    it('báo lỗi khi một bài nằm trong hai chương', () => {
+      const errors = withChapters(
+        ['01-xin-chao'],
+        [
+          { id: 'a', lessons: ['01-xin-chao'] },
+          { id: 'b', lessons: ['01-xin-chao'] },
+        ],
+      );
+      expect(errors[0]?.message).toContain('cả chương `a` và `b`');
+    });
+
+    it('báo lỗi khi chương nhắc tới bài không có trong order', () => {
+      const errors = withChapters(
+        ['01-xin-chao'],
+        [{ id: 'a', lessons: ['01-xin-chao', '09-la'] }],
+      );
+      expect(errors[0]?.message).toContain('`09-la`');
+    });
+
+    it('báo lỗi khi chương xếp bài lệch thứ tự của order', () => {
+      const errors = withChapters(
+        ['01-xin-chao', '02-bien'],
+        [
+          { id: 'a', lessons: ['02-bien'] },
+          { id: 'b', lessons: ['01-xin-chao'] },
+        ],
+      );
+      expect(errors.map((issue) => issue.message)).toEqual([
+        'Các chương phải xếp bài đúng thứ tự trong `order`.',
+      ]);
+    });
   });
 });

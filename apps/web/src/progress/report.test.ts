@@ -11,6 +11,10 @@ const index: ContentIndex = {
       title: 'Python khởi động',
       summary: '',
       ageRange: [10, 15],
+      level: 'moi-bat-dau',
+      tags: [],
+      illustration: 'py-khoi-dong.svg',
+      chapters: [{ id: 'lam-quen', title: 'Làm quen', lessonIds: ['py-khoi-dong.01-xin-chao'] }],
       status: 'draft',
       lessons: [
         {
