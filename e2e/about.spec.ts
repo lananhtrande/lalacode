@@ -17,7 +17,7 @@ test.describe('trang cho phụ huynh', () => {
   });
 
   test('chân trang có đường tới quyền riêng tư ở mọi trang', async ({ page }) => {
-    await page.goto('/ban-do');
+    await page.goto('/khoa-hoc/py-khoi-dong');
     await page.getByRole('contentinfo').getByRole('link', { name: 'Quyền riêng tư' }).click();
     await expect(page).toHaveURL(/\/quyen-rieng-tu$/);
   });

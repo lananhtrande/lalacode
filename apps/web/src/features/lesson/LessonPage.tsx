@@ -66,10 +66,10 @@ export function LessonPage() {
       <section>
         <h1 className="text-page-title">{vi.lesson.notFound}</h1>
         <Link
-          to="/ban-do"
+          to="/khoa-hoc"
           className="mt-4 inline-flex min-h-tap items-center font-semibold text-accent-strong underline"
         >
-          {vi.lesson.backToMap}
+          {vi.lesson.backToCatalog}
         </Link>
       </section>
     );
@@ -85,10 +85,10 @@ export function LessonPage() {
   return (
     <article className="mx-auto max-w-prose">
       <Link
-        to="/ban-do"
+        to={`/khoa-hoc/${lesson.id.split('.')[0] ?? ''}`}
         className="inline-flex min-h-tap items-center font-medium text-accent-strong underline"
       >
-        {vi.lesson.backToMap}
+        {vi.lesson.backToCourse}
       </Link>
 
       <h1 className="mt-2 text-page-title">{lesson.title}</h1>

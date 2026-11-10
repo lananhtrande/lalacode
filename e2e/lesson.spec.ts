@@ -3,12 +3,12 @@ import { expect, test } from '@playwright/test';
 const LESSON = '/bai-hoc/py-khoi-dong.01-xin-chao';
 
 /**
- * Trước S0-28 màn này là khung "Đang xây", nên bản đồ dẫn vào ngõ cụt: bấm vào
+ * Trước S0-28 màn này là khung "Đang xây", nên bản đồ (nay là trang khoá) dẫn vào ngõ cụt: bấm vào
  * bài là không còn đường nào tới bài tập. Test đầu tiên giữ đúng đường đi đó.
  */
 test.describe('màn bài học', () => {
-  test('từ bản đồ vào bài học rồi sang được bài tập', async ({ page }) => {
-    await page.goto('/ban-do');
+  test('từ trang khoá vào bài học rồi sang được bài tập', async ({ page }) => {
+    await page.goto('/khoa-hoc/py-khoi-dong');
     await page.getByRole('link', { name: /Xin chào, Python!/ }).click();
     await expect(page).toHaveURL(/\/bai-hoc\/py-khoi-dong\.01-xin-chao$/);
     await expect(page.getByRole('heading', { name: 'Xin chào, Python!', level: 1 })).toBeVisible();
@@ -55,11 +55,13 @@ test.describe('màn bài học', () => {
     expect(external).toEqual([]);
   });
 
-  test('bài học lạ thì nói không tìm thấy, vẫn có đường về bản đồ', async ({ page }) => {
+  test('bài học lạ thì nói không tìm thấy, vẫn có đường về danh sách khoá học', async ({
+    page,
+  }) => {
     await page.goto('/bai-hoc/khong-co-bai-nay');
     await expect(page.getByRole('heading', { name: 'Không tìm thấy bài học này.' })).toBeVisible();
-    await page.getByRole('link', { name: 'Về bản đồ nhiệm vụ' }).click();
-    await expect(page).toHaveURL(/\/ban-do$/);
+    await page.getByRole('main').getByRole('link', { name: 'Xem các khoá học' }).click();
+    await expect(page).toHaveURL(/\/khoa-hoc$/);
   });
 
   test('màn bài học không bị cuộn ngang trên điện thoại', async ({ page }) => {

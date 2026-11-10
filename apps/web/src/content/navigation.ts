@@ -10,8 +10,8 @@ import type { ContentIndex, LessonBundle } from './types';
 export type NavTarget =
   | { kind: 'exercise'; id: string; title: string }
   | { kind: 'lesson'; id: string; title: string }
-  /** Hết khoá học: quay về bản đồ. */
-  | { kind: 'map' };
+  /** Hết khoá học: quay về trang khoá (S0-37 thay cho bản đồ). */
+  | { kind: 'course'; id: string };
 
 export interface Neighbours {
   /** `null` khi đang ở bài học đầu khoá. */
@@ -25,8 +25,8 @@ export function hrefOf(target: NavTarget): string {
       return `/bai-tap/${target.id}`;
     case 'lesson':
       return `/bai-hoc/${target.id}`;
-    case 'map':
-      return '/ban-do';
+    case 'course':
+      return `/khoa-hoc/${target.id}`;
   }
 }
 
@@ -39,7 +39,9 @@ export function lessonNeighbours(index: ContentIndex, lessonId: string): Neighbo
     const next = course.lessons[position + 1];
     return {
       previous: previous ? { kind: 'lesson', id: previous.id, title: previous.title } : null,
-      next: next ? { kind: 'lesson', id: next.id, title: next.title } : { kind: 'map' },
+      next: next
+        ? { kind: 'lesson', id: next.id, title: next.title }
+        : { kind: 'course', id: course.id },
     };
   }
   return null;
@@ -70,7 +72,10 @@ export function exerciseNeighbours(
     title: lesson.lesson.title,
   };
   const next = ordered[position + 1] ??
-    lessonNeighbours(index, lesson.lesson.id)?.next ?? { kind: 'map' };
+    lessonNeighbours(index, lesson.lesson.id)?.next ?? {
+      kind: 'course',
+      id: lesson.lesson.id.split('.')[0] ?? '',
+    };
   return { previous, next };
 }
 

@@ -48,6 +48,20 @@ const index: ContentIndex = {
       title: 'Python khởi động',
       summary: '',
       ageRange: [10, 15],
+      level: 'moi-bat-dau',
+      tags: [],
+      illustration: 'py-khoi-dong.svg',
+      chapters: [
+        {
+          id: 'lam-quen',
+          title: 'Làm quen',
+          lessonIds: [
+            'py-khoi-dong.02-bien',
+            'py-khoi-dong.03-rua-ve-hinh',
+            'py-khoi-dong.04-hoi-dap',
+          ],
+        },
+      ],
       status: 'draft',
       lessons: [
         lessonSummary('py-khoi-dong.02-bien', 'Biến'),
@@ -134,13 +148,13 @@ describe('màn bài học', () => {
     expect(screen.queryByTestId('lesson-cta')).not.toBeInTheDocument();
   });
 
-  it('bài học không có thì nói rõ và chỉ đường về bản đồ', async () => {
+  it('bài học không có thì nói rõ và chỉ đường về danh sách khoá học', async () => {
     loadLesson.mockRejectedValue(new Error('không có'));
     renderPage();
     expect(await screen.findByRole('heading', { name: strings.lesson.notFound })).toBeVisible();
-    expect(screen.getByRole('link', { name: strings.lesson.backToMap })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: strings.lesson.backToCatalog })).toHaveAttribute(
       'href',
-      '/ban-do',
+      '/khoa-hoc',
     );
   });
 
@@ -165,12 +179,12 @@ describe('màn bài học', () => {
     expect(next.className).toContain('bg-accent');
   });
 
-  it('bài học cuối khoá: "tiếp" là về bản đồ', async () => {
+  it('bài học cuối khoá: "tiếp" là về trang khoá', async () => {
     renderPage('py-khoi-dong.04-hoi-dap');
     const nav = await screen.findByRole('navigation', { name: strings.pager.label });
-    expect(within(nav).getByRole('link', { name: strings.pager.toMap })).toHaveAttribute(
+    expect(within(nav).getByRole('link', { name: strings.pager.toCourse })).toHaveAttribute(
       'href',
-      '/ban-do',
+      '/khoa-hoc/py-khoi-dong',
     );
   });
 

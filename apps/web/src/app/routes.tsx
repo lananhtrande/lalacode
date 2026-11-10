@@ -1,7 +1,10 @@
-import type { RouteObject } from 'react-router';
+import { Navigate, type RouteObject } from 'react-router';
 import { RootLayout } from './RootLayout';
 import { NotFoundPage } from './NotFoundPage';
 import { HomePage } from '../features/home/HomePage';
+
+/** Khoá mà `/ban-do` cũ trỏ tới. */
+const DEFAULT_COURSE_ID = 'py-khoi-dong';
 
 /**
  * Đường dẫn bằng tiếng Việt để trẻ và bố mẹ đọc hiểu được.
@@ -18,8 +21,26 @@ export const routes: RouteObject[] = [
     children: [
       { index: true, Component: HomePage },
       {
-        path: 'ban-do',
-        lazy: async () => ({ Component: (await import('../features/map/MapPage')).MapPage }),
+        path: 'khoa-hoc',
+        // Lưới thẻ khoá học trải rộng trên nền xám, không bọc trong thẻ trắng hẹp.
+        handle: { wide: true },
+        lazy: async () => ({
+          Component: (await import('../features/courses/CatalogPage')).CatalogPage,
+        }),
+      },
+      {
+        path: 'khoa-hoc/:courseId',
+        lazy: async () => ({
+          Component: (await import('../features/courses/CoursePage')).CoursePage,
+        }),
+      },
+      // Bản đồ nhiệm vụ cũ (trước S0-37) giờ là trang khoá; giữ link cũ còn chạy.
+      { path: 'ban-do', element: <Navigate to={`/khoa-hoc/${DEFAULT_COURSE_ID}`} replace /> },
+      {
+        path: 'luyen-tap',
+        lazy: async () => ({
+          Component: (await import('../features/practice/PracticePage')).PracticePage,
+        }),
       },
       {
         path: 'bai-hoc/:lessonId',

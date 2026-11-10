@@ -243,8 +243,8 @@ export function ExercisePage() {
     return (
       <section className="mx-auto max-w-prose text-center">
         <h1 className="text-2xl font-bold">{vi.exercise.notFound}</h1>
-        <Link to="/ban-do" className={buttonClasses('primary', 'md', 'mt-4')}>
-          {vi.exercise.backToMap}
+        <Link to="/khoa-hoc" className={buttonClasses('primary', 'md', 'mt-4')}>
+          {vi.exercise.backToCatalog}
         </Link>
       </section>
     );

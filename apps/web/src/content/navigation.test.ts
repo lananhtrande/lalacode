@@ -17,7 +17,20 @@ function summary(id: string, title: string): LessonSummary {
 }
 
 function course(id: string, lessons: LessonSummary[]): CourseSummary {
-  return { id, title: id, summary: '', ageRange: [10, 15], status: 'draft', lessons };
+  return {
+    id,
+    title: id,
+    summary: '',
+    ageRange: [10, 15],
+    level: 'moi-bat-dau',
+    tags: [],
+    illustration: `${id}.svg`,
+    status: 'draft',
+    chapters: [
+      { id: 'chuong-1', title: 'Chương 1', lessonIds: lessons.map((lesson) => lesson.id) },
+    ],
+    lessons,
+  };
 }
 
 const index: ContentIndex = {
@@ -72,14 +85,14 @@ describe('lessonNeighbours', () => {
     expect(lessonNeighbours(index, 'py.01-xin-chao')?.previous).toBeNull();
   });
 
-  it('bài học cuối khoá: "tiếp" là về bản đồ, không nhảy sang khoá khác', () => {
-    expect(lessonNeighbours(index, 'py.03-rua')?.next).toEqual({ kind: 'map' });
+  it('bài học cuối khoá: "tiếp" là về trang khoá, không nhảy sang khoá khác', () => {
+    expect(lessonNeighbours(index, 'py.03-rua')?.next).toEqual({ kind: 'course', id: 'py' });
   });
 
-  it('khoá chỉ có một bài: không có bài trước, tiếp là bản đồ', () => {
+  it('khoá chỉ có một bài: không có bài trước, tiếp là trang khoá', () => {
     expect(lessonNeighbours(index, 'mot-bai.01-duy-nhat')).toEqual({
       previous: null,
-      next: { kind: 'map' },
+      next: { kind: 'course', id: 'mot-bai' },
     });
   });
 
@@ -112,19 +125,19 @@ describe('exerciseNeighbours', () => {
     });
   });
 
-  it('bài tập cuối của bài học cuối khoá: "tiếp" là bản đồ', () => {
+  it('bài tập cuối của bài học cuối khoá: "tiếp" là trang khoá', () => {
     const last = bundle('py.03-rua', 'Rùa', [['01-ve-vuong', 'Vẽ hình vuông']]);
     expect(exerciseNeighbours(index, last, 'py.03-rua.01-ve-vuong')).toEqual({
       previous: { kind: 'lesson', id: 'py.03-rua', title: 'Rùa' },
-      next: { kind: 'map' },
+      next: { kind: 'course', id: 'py' },
     });
   });
 
-  it('khoá một bài, bài học một bài tập: về bài học / về bản đồ', () => {
+  it('khoá một bài, bài học một bài tập: về bài học / về trang khoá', () => {
     const only = bundle('mot-bai.01-duy-nhat', 'Bài duy nhất', [['01-a', 'A']]);
     expect(exerciseNeighbours(index, only, 'mot-bai.01-duy-nhat.01-a')).toEqual({
       previous: { kind: 'lesson', id: 'mot-bai.01-duy-nhat', title: 'Bài duy nhất' },
-      next: { kind: 'map' },
+      next: { kind: 'course', id: 'mot-bai' },
     });
   });
 
@@ -137,7 +150,7 @@ describe('hrefOf', () => {
   it('trả đúng đường dẫn tiếng Việt của từng loại', () => {
     expect(hrefOf({ kind: 'exercise', id: 'a.b.c', title: '' })).toBe('/bai-tap/a.b.c');
     expect(hrefOf({ kind: 'lesson', id: 'a.b', title: '' })).toBe('/bai-hoc/a.b');
-    expect(hrefOf({ kind: 'map' })).toBe('/ban-do');
+    expect(hrefOf({ kind: 'course', id: 'py' })).toBe('/khoa-hoc/py');
   });
 });
 
