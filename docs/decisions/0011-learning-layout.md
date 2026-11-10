@@ -42,4 +42,4 @@ Những thứ cần server chỉ xét lại ở giai đoạn sau, và chỉ bậ
 - Tốt: trẻ luôn thấy mình ở chương nào, bài nào, còn bao nhiêu; thêm khoá thứ hai không phải sửa giao diện.
 - Tốt: mục lục, bài trước/tiếp và tiến độ cùng đọc một nguồn (`content/catalog.ts`, `content/navigation.ts`), hàm thuần có unit test.
 - Xấu: `course.json` có thêm trường bắt buộc (`level`, `illustration`, `chapters`); thêm bài mới phải nhớ xếp vào một chương (`content:check` nhắc).
-- Xấu: hai khung trang (khung chung và khung học bài) phải giữ đồng bộ phần logo, liên kết bỏ qua, chân trang.
+- Xấu: hai khung trang (khung chung và khung học bài) phải giữ đồng bộ phần logo và liên kết bỏ qua. Khung học bài không có chân trang: link Quyền riêng tư, Mã tiến độ nằm ở các trang khác, cách một lần bấm qua breadcrumb.

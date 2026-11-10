@@ -52,7 +52,8 @@ Trạng thái: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong. Claude cập 
 - [x] S0-35 **Màu nhấn xanh dương** (theo `docs/prompts/2026-11-05-blue-accent-next-links.md`): trẻ nhầm San hô trên nút với báo lỗi. San hô chỉ còn ở logo; tách xanh dương khỏi màu đạt/cần chú ý; màu cú pháp editor. ADR 0010.
 - [x] S0-36 **Nút sang bài trước/tiếp** trên màn bài tập và bài học; nút chính "Bài tập tiếp theo" khi làm đúng, nhận focus.
 - [x] S0-37 **Catalog khoá học và trang khoá** (theo `docs/prompts/2026-11-10-ui-rebuild.md`, ADR 0011): `/khoa-hoc` có lọc trạng thái/cấp độ/tên trên URL, `/khoa-hoc/:courseId` có chương dạng accordion; `course.json` thêm `chapters`, `level`, `tags`, `illustration`; `/ban-do` chuyển hướng; menu thêm "Luyện tập" (tạm "Đang xây").
-- [ ] S0-38 **Trình học bài**: khung riêng cho bài học và bài tập, sidebar mục lục nền tối thu gọn được, topbar có breadcrumb, mục "Nội dung bài" tự sinh từ `h2`.
+- [x] S0-38 **Trình học bài**: khung riêng cho bài học và bài tập, sidebar mục lục nền tối thu gọn được, topbar có breadcrumb, mục "Nội dung bài" tự sinh từ `h2`.
+- [ ] S0-38b Chia `lesson.md` của 20 bài thành vài mục `##` để khối "Nội dung bài" (S0-38) có tác dụng — hiện mỗi bài chỉ có một tiêu đề nên khối này chưa hiện. Việc nội dung, cần người duy trì đồng ý cách chia.
 - [ ] S0-39 **Bài thực hành chia đôi**: đề bài trái; editor và panel Kết quả/Kiểm tra kéo đổi chiều cao bên phải; ba tab Đề/Code/Kết quả dưới 1024px. Schema thêm `difficulty`, `requirements`, `examples` (điền cho bài 01–05).
 - [ ] S0-39b Điền `difficulty`, `requirements`, `examples` cho bài tập của bài 06–20 (PR nội dung riêng, `examples` lấy từ `solution` chạy thật).
 - [ ] S0-40 **Kho luyện tập** `/luyen-tap`: bộ bài theo chương, lọc độ khó/chủ đề/trạng thái, "Bài ngẫu nhiên", "Thử thách hôm nay", "Để dành", lịch chuỗi ngày học.

@@ -10,7 +10,7 @@ Lý do của từng lựa chọn: ADR 0008 (nguyên lý, token, component), ADR 
 2. **Màu không bao giờ là tín hiệu duy nhất.** Đúng/sai, xong/chưa xong luôn kèm icon và chữ.
 3. **Mọi chữ đạt WCAG AA (≥ 4.5:1)** trên nền của nó. `src/tokens.test.ts` đọc thẳng `index.css` và chốt điều này; thêm cách phối chữ/nền mới thì thêm cặp vào test.
 4. **Mọi thứ AI tạo ra nằm trên nền `ai-surface`** (`AiPanel`), để trẻ luôn biết đâu là gợi ý của trợ lý.
-5. Chỉ có giao diện sáng. Editor và console là ngoại lệ, luôn tối.
+5. Chỉ có giao diện sáng. Editor, console và sidebar mục lục của trình học bài (ADR 0011) là ngoại lệ, luôn tối.
 
 ## Màu
 
@@ -139,6 +139,39 @@ Lý do và những thứ cố ý không làm: ADR 0011. Logic (tiến độ kho�
 | Trang khoá, sau | ![](design/screenshots/s037-sau-trang-khoa-1440.png) | ![](design/screenshots/s037-sau-trang-khoa-820.png) | ![](design/screenshots/s037-sau-trang-khoa-390.png) |
 
 Trang chủ trước/sau: `design/screenshots/s037-{truoc,sau}-trang-chu-*`.
+
+## Trình học bài (S0-38)
+
+`/bai-hoc/:id` và `/bai-tap/:id` không dùng khung chung (sidebar menu, chân trang) mà dùng **khung học bài** `features/learn/LearnLayout.tsx` (route `handle: { layout: 'learn' }`, ADR 0011).
+
+| Phần | Bố cục |
+| --- | --- |
+| Sidebar mục lục (≥ 1024px) | Rộng 280px, nền `learn-bg`. Trên cùng: logo `lalakode-logo-dark.svg` (link về trang khoá), nút thu gọn, tên khoá, "7/20 bài · 35%" + `ProgressBar tone="dark"`. Dưới: chương dạng `<details>` (mở sẵn chương đang học), trong mỗi bài một dòng "Học bài" (icon sách, hoặc icon phim khi có video) và một dòng cho mỗi bài tập. Trạng thái: icon ✓ `learn-success` / vòng tròn, kèm chữ ẩn "Đã xong" / "Chưa xong". Mục đang mở: nền `learn-current`, vạch trái `learn-accent`, `aria-current="page"`, tự cuộn vào tầm nhìn. |
+| Thu gọn | Dải icon 64px: nút mở rộng, biểu tượng logo, số %. Nhớ trong `localStorage` (`lalakode.learn-sidebar.bai-hoc` / `.bai-tap`), riêng cho từng màn. **Màn bài tập mặc định thu gọn** để editor rộng. |
+| < 1024px | Nút "Mục lục" trên topbar mở ngăn kéo (`role="dialog"`); Esc, bấm ra ngoài hoặc chọn một mục thì đóng, focus trả về nút. |
+| Topbar | Cao 56px, dính trên cùng. Breadcrumb `<nav aria-label="Vị trí">`: Khoá học › Python khởi động › Bài 3 · Rùa vẽ hình (dưới 768px chỉ còn mục cuối). Bộ đếm "Bài 3/20", màn bài tập thêm "Bài tập 2/4". Bên phải là chỗ cho màn con đặt nội dung (`TopbarSlot`): màn bài tập đặt "Python sẵn sàng". |
+| Bài học | Thẻ trắng rộng tối đa 720px, căn giữa: nhãn chương in hoa nhỏ → `h1` → thời lượng, khái niệm → video (chỉ khi bài có video) → "Nội dung bài" → thân bài → bài tập → bài trước/tiếp. |
+| "Nội dung bài" | Tự sinh từ các tiêu đề `#`/`##` của `lesson.md` (`content/outline.ts`): `id` bỏ dấu, ổn định (`#vong-lap-long-nhau`). Ở ≥ 1280px dính bên phải và tô mục đang đọc (`aria-current="location"`); dưới 1280px nằm đầu bài. Bài có dưới hai mục thì không hiện — **20 bài hiện tại đều chỉ có một tiêu đề**, nên khối này chưa xuất hiện cho tới khi bài được chia mục. |
+
+| Token | Màu | Dùng cho | Tương phản |
+| --- | --- | --- | --- |
+| `learn-bg` | `#18181B` | Nền sidebar | — |
+| `learn-current` | `#1E2B45` | Mục đang mở | `learn-text` 12.0:1, `learn-muted` 5.5:1 |
+| `learn-hover` | `#26262B` | Di chuột | — |
+| `learn-line` | `#2E2E34` | Đường chia | (không dùng cho chữ) |
+| `learn-text` | `#ECECEE` | Chữ chính | 15.0:1 trên `learn-bg` |
+| `learn-muted` | `#A1A1AA` | Chữ phụ, icon, số đếm | 6.9:1 trên `learn-bg` |
+| `learn-accent` | `#60A5FA` | Vạch mục đang mở, thanh tiến độ, viền focus | 7.0:1 trên `learn-bg`, 5.6:1 trên `learn-current`, 4.1:1 trên rãnh `learn-track` |
+| `learn-success` | `#4ADE80` | Icon "đã xong" | 10.2:1 trên `learn-bg` |
+
+| | 1440 | 820 | 390 |
+| --- | --- | --- | --- |
+| Bài học, trước | ![](design/screenshots/s038-truoc-bai-hoc-1440.png) | ![](design/screenshots/s038-truoc-bai-hoc-820.png) | ![](design/screenshots/s038-truoc-bai-hoc-390.png) |
+| Bài học, sau | ![](design/screenshots/s038-sau-bai-hoc-1440.png) | ![](design/screenshots/s038-sau-bai-hoc-820.png) | ![](design/screenshots/s038-sau-bai-hoc-390.png) |
+| Bài tập, trước | ![](design/screenshots/s038-truoc-bai-tap-1440.png) | ![](design/screenshots/s038-truoc-bai-tap-820.png) | ![](design/screenshots/s038-truoc-bai-tap-390.png) |
+| Bài tập, sau | ![](design/screenshots/s038-sau-bai-tap-1440.png) | ![](design/screenshots/s038-sau-bai-tap-820.png) | ![](design/screenshots/s038-sau-bai-tap-390.png) |
+
+Ngăn kéo mục lục, 390px: ![](design/screenshots/s038-sau-muc-luc-390.png)
 
 ## Editor và console tối
 
