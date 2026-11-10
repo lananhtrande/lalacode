@@ -58,8 +58,9 @@ export function RootLayout() {
         {vi.nav.skipToContent}
       </a>
 
-      <header className="sticky top-0 z-20 border-b border-line bg-surface">
-        <div className="mx-auto flex min-h-16 w-full max-w-[90rem] items-center gap-4 px-4 sm:px-6 lg:gap-8 lg:px-10">
+      {/* Thanh menu: cao 64px, nội dung tối đa 1280px, đệm ngang 24px (S0-41). */}
+      <header className="sticky top-0 z-20 border-b border-line-soft bg-surface">
+        <div className="mx-auto flex min-h-16 w-full max-w-[80rem] items-center gap-4 px-4 sm:px-6 lg:gap-8">
           {/* Logo chữ đã chuyển thành nét (docs/brand/README.md); khai báo kích thước để không nhảy layout. */}
           <Link to="/" className="flex min-h-tap shrink-0 items-center">
             <img src="/brand/lalakode-logo.svg" alt={vi.app.name} width={131} height={30} />
@@ -76,7 +77,7 @@ export function RootLayout() {
               menuOpen ? 'block' : 'hidden',
             ].join(' ')}
           >
-            <ul className="flex flex-col gap-1 pt-2 lg:flex-row lg:gap-2 lg:pt-0">
+            <ul className="flex flex-col gap-1 pt-2 lg:flex-row lg:gap-0 lg:pt-0">
               {navItems.map((item) => (
                 <li key={item.to}>
                   <NavLink
@@ -84,11 +85,11 @@ export function RootLayout() {
                     end={item.end}
                     className={({ isActive }) =>
                       [
-                        'relative flex min-h-tap items-center rounded-full px-4 text-label lg:min-h-16 lg:rounded-none',
-                        // Vạch dưới 3px cho mục đang chọn ở màn rộng; màn hẹp tô nền nhạt.
-                        'lg:after:absolute lg:after:inset-x-3 lg:after:bottom-0 lg:after:h-[3px] lg:after:rounded-full',
+                        'relative flex min-h-tap items-center rounded-lg px-4 text-small lg:min-h-16 lg:rounded-none',
+                        // Vạch dưới 2px cho mục đang chọn ở màn rộng; màn hẹp tô nền nhạt.
+                        'lg:after:absolute lg:after:inset-x-4 lg:after:bottom-0 lg:after:h-0.5',
                         isActive
-                          ? 'bg-accent-soft text-accent-strong lg:bg-transparent lg:after:bg-accent'
+                          ? 'bg-accent-soft font-semibold text-accent-strong lg:bg-transparent lg:after:bg-accent'
                           : 'font-medium text-ink-soft hover:bg-surface-muted hover:text-ink lg:hover:bg-transparent',
                       ].join(' ')
                     }
@@ -115,7 +116,7 @@ export function RootLayout() {
           <div className="ml-auto flex items-center gap-2 lg:ml-0">
             <Link
               to="/tien-do"
-              className="hidden min-h-tap items-center gap-2 rounded-full px-3 text-small font-semibold text-ink-soft hover:bg-surface-muted hover:text-ink sm:flex"
+              className="hidden min-h-tap items-center gap-2 rounded-lg px-3 text-small font-semibold text-ink-soft hover:bg-surface-muted hover:text-ink sm:flex"
             >
               <KeyRound aria-hidden="true" className="size-4" />
               {vi.pages.progressCode}
@@ -135,22 +136,20 @@ export function RootLayout() {
       <div className="flex min-w-0 flex-1 flex-col">
         <main
           id="noi-dung"
-          className={[
-            'w-full flex-1 px-4 sm:px-6',
-            wide ? 'py-4 lg:px-6 lg:py-6' : 'py-6 lg:px-10 lg:py-10',
-          ].join(' ')}
+          // Vùng nội dung tối đa 1600px, đệm 32px (16px dưới 640px) — S0-41.
+          className="mx-auto w-full max-w-[100rem] flex-1 px-4 py-6 sm:p-8"
         >
           {wide ? (
             <Outlet />
           ) : (
-            <div className="mx-auto w-full max-w-5xl rounded-card bg-surface p-5 shadow-card sm:p-8">
+            <div className="mx-auto w-full max-w-5xl rounded-card border border-line bg-surface p-5 sm:p-8">
               <Outlet />
             </div>
           )}
         </main>
 
         <footer className="text-small text-ink-soft">
-          <div className="mx-auto flex w-full max-w-[90rem] flex-wrap items-center justify-between gap-2 px-4 pb-6 sm:px-6 lg:px-10">
+          <div className="mx-auto flex w-full max-w-[100rem] flex-wrap items-center justify-between gap-2 px-4 pb-6 sm:px-8">
             <span>{vi.footer.madeFor}</span>
             <span className="flex flex-wrap gap-x-4">
               <Link to="/tien-do" className="flex min-h-tap items-center underline">

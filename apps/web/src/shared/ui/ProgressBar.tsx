@@ -27,7 +27,7 @@ export function ProgressBar({ percent, label, caption, tone = 'light' }: Progres
         aria-valuetext={caption ?? `${value}%`}
         className={[
           'h-2 flex-1 overflow-hidden rounded-full',
-          dark ? 'bg-learn-track' : 'bg-line',
+          dark ? 'bg-learn-track' : 'bg-accent-soft',
         ].join(' ')}
       >
         <div
@@ -38,7 +38,7 @@ export function ProgressBar({ percent, label, caption, tone = 'light' }: Progres
       <span
         aria-hidden="true"
         className={[
-          'shrink-0 text-small font-semibold tabular-nums',
+          'shrink-0 text-meta tabular-nums',
           dark ? 'text-learn-text' : 'text-ink-soft',
         ].join(' ')}
       >

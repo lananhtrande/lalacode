@@ -113,19 +113,27 @@ describe('bộ lọc catalog', () => {
   it('đọc bộ lọc từ URL; giá trị lạ thì coi như không lọc', () => {
     expect(
       parseCatalogFilter(new URLSearchParams('trang-thai=dang-hoc&cap-do=co-ban&tim=rùa')),
-    ).toEqual({ status: 'dang-hoc', level: 'co-ban', query: 'rùa' });
+    ).toEqual({ status: 'dang-hoc', level: 'co-ban', tag: null, query: 'rùa' });
     expect(parseCatalogFilter(new URLSearchParams('trang-thai=bay&cap-do=sieu-kho'))).toEqual({
       status: 'tat-ca',
       level: null,
+      tag: null,
       query: '',
     });
   });
 
   it('chỉ ghi lên URL bộ lọc đang bật', () => {
-    expect(catalogFilterParams({ status: 'tat-ca', level: null, query: '  ' }).toString()).toBe('');
     expect(
-      catalogFilterParams({ status: 'da-xong', level: 'moi-bat-dau', query: '' }).toString(),
-    ).toBe('trang-thai=da-xong&cap-do=moi-bat-dau');
+      catalogFilterParams({ status: 'tat-ca', level: null, tag: null, query: '  ' }).toString(),
+    ).toBe('');
+    expect(
+      catalogFilterParams({
+        status: 'da-xong',
+        level: 'moi-bat-dau',
+        tag: 'rùa',
+        query: '',
+      }).toString(),
+    ).toBe('trang-thai=da-xong&cap-do=moi-bat-dau&the=r%C3%B9a');
   });
 
   it('bỏ dấu khi tìm: "rua", "RÙA", "khoi dong" đều khớp', () => {
@@ -136,7 +144,13 @@ describe('bộ lọc catalog', () => {
   const items = [
     { course, progress: courseProgress(course, new Map([['py.01-a', 1]])) },
     {
-      course: { ...course, id: 'web', title: 'Làm trang web', level: 'co-ban' as const },
+      course: {
+        ...course,
+        id: 'web',
+        title: 'Làm trang web',
+        level: 'co-ban' as const,
+        tags: ['web'],
+      },
       progress: courseProgress(course, new Map()),
     },
   ];
@@ -144,11 +158,12 @@ describe('bộ lọc catalog', () => {
   it('lọc theo trạng thái, cấp độ và tên cùng lúc', () => {
     const ids = (filter: Parameters<typeof filterCourses>[1]) =>
       filterCourses(items, filter).map((item) => item.course.id);
-    expect(ids({ status: 'tat-ca', level: null, query: '' })).toEqual(['py', 'web']);
-    expect(ids({ status: 'dang-hoc', level: null, query: '' })).toEqual(['py']);
-    expect(ids({ status: 'chua-hoc', level: null, query: '' })).toEqual(['web']);
-    expect(ids({ status: 'tat-ca', level: 'co-ban', query: '' })).toEqual(['web']);
-    expect(ids({ status: 'tat-ca', level: null, query: 'khoi dong' })).toEqual(['py']);
-    expect(ids({ status: 'da-xong', level: null, query: '' })).toEqual([]);
+    expect(ids({ status: 'tat-ca', level: null, tag: null, query: '' })).toEqual(['py', 'web']);
+    expect(ids({ status: 'dang-hoc', level: null, tag: null, query: '' })).toEqual(['py']);
+    expect(ids({ status: 'chua-hoc', level: null, tag: null, query: '' })).toEqual(['web']);
+    expect(ids({ status: 'tat-ca', level: 'co-ban', tag: null, query: '' })).toEqual(['web']);
+    expect(ids({ status: 'tat-ca', level: null, tag: null, query: 'khoi dong' })).toEqual(['py']);
+    expect(ids({ status: 'da-xong', level: null, tag: null, query: '' })).toEqual([]);
+    expect(ids({ status: 'tat-ca', level: null, tag: 'web', query: '' })).toEqual(['web']);
   });
 });

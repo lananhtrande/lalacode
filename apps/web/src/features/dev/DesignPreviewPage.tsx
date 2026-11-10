@@ -18,7 +18,10 @@ const COLORS = [
   'ink-soft',
   'surface',
   'surface-muted',
+  'surface-sunken',
   'line',
+  'line-soft',
+  'ink-surface',
   'accent',
   'on-accent',
   'accent-strong',
@@ -28,18 +31,21 @@ const COLORS = [
   'success-surface',
   'attention',
   'attention-surface',
+  'fresh-surface',
+  'fresh-text',
 ] as const;
 
 /** Chữ dài nhất của bảng chữ tiếng Việt: dấu chồng (Ổ, ầ, ừ), đ, ơ, ư (ADR 0009). */
 const SAMPLE = 'Hoàn thành! Ổ bánh mì, ước mơ, Đội bóng, Nền tảng học lập trình cho người Việt';
 
 const TYPE_SCALE = [
-  ['text-page-title', 'Tiêu đề trang · 28/36 đậm'],
-  ['text-section-title', 'Tiêu đề mục · 22/30'],
-  ['text-card-title', 'Tiêu đề thẻ · 18/26'],
+  ['text-page-title', 'Tiêu đề trang · 24/32 đậm'],
+  ['text-section-title', 'Tiêu đề mục · 18/26'],
+  ['text-card-title', 'Tiêu đề thẻ · 16/1.35'],
   ['text-body', 'Chữ thân · 16/24'],
-  ['text-small text-ink-soft', 'Chữ phụ · 14/20'],
-  ['text-label', 'Nhãn nút · 16/24 đậm vừa'],
+  ['text-small text-ink-soft', 'Chữ phụ · 14/21'],
+  ['text-label', 'Nhãn nút, chip, tab · 14/21 đậm vừa'],
+  ['text-meta text-ink-soft', 'Nhãn, số phụ · 12/16 (không cho câu cần đọc)'],
 ] as const;
 
 /**
@@ -104,6 +110,9 @@ export function DesignPreviewPage() {
           </Button>
           <IconButton label="Gợi ý" icon={<Lightbulb aria-hidden className="size-5" />} />
           <Button size="lg">Bắt đầu học</Button>
+          <Button size="sm" variant="outline">
+            Khám phá
+          </Button>
           <Button disabled>Đang chấm…</Button>
         </div>
         <div className="mt-4 flex flex-wrap gap-2">

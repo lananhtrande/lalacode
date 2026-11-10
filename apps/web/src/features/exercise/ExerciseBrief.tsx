@@ -12,7 +12,7 @@ export function DifficultyBadge({ difficulty }: { difficulty: Difficulty }) {
   return (
     <span
       data-testid="difficulty"
-      className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-2.5 py-0.5 text-small font-semibold text-ink-soft"
+      className="inline-flex h-5.5 items-center gap-1.5 rounded-md bg-surface-sunken px-2 text-meta text-ink-soft ring-1 ring-line ring-inset"
     >
       <BarsIcon filled={difficultyBars[difficulty]} total={4} />
       <span className="sr-only">{vi.exercise.difficultyLabel}: </span>

@@ -5,11 +5,11 @@ export interface CardProps extends HTMLAttributes<HTMLElement> {
   as?: 'div' | 'section' | 'article' | 'li';
 }
 
-/** Thẻ trắng bo góc 16px, bóng rất nhẹ — đặt trên nền `surface-muted`. */
+/** Thẻ trắng bo góc 20px, viền mảnh, không bóng — đặt trên nền `surface-muted` (S0-41). */
 export function Card({ as: Tag = 'div', className = '', ...rest }: CardProps) {
   return (
     <Tag
-      className={['rounded-card bg-surface p-5 shadow-card sm:p-6', className].join(' ')}
+      className={['rounded-card border border-line bg-surface p-5 sm:p-6', className].join(' ')}
       {...rest}
     />
   );

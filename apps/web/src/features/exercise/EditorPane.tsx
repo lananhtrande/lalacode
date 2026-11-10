@@ -46,12 +46,12 @@ export function EditorPane({
   };
 
   const iconButton =
-    'flex size-11 items-center justify-center rounded-full text-code-text hover:bg-code-active disabled:opacity-40';
+    'flex size-10 items-center justify-center rounded-full text-code-text hover:bg-code-active disabled:opacity-40';
 
   return (
     <section
       aria-labelledby="code-cua-em"
-      className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-card bg-code-bg shadow-card"
+      className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-card bg-code-bg"
     >
       <div className="flex flex-wrap items-center gap-x-2 bg-code-gutter px-3 py-1 text-code-text">
         <h2 id="code-cua-em" className="text-label">
@@ -118,7 +118,7 @@ export function EditorPane({
           <button
             ref={confirmRef}
             type="button"
-            className="min-h-tap rounded-full bg-code-text px-4 text-label text-code-bg"
+            className="min-h-tap rounded-lg bg-code-text px-4 text-label text-code-bg"
             onClick={() => {
               onReset();
               closeConfirm();
@@ -128,7 +128,7 @@ export function EditorPane({
           </button>
           <button
             type="button"
-            className="min-h-tap rounded-full px-4 text-label hover:bg-code-gutter"
+            className="min-h-tap rounded-lg px-4 text-label hover:bg-code-gutter"
             onClick={closeConfirm}
           >
             {vi.exercise.resetNo}

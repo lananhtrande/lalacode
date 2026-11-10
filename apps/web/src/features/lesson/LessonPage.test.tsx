@@ -193,7 +193,7 @@ describe('màn bài học', () => {
     expect(previous).toHaveAttribute('href', '/bai-hoc/py-khoi-dong.02-bien');
     const next = screen.getByRole('link', { name: 'Bài học tiếp: Hỏi đáp' });
     expect(next).toHaveAttribute('href', '/bai-hoc/py-khoi-dong.04-hoi-dap');
-    expect(next.className).not.toContain('bg-accent');
+    expect(next.classList).not.toContain('bg-accent');
   });
 
   it('xong hết bài tập thì "Bài học tiếp" là nút chính', async () => {
@@ -205,7 +205,7 @@ describe('màn bài học', () => {
     });
     renderPage();
     const next = await screen.findByRole('link', { name: 'Bài học tiếp: Hỏi đáp' });
-    expect(next.className).toContain('bg-accent');
+    expect(next.classList).toContain('bg-accent');
   });
 
   it('bài học cuối khoá: "tiếp" là về trang khoá', async () => {

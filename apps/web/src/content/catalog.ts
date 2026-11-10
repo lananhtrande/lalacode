@@ -113,12 +113,15 @@ export const levelFilters: readonly CourseLevel[] = ['moi-bat-dau', 'co-ban', 'n
 export interface CatalogFilter {
   status: StatusFilter;
   level: CourseLevel | null;
+  /** Một thẻ chủ đề của khoá (`course.json → tags`), `null` = tất cả. */
+  tag: string | null;
   query: string;
 }
 
 export const PARAM_STATUS = 'trang-thai';
 export const PARAM_LEVEL = 'cap-do';
 export const PARAM_QUERY = 'tim';
+export const PARAM_TAG = 'the';
 
 /** Giá trị lạ trên URL (gõ tay, link cũ) thì coi như không lọc. */
 export function parseCatalogFilter(params: URLSearchParams): CatalogFilter {
@@ -127,6 +130,7 @@ export function parseCatalogFilter(params: URLSearchParams): CatalogFilter {
   return {
     status: statusFilters.find((item) => item === status) ?? 'tat-ca',
     level: levelFilters.find((item) => item === level) ?? null,
+    tag: params.get(PARAM_TAG) || null,
     query: params.get(PARAM_QUERY) ?? '',
   };
 }
@@ -136,12 +140,18 @@ export function catalogFilterParams(filter: CatalogFilter): URLSearchParams {
   const params = new URLSearchParams();
   if (filter.status !== 'tat-ca') params.set(PARAM_STATUS, filter.status);
   if (filter.level) params.set(PARAM_LEVEL, filter.level);
+  if (filter.tag) params.set(PARAM_TAG, filter.tag);
   if (filter.query.trim()) params.set(PARAM_QUERY, filter.query);
   return params;
 }
 
 export function isFiltering(filter: CatalogFilter): boolean {
-  return filter.status !== 'tat-ca' || filter.level !== null || filter.query.trim() !== '';
+  return (
+    filter.status !== 'tat-ca' ||
+    filter.level !== null ||
+    filter.tag !== null ||
+    filter.query.trim() !== ''
+  );
 }
 
 /** Bỏ dấu và viết thường: gõ "rua" vẫn tìm ra "Rùa", gõ "đ" hay "d" đều được. */
@@ -155,6 +165,11 @@ export function foldVietnamese(text: string): string {
     .trim();
 }
 
+/** Mọi thẻ chủ đề của các khoá, theo thứ tự xuất hiện. */
+export function catalogTags(courses: readonly CourseSummary[]): string[] {
+  return [...new Set(courses.flatMap((course) => course.tags))];
+}
+
 export function filterCourses<T extends { course: CourseSummary; progress: CourseProgress }>(
   items: readonly T[],
   filter: CatalogFilter,
@@ -163,6 +178,7 @@ export function filterCourses<T extends { course: CourseSummary; progress: Cours
   return items.filter(({ course, progress }) => {
     if (filter.status !== 'tat-ca' && progress.status !== filter.status) return false;
     if (filter.level && course.level !== filter.level) return false;
+    if (filter.tag && !course.tags.includes(filter.tag)) return false;
     if (query && !foldVietnamese(course.title).includes(query)) return false;
     return true;
   });

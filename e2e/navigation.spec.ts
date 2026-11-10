@@ -48,7 +48,7 @@ test.describe('sang bài tiếp theo', () => {
     await expect(previous).toHaveAttribute('href', `/bai-tap/${LESSON_01}.01-in-loi-chao`);
     await expect(next).toHaveAttribute('href', `/bai-tap/${LESSON_01}.03-sua-loi-cua-ban`);
     for (const link of [previous, next]) {
-      expect((await link.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+      expect((await link.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(40);
     }
   });
 

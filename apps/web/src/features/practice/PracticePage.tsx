@@ -158,7 +158,7 @@ export function PracticePage() {
           )}
 
           {filtersOpen && (
-            <div id="bo-loc-hep" className="mt-3 rounded-card bg-surface p-4 shadow-card lg:hidden">
+            <div id="bo-loc-hep" className="mt-3 rounded-card border border-line bg-surface p-4 lg:hidden">
               {filters}
             </div>
           )}
@@ -173,7 +173,7 @@ export function PracticePage() {
           )}
 
           {shown.length === 0 ? (
-            <div className="mt-4 rounded-card bg-surface p-8 text-center shadow-card">
+            <div className="mt-4 rounded-card border border-line bg-surface p-8 text-center">
               <p className="text-card-title font-normal">{t.empty}</p>
               <Button
                 variant="outline"
@@ -234,7 +234,7 @@ function SetStrip({
   const scroll = (direction: 1 | -1) =>
     listRef.current?.scrollBy({ left: direction * 280, behavior: 'smooth' });
   const arrow =
-    'flex size-11 shrink-0 items-center justify-center rounded-full border border-line bg-surface hover:bg-surface-muted';
+    'flex size-10 shrink-0 items-center justify-center rounded-full border border-line bg-surface hover:bg-surface-muted';
 
   return (
     <section aria-labelledby="bo-bai" className="mt-6">
@@ -270,8 +270,8 @@ function SetStrip({
                 aria-pressed={active}
                 onClick={() => onSelect(set.id)}
                 className={[
-                  'flex h-full w-full flex-col gap-3 rounded-card border-2 bg-surface p-4 text-left shadow-card',
-                  active ? 'border-accent' : 'border-transparent hover:border-line',
+                  'flex h-full w-full flex-col gap-3 rounded-card border-2 bg-surface p-4 text-left',
+                  active ? 'border-accent' : 'border-line hover:border-ink-soft',
                 ].join(' ')}
               >
                 <span className="text-label">{set.title}</span>
@@ -408,7 +408,7 @@ function ExerciseList({
   saved: ReadonlySet<string>;
 }) {
   return (
-    <div className="mt-4 overflow-hidden rounded-card bg-surface shadow-card">
+    <div className="mt-4 overflow-hidden rounded-card border border-line bg-surface">
       <table className="w-full text-left max-md:block" data-testid="practice-list">
         <thead className="border-b border-line text-small text-ink-soft max-md:sr-only">
           <tr>
@@ -492,7 +492,7 @@ function SaveButton({
       aria-label={`${t.save}: ${title}`}
       title={saved ? t.unsave : t.save}
       onClick={() => void quietly(() => toggleSaved(exerciseId))}
-      className="inline-flex size-11 items-center justify-center rounded-full text-ink-soft hover:bg-surface-muted hover:text-ink aria-pressed:text-accent-strong"
+      className="inline-flex size-10 items-center justify-center rounded-full text-ink-soft hover:bg-surface-muted hover:text-ink aria-pressed:text-accent-strong"
     >
       {saved ? (
         <BookmarkCheck aria-hidden="true" className="size-5" />
@@ -523,7 +523,7 @@ function Sidebar({
 
   return (
     <>
-      <section className="rounded-card bg-surface p-4 shadow-card" data-testid="practice-continue">
+      <section className="rounded-card border border-line bg-surface p-4" data-testid="practice-continue">
         <h2 className="text-card-title">{t.continueTitle}</h2>
         {next ? (
           <>
@@ -542,7 +542,7 @@ function Sidebar({
 
       {challenge && (
         <section
-          className="rounded-card bg-surface p-4 shadow-card"
+          className="rounded-card border border-line bg-surface p-4"
           data-testid="practice-challenge"
         >
           <h2 className="flex items-center gap-2 text-card-title">
@@ -560,7 +560,7 @@ function Sidebar({
         </section>
       )}
 
-      <section aria-labelledby={calendarId} className="rounded-card bg-surface p-4 shadow-card">
+      <section aria-labelledby={calendarId} className="rounded-card border border-line bg-surface p-4">
         <h2 id={calendarId} className="text-card-title">
           {t.calendarTitle} ({month}/{year})
         </h2>

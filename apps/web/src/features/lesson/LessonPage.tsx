@@ -100,7 +100,7 @@ export function LessonPage() {
 
   return (
     <div className="mx-auto flex w-full max-w-[66rem] justify-center gap-10">
-      <article className="w-full max-w-[45rem] min-w-0 rounded-card bg-surface p-5 shadow-card sm:p-8">
+      <article className="w-full max-w-[45rem] min-w-0 rounded-card border border-line bg-surface p-5 sm:p-8">
         {chapterLabel && (
           <p
             className="text-small font-semibold tracking-wide text-ink-soft uppercase"

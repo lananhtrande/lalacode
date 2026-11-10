@@ -76,10 +76,10 @@ test.describe('khung app', () => {
     await expect(page.getByRole('heading', { name: 'Không tìm thấy trang này' })).toBeVisible();
   });
 
-  test('nút chính đủ lớn cho ngón tay trẻ (≥ 44 px)', async ({ page }) => {
+  test('nút chính đủ lớn cho ngón tay trẻ (≥ 40 px, ADR 0012)', async ({ page }) => {
     await page.goto('/');
     const box = await page.getByRole('link', { name: 'Bắt đầu học' }).boundingBox();
-    expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
+    expect(box?.height ?? 0).toBeGreaterThanOrEqual(40);
   });
 
   test('trang không bị cuộn ngang trên màn hình nhỏ', async ({ page }) => {
