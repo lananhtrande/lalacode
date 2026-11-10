@@ -3,6 +3,8 @@
   "title": "Một nét thẳng",
   "kind": "code",
   "prompt": "Gọi rùa ra rồi cho rùa đi thẳng 100 bước.",
+  "difficulty": "de",
+  "requirements": ["Bắt đầu bằng `import turtle`.", "Dùng `turtle.forward(100)`."],
   "starterCode": "import turtle\n\n# cho rùa đi thẳng 100 bước\n",
   "solution": "import turtle\n\nturtle.forward(100)\n",
   "tests": [

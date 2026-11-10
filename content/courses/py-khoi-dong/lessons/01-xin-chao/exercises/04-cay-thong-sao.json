@@ -3,6 +3,18 @@
   "title": "Cây thông bằng dấu sao",
   "kind": "code",
   "prompt": "Dùng dấu `*` để vẽ một cây thông 3 tầng: tầng 1 có 1 sao, tầng 2 có 3 sao, tầng 3 có 5 sao. Dòng đầu đã có sẵn, em viết tiếp 2 dòng còn lại. Dấu cách cũng phải nằm trong dấu ngoặc kép: tầng 1 đứng sau 2 dấu cách, tầng 2 sau 1 dấu cách, tầng 3 không có dấu cách nào.",
+  "difficulty": "vua",
+  "requirements": [
+    "Tầng 1: 2 dấu cách rồi 1 sao.",
+    "Tầng 2: 1 dấu cách rồi 3 sao.",
+    "Tầng 3: 5 sao, không có dấu cách."
+  ],
+  "examples": [
+    {
+      "output": "  *\n ***\n*****",
+      "note": "Dấu cách ở đầu dòng cũng được tính."
+    }
+  ],
   "starterCode": "print(\"  *\")\n",
   "solution": "print(\"  *\")\nprint(\" ***\")\nprint(\"*****\")\n",
   "tests": [

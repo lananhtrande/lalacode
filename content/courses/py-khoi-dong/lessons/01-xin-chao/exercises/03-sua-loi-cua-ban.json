@@ -3,6 +3,16 @@
   "title": "Sửa lỗi giúp bạn",
   "kind": "code",
   "prompt": "Bạn Minh muốn in ra `Chào cả lớp`, nhưng bấm chạy thì máy báo lỗi. Em sửa giúp bạn nhé. Lỗi hiện bằng chữ tiếng Anh cũng không sao, em chỉ cần tìm chỗ sai.",
+  "difficulty": "de",
+  "requirements": [
+    "Giữ nguyên lệnh `print`, chỉ sửa chỗ sai.",
+    "Chạy thử: không còn báo lỗi và in ra đúng `Chào cả lớp`."
+  ],
+  "examples": [
+    {
+      "output": "Chào cả lớp"
+    }
+  ],
   "starterCode": "print(Chào cả lớp)\n",
   "solution": "print(\"Chào cả lớp\")\n",
   "tests": [

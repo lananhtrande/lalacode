@@ -3,6 +3,13 @@
   "title": "In lời chào",
   "kind": "code",
   "prompt": "Viết chương trình in ra dòng chữ `Xin chào, Python!`",
+  "difficulty": "de",
+  "requirements": ["Dùng lệnh `print`.", "In đúng từng chữ, kể cả dấu phẩy và dấu chấm than."],
+  "examples": [
+    {
+      "output": "Xin chào, Python!"
+    }
+  ],
   "starterCode": "# Viết code của em ở dưới dòng này\n",
   "solution": "print(\"Xin chào, Python!\")\n",
   "tests": [

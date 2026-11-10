@@ -3,6 +3,13 @@
   "title": "Tiền tiêu vặt",
   "kind": "code",
   "prompt": "Mỗi ngày em để dành 5000 đồng. Tạo biến `moi_ngay` bằng 5000, rồi in số tiền để dành được sau 7 ngày.",
+  "difficulty": "de",
+  "requirements": ["Tạo biến `moi_ngay` bằng 5000.", "Dùng dấu `*` để nhân với 7."],
+  "examples": [
+    {
+      "output": "35000"
+    }
+  ],
   "starterCode": "moi_ngay = 5000\n# in số tiền sau 7 ngày\n",
   "solution": "moi_ngay = 5000\nprint(moi_ngay * 7)\n",
   "tests": [

@@ -3,6 +3,8 @@
   "title": "Góc vuông",
   "kind": "code",
   "prompt": "Cho rùa đi 80 bước, quay trái 90 độ, rồi đi tiếp 80 bước. Em sẽ được một góc vuông.",
+  "difficulty": "de",
+  "requirements": ["Đi 80 bước, quay trái 90 độ, đi tiếp 80 bước.", "Dùng `turtle.left` để quay."],
   "starterCode": "import turtle\n\nturtle.forward(80)\n# quay trái rồi đi tiếp\n",
   "solution": "import turtle\n\nturtle.forward(80)\nturtle.left(90)\nturtle.forward(80)\n",
   "tests": [

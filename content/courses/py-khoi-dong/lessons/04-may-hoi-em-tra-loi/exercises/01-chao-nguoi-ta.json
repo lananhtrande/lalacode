@@ -3,6 +3,15 @@
   "title": "Chào người ta",
   "kind": "code",
   "prompt": "Nhận tên người dùng gõ vào rồi in ra đúng tên đó.",
+  "difficulty": "de",
+  "requirements": ["Dùng `input()` để nhận tên.", "In ra đúng tên vừa nhận, không thêm chữ nào."],
+  "examples": [
+    {
+      "input": "Lan\n",
+      "output": "Lan",
+      "note": "Máy gõ thử tên Lan cho em."
+    }
+  ],
   "starterCode": "ten = input()\n# in biến ten ra\n",
   "solution": "ten = input()\nprint(ten)\n",
   "tests": [

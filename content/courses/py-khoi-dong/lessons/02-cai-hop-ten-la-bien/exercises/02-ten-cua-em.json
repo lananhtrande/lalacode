@@ -3,6 +3,13 @@
   "title": "Tên của em",
   "kind": "code",
   "prompt": "Tạo biến `ten` chứa chữ `Lan` rồi in ra. Chú ý chữ phải nằm trong dấu nháy.",
+  "difficulty": "de",
+  "requirements": ["Tạo biến tên `ten`.", "Chữ `Lan` nằm trong dấu nháy."],
+  "examples": [
+    {
+      "output": "Lan"
+    }
+  ],
   "starterCode": "ten = Lan\nprint(ten)\n",
   "solution": "ten = \"Lan\"\nprint(ten)\n",
   "tests": [
