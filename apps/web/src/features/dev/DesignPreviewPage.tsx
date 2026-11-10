@@ -71,7 +71,7 @@ export function DesignPreviewPage() {
 
       <Card as="section" aria-labelledby="chu">
         <h2 id="chu" className="text-section-title">
-          Chữ · Inter
+          Chữ · Be Vietnam Pro, code · JetBrains Mono
         </h2>
         <div className="mt-4 space-y-3">
           {TYPE_SCALE.map(([className, label]) => (
@@ -82,8 +82,8 @@ export function DesignPreviewPage() {
         </div>
         <div className="mt-6 space-y-2 border-t border-line pt-4" data-testid="font-sample">
           <p className="text-[16px] leading-6">16 px · {SAMPLE}</p>
-          <p className="text-[32px] leading-10 font-extrabold">32 px · {SAMPLE}</p>
-          <p className="text-small text-ink-soft">Il1 LaLaKode — chữ l có đuôi (cv05)</p>
+          <p className="text-[32px] leading-10 font-bold">32 px · {SAMPLE}</p>
+          <p className="font-mono">print(f"Xin chào {'{ten}'}!")  # != -&gt; Il1 0O</p>
         </div>
       </Card>
 

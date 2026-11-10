@@ -18,7 +18,7 @@ Mọi thay đổi bảng này cần một ADR trong `docs/decisions/`.
 | Schema nội dung | zod (`packages/content-schema`) | 3/4 | Một nguồn sự thật cho type + validate |
 | Markdown | `react-markdown` (CommonMark, **chưa cần** `remark-gfm`) | — | Nội dung bài viết bằng Markdown. 20 bài hiện chỉ dùng tiêu đề, danh sách, khối code, `code`, **đậm** — thêm `remark-gfm` khi nào có bài cần bảng. Route bài học: 37,8 kB gzip. |
 | Icon | lucide-react | — | Nhẹ, tree-shake |
-| Font | Inter 4.1 (OFL), variable 400–800, tự host woff2 cắt từ bản phát hành chính thức bằng `docs/brand/build-inter.sh` | 4.1 | Cùng font với logo; không gọi CDN (ADR 0009). Không phải dependency npm: chỉ chép file woff2 + giấy phép vào `public/fonts/inter/`. |
+| Font | **Be Vietnam Pro** 400/500/600/700 (chữ giao diện) và **JetBrains Mono** 400/500/700 (code), cả hai OFL, tự host woff2 lấy từ gói `@fontsource` 5.3.0 | 5.3.0 | Thiết kế cho tiếng Việt; không gọi CDN (ADR 0012). Không phải dependency npm: chỉ chép file woff2 + giấy phép vào `public/fonts/`. Logo vẫn là Inter đã chuyển thành nét (ADR 0009). |
 | Unit test | Vitest + Testing Library | — | Cùng hệ Vite |
 | E2E test | Playwright (Chromium, WebKit iPhone/iPad) | — | Kiểm tra Pyodide thật trên trình duyệt |
 | Lint/format | ESLint (flat config) + Prettier | — | Hook chạy sau mỗi lần sửa file |
@@ -35,6 +35,7 @@ Mọi thay đổi bảng này cần một ADR trong `docs/decisions/`.
 
 - JS chính (không tính Pyodide) ≤ 200 kB gzip; mỗi route lazy ≤ 80 kB gzip.
 - Riêng route bài tập ≤ 150 kB gzip vì chứa CodeMirror (ADR 0007); hiện ~135 kB (có theme tối tự viết, S0-32).
+- Font: trang chủ/catalog tải ~136 kB (Be Vietnam Pro 4 độ đậm × bảng latin + vietnamese, không bản variable); màn bài tập thêm ~25 kB JetBrains Mono. Ngân sách ≤ 160 kB cho trang thường, ≤ 190 kB cho màn bài tập. Thêm độ đậm mới phải đo lại (ADR 0012).
 - Pyodide core tải ngầm, cache dài hạn (`immutable`, tên file có version).
 - Lighthouse mobile (trang chủ): Performance ≥ 85, Accessibility ≥ 95.
 
