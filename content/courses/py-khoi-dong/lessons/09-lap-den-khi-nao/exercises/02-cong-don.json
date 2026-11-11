@@ -3,6 +3,11 @@
   "title": "Cộng dồn",
   "kind": "code",
   "prompt": "Tính tổng các số từ 1 đến 10 bằng `while`, rồi in ra tổng.",
+  "difficulty": "vua",
+  "requirements": [
+    "Bài này để luyện `while`, em thử không dùng `for` nhé.",
+    "Biến `tong` giữ tổng, in ra một số."
+  ],
   "starterCode": "tong = 0\nso = 1\n\n# lặp tới khi so vượt quá 10\nprint(tong)\n",
   "solution": "tong = 0\nso = 1\n\nwhile so <= 10:\n    tong = tong + so\n    so = so + 1\n\nprint(tong)\n",
   "tests": [

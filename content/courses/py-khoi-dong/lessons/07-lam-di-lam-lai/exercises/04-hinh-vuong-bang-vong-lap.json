@@ -3,6 +3,12 @@
   "title": "Hình vuông bằng vòng lặp",
   "kind": "code",
   "prompt": "Vẽ hình vuông cạnh 70 bằng vòng lặp, chỉ viết lệnh vẽ **một lần**.",
+  "difficulty": "vua",
+  "requirements": [
+    "Hình vuông cạnh 70.",
+    "Lệnh vẽ chỉ viết một lần, bên trong vòng lặp.",
+    "Vẽ xong, rùa về đúng chỗ và hướng ban đầu."
+  ],
   "starterCode": "import turtle\n\nfor canh in range(4):\n    turtle.forward(70)\n",
   "solution": "import turtle\n\nfor canh in range(4):\n    turtle.forward(70)\n    turtle.left(90)\n",
   "tests": [

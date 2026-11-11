@@ -3,6 +3,8 @@
   "title": "Thêm một môn",
   "kind": "code",
   "prompt": "Thêm môn `Sử` với điểm 10 vào từ điển `diem`, rồi in cả từ điển ra.",
+  "difficulty": "de",
+  "requirements": ["Từ điển `diem` có thêm môn `Sử` với điểm 10.", "Các môn cũ vẫn giữ nguyên."],
   "starterCode": "diem = {\"Toán\": 9, \"Văn\": 7}\n\nprint(diem)\n",
   "solution": "diem = {\"Toán\": 9, \"Văn\": 7}\ndiem[\"Sử\"] = 10\nprint(diem)\n",
   "tests": [

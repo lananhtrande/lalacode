@@ -3,6 +3,11 @@
   "title": "Máy nghĩ một số",
   "kind": "code",
   "prompt": "Máy nghĩ một số từ 1 đến 10 (biến `bi_mat`). Nhận một số em đoán, in `Đúng rồi!` nếu trúng, ngược lại in `Sai rồi, số đó là` kèm số bí mật.",
+  "difficulty": "vua",
+  "requirements": [
+    "Số bí mật trong biến `bi_mat`, từ 1 đến 10.",
+    "Trúng thì in `Đúng rồi!`, trật thì in câu có cả số bí mật."
+  ],
   "starterCode": "import random\n\nbi_mat = random.randint(1, 10)\ndoan = int(input())\n",
   "solution": "import random\n\nbi_mat = random.randint(1, 10)\ndoan = int(input())\n\nif doan == bi_mat:\n    print(\"Đúng rồi!\")\nelse:\n    print(f\"Sai rồi, số đó là {bi_mat}\")\n",
   "tests": [

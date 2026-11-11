@@ -3,6 +3,14 @@
   "title": "Đếm nguyên âm",
   "kind": "code",
   "prompt": "Nhận một từ, đếm xem có bao nhiêu chữ cái nằm trong `aeiou` rồi in số đếm được.",
+  "difficulty": "vua",
+  "requirements": ["Chỉ đếm các chữ `a`, `e`, `i`, `o`, `u`.", "In ra một số."],
+  "examples": [
+    {
+      "input": "banana\n",
+      "output": "3"
+    }
+  ],
   "starterCode": "tu = input()\ndem = 0\n\nprint(dem)\n",
   "solution": "tu = input()\ndem = 0\n\nfor chu in tu:\n    if chu in \"aeiou\":\n        dem = dem + 1\n\nprint(dem)\n",
   "tests": [

@@ -3,6 +3,19 @@
   "title": "Đếm chữ",
   "kind": "code",
   "prompt": "Nhận một chuỗi từ người dùng rồi in ra số ký tự của chuỗi đó.",
+  "difficulty": "de",
+  "requirements": ["In ra một số: số ký tự của chuỗi."],
+  "examples": [
+    {
+      "input": "hoa\n",
+      "output": "3"
+    },
+    {
+      "input": "bé na\n",
+      "output": "5",
+      "note": "Dấu cách cũng được đếm là một ký tự."
+    }
+  ],
   "starterCode": "chu = input()\nprint(chu)\n",
   "solution": "chu = input()\nprint(len(chu))\n",
   "tests": [

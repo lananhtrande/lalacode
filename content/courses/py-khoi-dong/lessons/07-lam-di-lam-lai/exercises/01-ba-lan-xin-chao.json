@@ -3,6 +3,8 @@
   "title": "Ba lần xin chào",
   "kind": "code",
   "prompt": "Dùng vòng lặp in chữ `Xin chào` đúng 3 lần, mỗi lần một dòng.",
+  "difficulty": "de",
+  "requirements": ["Dùng vòng lặp, chỉ viết lệnh in **một lần**.", "In đúng 3 dòng."],
   "starterCode": "print(\"Xin chào\")\n",
   "solution": "for i in range(3):\n    print(\"Xin chào\")\n",
   "tests": [

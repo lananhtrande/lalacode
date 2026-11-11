@@ -3,6 +3,14 @@
   "title": "Đếm số lần đoán",
   "kind": "code",
   "prompt": "Số bí mật là 7. Nhận các số đoán cho tới khi trúng, rồi in `Em đoán 3 lần` (thay 3 bằng số lần thật sự).",
+  "difficulty": "kho",
+  "requirements": ["Số bí mật là 7.", "In đúng một dòng dạng `Em đoán 3 lần` sau khi trúng."],
+  "examples": [
+    {
+      "input": "1\n7\n",
+      "output": "Em đoán 2 lần"
+    }
+  ],
   "starterCode": "bi_mat = 7\nso_lan = 0\ndoan = int(input())\n",
   "solution": "bi_mat = 7\nso_lan = 1\ndoan = int(input())\n\nwhile doan != bi_mat:\n    doan = int(input())\n    so_lan = so_lan + 1\n\nprint(f\"Em đoán {so_lan} lần\")\n",
   "tests": [

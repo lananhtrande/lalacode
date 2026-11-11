@@ -3,6 +3,22 @@
   "title": "Gợi ý lớn hơn hay nhỏ hơn",
   "kind": "code",
   "prompt": "Số bí mật là 12. Nhận một số đoán, in `Lớn hơn nhé` nếu đoán nhỏ hơn bí mật, `Nhỏ hơn nhé` nếu đoán lớn hơn, `Đúng rồi!` nếu trúng.",
+  "difficulty": "vua",
+  "requirements": [
+    "Số bí mật là 12.",
+    "In đúng một trong ba câu: `Lớn hơn nhé`, `Nhỏ hơn nhé`, `Đúng rồi!`."
+  ],
+  "examples": [
+    {
+      "input": "9\n",
+      "output": "Lớn hơn nhé",
+      "note": "Đoán 9, số bí mật lớn hơn."
+    },
+    {
+      "input": "15\n",
+      "output": "Nhỏ hơn nhé"
+    }
+  ],
   "starterCode": "bi_mat = 12\ndoan = int(input())\n\nif doan == bi_mat:\n    print(\"Đúng rồi!\")\n",
   "solution": "bi_mat = 12\ndoan = int(input())\n\nif doan == bi_mat:\n    print(\"Đúng rồi!\")\nelif doan < bi_mat:\n    print(\"Lớn hơn nhé\")\nelse:\n    print(\"Nhỏ hơn nhé\")\n",
   "tests": [

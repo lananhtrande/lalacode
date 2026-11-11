@@ -3,6 +3,8 @@
   "title": "Tra điểm một môn",
   "kind": "code",
   "prompt": "Từ điển `diem` đã có sẵn. In ra điểm môn Văn.",
+  "difficulty": "de",
+  "requirements": ["In ra một số: điểm môn Văn."],
   "starterCode": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 8}\nprint(diem[\"Toán\"])\n",
   "solution": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 8}\nprint(diem[\"Văn\"])\n",
   "tests": [

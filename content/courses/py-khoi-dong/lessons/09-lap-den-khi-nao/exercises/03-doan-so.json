@@ -3,6 +3,19 @@
   "title": "Trò đoán số",
   "kind": "code",
   "prompt": "Số bí mật là 7. Nhận từng số người chơi đoán cho tới khi đúng. Mỗi lần sai in `Chưa đúng`, khi đúng in `Chính xác!` rồi dừng.",
+  "difficulty": "kho",
+  "requirements": [
+    "Số bí mật là 7.",
+    "Mỗi lần đoán sai in `Chưa đúng` rồi nhận số tiếp theo.",
+    "Đoán đúng thì in `Chính xác!` rồi dừng."
+  ],
+  "examples": [
+    {
+      "input": "5\n7\n",
+      "output": "Chưa đúng\nChính xác!",
+      "note": "Lần đầu đoán 5 (sai), lần hai đoán 7 (đúng)."
+    }
+  ],
   "starterCode": "bi_mat = 7\ndoan = int(input())\n\nif doan == bi_mat:\n    print(\"Chính xác!\")\n",
   "solution": "bi_mat = 7\ndoan = int(input())\n\nwhile doan != bi_mat:\n    print(\"Chưa đúng\")\n    doan = int(input())\n\nprint(\"Chính xác!\")\n",
   "tests": [

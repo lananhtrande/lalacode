@@ -23,6 +23,12 @@
       "expected": "Lan thích môn Toán\n",
       "stdin": "Lan\nToán\n",
       "message": "Câu in ra cần có cả tên và môn học."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "An thích môn Nhạc\n",
+      "stdin": "An\nNhạc\n",
+      "message": "Câu in ra cần có cả tên và môn học."
     }
   ],
   "hints": [

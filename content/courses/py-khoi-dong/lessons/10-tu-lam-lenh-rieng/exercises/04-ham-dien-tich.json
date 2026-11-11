@@ -3,26 +3,25 @@
   "title": "Diện tích hình chữ nhật",
   "kind": "code",
   "prompt": "Viết hàm `dien_tich(dai, rong)` trả về diện tích, rồi in diện tích của hình dài 8 rộng 3.",
+  "difficulty": "vua",
+  "requirements": [
+    "Hàm `dien_tich(dai, rong)` đưa kết quả về, không in trong hàm.",
+    "In ra diện tích hình dài 8 rộng 3."
+  ],
   "starterCode": "def dien_tich(dai, rong):\n    return 0\n\nprint(dien_tich(8, 3))\n",
   "solution": "def dien_tich(dai, rong):\n    return dai * rong\n\nprint(dien_tich(8, 3))\n",
   "tests": [
     {
       "type": "function_returns",
       "name": "dien_tich",
-      "args": [
-        8,
-        3
-      ],
+      "args": [8, 3],
       "expected": 24,
       "message": "Diện tích hình 8 x 3 là 24."
     },
     {
       "type": "function_returns",
       "name": "dien_tich",
-      "args": [
-        5,
-        5
-      ],
+      "args": [5, 5],
       "expected": 25,
       "message": "Hình vuông cạnh 5 có diện tích 25."
     },

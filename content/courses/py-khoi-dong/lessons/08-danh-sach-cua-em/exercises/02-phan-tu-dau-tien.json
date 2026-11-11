@@ -3,6 +3,8 @@
   "title": "Phần tử đầu tiên",
   "kind": "code",
   "prompt": "Danh sách `ban` đã có sẵn. In ra tên **người đầu tiên** trong danh sách.",
+  "difficulty": "de",
+  "requirements": ["Chỉ in một tên: người đứng đầu danh sách."],
   "starterCode": "ban = [\"Lan\", \"Minh\", \"Hoa\"]\nprint(ban[1])\n",
   "solution": "ban = [\"Lan\", \"Minh\", \"Hoa\"]\nprint(ban[0])\n",
   "tests": [

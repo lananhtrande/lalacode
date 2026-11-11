@@ -23,6 +23,12 @@
       "expected": "13\n",
       "stdin": "12\n",
       "message": "Nhớ đổi chữ nhận được thành số trước khi cộng."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "10\n",
+      "stdin": "9\n",
+      "message": "Nhớ đổi chữ nhận được thành số trước khi cộng."
     }
   ],
   "hints": [

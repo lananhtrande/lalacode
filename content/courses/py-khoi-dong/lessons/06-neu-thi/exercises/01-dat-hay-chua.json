@@ -3,6 +3,21 @@
   "title": "Đạt hay chưa đạt",
   "kind": "code",
   "prompt": "Nhận điểm từ người dùng. In `Đạt` nếu điểm từ 5 trở lên, ngược lại in `Chưa đạt`.",
+  "difficulty": "de",
+  "requirements": [
+    "Điểm từ 5 trở lên (kể cả đúng 5) thì in `Đạt`.",
+    "Điểm dưới 5 thì in `Chưa đạt`."
+  ],
+  "examples": [
+    {
+      "input": "9\n",
+      "output": "Đạt"
+    },
+    {
+      "input": "4\n",
+      "output": "Chưa đạt"
+    }
+  ],
   "starterCode": "diem = int(input())\n\nif diem >= 5:\n    print(\"Đạt\")\n",
   "solution": "diem = int(input())\n\nif diem >= 5:\n    print(\"Đạt\")\nelse:\n    print(\"Chưa đạt\")\n",
   "tests": [

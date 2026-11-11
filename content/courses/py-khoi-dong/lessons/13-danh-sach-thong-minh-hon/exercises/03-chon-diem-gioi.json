@@ -3,6 +3,8 @@
   "title": "Chọn điểm giỏi",
   "kind": "code",
   "prompt": "Từ danh sách `diem`, tạo danh sách `gioi` chỉ gồm những điểm từ 8 trở lên, rồi in ra.",
+  "difficulty": "kho",
+  "requirements": ["Danh sách mới tên là `gioi`.", "Chỉ giữ điểm từ 8 trở lên, đúng thứ tự cũ."],
   "starterCode": "diem = [8, 5, 10, 7, 9]\ngioi = []\n\nprint(gioi)\n",
   "solution": "diem = [8, 5, 10, 7, 9]\ngioi = []\n\nfor d in diem:\n    if d >= 8:\n        gioi.append(d)\n\nprint(gioi)\n",
   "tests": [
@@ -14,11 +16,7 @@
     {
       "type": "variable_equals",
       "name": "gioi",
-      "expected": [
-        8,
-        10,
-        9
-      ],
+      "expected": [8, 10, 9],
       "message": "Danh sách `gioi` chưa đúng."
     }
   ],

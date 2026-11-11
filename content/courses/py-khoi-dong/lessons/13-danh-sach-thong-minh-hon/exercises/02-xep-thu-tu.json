@@ -3,6 +3,8 @@
   "title": "Xếp theo thứ tự",
   "kind": "code",
   "prompt": "Nhận danh sách `tuoi` có sẵn, in ra danh sách đã xếp từ bé tới lớn.",
+  "difficulty": "de",
+  "requirements": ["In ra cả danh sách, từ bé tới lớn."],
   "starterCode": "tuoi = [12, 10, 15, 11]\nprint(tuoi)\n",
   "solution": "tuoi = [12, 10, 15, 11]\nprint(sorted(tuoi))\n",
   "tests": [

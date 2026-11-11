@@ -3,6 +3,18 @@
   "title": "Đủ tiền chưa",
   "kind": "code",
   "prompt": "Em có 20000 đồng. Nhận giá món đồ từ người dùng. In `Mua được` nếu giá nhỏ hơn hoặc bằng số tiền, ngược lại in `Để dành thêm`.",
+  "difficulty": "vua",
+  "requirements": ["Em có đúng 20000 đồng.", "Giá bằng đúng số tiền em có thì vẫn mua được."],
+  "examples": [
+    {
+      "input": "18000\n",
+      "output": "Mua được"
+    },
+    {
+      "input": "25000\n",
+      "output": "Để dành thêm"
+    }
+  ],
   "starterCode": "tien = 20000\ngia = int(input())\n",
   "solution": "tien = 20000\ngia = int(input())\n\nif gia <= tien:\n    print(\"Mua được\")\nelse:\n    print(\"Để dành thêm\")\n",
   "tests": [

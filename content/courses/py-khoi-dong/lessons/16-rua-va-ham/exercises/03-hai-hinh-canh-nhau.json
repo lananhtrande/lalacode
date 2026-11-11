@@ -3,6 +3,12 @@
   "title": "Hai hình cạnh nhau",
   "kind": "code",
   "prompt": "Vẽ một hình vuông cạnh 40, rồi nhấc bút dời sang phải 100 bước và vẽ hình vuông thứ hai cạnh 40.",
+  "difficulty": "vua",
+  "requirements": [
+    "Hai hình vuông, mỗi cạnh 40.",
+    "Hình thứ hai cách hình đầu 100 bước sang phải.",
+    "Không có nét kẻ nối giữa hai hình."
+  ],
   "starterCode": "import turtle\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nve_vuong(40)\nturtle.goto(100, 0)\nve_vuong(40)\n",
   "solution": "import turtle\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nve_vuong(40)\nturtle.penup()\nturtle.goto(100, 0)\nturtle.pendown()\nve_vuong(40)\n",
   "tests": [

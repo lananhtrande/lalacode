@@ -3,6 +3,14 @@
   "title": "Hô to lên",
   "kind": "code",
   "prompt": "Nhận một chuỗi rồi in ra bản chữ in hoa của nó.",
+  "difficulty": "de",
+  "requirements": ["In lại đúng chuỗi đó, nhưng toàn chữ in hoa."],
+  "examples": [
+    {
+      "input": "python\n",
+      "output": "PYTHON"
+    }
+  ],
   "starterCode": "chu = input()\n",
   "solution": "chu = input()\nprint(chu.upper())\n",
   "tests": [
@@ -10,6 +18,12 @@
       "type": "stdout_equals",
       "expected": "XIN CHÀO\n",
       "stdin": "xin chào\n",
+      "message": "Cần in ra chữ in hoa."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "LALAKODE\n",
+      "stdin": "lalakode\n",
       "message": "Cần in ra chữ in hoa."
     }
   ],

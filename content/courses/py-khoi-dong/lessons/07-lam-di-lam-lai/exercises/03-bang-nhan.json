@@ -3,6 +3,8 @@
   "title": "Bảng nhân 3",
   "kind": "code",
   "prompt": "In bảng nhân 3 từ 1 đến 5, mỗi dòng dạng `3 x 1 = 3`.",
+  "difficulty": "vua",
+  "requirements": ["5 dòng, từ `3 x 1 = 3` tới `3 x 5`.", "Đúng dấu cách như mẫu: `3 x 1 = 3`."],
   "starterCode": "for i in range(1, 6):\n    print(i)\n",
   "solution": "for i in range(1, 6):\n    print(f\"3 x {i} = {3 * i}\")\n",
   "tests": [

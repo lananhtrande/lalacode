@@ -3,6 +3,8 @@
   "title": "Đếm số chia hết cho 3",
   "kind": "code",
   "prompt": "Đếm xem từ 1 đến 20 có bao nhiêu số chia hết cho 3, rồi in ra số đếm được.",
+  "difficulty": "vua",
+  "requirements": ["Xét các số từ 1 đến 20.", "Biến `dem` giữ số đếm được, in ra một số."],
   "starterCode": "dem = 0\nfor so in range(1, 21):\n    dem = dem + 1\nprint(dem)\n",
   "solution": "dem = 0\nfor so in range(1, 21):\n    if so % 3 == 0:\n        dem = dem + 1\nprint(dem)\n",
   "tests": [

@@ -3,6 +3,11 @@
   "title": "Khuôn mặt tròn",
   "kind": "code",
   "prompt": "Vẽ một đường tròn bán kính 50, rồi nhấc bút dời tới (0, 80) và chấm một chấm vàng to 25.",
+  "difficulty": "vua",
+  "requirements": [
+    "Đường tròn bán kính 50.",
+    "Chấm vàng (yellow) to 25 ở (0, 80), không có nét kẻ tới đó."
+  ],
   "starterCode": "import turtle\n\nturtle.circle(50)\n",
   "solution": "import turtle\n\nturtle.circle(50)\nturtle.penup()\nturtle.goto(0, 80)\nturtle.pendown()\nturtle.dot(25, \"yellow\")\n",
   "tests": [

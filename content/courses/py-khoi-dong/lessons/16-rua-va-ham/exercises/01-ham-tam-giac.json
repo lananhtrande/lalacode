@@ -3,6 +3,12 @@
   "title": "Hàm vẽ tam giác",
   "kind": "code",
   "prompt": "Viết hàm `ve_tam_giac(canh)` vẽ tam giác đều, rồi gọi với cạnh 60. Tam giác đều quay 120 độ mỗi góc.",
+  "difficulty": "vua",
+  "requirements": [
+    "Hàm `ve_tam_giac(canh)` vẽ một tam giác đều.",
+    "Gọi hàm với cạnh 60.",
+    "Vẽ xong, rùa về đúng chỗ xuất phát."
+  ],
   "starterCode": "import turtle\n\ndef ve_tam_giac(canh):\n    for i in range(3):\n        turtle.forward(canh)\n\nve_tam_giac(60)\n",
   "solution": "import turtle\n\ndef ve_tam_giac(canh):\n    for i in range(3):\n        turtle.forward(canh)\n        turtle.left(120)\n\nve_tam_giac(60)\n",
   "tests": [

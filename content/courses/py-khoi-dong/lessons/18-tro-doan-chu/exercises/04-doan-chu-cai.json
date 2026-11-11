@@ -3,6 +3,19 @@
   "title": "Đoán chữ cái",
   "kind": "code",
   "prompt": "Từ bí mật là `mèo`. Nhận từng chữ cái cho tới khi người chơi đoán trúng một chữ có trong từ. Sai thì in `Chưa có`, trúng thì in `Có rồi!` và dừng.",
+  "difficulty": "kho",
+  "requirements": [
+    "Từ bí mật là `mèo`.",
+    "Mỗi lần đoán sai in `Chưa có` rồi nhận chữ tiếp theo.",
+    "Đoán trúng thì in `Có rồi!` rồi dừng."
+  ],
+  "examples": [
+    {
+      "input": "a\no\n",
+      "output": "Chưa có\nCó rồi!",
+      "note": "Lần đầu đoán a (không có), lần hai đoán o (có)."
+    }
+  ],
   "starterCode": "tu = \"mèo\"\nchu = input()\n\nif chu in tu:\n    print(\"Có rồi!\")\n",
   "solution": "tu = \"mèo\"\nchu = input()\n\nwhile chu not in tu:\n    print(\"Chưa có\")\n    chu = input()\n\nprint(\"Có rồi!\")\n",
   "tests": [

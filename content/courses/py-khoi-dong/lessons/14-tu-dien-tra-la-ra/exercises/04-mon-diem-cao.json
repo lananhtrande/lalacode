@@ -3,6 +3,8 @@
   "title": "Môn điểm cao nhất",
   "kind": "code",
   "prompt": "Tìm môn có điểm cao nhất trong từ điển `diem` rồi in tên môn đó.",
+  "difficulty": "kho",
+  "requirements": ["In ra tên môn, không in điểm.", "Biến `cao_nhat` giữ tên môn đó."],
   "starterCode": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 10}\ncao_nhat = \"\"\n\nprint(cao_nhat)\n",
   "solution": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 10}\ncao_nhat = \"\"\n\nfor mon in diem:\n    if cao_nhat == \"\" or diem[mon] > diem[cao_nhat]:\n        cao_nhat = mon\n\nprint(cao_nhat)\n",
   "tests": [

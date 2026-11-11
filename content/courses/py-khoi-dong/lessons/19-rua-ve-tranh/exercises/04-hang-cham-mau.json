@@ -3,6 +3,12 @@
   "title": "Hàng chấm nhiều màu",
   "kind": "code",
   "prompt": "Dùng vòng lặp chấm 4 chấm to 20, cách nhau 50 bước theo chiều ngang, bắt đầu từ (-75, 0). Màu lấy lần lượt từ danh sách `mau`.",
+  "difficulty": "kho",
+  "requirements": [
+    "4 chấm to 20, chấm đầu ở (-75, 0).",
+    "Mỗi chấm cách chấm trước 50 bước sang phải.",
+    "Màu lần lượt theo danh sách `mau`."
+  ],
   "starterCode": "import turtle\n\nmau = [\"red\", \"orange\", \"green\", \"blue\"]\nx = -75\n\nturtle.penup()\nfor m in mau:\n    turtle.goto(x, 0)\n",
   "solution": "import turtle\n\nmau = [\"red\", \"orange\", \"green\", \"blue\"]\nx = -75\n\nturtle.penup()\nfor m in mau:\n    turtle.goto(x, 0)\n    turtle.dot(20, m)\n    x = x + 50\n",
   "tests": [

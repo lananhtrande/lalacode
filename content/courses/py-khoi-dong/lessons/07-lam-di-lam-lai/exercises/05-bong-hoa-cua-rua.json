@@ -3,6 +3,8 @@
   "title": "Bông hoa của rùa",
   "kind": "code",
   "prompt": "Vẽ 6 hình vuông cạnh 50, sau mỗi hình quay trái 60 độ. Em sẽ được một bông hoa.",
+  "difficulty": "kho",
+  "requirements": ["6 hình vuông, mỗi cạnh 50.", "Sau mỗi hình vuông, quay trái 60 độ."],
   "starterCode": "import turtle\n\nfor hinh in range(6):\n    for canh in range(4):\n        turtle.forward(50)\n        turtle.left(90)\n",
   "solution": "import turtle\n\nfor hinh in range(6):\n    for canh in range(4):\n        turtle.forward(50)\n        turtle.left(90)\n    turtle.left(60)\n",
   "tests": [

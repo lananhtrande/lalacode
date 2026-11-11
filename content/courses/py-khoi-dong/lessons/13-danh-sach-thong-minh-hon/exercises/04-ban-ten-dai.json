@@ -3,6 +3,11 @@
   "title": "Bạn nào tên dài",
   "kind": "code",
   "prompt": "Từ danh sách `ban`, in ra những tên dài hơn 3 ký tự, mỗi tên một dòng.",
+  "difficulty": "vua",
+  "requirements": [
+    "Chỉ in tên dài hơn 3 ký tự, mỗi tên một dòng.",
+    "Giữ đúng thứ tự trong danh sách."
+  ],
   "starterCode": "ban = [\"Lan\", \"Minh\", \"Hoa\", \"Phương\"]\n\nfor b in ban:\n    print(b)\n",
   "solution": "ban = [\"Lan\", \"Minh\", \"Hoa\", \"Phương\"]\n\nfor b in ban:\n    if len(b) > 3:\n        print(b)\n",
   "tests": [

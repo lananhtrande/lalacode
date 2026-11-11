@@ -3,6 +3,14 @@
   "title": "Chữ cái đầu",
   "kind": "code",
   "prompt": "Nhận một tên rồi in ra chữ cái đầu tiên, viết hoa. Ví dụ `lan` thì in `L`.",
+  "difficulty": "vua",
+  "requirements": ["Chỉ in một chữ cái: chữ đầu tiên của tên, viết hoa."],
+  "examples": [
+    {
+      "input": "hoa\n",
+      "output": "H"
+    }
+  ],
   "starterCode": "ten = input()\nprint(ten[0])\n",
   "solution": "ten = input()\nprint(ten[0].upper())\n",
   "tests": [

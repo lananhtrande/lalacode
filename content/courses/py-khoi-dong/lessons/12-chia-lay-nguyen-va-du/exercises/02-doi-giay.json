@@ -3,6 +3,14 @@
   "title": "Đổi giây sang phút",
   "kind": "code",
   "prompt": "Nhận số giây từ người dùng, in ra dạng `2 phút 15 giây`.",
+  "difficulty": "vua",
+  "requirements": ["In đúng một dòng theo mẫu `2 phút 15 giây`."],
+  "examples": [
+    {
+      "input": "200\n",
+      "output": "3 phút 20 giây"
+    }
+  ],
   "starterCode": "giay = int(input())\n",
   "solution": "giay = int(input())\nprint(f\"{giay // 60} phút {giay % 60} giây\")\n",
   "tests": [

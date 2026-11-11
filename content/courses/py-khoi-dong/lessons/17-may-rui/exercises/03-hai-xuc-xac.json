@@ -3,6 +3,11 @@
   "title": "Hai con xúc xắc",
   "kind": "code",
   "prompt": "Tung hai xúc xắc vào hai biến `xuc_xac_1` và `xuc_xac_2`, rồi in tổng điểm của cả hai vào biến `tong`. Tổng phải nằm trong khoảng 2 đến 12.",
+  "difficulty": "vua",
+  "requirements": [
+    "Có đủ hai biến `xuc_xac_1` và `xuc_xac_2`, mỗi biến từ 1 đến 6.",
+    "Biến `tong` là tổng hai xúc xắc, in ra."
+  ],
   "starterCode": "import random\n\nxuc_xac_1 = random.randint(1, 6)\ntong = xuc_xac_1\nprint(tong)\n",
   "solution": "import random\n\nxuc_xac_1 = random.randint(1, 6)\nxuc_xac_2 = random.randint(1, 6)\ntong = xuc_xac_1 + xuc_xac_2\nprint(tong)\n",
   "tests": [

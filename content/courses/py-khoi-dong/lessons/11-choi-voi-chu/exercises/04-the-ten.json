@@ -3,6 +3,15 @@
   "title": "Thẻ tên",
   "kind": "code",
   "prompt": "Nhận họ ở dòng 1 và tên ở dòng 2, in ra `NGUYỄN LAN` (cả hai viết hoa, cách nhau một dấu cách).",
+  "difficulty": "vua",
+  "requirements": ["Họ ở dòng 1, tên ở dòng 2.", "In họ và tên viết hoa, cách nhau một dấu cách."],
+  "examples": [
+    {
+      "input": "trần\nminh\n",
+      "output": "TRẦN MINH",
+      "note": "Chữ có dấu cũng viết hoa được."
+    }
+  ],
   "starterCode": "ho = input()\nten = input()\n",
   "solution": "ho = input()\nten = input()\nprint(f\"{ho.upper()} {ten.upper()}\")\n",
   "tests": [
@@ -10,6 +19,12 @@
       "type": "stdout_equals",
       "expected": "NGUYỄN LAN\n",
       "stdin": "nguyễn\nlan\n",
+      "message": "Cả họ và tên đều viết hoa, cách nhau một dấu cách."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "LÊ HÀ\n",
+      "stdin": "lê\nhà\n",
       "message": "Cả họ và tên đều viết hoa, cách nhau một dấu cách."
     }
   ],

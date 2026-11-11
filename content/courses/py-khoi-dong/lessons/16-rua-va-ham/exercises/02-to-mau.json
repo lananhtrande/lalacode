@@ -3,6 +3,8 @@
   "title": "Tô màu hình vuông",
   "kind": "code",
   "prompt": "Tô một hình vuông cạnh 60 bằng màu cam. Dùng `fillcolor`, `begin_fill` và `end_fill`.",
+  "difficulty": "vua",
+  "requirements": ["Hình vuông cạnh 60, tô màu cam (orange)."],
   "starterCode": "import turtle\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nturtle.fillcolor(\"orange\")\nve_vuong(60)\n",
   "solution": "import turtle\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nturtle.fillcolor(\"orange\")\nturtle.begin_fill()\nve_vuong(60)\nturtle.end_fill()\n",
   "tests": [

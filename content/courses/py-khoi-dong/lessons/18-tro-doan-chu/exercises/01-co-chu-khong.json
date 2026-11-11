@@ -3,6 +3,18 @@
   "title": "Có chữ đó không",
   "kind": "code",
   "prompt": "Nhận một chữ cái từ người dùng. In `Có` nếu chữ đó nằm trong từ `con mèo`, ngược lại in `Không`.",
+  "difficulty": "de",
+  "requirements": ["Từ để dò là `con mèo`.", "Chỉ in một chữ: `Có` hoặc `Không`."],
+  "examples": [
+    {
+      "input": "o\n",
+      "output": "Có"
+    },
+    {
+      "input": "a\n",
+      "output": "Không"
+    }
+  ],
   "starterCode": "tu = \"con mèo\"\nchu = input()\n",
   "solution": "tu = \"con mèo\"\nchu = input()\n\nif chu in tu:\n    print(\"Có\")\nelse:\n    print(\"Không\")\n",
   "tests": [

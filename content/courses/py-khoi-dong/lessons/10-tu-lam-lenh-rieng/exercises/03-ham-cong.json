@@ -3,26 +3,25 @@
   "title": "Hàm cộng hai số",
   "kind": "code",
   "prompt": "Viết hàm `cong(a, b)` **trả về** tổng hai số. Đừng in trong hàm.",
+  "difficulty": "vua",
+  "requirements": [
+    "Hàm `cong(a, b)` đưa tổng về cho chỗ gọi.",
+    "Hàm chỉ đưa kết quả về, việc in để chỗ gọi hàm lo."
+  ],
   "starterCode": "def cong(a, b):\n    print(a + b)\n",
   "solution": "def cong(a, b):\n    return a + b\n",
   "tests": [
     {
       "type": "function_returns",
       "name": "cong",
-      "args": [
-        3,
-        4
-      ],
+      "args": [3, 4],
       "expected": 7,
       "message": "`cong(3, 4)` phải trả về 7."
     },
     {
       "type": "function_returns",
       "name": "cong",
-      "args": [
-        10,
-        25
-      ],
+      "args": [10, 25],
       "expected": 35,
       "message": "Thử với hai số khác xem sao nhé."
     }
