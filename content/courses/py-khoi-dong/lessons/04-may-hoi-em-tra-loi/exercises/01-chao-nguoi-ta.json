@@ -20,6 +20,12 @@
       "expected": "Lan\n",
       "stdin": "Lan\n",
       "message": "In đúng tên vừa nhận được nhé."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Hoa\n",
+      "stdin": "Hoa\n",
+      "message": "In đúng tên vừa nhận được nhé."
     }
   ],
   "hints": [

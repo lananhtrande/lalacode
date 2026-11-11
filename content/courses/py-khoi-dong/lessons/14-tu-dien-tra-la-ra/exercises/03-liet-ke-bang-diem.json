@@ -3,6 +3,8 @@
   "title": "Liệt kê bảng điểm",
   "kind": "code",
   "prompt": "In từng môn và điểm, mỗi dòng dạng `Toán: 9`, theo đúng thứ tự trong từ điển.",
+  "difficulty": "vua",
+  "requirements": ["Mỗi dòng một môn, dạng `Toán: 9`.", "Đúng thứ tự trong từ điển."],
   "starterCode": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 8}\n\nfor mon in diem:\n    print(mon)\n",
   "solution": "diem = {\"Toán\": 9, \"Văn\": 7, \"Anh\": 8}\n\nfor mon in diem:\n    print(f\"{mon}: {diem[mon]}\")\n",
   "tests": [

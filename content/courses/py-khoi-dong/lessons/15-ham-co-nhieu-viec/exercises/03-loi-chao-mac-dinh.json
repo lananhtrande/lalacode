@@ -3,6 +3,11 @@
   "title": "Lời chào mặc định",
   "kind": "code",
   "prompt": "Viết hàm `chao(ten, loi=\"Xin chào\")` in ra `Xin chào Lan!`. Gọi một lần chỉ với tên, một lần với lời chào `Chào buổi sáng`.",
+  "difficulty": "vua",
+  "requirements": [
+    "Gọi chỉ với tên thì in `Xin chào Lan!`.",
+    "Gọi lần hai với `Minh` và lời chào `Chào buổi sáng`."
+  ],
   "starterCode": "def chao(ten, loi):\n    print(f\"{loi} {ten}!\")\n\nchao(\"Lan\")\nchao(\"Minh\", \"Chào buổi sáng\")\n",
   "solution": "def chao(ten, loi=\"Xin chào\"):\n    print(f\"{loi} {ten}!\")\n\nchao(\"Lan\")\nchao(\"Minh\", \"Chào buổi sáng\")\n",
   "tests": [

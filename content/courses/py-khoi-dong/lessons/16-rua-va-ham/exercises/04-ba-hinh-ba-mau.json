@@ -3,6 +3,11 @@
   "title": "Ba hình ba màu",
   "kind": "code",
   "prompt": "Dùng vòng lặp vẽ 3 hình vuông cạnh 50, mỗi hình một màu trong danh sách `mau`, sau mỗi hình quay trái 120 độ.",
+  "difficulty": "kho",
+  "requirements": [
+    "3 hình vuông cạnh 50, mỗi hình một màu trong `mau`.",
+    "Sau mỗi hình, quay trái 120 độ."
+  ],
   "starterCode": "import turtle\n\nmau = [\"red\", \"green\", \"blue\"]\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nfor m in mau:\n    ve_vuong(50)\n",
   "solution": "import turtle\n\nmau = [\"red\", \"green\", \"blue\"]\n\ndef ve_vuong(canh):\n    for i in range(4):\n        turtle.forward(canh)\n        turtle.left(90)\n\nfor m in mau:\n    turtle.pencolor(m)\n    ve_vuong(50)\n    turtle.left(120)\n",
   "tests": [

@@ -3,6 +3,11 @@
   "title": "Chào kèm tên",
   "kind": "code",
   "prompt": "Viết hàm `chao(ten)` in ra `Xin chào Lan!` khi gọi `chao(\"Lan\")`. Gọi hàm hai lần với Lan và Minh.",
+  "difficulty": "vua",
+  "requirements": [
+    "Hàm `chao(ten)` in một câu chào có tên.",
+    "Gọi hàm hai lần: với `\"Lan\"` rồi với `\"Minh\"`."
+  ],
   "starterCode": "def chao(ten):\n    print(\"Xin chào!\")\n\nchao(\"Lan\")\nchao(\"Minh\")\n",
   "solution": "def chao(ten):\n    print(f\"Xin chào {ten}!\")\n\nchao(\"Lan\")\nchao(\"Minh\")\n",
   "tests": [

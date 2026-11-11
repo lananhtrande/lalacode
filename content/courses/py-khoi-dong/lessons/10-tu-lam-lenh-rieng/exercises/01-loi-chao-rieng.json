@@ -3,6 +3,8 @@
   "title": "Lời chào riêng",
   "kind": "code",
   "prompt": "Viết hàm `chao()` in ra `Xin chào!`, rồi gọi hàm đó một lần.",
+  "difficulty": "de",
+  "requirements": ["Hàm tên là `chao`, không nhận gì.", "Gọi hàm đúng một lần."],
   "starterCode": "def chao():\n    print(\"Xin chào!\")\n\n# gọi hàm ở đây\n",
   "solution": "def chao():\n    print(\"Xin chào!\")\n\nchao()\n",
   "tests": [

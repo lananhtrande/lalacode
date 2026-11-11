@@ -3,6 +3,11 @@
   "title": "Giới thiệu bản thân",
   "kind": "code",
   "prompt": "Viết hàm `gioi_thieu(ten, tuoi)` in ra `Lan, 12 tuổi`, rồi gọi với Lan và 12.",
+  "difficulty": "de",
+  "requirements": [
+    "Hàm `gioi_thieu(ten, tuoi)` in một dòng dạng `Lan, 12 tuổi`.",
+    "Gọi hàm với Lan và 12."
+  ],
   "starterCode": "def gioi_thieu(ten, tuoi):\n    print(f\"{ten} tuổi\")\n\ngioi_thieu(\"Lan\", 12)\n",
   "solution": "def gioi_thieu(ten, tuoi):\n    print(f\"{ten}, {tuoi} tuổi\")\n\ngioi_thieu(\"Lan\", 12)\n",
   "tests": [

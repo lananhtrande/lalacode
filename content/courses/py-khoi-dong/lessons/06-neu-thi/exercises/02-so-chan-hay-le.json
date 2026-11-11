@@ -3,6 +3,18 @@
   "title": "Chẵn hay lẻ",
   "kind": "code",
   "prompt": "Nhận một số từ người dùng. In `Chẵn` nếu số chia hết cho 2, ngược lại in `Lẻ`. Gợi ý: `so % 2` cho phần dư.",
+  "difficulty": "de",
+  "requirements": ["Chỉ in một chữ: `Chẵn` hoặc `Lẻ`."],
+  "examples": [
+    {
+      "input": "12\n",
+      "output": "Chẵn"
+    },
+    {
+      "input": "5\n",
+      "output": "Lẻ"
+    }
+  ],
   "starterCode": "so = int(input())\n\n# kiểm tra phần dư\n",
   "solution": "so = int(input())\n\nif so % 2 == 0:\n    print(\"Chẵn\")\nelse:\n    print(\"Lẻ\")\n",
   "tests": [

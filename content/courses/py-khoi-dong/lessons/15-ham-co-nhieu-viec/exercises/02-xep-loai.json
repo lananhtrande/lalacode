@@ -3,35 +3,48 @@
   "title": "Xếp loại học lực",
   "kind": "code",
   "prompt": "Viết hàm `xep_loai(diem)` trả về `Giỏi` nếu điểm từ 8, `Khá` nếu từ 6.5, còn lại `Cần cố gắng`.",
+  "difficulty": "vua",
+  "requirements": [
+    "Hàm `xep_loai(diem)` đưa về một trong ba chữ: `Giỏi`, `Khá`, `Cần cố gắng`.",
+    "Đúng 8 là `Giỏi`, đúng 6.5 là `Khá`."
+  ],
   "starterCode": "def xep_loai(diem):\n    return \"Giỏi\"\n",
   "solution": "def xep_loai(diem):\n    if diem >= 8:\n        return \"Giỏi\"\n    if diem >= 6.5:\n        return \"Khá\"\n    return \"Cần cố gắng\"\n",
   "tests": [
     {
       "type": "function_returns",
       "name": "xep_loai",
-      "args": [
-        9
-      ],
+      "args": [9],
       "expected": "Giỏi",
       "message": "9 điểm là Giỏi."
     },
     {
       "type": "function_returns",
       "name": "xep_loai",
-      "args": [
-        7
-      ],
+      "args": [7],
       "expected": "Khá",
       "message": "7 điểm là Khá."
     },
     {
       "type": "function_returns",
       "name": "xep_loai",
-      "args": [
-        5
-      ],
+      "args": [5],
       "expected": "Cần cố gắng",
       "message": "5 điểm thì cần cố gắng thêm."
+    },
+    {
+      "type": "function_returns",
+      "name": "xep_loai",
+      "args": [8],
+      "expected": "Giỏi",
+      "message": "Đúng 8 điểm vẫn là Giỏi nhé."
+    },
+    {
+      "type": "function_returns",
+      "name": "xep_loai",
+      "args": [6.5],
+      "expected": "Khá",
+      "message": "Đúng 6.5 điểm vẫn là Khá nhé."
     }
   ],
   "hints": [

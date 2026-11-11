@@ -3,35 +3,48 @@
   "title": "Hàm nhận xét",
   "kind": "code",
   "prompt": "Viết hàm `nhan_xet(so_lan)` trả về `Siêu quá!` nếu đoán dưới 3 lần, `Giỏi lắm!` nếu dưới 6 lần, còn lại `Lần sau nhanh hơn nhé`.",
+  "difficulty": "vua",
+  "requirements": [
+    "Hàm `nhan_xet(so_lan)` đưa về một trong ba câu đề bài cho.",
+    "Đúng 3 lần là `Giỏi lắm!`, đúng 6 lần là `Lần sau nhanh hơn nhé`."
+  ],
   "starterCode": "def nhan_xet(so_lan):\n    return \"Giỏi lắm!\"\n",
   "solution": "def nhan_xet(so_lan):\n    if so_lan < 3:\n        return \"Siêu quá!\"\n    if so_lan < 6:\n        return \"Giỏi lắm!\"\n    return \"Lần sau nhanh hơn nhé\"\n",
   "tests": [
     {
       "type": "function_returns",
       "name": "nhan_xet",
-      "args": [
-        2
-      ],
+      "args": [2],
       "expected": "Siêu quá!",
       "message": "Đoán 2 lần là rất nhanh."
     },
     {
       "type": "function_returns",
       "name": "nhan_xet",
-      "args": [
-        4
-      ],
+      "args": [4],
       "expected": "Giỏi lắm!",
       "message": "Đoán 4 lần vẫn giỏi."
     },
     {
       "type": "function_returns",
       "name": "nhan_xet",
-      "args": [
-        9
-      ],
+      "args": [9],
       "expected": "Lần sau nhanh hơn nhé",
       "message": "Đoán 9 lần thì động viên em lần sau."
+    },
+    {
+      "type": "function_returns",
+      "name": "nhan_xet",
+      "args": [3],
+      "expected": "Giỏi lắm!",
+      "message": "Đoán đúng 3 lần thì là Giỏi lắm!"
+    },
+    {
+      "type": "function_returns",
+      "name": "nhan_xet",
+      "args": [6],
+      "expected": "Lần sau nhanh hơn nhé",
+      "message": "Đoán đúng 6 lần thì là Lần sau nhanh hơn nhé"
     }
   ],
   "hints": [

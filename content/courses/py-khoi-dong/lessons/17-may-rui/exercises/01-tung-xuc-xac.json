@@ -3,6 +3,8 @@
   "title": "Tung xúc xắc",
   "kind": "code",
   "prompt": "Tạo biến `so` là một số ngẫu nhiên từ 1 đến 6 rồi in ra.",
+  "difficulty": "de",
+  "requirements": ["Biến `so` là một số từ 1 đến 6, mỗi lần chạy có thể khác nhau.", "In `so` ra."],
   "starterCode": "import random\n\nso = 7\nprint(so)\n",
   "solution": "import random\n\nso = random.randint(1, 6)\nprint(so)\n",
   "tests": [

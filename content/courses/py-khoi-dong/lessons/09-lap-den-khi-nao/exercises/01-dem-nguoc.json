@@ -3,6 +3,8 @@
   "title": "Đếm ngược",
   "kind": "code",
   "prompt": "Đoạn code dưới mới in được một số rồi dừng. Sửa thành vòng lặp `while` để in 3, 2, 1.",
+  "difficulty": "de",
+  "requirements": ["In 3, 2, 1, mỗi số một dòng.", "Dùng `while`."],
   "starterCode": "dem = 3\n\nif dem >= 1:\n    print(dem)\n    dem = dem - 1\n",
   "solution": "dem = 3\n\nwhile dem >= 1:\n    print(dem)\n    dem = dem - 1\n",
   "tests": [

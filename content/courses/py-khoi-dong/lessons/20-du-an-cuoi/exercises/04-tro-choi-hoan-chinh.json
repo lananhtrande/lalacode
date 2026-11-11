@@ -3,6 +3,12 @@
   "title": "Trò chơi hoàn chỉnh",
   "kind": "code",
   "prompt": "Ghép tất cả: máy nghĩ số từ 1 đến 20, gợi ý lớn/nhỏ sau mỗi lần đoán sai, khi trúng in `Đúng rồi!` rồi in số lần đã đoán dạng `Em đoán 3 lần`.",
+  "difficulty": "thu-thach",
+  "requirements": [
+    "Số bí mật ngẫu nhiên từ 1 đến 20.",
+    "Sau mỗi lần đoán sai, gợi ý lớn hơn hay nhỏ hơn.",
+    "Trúng thì in `Đúng rồi!`, rồi in số lần dạng `Em đoán 3 lần`."
+  ],
   "starterCode": "import random\n\nbi_mat = random.randint(1, 20)\nso_lan = 1\ndoan = int(input())\n",
   "solution": "import random\n\nbi_mat = random.randint(1, 20)\nso_lan = 1\ndoan = int(input())\n\nwhile doan != bi_mat:\n    if doan < bi_mat:\n        print(\"Lớn hơn nhé\")\n    else:\n        print(\"Nhỏ hơn nhé\")\n    doan = int(input())\n    so_lan = so_lan + 1\n\nprint(\"Đúng rồi!\")\nprint(f\"Em đoán {so_lan} lần\")\n",
   "tests": [

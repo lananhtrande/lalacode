@@ -3,6 +3,21 @@
   "title": "Số nào lớn hơn",
   "kind": "code",
   "prompt": "Nhận hai số (mỗi số một dòng) rồi in ra số lớn hơn. Nếu hai số bằng nhau thì in `Bằng nhau`.",
+  "difficulty": "vua",
+  "requirements": [
+    "Nhận hai số, mỗi số một dòng.",
+    "In ra số lớn hơn; hai số bằng nhau thì in `Bằng nhau`."
+  ],
+  "examples": [
+    {
+      "input": "6\n2\n",
+      "output": "6"
+    },
+    {
+      "input": "4\n4\n",
+      "output": "Bằng nhau"
+    }
+  ],
   "starterCode": "a = int(input())\nb = int(input())\n",
   "solution": "a = int(input())\nb = int(input())\n\nif a > b:\n    print(a)\nelif b > a:\n    print(b)\nelse:\n    print(\"Bằng nhau\")\n",
   "tests": [

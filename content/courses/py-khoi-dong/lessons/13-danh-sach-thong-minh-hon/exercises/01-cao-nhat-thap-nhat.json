@@ -3,6 +3,8 @@
   "title": "Cao nhất, thấp nhất",
   "kind": "code",
   "prompt": "Danh sách `diem` đã có sẵn. In điểm cao nhất ở dòng 1, điểm thấp nhất ở dòng 2.",
+  "difficulty": "de",
+  "requirements": ["Dòng 1: điểm cao nhất. Dòng 2: điểm thấp nhất."],
   "starterCode": "diem = [8, 5, 10, 7]\nprint(max(diem))\n",
   "solution": "diem = [8, 5, 10, 7]\nprint(max(diem))\nprint(min(diem))\n",
   "tests": [

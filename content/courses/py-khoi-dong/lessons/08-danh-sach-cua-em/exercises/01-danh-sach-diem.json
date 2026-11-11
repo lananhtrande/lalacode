@@ -3,6 +3,8 @@
   "title": "Danh sách điểm",
   "kind": "code",
   "prompt": "Tạo danh sách `diem` gồm 8, 9, 7 rồi in cả danh sách ra.",
+  "difficulty": "de",
+  "requirements": ["Danh sách tên là `diem`, gồm 8, 9, 7 theo đúng thứ tự.", "In cả danh sách ra."],
   "starterCode": "diem = \nprint(diem)\n",
   "solution": "diem = [8, 9, 7]\nprint(diem)\n",
   "tests": [
@@ -14,11 +16,7 @@
     {
       "type": "variable_equals",
       "name": "diem",
-      "expected": [
-        8,
-        9,
-        7
-      ],
+      "expected": [8, 9, 7],
       "message": "Biến `diem` phải là danh sách ba số."
     }
   ],

@@ -27,6 +27,12 @@
       "expected": "Xin chào Minh!\n",
       "stdin": "Minh\n",
       "message": "Tên phải được thay vào câu chào, đừng in chữ \"ten\"."
+    },
+    {
+      "type": "stdout_equals",
+      "expected": "Xin chào Linh!\n",
+      "stdin": "Linh\n",
+      "message": "Tên phải được thay vào câu chào, đừng in chữ \"ten\"."
     }
   ],
   "hints": [

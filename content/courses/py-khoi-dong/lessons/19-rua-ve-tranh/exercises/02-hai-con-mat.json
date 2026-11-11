@@ -3,6 +3,12 @@
   "title": "Hai con mắt",
   "kind": "code",
   "prompt": "Chấm hai chấm đen to 20 làm hai con mắt: một ở toạ độ (-40, 0), một ở (40, 0). Nhớ nhấc bút khi dời chỗ.",
+  "difficulty": "vua",
+  "requirements": [
+    "Hai chấm đen (black), mỗi chấm to 20.",
+    "Một chấm ở (-40, 0), một chấm ở (40, 0).",
+    "Không có nét kẻ giữa hai chấm."
+  ],
   "starterCode": "import turtle\n\nturtle.penup()\nturtle.goto(-40, 0)\nturtle.dot(20, \"black\")\n",
   "solution": "import turtle\n\nturtle.penup()\nturtle.goto(-40, 0)\nturtle.dot(20, \"black\")\nturtle.goto(40, 0)\nturtle.dot(20, \"black\")\n",
   "tests": [
