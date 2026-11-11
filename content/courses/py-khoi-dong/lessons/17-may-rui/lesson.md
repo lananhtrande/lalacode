@@ -1,5 +1,7 @@
 # May rủi
 
+## Số ngẫu nhiên
+
 Muốn chương trình bất ngờ như tung xúc xắc? Python có sẵn:
 
 ```python
@@ -10,6 +12,8 @@ print(so)
 ```
 
 `random.randint(1, 6)` cho một số nguyên ngẫu nhiên từ 1 đến 6, **tính cả 1 và 6**. Chạy lại là ra số khác.
+
+## Chọn đại trong danh sách
 
 Chọn đại một phần tử trong danh sách:
 

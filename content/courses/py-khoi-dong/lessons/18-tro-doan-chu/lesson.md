@@ -1,5 +1,7 @@
 # Trò đoán chữ
 
+## Tìm chữ bằng `in`
+
 Em kiểm tra được một chữ cái có nằm trong từ hay không bằng từ khoá `in`:
 
 ```python
@@ -17,6 +19,8 @@ if "m" in tu:
 ```
 
 `in` cũng chạy với danh sách: `if "Lan" in ban:`.
+
+## Đi qua từng chữ
 
 Đi qua từng chữ cái của một từ bằng `for`:
 

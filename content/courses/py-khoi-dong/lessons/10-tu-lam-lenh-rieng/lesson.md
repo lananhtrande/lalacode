@@ -1,5 +1,7 @@
 # Tự làm lệnh riêng
 
+## Hàm là gì
+
 `print`, `len`, `input` là những lệnh Python cho sẵn. Em cũng tự đặt được lệnh riêng, gọi là **hàm**.
 
 ```python
@@ -10,6 +12,8 @@ chao()
 ```
 
 `def` là *định nghĩa*. Viết xong hàm, muốn chạy thì **gọi tên nó** kèm cặp ngoặc.
+
+## Tham số
 
 Hàm nhận thêm thông tin, gọi là **tham số**:
 
@@ -22,6 +26,8 @@ chao("Minh")
 ```
 
 Một hàm viết xong dùng được bao nhiêu lần tuỳ thích.
+
+## Trả về bằng `return`
 
 Hàm cũng **trả về** kết quả bằng `return`:
 

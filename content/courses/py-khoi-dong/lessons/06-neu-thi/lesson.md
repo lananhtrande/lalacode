@@ -1,5 +1,7 @@
 # Nếu… thì…
 
+## Máy biết chọn
+
 Chương trình của em tới giờ chạy một mạch từ trên xuống. Bây giờ mình dạy nó **chọn**.
 
 ```python
@@ -13,6 +15,8 @@ else:
 
 Đọc như tiếng Việt: *nếu* `diem` lớn hơn hoặc bằng 5 *thì* in "Đạt", *không thì* in "Chưa đạt".
 
+## Viết `if` cho đúng
+
 Ba điều phải nhớ:
 
 1. Cuối dòng `if` và `else` luôn có dấu hai chấm `:`.
@@ -20,6 +24,8 @@ Ba điều phải nhớ:
 3. So sánh bằng nhau viết **hai** dấu bằng `==`, vì một dấu `=` là để cất giá trị vào hộp.
 
 Các phép so sánh: `>` lớn hơn, `<` nhỏ hơn, `>=` lớn hơn hoặc bằng, `<=`, `==` bằng, `!=` khác.
+
+## Nhiều trường hợp: `elif`
 
 Có hơn hai trường hợp thì thêm `elif` vào giữa `if` và `else`. Đọc là *nếu không phải vậy, nhưng nếu…*:
 

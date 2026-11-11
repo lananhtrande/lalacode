@@ -1,5 +1,7 @@
 # Rùa và hàm
 
+## Hàm vẽ hình
+
 Viết hàm xong, em ra lệnh cho rùa gọn hơn hẳn:
 
 ```python
@@ -16,6 +18,8 @@ ve_vuong(80)
 
 Một hàm, gọi bao nhiêu lần tuỳ thích, mỗi lần một kích thước.
 
+## Tô màu
+
 Muốn **tô màu** bên trong hình:
 
 ```python
@@ -26,6 +30,8 @@ turtle.end_fill()
 ```
 
 `begin_fill()` nói "bắt đầu tô từ đây", `end_fill()` nói "tô xong rồi". Hình phải khép kín thì mới tô đẹp.
+
+## Nhấc bút, đặt bút
 
 Muốn dời rùa mà không vẽ đường kẻ:
 

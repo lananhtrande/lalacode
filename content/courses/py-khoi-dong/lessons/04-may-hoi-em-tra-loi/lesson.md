@@ -1,5 +1,7 @@
 # Máy hỏi, em trả lời
 
+## Hỏi bằng `input()`
+
 Tới giờ chương trình của em luôn chạy giống hệt nhau. Bây giờ mình cho nó **hỏi người dùng** một câu.
 
 ```python
@@ -8,6 +10,8 @@ print(ten)
 ```
 
 `input()` dừng lại chờ người ta gõ gì đó rồi nhấn Enter. Chữ gõ vào được cất ngay vào biến `ten`.
+
+## Ghép chữ bằng f-string
 
 Muốn ghép chữ với biến, em dùng **f-string**: thêm chữ `f` trước dấu nháy, rồi đặt tên biến trong dấu ngoặc nhọn.
 

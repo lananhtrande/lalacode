@@ -160,7 +160,11 @@ Trang chủ trước/sau: `design/screenshots/s037-{truoc,sau}-trang-chu-*`.
 | < 1024px | Nút "Mục lục" trên topbar mở ngăn kéo (`role="dialog"`); Esc, bấm ra ngoài hoặc chọn một mục thì đóng, focus trả về nút. |
 | Topbar | Cao 56px, dính trên cùng. Breadcrumb `<nav aria-label="Vị trí">`: Khoá học › Python khởi động › Bài 3 · Rùa vẽ hình (dưới 768px chỉ còn mục cuối). Bộ đếm "Bài 3/20", màn bài tập thêm "Bài tập 2/4". Bên phải là chỗ cho màn con đặt nội dung (`TopbarSlot`): màn bài tập đặt "Python sẵn sàng". |
 | Bài học | Thẻ trắng rộng tối đa 720px, căn giữa: nhãn chương in hoa nhỏ → `h1` → thời lượng, khái niệm → video (chỉ khi bài có video) → "Nội dung bài" → thân bài → bài tập → bài trước/tiếp. |
-| "Nội dung bài" | Tự sinh từ các tiêu đề `#`/`##` của `lesson.md` (`content/outline.ts`): `id` bỏ dấu, ổn định (`#vong-lap-long-nhau`). Ở ≥ 1280px dính bên phải và tô mục đang đọc (`aria-current="location"`); dưới 1280px nằm đầu bài. Bài có dưới hai mục thì không hiện — **20 bài hiện tại đều chỉ có một tiêu đề**, nên khối này chưa xuất hiện cho tới khi bài được chia mục. |
+| "Nội dung bài" | Tự sinh từ các tiêu đề `#`/`##` của `lesson.md` (`content/outline.ts`): `id` bỏ dấu, ổn định (`#vong-lap-long-nhau`). Ở ≥ 1280px dính bên phải và tô mục đang đọc (`aria-current="location"`); dưới 1280px nằm đầu bài. Bài có dưới hai mục thì không hiện. Từ S0-38b, cả 20 bài đều chia 2–4 mục `##`. |
+
+| "Nội dung bài" dính bên phải, 1440 | Đầu bài, 390 |
+| --- | --- |
+| ![](design/screenshots/s038b-sau-bai-hoc-1440.png) | ![](design/screenshots/s038b-sau-bai-hoc-390.png) |
 
 | Token | Màu | Dùng cho | Tương phản |
 | --- | --- | --- | --- |

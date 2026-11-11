@@ -40,6 +40,10 @@ content/courses/<course-id>/
 - `illustration`: tên file SVG trong `apps/web/public/illustrations/` (hình phẳng, tự vẽ, không chữ; nền pastel nhạt, không dùng San hô hay đỏ/cam). `content:check` báo lỗi nếu thiếu file.
 - `chapters` (S0-37, ADR 0011): mỗi bài trong `order` thuộc **đúng một** chương, và các chương xếp bài đúng thứ tự `order`. Thêm bài mới thì nhớ xếp nó vào một chương — `content:check` sẽ nhắc.
 
+## `lesson.md`
+
+Bắt đầu bằng một dòng `# Tiêu đề` (màn bài học bỏ dòng này vì đã có `h1` riêng), rồi chia **2–4 mục `##`** ngắn, mỗi mục một ý. Các mục thành khối "Nội dung bài" có link neo trên màn bài học (S0-38b). Tiêu đề mục không lặp tên bài, không lặp ngay câu đầu bên dưới nó, và đặt **trước** câu dẫn của khối code, không chen giữa câu dẫn và code.
+
 ## `lesson.json`
 
 ```json
