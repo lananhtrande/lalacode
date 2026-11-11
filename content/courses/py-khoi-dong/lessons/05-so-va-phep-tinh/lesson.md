@@ -1,5 +1,7 @@
 # Số và phép tính
 
+## Các phép tính
+
 Python tính toán rất nhanh. Em viết phép tính, nó trả ra kết quả:
 
 ```python
@@ -11,6 +13,8 @@ print(7 / 2)
 
 Dấu `*` là nhân, dấu `/` là chia. Chia xong Python cho số thập phân: `7 / 2` ra `3.5`.
 
+## Đổi chữ thành số
+
 Có một chỗ hay nhầm: thứ `input()` nhận về **luôn là chữ**, dù người ta gõ số. Muốn tính thì phải đổi sang số bằng `int()`:
 
 ```python
@@ -19,6 +23,8 @@ print(tuoi + 1)
 ```
 
 Thiếu `int()` là Python kêu ngay, vì nó không biết cộng chữ với số.
+
+## Ghép số vào câu
 
 Ngược lại, muốn ghép số vào câu chữ thì f-string lo hết, em không cần đổi gì:
 

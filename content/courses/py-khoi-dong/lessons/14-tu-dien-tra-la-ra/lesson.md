@@ -1,5 +1,7 @@
 # Từ điển: tra là ra
 
+## Từ điển là gì
+
 Danh sách tìm theo **số thứ tự**. Nhưng đôi khi em muốn tìm theo **tên**: điểm môn Toán là mấy? Lúc đó dùng **từ điển**.
 
 ```python
@@ -10,12 +12,16 @@ print(diem["Toán"])    # 9
 
 Từ điển viết trong dấu ngoặc nhọn. Mỗi mục có hai phần: **khoá** đứng trước dấu hai chấm, **giá trị** đứng sau. Tra bằng khoá, giống tra từ điển giấy.
 
+## Thêm và sửa
+
 Thêm hoặc sửa một mục:
 
 ```python
 diem["Anh"] = 8      # thêm mới
 diem["Văn"] = 8      # sửa lại
 ```
+
+## Đi qua từ điển, viết đúng khoá
 
 Đi qua từng mục bằng `for`:
 

@@ -1,5 +1,7 @@
 # Dự án cuối: trò chơi của em
 
+## Đồ nghề của em
+
 Bài cuối rồi! Em đã có đủ đồ nghề:
 
 - `input` để hỏi, `print` để trả lời
@@ -7,6 +9,8 @@ Bài cuối rồi! Em đã có đủ đồ nghề:
 - danh sách và từ điển để cất nhiều thứ
 - hàm để gom việc lại một chỗ
 - `random` để mỗi lần chơi một khác
+
+## Ghép thành trò chơi
 
 Giờ mình ghép tất cả thành một trò chơi nhỏ. Ví dụ trò đoán số có đếm lượt:
 

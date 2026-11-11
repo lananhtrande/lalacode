@@ -1,5 +1,7 @@
 # Rùa vẽ hình
 
+## Ra lệnh cho rùa
+
 Python có một chú rùa cầm bút. Em ra lệnh, rùa bò tới đâu thì vẽ tới đó.
 
 ```python
@@ -14,9 +16,13 @@ turtle.forward(100)
 - `turtle.forward(100)` đi thẳng 100 bước.
 - `turtle.left(90)` quay trái 90 độ, `turtle.right(90)` quay phải.
 
+## Hướng và góc quay
+
 Rùa luôn bắt đầu ở giữa màn hình, đầu quay sang **phải**.
 
 Góc 90 độ là góc vuông, giống góc tờ giấy. Quay trái bốn lần 90 độ là rùa quay đủ một vòng về chỗ cũ.
+
+## Màu bút và thứ tự lệnh
 
 Muốn đổi màu bút thì dùng `turtle.pencolor("red")`. Vài màu dùng được: `red`, `blue`, `green`, `orange`.
 

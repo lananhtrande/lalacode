@@ -1,5 +1,7 @@
 # Lặp đến khi nào
 
+## Vòng lặp `while`
+
 `for` lặp **đúng số lần đã biết**. Nhưng có lúc em chưa biết phải lặp bao nhiêu lần — chỉ biết *khi nào thì dừng*. Lúc đó dùng `while`:
 
 ```python
@@ -11,6 +13,8 @@ while dem <= 3:
 ```
 
 Đọc là: *chừng nào `dem` còn nhỏ hơn hoặc bằng 3 thì còn lặp*. Mỗi lượt in số rồi cộng thêm 1.
+
+## Cẩn thận vòng lặp vô hạn
 
 Dòng `dem = dem + 1` **cực kỳ quan trọng**. Thiếu nó, `dem` mãi mãi bằng 1, điều kiện mãi mãi đúng, và chương trình chạy không bao giờ dừng. Người ta gọi đó là *vòng lặp vô hạn*.
 

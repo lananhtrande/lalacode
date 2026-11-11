@@ -1,5 +1,7 @@
 # Chơi với chữ
 
+## Đếm và đổi chữ
+
 Chữ trong Python gọi là **chuỗi**. Em làm được nhiều thứ với chuỗi:
 
 ```python
@@ -12,11 +14,15 @@ print(ten.lower())     # lan anh
 
 `len` đếm số ký tự. `.upper()` cho chữ in hoa, `.lower()` cho chữ thường. Dấu chấm đọc là *của*: `ten.upper()` là "bản in hoa **của** ten".
 
+## Ghép chuỗi
+
 Hai chuỗi cộng lại thì dính liền nhau:
 
 ```python
 print("Xin" + " " + "chào")   # Xin chào
 ```
+
+## Lấy ký tự, giữ chuỗi gốc
 
 Lấy một ký tự bằng số thứ tự, vẫn đếm từ 0:
 

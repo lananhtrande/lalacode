@@ -1,5 +1,7 @@
 # Danh sách thông minh hơn
 
+## Lớn nhất, nhỏ nhất, xếp thứ tự
+
 Em đã biết `len` và `sum`. Python còn cho sẵn mấy lệnh rất tiện:
 
 ```python
@@ -11,6 +13,8 @@ print(sorted(diem))   # [5, 7, 8, 10] — xếp từ bé tới lớn
 ```
 
 `sorted` tạo ra danh sách **mới** đã xếp, danh sách cũ vẫn nguyên.
+
+## Lọc danh sách
 
 Muốn chọn ra những phần tử thoả điều kiện, em ghép `for` với `if`:
 

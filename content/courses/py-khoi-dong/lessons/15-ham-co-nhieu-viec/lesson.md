@@ -1,5 +1,7 @@
 # Hàm có nhiều việc
 
+## Nhiều tham số
+
 Hàm nhận được **nhiều tham số**, cách nhau bằng dấu phẩy:
 
 ```python
@@ -10,6 +12,8 @@ gioi_thieu("Lan", 12)
 ```
 
 Thứ tự rất quan trọng: `gioi_thieu(12, "Lan")` sẽ in sai, vì Python đưa 12 vào chỗ `ten`.
+
+## Giá trị mặc định
 
 Tham số cũng đặt được **giá trị mặc định**:
 
@@ -22,6 +26,8 @@ chao("Minh", "Chúc ngủ ngon")  # Chúc ngủ ngon Minh!
 ```
 
 Tham số có mặc định phải đứng **sau** các tham số thường.
+
+## `return` dừng hàm
 
 Hàm cũng gọi được hàm khác, và `return` dừng hàm ngay tại đó:
 
