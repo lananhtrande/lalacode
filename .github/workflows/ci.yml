@@ -48,6 +48,13 @@ jobs:
     needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # Ảnh chính thức của Playwright đã có sẵn trình duyệt và thư viện hệ thống:
+    # không cần `apt-get` nữa, nên mirror Ubuntu sập không chặn CI (S0-25).
+    # Phiên bản phải khớp @playwright/test trong package-lock.json (bước dưới kiểm).
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      # Chromium dùng nhiều bộ nhớ chia sẻ; thiếu cờ này dễ chết giữa chừng (tài liệu Playwright).
+      options: --ipc=host
     steps:
       - uses: actions/checkout@v7
 
@@ -59,23 +66,13 @@ jobs:
       - name: Cài dependency
         run: npm ci
 
-      - name: Lấy trình duyệt từ cache
-        id: playwright-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-
-      # Bình thường mất ~30 giây, nhưng thỉnh thoảng treo (có lần tới khi job bị
-      # huỷ sau 30 phút). Mỗi lần thử tối đa 5 phút, thử lại một lần rồi mới đỏ.
-      - name: Cài trình duyệt
-        timeout-minutes: 12
+      - name: Kiểm phiên bản Playwright khớp ảnh container
         run: |
-          for attempt in 1 2; do
-            timeout 5m npx playwright install --with-deps chromium webkit && exit 0
-            echo "::warning::Cài trình duyệt lần $attempt quá 5 phút hoặc lỗi, thử lại"
-          done
-          exit 1
+          installed=$(node -p "require('@playwright/test/package.json').version")
+          if [ "$installed" != "1.64.1" ]; then
+            echo "::error::@playwright/test là $installed nhưng ảnh container là v1.64.1 — sửa image trong ci.yml"
+            exit 1
+          fi
 
       - name: Playwright trên bản build
         run: npm run test:e2e
